@@ -1,7 +1,5 @@
 *.suo
 TempoMonkey/bin
 TempoMonkey/obj
-TempoMonkey/properties
 Processing/bin
 Processing/obj
-Processing/Properties
