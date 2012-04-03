@@ -23,20 +23,41 @@ namespace TempoMonkey
         public MainWindow()
         {
             InitializeComponent();
+			// Processing.Audio.LoadFile("test.mp3");
+        }
 
+		private void button1_Click(object sender, RoutedEventArgs e)
+		{
+			// Processing.Program.Reset();
+			Processing.Audio.Reset();
+		}
+
+		private void button2_Click(object sender, RoutedEventArgs e)
+		{
+			// Processing.Program.Mp3ToWav("test.mp3", "test.wav");
+			Processing.Audio.LoadFile("test.mp3");
+		}
+
+		private void button3_Click(object sender, RoutedEventArgs e)
+		{
 			try
 			{
-				Processing.Program.Run();
+				Processing.Audio.Play();
 			}
 			catch (Exception processingRunException)
 			{
 				ErrorText.Text = processingRunException.Message;
 			}
-        }
+		}
 
-		private void button1_Click(object sender, RoutedEventArgs e)
+		private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
 		{
-			Processing.Program.Reset();
+			Processing.Audio.Cleanup();
+		}
+
+		private void button4_Click(object sender, RoutedEventArgs e)
+		{
+			Processing.Audio.Pause();
 		}
     }
 }
