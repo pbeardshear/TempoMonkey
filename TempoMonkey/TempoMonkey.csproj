@@ -92,6 +92,19 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="assets\" />
+    <Folder Include="Collaboration\" />
+    <Folder Include="Gestures\" />
+    <Folder Include="Navigation\" />
+    <Folder Include="Visualizer\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Processing\Processing.csproj">
+      <Project>{034DC868-D097-4B27-BF3B-0D4CC4AA8AFF}</Project>
+      <Name>Processing</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

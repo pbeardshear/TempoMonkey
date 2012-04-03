@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Processing;
 
 namespace TempoMonkey
 {
@@ -22,6 +23,20 @@ namespace TempoMonkey
         public MainWindow()
         {
             InitializeComponent();
+
+			try
+			{
+				Processing.Program.Run();
+			}
+			catch (Exception processingRunException)
+			{
+				ErrorText.Text = processingRunException.Message;
+			}
         }
+
+		private void button1_Click(object sender, RoutedEventArgs e)
+		{
+			Processing.Program.Reset();
+		}
     }
 }

@@ -3,6 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <Button Content="Reset" Height="45" HorizontalAlignment="Left" Margin="193,31,0,0" Name="button1" VerticalAlignment="Top" Width="108" Click="button1_Click" />
+        <TextBlock Height="89" HorizontalAlignment="Left" Margin="45,140,0,0" Name="ErrorText" Text="" VerticalAlignment="Top" Width="411" />
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="193,120,0,0" Name="textBlock2" Text="Error:" VerticalAlignment="Top" />
     </Grid>
 </Window>
