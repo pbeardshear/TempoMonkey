@@ -36,6 +36,7 @@ namespace TempoMonkey
 		{
 			// Processing.Program.Mp3ToWav("test.mp3", "test.wav");
 			Processing.Audio.LoadFile("test.mp3");
+			Processing.Audio.LoadFile("test2.mp3");
 		}
 
 		private void button3_Click(object sender, RoutedEventArgs e)
@@ -58,6 +59,22 @@ namespace TempoMonkey
 		private void button4_Click(object sender, RoutedEventArgs e)
 		{
 			Processing.Audio.Pause();
+		}
+
+		// Swap
+		string current = "test.mp3";
+		private void button5_Click(object sender, RoutedEventArgs e)
+		{
+			if (current == "test.mp3")
+			{
+				Processing.Audio.SwapTrack("test2.mp3");
+				current = "test2.mp3";
+			}
+			else
+			{
+				Processing.Audio.SwapTrack("test.mp3");
+				current = "test.mp3";
+			}
 		}
     }
 }

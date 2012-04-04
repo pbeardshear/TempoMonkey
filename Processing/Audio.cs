@@ -13,11 +13,11 @@ namespace Processing
 	/// </summary>
 	public class Audio
 	{
-
 		#region Private variables
-		private static Dictionary<string, WaveStream> _files = new Dictionary<string,WaveStream>();
-		private static WaveStream _currentOutputStream;
+		private static Dictionary<string, AudioStream> _files = new Dictionary<string, AudioStream>();
+		private static AudioStream _currentOutputStream;
 		private static WaveChannel32 _volumeStream;
+		private static WaveMixerStream32 _mixStream = new WaveMixerStream32();
 		private static WaveOut _device = new WaveOut();
 		#endregion
 
@@ -31,12 +31,13 @@ namespace Processing
 		{
 			if (fileName.EndsWith(".mp3"))
 			{
-				_files[fileName] = new Mp3FileReader(fileName);
+				_files[fileName] = new AudioStream(new WaveChannel32(new Mp3FileReader(fileName)));
 				if (_currentOutputStream == null)
 				{
 					_currentOutputStream = _files[fileName];
-					_volumeStream = new WaveChannel32(_currentOutputStream);
-					_device.Init(_currentOutputStream);
+					_volumeStream = new WaveChannel32(_currentOutputStream.Stream);
+					_mixStream.AddInputStream(_currentOutputStream.Stream);
+					_device.Init(_mixStream);
 				}
 			}
 			else
@@ -82,8 +83,14 @@ namespace Processing
 				_volumeStream.Close();
 				_volumeStream = null;
 				// Close the metering stream
-				_currentOutputStream.Close();
+				_currentOutputStream.Stream.Close();
 				_currentOutputStream = null;
+			}
+			if (_mixStream != null)
+			{
+				_mixStream.Close();
+				_mixStream.Dispose();
+				_mixStream = null;
 			}
 			if (_device != null)
 			{
@@ -122,9 +129,17 @@ namespace Processing
 		/// <param name="fileName">The filename of the song to start playing</param>
 		/// <param name="keepOldPosition">Maintain the position of the track being swapped out (defaults to true)</param>
 		/// <param name="resetNewPosition">Begin at the last stopping position of the track being swapped in (defaults to true)</param>
-		public static void SwapTrack(string fileName, bool keepOldPosition = true, bool keepNewPosition = false)
+		public static void SwapTrack(string fileName, bool keepOldPosition = true, bool keepNewPosition = true)
 		{
-			throw new NotImplementedException();
+			// Stop the current stream
+			_currentOutputStream.CurrentTime = _mixStream.CurrentTime;
+			_mixStream.RemoveInputStream(_currentOutputStream.Stream);
+			// Switch tracks
+			_currentOutputStream = _files[fileName];
+			_mixStream.AddInputStream(_currentOutputStream.Stream);
+			_mixStream.CurrentTime = _currentOutputStream.CurrentTime;
+			// Resume
+			_device.Play();
 		}
 		#endregion
 
@@ -163,10 +178,27 @@ namespace Processing
 		/// <returns>The new current time of the song</returns>
 		public static TimeSpan Seek(long offset)
 		{
-			_currentOutputStream.Seek(offset, SeekOrigin.Current);
+			_currentOutputStream.Stream.Seek(offset, SeekOrigin.Current);
 			return _currentOutputStream.CurrentTime;
 		}
 
+		#endregion
+
+		#region Private Helper Classes
+		/// <summary>
+		/// Helper class to consolidate an output stream's bitstream + its current play time
+		/// </summary>
+		private class AudioStream
+		{
+			public WaveStream Stream;
+			public TimeSpan CurrentTime;
+
+			public AudioStream(WaveStream outputStream)
+			{
+				Stream = outputStream;
+				CurrentTime = TimeSpan.FromSeconds(0);
+			}
+		}
 		#endregion
 	}
 }
