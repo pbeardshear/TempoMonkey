@@ -1,0 +1,16 @@
+﻿<Page x:Class="tempoMonkey.BrowseTutorials"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+	Title="BrowseTutorials" xmlns:my="clr-namespace:slidingMenu;assembly=slidingMenu">
+
+    <Grid>
+        
+        <Label Content="Browse Tutorials" Height="86" HorizontalAlignment="Left" Margin="187,45,0,0" Name="Title" VerticalAlignment="Top" Width="424" FontSize="56" FontFamily="Sylfaen" FontWeight="Bold" Foreground="#FF7F64FC" />
+        <my:UserControl1 Height="304" HorizontalAlignment="Left" Margin="33,198,0,0" Name="slidingMenu" VerticalAlignment="Top" Width="735" />
+        <Button Content="Back" Height="50" HorizontalAlignment="Left" Margin="25,12,0,0" Name="Back" VerticalAlignment="Top" Width="110" MouseEnter="Back_MouseEnter" MouseLeave="Back_MouseLeave" />
+    </Grid>
+</Page>
