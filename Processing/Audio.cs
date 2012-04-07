@@ -19,6 +19,8 @@ namespace Processing
 		private static WaveChannel32 _volumeStream;
 		private static WaveMixerStream32 _mixStream = new WaveMixerStream32();
 		private static WaveOut _device = new WaveOut();
+
+		private int test = 2;
 		#endregion
 
 		#region Initialization Methods
