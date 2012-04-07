@@ -29,15 +29,12 @@ namespace tempoMonkey
         int timer = 0;
         int waitTime = 100;
         string mediaAddress;
+        bool isManipulating = false;
 
         public MainWindow()
         {
             InitializeComponent();
-            //this.frame.NavigationUIVisibility = NavigationUIVisibility.Hidden;
             frame.Navigate(new HomePage());
-            //frame.Navigate(new learningStudio());
-            //adding new event handler to the Frame
-            //frame.command commandFromChild += new RoutedEventHandler(handleCommandFromChild);
             this.setTimer +=new RoutedEventHandler(handle_resetTimer);
         }
 
@@ -54,9 +51,6 @@ namespace tempoMonkey
         private void handle_resetTimer(object sender, RoutedEventArgs e)
         {
             timer = 0;
-            //this.frame.
-            //frame.Navigate(new TutorMode());
-            //label1.Content = e. ToString();
         }
 
         //hide the NavigationBar
@@ -110,30 +104,39 @@ namespace tempoMonkey
                 kinectSensorChooser1.AppConflictOccurred();
             }
         }
+
         void theNewSensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
         {
-            Skeleton skl = getSkeleton(e);
-            if (skl != null)
+            if (!isManipulating)
             {
-                moveMouse(skl);
+                handleCursorDetection(e);
+            }
+            else
+            {
 
+            }
+        }
+
+        public void handleCursorDetection(AllFramesReadyEventArgs e)
+        {
+                Object pg = frame.Content;
+                Skeleton skl = getSkeleton(e);
+                if (skl == null) {
+                        return; 
+                }
+                moveMouse(skl);
+    
                 float rightHandY = skl.Joints[JointType.HandRight].Position.Y;
                 float rightHandX = skl.Joints[JointType.HandRight].Position.X;
                 float rightHandDiffZ = Math.Abs(skl.Joints[JointType.HandRight].Position.Z - skl.Joints[JointType.ShoulderRight].Position.Z);
-
-                Object pg = frame.Content;
-
-
+                
                 switch(pg.GetType().ToString())
                 {
                     case "tempoMonkey.HomePage":
-
                         HomePage p = (HomePage)pg;
                         if (p.isSelectionReady())
                         {
                             int menu = p.getSelectedMenu();
-                                              
-                            //p.textBox1.Text = "iam in";
 
                             timer++;
                             if (timer > waitTime)
@@ -157,9 +160,6 @@ namespace tempoMonkey
                         if (l.isSelectionReady())
                         {
                             int menu = l.getSelectedMenu();
-                                              
-                            //p.textBox1.Text = "iam in";
-
                             timer++;
                             if (timer > waitTime)
                             {
@@ -266,9 +266,6 @@ namespace tempoMonkey
                         if (t.isSelectionReady())
                         {
                             int menu = t.getSelectedMenu();
-                                              
-                            //p.textBox1.Text = "iam in";
-
                             timer++;
                             if (timer > waitTime)
                             {
@@ -287,9 +284,6 @@ namespace tempoMonkey
                         if (i.isSelectionReady())
                         {
                             int menu = i.getSelectedMenu();
-                                              
-                            //p.textBox1.Text = "iam in";
-
                             timer++;
                             if (timer > waitTime)
                             {
@@ -308,8 +302,6 @@ namespace tempoMonkey
                         if (f.isSelectionReady())
                         {
                             int menu = f.getSelectedMenu();
-                            //p.textBox1.Text = "iam in";
-
                             timer++;
                             if (timer > waitTime)
                             {
@@ -324,31 +316,6 @@ namespace tempoMonkey
                         }
                         break;
                 }
-                 
-            }               
-                    /*
-                    if (rightHandX > 0.0 && rightHandX < 0.12 &&
-                            rightHandY > 0.045 && rightHandY < 0.55 &&
-                            rightHandDiffZ > 0.16 && rightHandDiffZ < 0.48)
-                    {
-                        timer++;
-                        p.textBox1.Text = "Pushing";
-                        //tipsRightHandPush.Content = "That's right. Awesome!!";
-                        if (timer <= waitTime)
-                        {
-                            p.textBox1.Text = "Dynamic Gesture: Right Hand Push";
-                            //learningStudioPush();
-
-                        }
-                    }
-                    else
-                    {
-                        timer = 0;
-                        //tipsRightHandPush.Content = "Tips: Lift you right hand up and push straightforward.";
-                        //tipsRightHandPush.Visibility = Visibility.Visible;
-                    }
-                     */
-
         }
 
         Skeleton getSkeleton(AllFramesReadyEventArgs e)
@@ -368,9 +335,9 @@ namespace tempoMonkey
                                 select s).FirstOrDefault();
 
                 return skl;
-
             }
         }
+
         private void moveMouse(Skeleton skl)
         {
             Joint hand = skl.Joints[JointType.HandRight].ScaleTo((int)this.Width, (int)this.Height, 0.25f, 0.25f);
@@ -382,19 +349,8 @@ namespace tempoMonkey
             curPos.X = (int)thePoint.X;
             curPos.Y = (int)thePoint.Y;
             System.Windows.Forms.Cursor.Position = curPos;
-            //this.Cursor = Cursors.None;
-            //this.Cursor = new Cursor("cursor.jpg");
         }
-/*
-        private void ScalePosition(FrameworkElement element, Joint joint)
-        {
-            Joint scaledJoint = joint.ScaleTo(1280, 720, 2f, 2f); //1280,720
 
-            Canvas.SetLeft(element, scaledJoint.Position.X);
-            Canvas.SetTop(element, scaledJoint.Position.Y);
-
-        }
-*/
         void stopKinect(KinectSensor theSensor)
         {
             if (theSensor != null)
