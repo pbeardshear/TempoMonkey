@@ -12,6 +12,5 @@
         <Button Content="Tutor" Height="106" Width="447" HorizontalAlignment="Left" Name="TutorButton" VerticalAlignment="Top" Foreground="#FF604EB4" FontSize="48" FontFamily="Palatino Linotype" Margin="167,198,0,0" Click="Tutor_Click" MouseEnter="TutorButton_MouseEnter" MouseLeave="TutorButton_MouseLeave" />
         <Button Content="Interactive Mode" Height="106" Width="447" HorizontalAlignment="Left" Name="InteractiveModeButton" VerticalAlignment="Top" Foreground="#FF604EB4" FontSize="48" FontFamily="Palatino Linotype" Margin="167,375,0,0" Click="InteractiveModeButton_Click" MouseLeave="InteractiveModeButton_MouseLeave" MouseEnter="InteractiveModeButton_MouseEnter" />
         <Button Content="Back" Height="42" HorizontalAlignment="Left" Margin="34,29,0,0" Name="Back" VerticalAlignment="Top" Width="81" Click="Back_Click" MouseEnter="Back_MouseEnter" MouseLeave="Back_MouseLeave" />
-        <my:KinectSensorChooser Height="107" HorizontalAlignment="Left" Margin="23,262,0,0" Name="kinectSensorChooser1" VerticalAlignment="Top" Width="193"/>
-    </Grid>
+   </Grid>
 </Page>

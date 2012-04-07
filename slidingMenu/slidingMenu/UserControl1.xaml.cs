@@ -55,7 +55,6 @@ namespace slidingMenu
         private void addItemToMenu() // add each item to the box( a class instance )
         {
             string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath);
-
             path = path + "\\" + folderName; //folderBrowser.SelectedPath;
 
             double pos = 0.0;
@@ -68,6 +67,7 @@ namespace slidingMenu
             }
             this.MenuBarWindow.UpdateLayout();
         }
+
         private void addToBox(string name, string address, double pos) // instantiate a box instance
         {
             box littleBox = new box(sizeOfBox);
@@ -141,6 +141,7 @@ namespace slidingMenu
                 return false;
             }
         }
+
         public string getAddress()
         {
             return currentSelectedBox.address;

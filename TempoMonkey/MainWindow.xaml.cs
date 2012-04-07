@@ -196,9 +196,10 @@ namespace tempoMonkey
                             timer++;
                             if (timer > 20)
                             {
-                                
-                                string addr = b.getAddr();
-                                frame.Navigate(new TutorMode(addr));
+
+                                string addr = "";// b.getAddr();
+                                currentPage = new TutorMode(addr);
+                                frame.Navigate(currentPage);
                                 timer = 0;
                             }
                         }
