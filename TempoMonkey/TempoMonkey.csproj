@@ -73,9 +73,11 @@
     <Compile Include="InteractiveMode.xaml.cs">
       <DependentUpon>InteractiveMode.xaml</DependentUpon>
     </Compile>
+    <Compile Include="KinectGesture.cs" />
     <Compile Include="TutorMode.xaml.cs">
       <DependentUpon>TutorMode.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Vector3.cs" />
     <Page Include="BrowseMusic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

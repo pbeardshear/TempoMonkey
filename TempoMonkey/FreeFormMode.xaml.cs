@@ -12,6 +12,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections;
+using Microsoft.Kinect;
+using Coding4Fun.Kinect.Wpf;
+
 
 namespace tempoMonkey
 {
@@ -20,23 +23,105 @@ namespace tempoMonkey
     /// </summary>
     public partial class FreeFormMode : Page
     {
+        /*
         ArrayList musicAddrList;
         ArrayList musicNameList;
         string mediaAddress;
         int direction;
         Boolean isReady;
+        */
+        bool closing = false;
+        BrushConverter bc = new BrushConverter();
+        KinectGesturePlayer player1 = new KinectGesturePlayer();
+
+
+        public void freeAllFramesReady(object sender, AllFramesReadyEventArgs e){
+            if (!closing)
+            {
+                Skeleton[] skeletons = KinectGesturePlayer.getFirstTwoSkeletons(e);
+
+                Skeleton leftSkeleton = skeletons.Count() > 0 ? skeletons[0] : null;
+                Skeleton rightSkeleton = skeletons.Count() > 1 ? skeletons[1] : null;
+
+                if (leftSkeleton != null)
+                {
+                    player1.skeletonReady(e, leftSkeleton);
+                }
+            }
+        }
+
+        //Handlers
+        void pauseTrackingHandler(bool exist)
+        {
+            pause.Fill = exist ? (Brush)bc.ConvertFrom("GREEN") : (Brush)bc.ConvertFrom("RED");
+        }
+
+        void debugTrackerHandler(double value)
+        {
+            DebugBox.Content = value.ToString();
+        }
+
+        void volumeChangeHandler(double change)
+        {
+            Canvas.SetTop(VolumePos, Canvas.GetTop(VolumePos) + change);
+        }
+
+        void volumeTrackingHandler(bool exist)
+        {
+            VolumePos.Fill = exist ? (Brush)bc.ConvertFrom("GREEN") : (Brush)bc.ConvertFrom("RED");
+        }
+
+        void tempoChangeHandler(double change)
+        {
+            Canvas.SetTop(TempoPos, Canvas.GetTop(TempoPos) + change);
+        }
+
+        void tempoTrackingHandler(bool exist)
+        {
+            TempoPos.Fill = exist ? (Brush)bc.ConvertFrom("GREEN") : (Brush)bc.ConvertFrom("RED");
+        }
+
+        void seekChangeHandler(double change)
+        {
+            Canvas.SetLeft(SeekPos, Canvas.GetLeft(SeekPos) + change);
+        }
+
+        void seekTrackingHandler(bool exist)
+        {
+            SeekPos.Fill = exist ? (Brush)bc.ConvertFrom("GREEN") : (Brush)bc.ConvertFrom("RED");
+        }
+
+        void pitchChangeHandler(double change)
+        {
+            Canvas.SetTop(PitchPos, Canvas.GetTop(PitchPos) + change);
+        }
+
+        void pitchTrackingHandler(bool exist)
+        {
+            PitchPos.Fill = exist ? (Brush)bc.ConvertFrom("GREEN") : (Brush)bc.ConvertFrom("RED");
+        }
+
 
         public FreeFormMode(ArrayList addrList, ArrayList nameList)
         {
             InitializeComponent();
-            musicAddrList = addrList;
+            /*
+             * musicAddrList = addrList;
             musicNameList = nameList;
             addingToMusicList(musicNameList);
             mediaAddress = (string)musicAddrList[0];
             direction = 999;
-            isReady = false;
+            isReady = false; */
+
+            //kinectSensorChooser.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser_KinectSensorChanged);
+            player1.registerCallBack(player1.kinectGuideListener, pauseTrackingHandler, debugTrackerHandler);
+            player1.registerCallBack(player1.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
+            player1.registerCallBack(player1.handSwingListener, seekTrackingHandler, seekChangeHandler);
+            player1.registerCallBack(player1.fistsPumpListener, tempoTrackingHandler, tempoChangeHandler);
+            player1.registerCallBack(player1.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
         }
 
+        /*
         public int getSelectedMenu()
         {
             return direction;
@@ -58,6 +143,7 @@ namespace tempoMonkey
             return isReady;
         }
 
+        
         private void addingToMusicList(ArrayList list)
         {
             foreach (string name in list)
@@ -105,7 +191,7 @@ namespace tempoMonkey
         private void back_MouseLeave(object sender, MouseEventArgs e)
         {
             setSelectionStatus(false);
-        }
+        }*/
 
 
     }

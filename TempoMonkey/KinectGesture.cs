@@ -358,6 +358,25 @@ class KinectGesturePlayer
 
     private const int skeletonCount = 6;
     static private Skeleton[] allSkeletons = new Skeleton[skeletonCount];
+    public static Skeleton getFristSkeleton(AllFramesReadyEventArgs e)
+    {
+        using (SkeletonFrame skeletonFrameData = e.OpenSkeletonFrame())
+        {
+            if (skeletonFrameData == null)
+            {
+                return null;
+            }
+            else
+            {
+                skeletonFrameData.CopySkeletonDataTo(allSkeletons);
+                //get the first tracked skeleton
+                return (from s in allSkeletons
+                        where s.TrackingState == SkeletonTrackingState.Tracked
+                        select s).FirstOrDefault();
+           }
+        }
+    }
+
     public static Skeleton[] getFirstTwoSkeletons(AllFramesReadyEventArgs e)
     {
         using (SkeletonFrame skeletonFrameData = e.OpenSkeletonFrame())

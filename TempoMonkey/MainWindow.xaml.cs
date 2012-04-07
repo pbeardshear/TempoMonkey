@@ -113,7 +113,7 @@ namespace tempoMonkey
             }
             else
             {
-
+                
             }
         }
 
@@ -250,6 +250,7 @@ namespace tempoMonkey
                                     case 4:
                                         if (m.isSelectionDone())
                                         {
+                                            isManipulating = true;
                                             frame.Navigate(new FreeFormMode(m.getMusicAddrList(), m.getMusicList()));
                                         }
                                         timer = 0;
@@ -291,24 +292,6 @@ namespace tempoMonkey
                                 {
                                     case 3:
                                         frame.Navigate(new Uri("LearningStudio.xaml", UriKind.Relative));
-                                        timer = 0;
-                                        break;
-                                }
-                            }
-                        }
-                        break;
-                    case "tempoMonkey.FreeFormMode":
-                        FreeFormMode f = (FreeFormMode)pg;
-                        if (f.isSelectionReady())
-                        {
-                            int menu = f.getSelectedMenu();
-                            timer++;
-                            if (timer > waitTime)
-                            {
-                                switch (f.getSelectedMenu())
-                                {
-                                    case 3:
-                                        frame.Navigate(new Uri("BrowseMusic.xaml", UriKind.Relative));
                                         timer = 0;
                                         break;
                                 }
