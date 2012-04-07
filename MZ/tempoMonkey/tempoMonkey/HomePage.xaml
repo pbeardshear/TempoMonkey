@@ -1,0 +1,17 @@
+﻿<Page x:Class="tempoMonkey.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+	  Title="HomePage">
+      <!--xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers" Loaded="Page_Loaded" Unloaded="Page_Unloaded">-->
+    <Grid>
+        <Label Content="TempoMonkey" Name="Title" FontSize="56" FontFamily="Sylfaen" FontWeight="Bold" Foreground="#FF7F64FC" Margin="158,69,224,444" />
+        <Image Height="177" Name="image1" Stretch="Fill" Width="183" Source="/tempoMonkey;component/images/Mb-logo.png" Margin="582,22,34,402" />
+        <Button Content="Learning Studio"  Name="learningStudioButton" Height="106" Width="447" Foreground="#FF604EB4" FontSize="48" FontFamily="Palatino Linotype" Margin="142,404,210,90" Click="learningStudioButton_Click" MouseEnter="learningStudioButton_MouseEnter" MouseLeave="learningStudioButton_MouseLeave" />
+        <Button Content="Browse Music"  Name="browseMusic" Height="106" Width="447" Foreground="#FF604EB4" FontSize="48" FontFamily="Palatino Linotype" Margin="142,237,210,257" Click="browseMusic_Click" MouseEnter="browseMusic_MouseEnter" MouseLeave="browseMusic_MouseLeave" />
+        <!--<my:KinectSensorChooser Height="111" HorizontalAlignment="Left" Margin="63,120,0,0" Name="kinectSensorChooser1" VerticalAlignment="Top" Width="127" />-->
+    </Grid>
+</Page>
