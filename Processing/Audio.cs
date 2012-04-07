@@ -5,6 +5,7 @@ using System.Text;
 using NAudio;
 using NAudio.Wave;
 using System.IO;
+using BigMansStuff.PracticeSharp.Core;
 
 namespace Processing
 {
@@ -19,26 +20,43 @@ namespace Processing
 		private static WaveChannel32 _volumeStream;
 		private static WaveMixerStream32 _mixStream = new WaveMixerStream32();
 		private static WaveOut _device = new WaveOut();
+
+		private static PracticeSharpLogic m_practiceSharpLogic;
 		#endregion
 
+		public static bool isInitialized = false;
+
 		#region Initialization Methods
+		public static void Initialize()
+		{
+			m_practiceSharpLogic = new PracticeSharpLogic();
+			m_practiceSharpLogic.Initialize();
+			m_practiceSharpLogic.Tempo = 1.0f;
+			m_practiceSharpLogic.Pitch = 0.0f;
+			m_practiceSharpLogic.Volume = 0.25f;
+			m_practiceSharpLogic.CurrentPlayTime = TimeSpan.FromSeconds(0);
+
+			isInitialized = true;
+		}
 
 		/// <summary>
-		/// Initialize the processing library with an .mp3 file
+		/// Load the processing library with an .mp3 file
 		/// </summary>
 		/// <param name="fileName">The filename of the song to load</param>
 		public static void LoadFile(string fileName)
 		{
 			if (fileName.EndsWith(".mp3"))
 			{
-				_files[fileName] = new AudioStream(new WaveChannel32(new Mp3FileReader(fileName)));
-				if (_currentOutputStream == null)
-				{
-					_currentOutputStream = _files[fileName];
-					_volumeStream = new WaveChannel32(_currentOutputStream.Stream);
-					_mixStream.AddInputStream(_currentOutputStream.Stream);
-					_device.Init(_mixStream);
-				}
+				//_files[fileName] = new AudioStream(new WaveChannel32(new Mp3FileReader(fileName)));
+				//if (_currentOutputStream == null)
+				//{
+				//    _currentOutputStream = _files[fileName];
+				//    _volumeStream = new WaveChannel32(_currentOutputStream.Stream);
+				//    _mixStream.AddInputStream(_currentOutputStream.Stream);
+				//    _device.Init(_mixStream);
+				//}
+
+				m_practiceSharpLogic.LoadFile(fileName);
 			}
 			else
 			{
@@ -97,16 +115,21 @@ namespace Processing
 				_device.Dispose();
 				_device = null;
 			}
+			if (m_practiceSharpLogic != null)
+			{
+				m_practiceSharpLogic.Terminate();
+			}
 		}
 		#endregion
 
 		#region Basic Audio Methods
 		public static void Play()
 		{
-			if (_device.PlaybackState == PlaybackState.Stopped)
-			{
-				_device.Play();
-			}
+			//if (_device.PlaybackState == PlaybackState.Stopped)
+			//{
+			//    _device.Play();
+			//}
+			m_practiceSharpLogic.Play();
 		}
 
 		public static void Pause()
@@ -149,27 +172,30 @@ namespace Processing
 		/// Change the volume of the current song
 		/// </summary>
 		/// <returns>The new volume</returns>
-		public static int ChangeVolume()
+		public static float ChangeVolume(float offset)
 		{
-			throw new NotImplementedException();
+			_device.Volume += offset;
+			return _device.Volume;
 		}
 
 		/// <summary>
 		/// Change the tempo (BPM) of the current song
 		/// </summary>
 		/// <returns>The new tempo</returns>
-		public static int ChangeTempo()
+		public static float ChangeTempo(double newTempo)
 		{
-			throw new NotImplementedException();
+			m_practiceSharpLogic.Tempo = (float)(1.2f);
+			return m_practiceSharpLogic.Tempo;
 		}
 
 		/// <summary>
 		/// Change the pitch of the current song
 		/// </summary>
 		/// <returns>The new pitch</returns>
-		public static int ChangePitch()
+		public static float ChangePitch(double newPitch)
 		{
-			throw new NotImplementedException();
+			m_practiceSharpLogic.Pitch = (float)(newPitch / 8);
+			return m_practiceSharpLogic.Pitch;
 		}
 
 		/// <summary>
@@ -188,7 +214,7 @@ namespace Processing
 		/// <summary>
 		/// Helper class to consolidate an output stream's bitstream + its current play time
 		/// </summary>
-		private class AudioStream
+		internal class AudioStream
 		{
 			public WaveStream Stream;
 			public TimeSpan CurrentTime;

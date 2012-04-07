@@ -100,6 +100,10 @@
     <Folder Include="Visualizer\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Processing\lib\PracticeSharpApp\PracticeSharp.csproj">
+      <Project>{BBEECE8C-8D5A-42F5-9901-34E8D07490AE}</Project>
+      <Name>PracticeSharp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Processing\Processing.csproj">
       <Project>{034DC868-D097-4B27-BF3B-0D4CC4AA8AFF}</Project>
       <Name>Processing</Name>

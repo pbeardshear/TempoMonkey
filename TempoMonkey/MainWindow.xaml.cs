@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,6 +13,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Processing;
+using System.Diagnostics;
+using BigMansStuff.PracticeSharp.Core;
+using BigMansStuff.PracticeSharp.UI;
+using BigMansStuff.PracticeSharp.Properties;
+using System.Threading;
 
 namespace TempoMonkey
 {
@@ -34,9 +40,25 @@ namespace TempoMonkey
 
 		private void button2_Click(object sender, RoutedEventArgs e)
 		{
+			Processing.Audio.Initialize();
+			// Initialize Time Stretch Profiles (required for changing tempo)
+			TimeStretchProfileManager.Initialize();
+
+			int defaultProfileIndex = 0;
+			foreach (TimeStretchProfile timeStretchProfile in TimeStretchProfileManager.TimeStretchProfiles.Values)
+			{
+				int itemIndex = timeStretchProfileComboBox.Items.Add(timeStretchProfile);
+				if (timeStretchProfile == TimeStretchProfileManager.DefaultProfile)
+				{
+					defaultProfileIndex = itemIndex;
+				}
+			}
+
+			// Select default profile
+			timeStretchProfileComboBox.SelectedIndex = defaultProfileIndex;
 			// Processing.Program.Mp3ToWav("test.mp3", "test.wav");
 			Processing.Audio.LoadFile("test.mp3");
-			Processing.Audio.LoadFile("test2.mp3");
+			// Processing.Audio.LoadFile("test2.mp3");
 		}
 
 		private void button3_Click(object sender, RoutedEventArgs e)
@@ -76,5 +98,29 @@ namespace TempoMonkey
 				current = "test.mp3";
 			}
 		}
+
+		private void Tempo_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		{
+			if (Processing.Audio.isInitialized)
+			{
+				Processing.Audio.ChangeTempo(Tempo.Value);
+			}
+		}
+
+		private void Pitch_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+		{
+			if (Processing.Audio.isInitialized)
+			{
+				Processing.Audio.ChangePitch(Pitch.Value);
+			}
+		}
+
+		/*
+		 * 
+		 *	Code taken from PracticeSharpLibrary
+		 * 
+		 * 
+		 */
+		
     }
 }

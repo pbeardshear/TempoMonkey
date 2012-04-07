@@ -10,5 +10,10 @@
 		<Button Content="Play" Height="45" HorizontalAlignment="Left" Margin="78,34,0,0" Name="button3" VerticalAlignment="Top" Width="109" Click="button3_Click" />
 		<Button Content="Pause" Height="47" HorizontalAlignment="Left" Margin="204,34,0,0" Name="button4" VerticalAlignment="Top" Width="101" Click="button4_Click" />
 		<Button Content="Swap Track" Height="47" HorizontalAlignment="Left" Margin="279,244,0,0" Name="button5" VerticalAlignment="Top" Width="109" Click="button5_Click" />
+		<Slider Height="23" HorizontalAlignment="Left" Margin="87,95,0,0" Name="Tempo" VerticalAlignment="Top" Width="134" Maximum="200" Value="100" ValueChanged="Tempo_ValueChanged" SmallChange="5" Interval="1" IsSnapToTickEnabled="True" Minimum="10" TickFrequency="10" />
+		<Label Content="Tempo" Height="28" HorizontalAlignment="Left" Margin="45,90,0,0" Name="label1" VerticalAlignment="Top" />
+		<Slider Height="23" HorizontalAlignment="Left" Margin="302,95,0,0" Name="Pitch" VerticalAlignment="Top" Width="154" IsSnapToTickEnabled="True" Maximum="96" Minimum="-96" TickFrequency="4" ValueChanged="Pitch_ValueChanged" SmallChange="4" />
+		<Label Content="Pitch" Height="28" HorizontalAlignment="Left" Margin="270,92,0,0" Name="label2" VerticalAlignment="Top" />
+		<ComboBox Height="23" HorizontalAlignment="Left" Name="timeStretchProfileComboBox" VerticalAlignment="Top" Width="120" Visibility="Hidden" TabIndex="88" />
 	</Grid>
 </Window>
