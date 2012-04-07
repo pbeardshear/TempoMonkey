@@ -46,13 +46,12 @@ namespace slidingMenu
 
         public void initializeMenu(string name)
         {
-            highlightBox(theOneChosenToHighlight);
             folderName = name;
-            addItemToMenu();
-
+            addItemsToMenu();
+            highlightBox(theOneChosenToHighlight);
         }
 
-        private void addItemToMenu() // add each item to the box( a class instance )
+        private void addItemsToMenu() // add each item to the box( a class instance )
         {
             string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath);
             path = path + "\\" + folderName; //folderBrowser.SelectedPath;

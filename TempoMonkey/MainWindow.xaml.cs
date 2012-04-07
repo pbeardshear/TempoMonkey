@@ -28,7 +28,6 @@ namespace tempoMonkey
         Skeleton[] allSkeletons = new Skeleton[sklCount];
         int timer = 0;
         int waitTime = 50;
-        string mediaAddress;
         bool isManipulating = false;
         Page currentPage;
 
@@ -112,14 +111,19 @@ namespace tempoMonkey
         {
             if (!isManipulating)
             {
+                System.Windows.Forms.Cursor.Show();
                 handleCursorDetection(e);
             }
             else
             {
+                System.Windows.Forms.Cursor.Hide();
                 switch (frame.Content.GetType().ToString())
                 {
                     case "tempoMonkey.FreeFormMode":
                         ((FreeFormMode)currentPage).freeAllFramesReady(sender, e);
+                        break;
+                    case "tempoMonkey.TutorMode":
+                        ((TutorMode)currentPage).tutorAllFramesReady(sender, e);
                         break;
                 }
             }
@@ -189,15 +193,18 @@ namespace tempoMonkey
                         break;
                     case "tempoMonkey.BrowseTutorials":
                         BrowseTutorials b = (BrowseTutorials)pg;
-                        if (rightHandX > 0.0 && rightHandX < 0.12 &&
+                        //This is because it is hard to select the tutorial without a done button,
+                        //So automatically select choose the first tutorial, later ill ask minzhi to add a done button
+                        if ( true || (rightHandX > 0.0 && rightHandX < 0.12 && 
                            rightHandY > 0.045 && rightHandY < 0.55 &&
-                           rightHandDiffZ > 0.16 && rightHandDiffZ < 0.48)  //detect push gesture
+                           rightHandDiffZ > 0.16 && rightHandDiffZ < 0.48))  //detect push gesture
                         {
                             timer++;
                             if (timer > 20)
                             {
                                 string addr = b.getAddr();
                                 currentPage = new TutorMode(addr);
+                                isManipulating = true;
                                 frame.Navigate(currentPage);
                                 timer = 0;
                             }

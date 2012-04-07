@@ -19,13 +19,13 @@ class KinectGesturePlayer
     private Dictionary<listener, staticCallBack> staticCallBacks = new Dictionary<listener, staticCallBack>();
     private bool handled = false;
 
-    DepthImagePoint lastHead, lastNeck, lastSpine, lastHipCenter;
-    DepthImagePoint lastLeftWrist, lastLeftHand, lastLeftElbow, lastLeftShoulder;
-    DepthImagePoint lastRightWrist, lastRightHand, lastRightElbow, lastRightShoulder;
+    public DepthImagePoint lastHead, lastNeck, lastSpine, lastHipCenter;
+    public DepthImagePoint lastLeftWrist, lastLeftHand, lastLeftElbow, lastLeftShoulder;
+    public DepthImagePoint lastRightWrist, lastRightHand, lastRightElbow, lastRightShoulder;
 
-    DepthImagePoint currHead, currNeck, currSpine, currHipCenter;
-    DepthImagePoint currLeftWrist, currLeftHand, currLeftElbow, currLeftShoulder;
-    DepthImagePoint currRightWrist, currRightHand, currRightElbow, currRightShoulder;
+    public DepthImagePoint currHead, currNeck, currSpine, currHipCenter;
+    public DepthImagePoint currLeftWrist, currLeftHand, currLeftElbow, currLeftShoulder;
+    public DepthImagePoint currRightWrist, currRightHand, currRightElbow, currRightShoulder;
 
     public void registerCallBack(listener listener, staticCallBack staticCallBack, dynamicCallBack dynamicCallback){
         if (staticCallBack != null)
@@ -139,7 +139,7 @@ class KinectGesturePlayer
         double leftAngle = GetBodySegmentAngle(currLeftHand, currLeftShoulder, currHipCenter);
         double rightAngle = GetBodySegmentAngle(currHipCenter, currRightShoulder, currRightHand);
         if ((rightAngle < 50 && rightAngle > 20) &&
-            (leftAngle < 100 && leftAngle > 60))
+            (leftAngle < 150 && leftAngle > 90))
         {
             if (guideTryCount >= 40)
             {

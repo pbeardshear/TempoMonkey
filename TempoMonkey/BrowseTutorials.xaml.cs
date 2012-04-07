@@ -20,6 +20,7 @@ namespace tempoMonkey
     public partial class BrowseTutorials : Page
     {
         Boolean isReady;
+        Boolean selectionDone;
         int direction;
 
         public BrowseTutorials()
@@ -28,6 +29,7 @@ namespace tempoMonkey
             this.slidingMenu.initializeMenu("TutorialVideos");
             isReady = false;
             direction = 999;
+            selectionDone = false;
         }
         //Tell the MainWindow which menu button has been selected
         public int getSelectedMenu()
@@ -69,6 +71,19 @@ namespace tempoMonkey
         private void Back_MouseLeave(object sender, MouseEventArgs e)
         {
             setSelectionStatus(false);
+        }
+
+        private void done_MouseEnter(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(true);
+            selectionDone = true;
+            direction = 4;
+        }
+
+        private void done_MouseLeave(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(false);
+            selectionDone = false;
         }
 
     }

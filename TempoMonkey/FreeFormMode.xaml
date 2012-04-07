@@ -11,7 +11,7 @@
         <!--KinectSensorChooser Canvas.Left="211" Canvas.Top="167" Name="kinectSensorChooser" Width="328" /-->
         <!--KinectSkeletonViewer Canvas.Left="0" Canvas.Top="0" Width="640" Height="480" Name="kinectColorViewer1" 
                               Kinect="{Binding ElementName=freeKinectSensorChooser, Path=Kinect}" /-->
-
+       
         <Rectangle Canvas.Left="15" Canvas.Top="45" Height="24" Name="SeekBar" Stroke="Black" Width="542" />
         <Label Canvas.Left="15" Canvas.Top="9" Content="Seek Bar" Height="31" Name="label1" Width="54" />
         <Ellipse Canvas.Left="254" Canvas.Top="17" Height="76" Name="SeekPos" Fill="RED" Width="14" />
