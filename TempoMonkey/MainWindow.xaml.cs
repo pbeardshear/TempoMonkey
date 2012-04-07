@@ -196,8 +196,7 @@ namespace tempoMonkey
                             timer++;
                             if (timer > 20)
                             {
-
-                                string addr = "";// b.getAddr();
+                                string addr = b.getAddr();
                                 currentPage = new TutorMode(addr);
                                 frame.Navigate(currentPage);
                                 timer = 0;
