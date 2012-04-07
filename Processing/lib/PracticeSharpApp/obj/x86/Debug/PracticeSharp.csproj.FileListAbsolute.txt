@@ -1,0 +1,27 @@
+C:\Users\Peter Beardshear\Desktop\practicesharp\PracticeSharpApp\bin\Debug\PracticeSharp.exe.config
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\bin\Debug\NLog.config
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\bin\Debug\PracticeSharp.exe.config
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\bin\Debug\PracticeSharp.exe
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\bin\Debug\PracticeSharp.pdb
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\bin\Debug\NAudio.dll
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\bin\Debug\NAudio.WindowsMediaFormat.dll
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\bin\Debug\NAudioFLAC.dll
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\bin\Debug\NAudioOggVorbis.dll
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\bin\Debug\NLog.dll
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\bin\Debug\NAudio.pdb
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\bin\Debug\NAudio.WindowsMediaFormat.pdb
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\bin\Debug\NLog.pdb
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\bin\Debug\NLog.xml
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\obj\x86\Debug\BigMansStuff.PracticeSharp.Properties.Resources.resources
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\obj\x86\Debug\BigMansStuff.PracticeSharp.Resources.resources
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\obj\x86\Debug\BigMansStuff.PracticeSharp.UI.AboutForm.resources
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\obj\x86\Debug\BigMansStuff.PracticeSharp.UI.KeyboardShortcutsForm.resources
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\obj\x86\Debug\BigMansStuff.PracticeSharp.UI.MainForm.resources
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\obj\x86\Debug\BigMansStuff.PracticeSharp.UI.PresetControl.resources
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\obj\x86\Debug\BigMansStuff.PracticeSharp.UI.PresetTextInputDialog.resources
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\obj\x86\Debug\BigMansStuff.PracticeSharp.UI.UltraButton.resources
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\obj\x86\Debug\ResGen.read.1.tlog
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\obj\x86\Debug\ResGen.write.1.tlog
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\obj\x86\Debug\PracticeSharp.exe
+C:\projects\TempoMonkey\Processing\lib\PracticeSharpApp\obj\x86\Debug\PracticeSharp.pdb

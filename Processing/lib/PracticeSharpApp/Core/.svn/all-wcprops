@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/290/trunk/PracticeSharpApp/Core
+END
+PresetData.cs
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/275/trunk/PracticeSharpApp/Core/PresetData.cs
+END
+TimeStretchProfile.cs
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/214/trunk/PracticeSharpApp/Core/TimeStretchProfile.cs
+END
+EqualizerEffect.cs
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/179/trunk/PracticeSharpApp/Core/EqualizerEffect.cs
+END
+DSPEffectFactor.cs
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/122/trunk/PracticeSharpApp/Core/DSPEffectFactor.cs
+END
+DSPEffect.cs
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/157/trunk/PracticeSharpApp/Core/DSPEffect.cs
+END
+AdvancedBufferedWaveProvider.cs
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/!svn/ver/267/trunk/PracticeSharpApp/Core/AdvancedBufferedWaveProvider.cs
+END
+PracticeSharpLogic.cs
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/290/trunk/PracticeSharpApp/Core/PracticeSharpLogic.cs
+END
+TimeStretchProfileManager.cs
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/!svn/ver/218/trunk/PracticeSharpApp/Core/TimeStretchProfileManager.cs
+END
+SoundTouchSharp.cs
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/157/trunk/PracticeSharpApp/Core/SoundTouchSharp.cs
+END
