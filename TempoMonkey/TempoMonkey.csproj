@@ -162,7 +162,16 @@
       <Name>slidingMenu</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Sleep Away.mp3" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Maid with the Flaxen Hair.mp3" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>cp ../../Resources/*.mp3 .</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
