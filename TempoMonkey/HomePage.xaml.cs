@@ -65,11 +65,11 @@ namespace tempoMonkey
             setSelectionStatus(false);
             //label1.Content = "Music leave";
         }
+        
         private void browseMusic_Click(object sender, RoutedEventArgs e)
         {
             //DependencyObject s = (DependencyObject)e.OriginalSource;
             //var p = VisualTreeHelper.GetParent(this);
-
             //((MainWindow)p).Navigate(new Uri("TutorMode.xaml", UriKind.Relative));
             direction = 1;
             //RaiseEvent(new RoutedEventArgs(MainWindow.resetTimer));

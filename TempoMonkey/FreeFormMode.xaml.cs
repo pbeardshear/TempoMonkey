@@ -34,7 +34,6 @@ namespace tempoMonkey
         BrushConverter bc = new BrushConverter();
         KinectGesturePlayer player1 = new KinectGesturePlayer();
 
-
         public void freeAllFramesReady(object sender, AllFramesReadyEventArgs e){
             if (!closing)
             {

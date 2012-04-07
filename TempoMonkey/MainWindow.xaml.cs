@@ -27,14 +27,17 @@ namespace tempoMonkey
         System.Drawing.Point curPos = new System.Drawing.Point(0, 0);
         Skeleton[] allSkeletons = new Skeleton[sklCount];
         int timer = 0;
-        int waitTime = 100;
+        int waitTime = 50;
         string mediaAddress;
         bool isManipulating = false;
+        Page currentPage;
 
         public MainWindow()
         {
             InitializeComponent();
-            frame.Navigate(new HomePage());
+            Page homepage = new HomePage();
+            frame.Navigate(homepage);
+            currentPage = homepage;
             this.setTimer +=new RoutedEventHandler(handle_resetTimer);
         }
 
@@ -113,7 +116,12 @@ namespace tempoMonkey
             }
             else
             {
-                
+                switch (frame.Content.GetType().ToString())
+                {
+                    case "tempoMonkey.FreeFormMode":
+                        ((FreeFormMode)currentPage).freeAllFramesReady(sender, e);
+                        break;
+                }
             }
         }
 
@@ -136,8 +144,6 @@ namespace tempoMonkey
                         HomePage p = (HomePage)pg;
                         if (p.isSelectionReady())
                         {
-                            int menu = p.getSelectedMenu();
-
                             timer++;
                             if (timer > waitTime)
                             {
@@ -251,7 +257,8 @@ namespace tempoMonkey
                                         if (m.isSelectionDone())
                                         {
                                             isManipulating = true;
-                                            frame.Navigate(new FreeFormMode(m.getMusicAddrList(), m.getMusicList()));
+                                            currentPage = new FreeFormMode(m.getMusicAddrList(), m.getMusicList());
+                                            frame.Navigate(currentPage);
                                         }
                                         timer = 0;
                                         break;
