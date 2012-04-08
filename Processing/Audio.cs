@@ -44,9 +44,15 @@ namespace Processing
 		private static bool tempoChanged = false;
 		private static bool pitchChanged = false;
 		private static bool volumeChanged = false;
+
+		// DEPRECATED: Changes are now absolute, not relative
 		private static float tempoOffset;
 		private static float pitchOffset;
 		private static float volumeOffset;
+
+		private static float newTempo;
+		private static float newPitch;
+		private static float newVolume;
 
 		private static float _currentTempo;
 		private static float _currentPitch;
@@ -263,7 +269,7 @@ namespace Processing
 		public static void SwapTrack(int fileNumber, bool keepOldPosition = true, bool keepNewPosition = true)
 		{
 			// Only switch tracks if we have a track at that index
-			if (IsBetween(0, _audioStreamList.Count, fileNumber)) {
+			if (IsBetween(0, _audioStreamList.Count - 1, fileNumber)) {
 				_currentWaveChannel = _audioStreamList[fileNumber].Stream;
 				CurrentTrack = _audioStreamList[fileNumber].Name;
 				CurrentTrackIndex = fileNumber;
@@ -278,8 +284,8 @@ namespace Processing
 		/// <returns>The new volume</returns>
 		public static void ChangeVolume(double value)
 		{
-			volumeOffset = (float)(value / 100.0f);
-			if (IsBetween(minVolume, maxVolume, _currentVolume + volumeOffset))
+			newVolume = (float)(value / 100.0f);
+			if (IsBetween(minVolume, maxVolume, newVolume))
 			{
 				volumeChanged = true;
 			}
@@ -291,8 +297,8 @@ namespace Processing
 		/// <returns>The new tempo</returns>
 		public static void ChangeTempo(double value)
 		{
-			tempoOffset = (float)(value / 100.0f);
-			if (IsBetween(minTempo, maxTempo, _currentTempo + tempoOffset))
+			newTempo = (float)(value / 100.0f);
+			if (IsBetween(minTempo, maxTempo, newTempo))
 			{
 				tempoChanged = true;
 			}
@@ -304,8 +310,8 @@ namespace Processing
 		/// <returns>The new pitch</returns>
 		public static void ChangePitch(double value)
 		{
-			pitchOffset = (float)(value / 8);
-			if (IsBetween(minPitch, maxPitch, _currentPitch + pitchOffset))
+			newPitch = (float)(value / 8);
+			if (IsBetween(minPitch, maxPitch, newPitch))
 			{
 				pitchChanged = true;
 			}
@@ -314,17 +320,13 @@ namespace Processing
 		/// <summary>
 		/// Change the play position of the current song
 		/// </summary>
+		/// <param name="position">The position of the song as a percentage of the total time</param>
 		/// <returns>The new current time of the song</returns>
-		public static void Seek(long offset)
+		public static void Seek(float position)
 		{
-			if (offset > 0)
-			{
-				_currentWaveChannel.CurrentTime.Add(TimeSpan.FromSeconds(offset));
-			}
-			else
-			{
-				_currentWaveChannel.CurrentTime.Subtract(TimeSpan.FromSeconds(offset));
-			}
+			TimeSpan totalTime = _currentWaveChannel.TotalTime;
+			double newSeconds = totalTime.TotalSeconds * (position / 100.0);
+			_currentWaveChannel.CurrentTime = TimeSpan.FromSeconds(newSeconds);
 		}
 
 		#endregion
@@ -477,23 +479,23 @@ namespace Processing
 		{
 			if (tempoChanged)
 			{
-				_soundTouchSharp.SetTempo(_currentTempo + tempoOffset);
-				_currentTempo += tempoOffset;
-				tempoOffset = 0;
+				_soundTouchSharp.SetTempo(newTempo);
+				_currentTempo = newTempo;
 				tempoChanged = false;
 			}
 
 			if (pitchChanged)
 			{
-				_soundTouchSharp.SetPitchSemiTones(_currentPitch + pitchOffset);
-				_currentPitch += pitchOffset;
-				pitchOffset = 0;
+				_soundTouchSharp.SetPitchSemiTones(newPitch);
+				_currentPitch = newPitch;
 				pitchChanged = false;
 			}
 
 			if (volumeChanged)
 			{
-				_waveOutDevice.Volume += volumeOffset;
+
+				_currentWaveChannel.Volume = newVolume;
+				_currentVolume = newVolume;
 				volumeChanged = false;
 			}
 		}
@@ -506,12 +508,12 @@ namespace Processing
 
 		// Helper method
 		// Returns a float in the range [0, 100]
-		public static double Normalize(double value, double min, double max)
+		public static double Normalize(double value, double min, double max, double baseMin = 0, double baseMax = 100)
 		{
 			// Determine a linear map of the form: x -> ax + b
 			// Do this by solving a system of linear equations
-			double a = 100 / (max - min);
-			double b = -a * min;
+			double a = (baseMax - baseMin) / (max - min);
+			double b = baseMin - a * min;
 			return (a * value + b);
 		}
 
