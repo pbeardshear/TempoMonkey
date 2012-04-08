@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,6 +16,9 @@ using Microsoft.Kinect;
 using Coding4Fun.Kinect.Wpf;
 using System.Drawing;
 using System.Collections;
+using Processing;
+using System.Diagnostics;
+using System.Threading;
 
 namespace tempoMonkey
 {
@@ -451,6 +455,5 @@ namespace tempoMonkey
             };
             return ready;
         }
-
     }
 }

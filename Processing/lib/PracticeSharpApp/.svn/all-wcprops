@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svn/!svn/ver/292/trunk/PracticeSharpApp
+END
+PracticeSharp.sln
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/163/trunk/PracticeSharpApp/PracticeSharp.sln
+END
+NLog.config
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svn/!svn/ver/267/trunk/PracticeSharpApp/NLog.config
+END
+LICENSES.txt
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/237/trunk/PracticeSharpApp/LICENSES.txt
+END
+app.config
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/270/trunk/PracticeSharpApp/app.config
+END
+PracticeSharp.csproj
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/247/trunk/PracticeSharpApp/PracticeSharp.csproj
+END
+Resources.resx
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/244/trunk/PracticeSharpApp/Resources.resx
+END
+Program.cs
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svn/!svn/ver/134/trunk/PracticeSharpApp/Program.cs
+END
+Resources.Designer.cs
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/243/trunk/PracticeSharpApp/Resources.Designer.cs
+END
