@@ -71,6 +71,7 @@ class KinectGesturePlayer
         handled = false;
         kinectGuideListener();
         handsAboveHeadListener();
+        handsWidenListener2();
         handsWidenListener();
         handSwingListener();
         fistsPumpListener();
@@ -120,8 +121,6 @@ class KinectGesturePlayer
     {
         return Vector3.angleBetween(new Vector3(j1.X, j1.Y, 0), new Vector3(j2.X, j2.Y, 0), new Vector3(j3.X, j3.Y, 0));
     }
-
-
 
     /* Guide gesture 
      * * http://support.xbox.com/en-US/kinect/body-tracking/body-controller
@@ -358,6 +357,70 @@ class KinectGesturePlayer
         }
     }
 
+
+    /* Detects widening hands,
+     * * We could use this for volume
+     * * This is tracked by looking at both hands and seeing their position in relative to the hip and neck
+     * */
+    private double prevDist2 = 0;
+    private bool wasTrackingHandsWiden2 = false;
+    private int handsWidenTryCount2 = 0;
+    public void handsWidenListener2()
+    {
+        if (handled)
+        {
+            callStaticCallBack(handsWidenListener2, false);
+            wasTrackingHandsWiden2 = false;
+            handsWidenTryCount2 = 0;
+            return;
+        }
+
+        bool a = currRightHand.X < currRightElbow.X;
+        bool b = currLeftHand.X > currLeftElbow.X;
+        bool c = currRightHand.Y < currRightHand.Y;
+
+        if (a)
+        {
+            if (b)
+            {
+                if (c)
+                {
+                    Console.WriteLine("1");
+                }
+            }
+        }
+
+        if ((currRightHand.X < currRightElbow.X) &&
+            (currLeftHand.X > currLeftElbow.X) &&
+            (currRightHand.Y < currRightHand.Y))
+        {
+            if (handsWidenTryCount2 >= 5)
+            {
+                callStaticCallBack(handsWidenListener2, true);
+                double currDist = currRightHand.Y - currLeftHand.Y;
+                if (wasTrackingHandsWiden2)
+                {
+                    callDynamicCallBack(handsWidenListener2, prevDist2 - currDist);
+                }
+                prevDist2 = currDist;
+                wasTrackingHandsWiden2 = true;
+                handled = true;
+            }
+            else
+            {
+                handsWidenTryCount2++;
+            }
+        }
+        else
+        {
+            callStaticCallBack(handsWidenListener, false);
+            wasTrackingHandsWiden = false;
+            if (handsWidenTryCount > 0)
+            {
+                handsWidenTryCount--;
+            }
+        }
+    }
 
     private const int skeletonCount = 6;
     static private Skeleton[] allSkeletons = new Skeleton[skeletonCount];
