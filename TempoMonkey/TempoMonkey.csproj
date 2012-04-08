@@ -8,8 +8,8 @@
     <ProjectGuid>{C72C3324-B6D2-4001-94B8-F9CA71E3B71D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>tempoMonkey</RootNamespace>
-    <AssemblyName>tempoMonkey</AssemblyName>
+    <RootNamespace>TempoMonkey</RootNamespace>
+    <AssemblyName>TempoMonkey</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
@@ -163,6 +163,10 @@
     <ProjectReference Include="..\KinectWpfViewers\Microsoft.Samples.Kinect.WpfViewers.csproj">
       <Project>{4DE23893-27E7-423F-9BB6-BA21DAC2C45E}</Project>
       <Name>Microsoft.Samples.Kinect.WpfViewers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Processing\Processing.csproj">
+      <Project>{034DC868-D097-4B27-BF3B-0D4CC4AA8AFF}</Project>
+      <Name>Processing</Name>
     </ProjectReference>
     <ProjectReference Include="..\slidingMenu\slidingMenu\slidingMenu.csproj">
       <Project>{983E3261-4510-43D5-97B8-A50E9E736E28}</Project>

@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tempoMonkey", "tempoMonkey\tempoMonkey.csproj", "{C72C3324-B6D2-4001-94B8-F9CA71E3B71D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TempoMonkey", "TempoMonkey\TempoMonkey.csproj", "{C72C3324-B6D2-4001-94B8-F9CA71E3B71D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.Samples.Kinect.WpfViewers", "KinectWpfViewers\Microsoft.Samples.Kinect.WpfViewers.csproj", "{4DE23893-27E7-423F-9BB6-BA21DAC2C45E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "slidingMenu", "slidingMenu\slidingMenu\slidingMenu.csproj", "{983E3261-4510-43D5-97B8-A50E9E736E28}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlidingMenu", "SlidingMenu\SlidingMenu\SlidingMenu.csproj", "{983E3261-4510-43D5-97B8-A50E9E736E28}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Processing", "Processing\Processing.csproj", "{034DC868-D097-4B27-BF3B-0D4CC4AA8AFF}"
 EndProject
