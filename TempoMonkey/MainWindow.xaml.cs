@@ -333,7 +333,7 @@ namespace tempoMonkey
                                         if (mbi.isSelectionDone())
                                         {
                                             isManipulating = true;
-                                            currentPage = new FreeFormMode(mbi.getMusicAddrList(), mbi.getMusicList());
+                                            currentPage = new InteractiveMode(mbi.getMusicAddrList(), mbi.getMusicList());
                                             frame.Navigate(currentPage);
                                         }
                                         timer = 0;

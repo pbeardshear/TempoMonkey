@@ -121,6 +121,8 @@ class KinectGesturePlayer
         return Vector3.angleBetween(new Vector3(j1.X, j1.Y, 0), new Vector3(j2.X, j2.Y, 0), new Vector3(j3.X, j3.Y, 0));
     }
 
+
+
     /* Guide gesture 
      * * http://support.xbox.com/en-US/kinect/body-tracking/body-controller
      * * If the user move their left arm at a ~45 degree angle about the vertical and have their right hand down
@@ -135,6 +137,7 @@ class KinectGesturePlayer
             guideTryCount = 0;
             return;
         }
+        callDynamicCallBack(kinectGuideListener, currSpine.X);
 
         double leftAngle = GetBodySegmentAngle(currLeftHand, currLeftShoulder, currHipCenter);
         double rightAngle = GetBodySegmentAngle(currHipCenter, currRightShoulder, currRightHand);
