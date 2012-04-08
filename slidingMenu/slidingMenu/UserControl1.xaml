@@ -9,7 +9,7 @@
         </StackPanel>
         <Button Canvas.Left="730" Canvas.Top="0" Content=">" Height="300" Name="right" Width="35" MouseEnter="moveRight" />
         <Button Canvas.Left="-35" Canvas.Top="0" Content="&lt;" Height="300" Name="left" Width="35" MouseEnter="moveLeft" />
-        <Button Content="Choose" Canvas.Left="307" Canvas.Top="264" Width="135" Height="36" MouseEnter="chooseMouseEnter" MouseLeave="chooseMouseLeave"/>
+        <Button Content="Choose" Canvas.Left="284" Canvas.Top="240" Width="135" Height="60" MouseEnter="chooseMouseEnter" MouseLeave="chooseMouseLeave"/>
 
     </Canvas>
 </UserControl>

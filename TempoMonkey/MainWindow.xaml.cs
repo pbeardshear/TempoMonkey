@@ -284,6 +284,10 @@ namespace tempoMonkey
                                         }
                                         timer = 0;
                                         break;
+                                    case 9:
+                                        m.deletingMusic();
+                                        timer = 0;
+                                        break;
                                 }
                             }
                         }
@@ -342,8 +346,12 @@ namespace tempoMonkey
                                         if (mbi.getMusicChoose())
                                         {
                                             mbi.addingToMusicAddrList();
-                                            mbi.addingToMusicList();    
+                                            mbi.addingToMusicList();
                                         }
+                                        timer = 0;
+                                        break;
+                                    case 9:
+                                        mbi.deletingMusic();
                                         timer = 0;
                                         break;
                                 }

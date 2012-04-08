@@ -61,18 +61,10 @@ namespace tempoMonkey
             return isReady;
         }
 
-        public bool isMenuSelectionValid() //function used when push gesture is performed
+        public bool isMenuSelectionValid() //
         {
             if (slidingMenu.hasCurrentSelectedBox())
             {
-                foreach (var name in musicList)
-                {
-                    if (((string)name).Equals(slidingMenu.getName()))
-                    {
-
-                        return false;
-                    }
-                }
                 direction = 5;
                 isReady = true;
                 return true;
@@ -93,6 +85,13 @@ namespace tempoMonkey
             myLabel.Content = this.slidingMenu.getName();
             selectedMusicList.Children.Add(myLabel);
             musicList.Add(this.slidingMenu.getName());
+        }
+
+        public void deletingMusic()
+        {
+            selectedMusicList.Children.Clear();
+            musicAddrList.Clear();
+            musicList.Clear();
         }
 
 
@@ -130,6 +129,17 @@ namespace tempoMonkey
         }
 
         private void back_MouseLeave(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(false);
+        }
+
+        private void delete_MouseEnter(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(true);
+            direction = 9;
+        }
+
+        private void delete_MouseLeave(object sender, MouseEventArgs e)
         {
             setSelectionStatus(false);
         }

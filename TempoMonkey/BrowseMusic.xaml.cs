@@ -72,9 +72,16 @@ namespace tempoMonkey
                         return false;
                     }
                 }
-                direction = 5;
-                isReady = true;
-                return true;
+                if (musicAddrList.Count == 3)
+                {
+                    return false;
+                }
+                else
+                {
+                    direction = 5;
+                    isReady = true;
+                    return true;
+                }
             }
             return false;
         }
