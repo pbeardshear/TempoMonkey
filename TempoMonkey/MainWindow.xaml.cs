@@ -185,7 +185,7 @@ namespace tempoMonkey
                                         break;
                                     case 2:
                                         isManipulating = true;
-                                        currentPage = new InteractiveMode();
+                                        currentPage = new BrowseMusicInteractiveMode();
                                         frame.Navigate(currentPage);
                                         timer = 0;
                                         break;
@@ -313,6 +313,47 @@ namespace tempoMonkey
                             }
                         }
                         break;
+                    case "tempoMonkey.BrowseMusicInteractiveMode":
+                        BrowseMusicInteractiveMode mbi = (BrowseMusicInteractiveMode)pg;
+                        if (mbi.isSelectionReady())
+                        {
+                            int menu = mbi.getSelectedMenu();
+
+                            timer++;
+                            if (timer > waitTime)
+                            {
+                                switch (menu)
+                                {
+                                    case 3:
+                                        frame.Navigate(new Uri("HomePage.xaml", UriKind.Relative));
+                                        timer = 0;
+                                        isManipulating = false;
+                                        break;
+                                    case 4:
+                                        if (mbi.isSelectionDone())
+                                        {
+                                            isManipulating = true;
+                                            currentPage = new FreeFormMode(mbi.getMusicAddrList(), mbi.getMusicList());
+                                            frame.Navigate(currentPage);
+                                        }
+                                        timer = 0;
+                                        break;
+                                    case 5:
+                                        if (mbi.getMusicChoose())
+                                        {
+                                            mbi.addingToMusicAddrList();
+                                            mbi.addingToMusicList();    
+                                        }
+                                        timer = 0;
+                                        break;
+                                }
+                            }
+                        }
+                        else {
+                            timer = 0;
+                        }
+                        break;
+
                     case "tempoMonkey.InteractiveMode":
                         InteractiveMode i = (InteractiveMode)pg;
                         if (i.isSelectionReady())
