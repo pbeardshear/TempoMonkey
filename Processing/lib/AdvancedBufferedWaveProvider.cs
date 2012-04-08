@@ -27,14 +27,14 @@ using System.Text;
 using System.Collections;
 using NAudio.Wave;
 
-namespace BigMansStuff.PracticeSharp.Core
+namespace Processing
 {
     /// <summary>
     /// Provides a buffered store of samples
     /// Read method will return queued samples or fill buffer with zeroes
     /// based on code from trentdevers (http://naudio.codeplex.com/Thread/View.aspx?ThreadId=54133)
     /// </summary>
-    public class AdvancedBufferedWaveProvider : IWaveProvider
+    internal class AdvancedBufferedWaveProvider : IWaveProvider
     {
         #region Construction
 

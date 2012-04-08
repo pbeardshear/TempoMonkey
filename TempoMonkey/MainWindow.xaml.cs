@@ -14,9 +14,6 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Processing;
 using System.Diagnostics;
-using BigMansStuff.PracticeSharp.Core;
-using BigMansStuff.PracticeSharp.UI;
-using BigMansStuff.PracticeSharp.Properties;
 using System.Threading;
 
 namespace TempoMonkey
@@ -42,20 +39,9 @@ namespace TempoMonkey
 		{
 			Processing.Audio.Initialize();
 			// Initialize Time Stretch Profiles (required for changing tempo)
-			TimeStretchProfileManager.Initialize();
-
-			int defaultProfileIndex = 0;
-			foreach (TimeStretchProfile timeStretchProfile in TimeStretchProfileManager.TimeStretchProfiles.Values)
-			{
-				int itemIndex = timeStretchProfileComboBox.Items.Add(timeStretchProfile);
-				if (timeStretchProfile == TimeStretchProfileManager.DefaultProfile)
-				{
-					defaultProfileIndex = itemIndex;
-				}
-			}
+			// TimeStretchProfileManager.Initialize();
 
 			// Select default profile
-			timeStretchProfileComboBox.SelectedIndex = defaultProfileIndex;
 			// Processing.Program.Mp3ToWav("test.mp3", "test.wav");
 			Processing.Audio.LoadFile("test.mp3");
 			// Processing.Audio.LoadFile("test2.mp3");
