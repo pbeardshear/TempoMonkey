@@ -162,6 +162,7 @@ namespace tempoMonkey
             Border.Visibility = System.Windows.Visibility.Hidden;
             Resume.Visibility = System.Windows.Visibility.Hidden;
             Quit.Visibility = System.Windows.Visibility.Hidden;
+            System.Windows.Forms.Cursor.Hide();
         }
 
         public void Pause()
@@ -170,6 +171,7 @@ namespace tempoMonkey
             Border.Visibility = System.Windows.Visibility.Visible;
             Resume.Visibility = System.Windows.Visibility.Visible;
             Quit.Visibility = System.Windows.Visibility.Visible;
+            System.Windows.Forms.Cursor.Show();
         }
 
         private void ResumeEnter(object sender, MouseEventArgs e){
@@ -219,8 +221,9 @@ namespace tempoMonkey
         bool isReady = false;
 
 
-        public InteractiveMode()//ArrayList addrList, ArrayList nameList)
+        public InteractiveMode(ArrayList addrList, ArrayList nameList)
         {
+            System.Windows.Forms.Cursor.Hide();
             InitializeComponent();
             leftPlayer = new KinectGesturePlayer();
             rightPlayer = new KinectGesturePlayer();

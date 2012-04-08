@@ -53,9 +53,28 @@ namespace tempoMonkey
             }
         }
 
-        void debugTrackerHandler(double value)
+        int previousTrack = 2;
+        void changeTrackHandler(double value)
         {
             DebugBox.Content = value.ToString();
+            if (value < 250 && previousTrack != 1)
+            {
+                Track.Content = "On Track 1";
+                previousTrack = 1;
+                //Go as Track 1
+            }
+            else if (value > 450 && previousTrack != 3)
+            {
+                Track.Content = "On Track 3";
+                previousTrack = 3;
+                //Go as Track 3
+            }
+            else if( value >= 250 && value <= 450 && previousTrack != 2)
+            {
+                Track.Content = "On Track 2";
+                previousTrack = 2;
+                //Go as Track 2
+            }
         }
 
         void volumeChangeHandler(double change)
@@ -100,9 +119,10 @@ namespace tempoMonkey
 
         public FreeFormMode(ArrayList addrList, ArrayList nameList)
         {
+            System.Windows.Forms.Cursor.Show();
             InitializeComponent();
             freePlayer = new KinectGesturePlayer();
-            freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, debugTrackerHandler);
+            freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
             freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
             freePlayer.registerCallBack(freePlayer.handSwingListener, seekTrackingHandler, seekChangeHandler);
             freePlayer.registerCallBack(freePlayer.fistsPumpListener, tempoTrackingHandler, tempoChangeHandler);
@@ -115,6 +135,7 @@ namespace tempoMonkey
             Border.Visibility = System.Windows.Visibility.Hidden;
             Resume.Visibility = System.Windows.Visibility.Hidden;
             Quit.Visibility = System.Windows.Visibility.Hidden;
+            System.Windows.Forms.Cursor.Hide();
         }
 
         public void Pause()
@@ -123,6 +144,7 @@ namespace tempoMonkey
             Border.Visibility = System.Windows.Visibility.Visible;
             Resume.Visibility = System.Windows.Visibility.Visible;
             Quit.Visibility = System.Windows.Visibility.Visible;
+            System.Windows.Forms.Cursor.Show();
         }
 
         private void ResumeEnter(object sender, MouseEventArgs e){

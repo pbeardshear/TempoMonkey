@@ -25,7 +25,7 @@
         <Rectangle Canvas.Left="740" Canvas.Top="65" Fill="Black" Height="360" Name="Tempobar" Width="20" />
         <Ellipse Canvas.Left="706" Canvas.Top="285" Fill="Red" Height="24" Name="TempoPos" Width="88" />
 
-        <Label Canvas.Left="10" Canvas.Top="376" Content="Debug Bar" Height="30" Name="DebugBox" Width="71" />
+        <Label Canvas.Left="10" Canvas.Top="376" Content="Debug Bar" Height="80" Name="DebugBox" Width="165" FontSize="50"/>
         <Rectangle Canvas.Left="44" Canvas.Top="10" Fill="Black" Height="360" Name="debugBar" Width="20" />
         <Ellipse Canvas.Left="10" Canvas.Top="230" Fill="Red" Height="24" Name="debugPos" Width="88" />
 
@@ -40,5 +40,6 @@
                 MouseEnter="ResumeEnter" MouseLeave="ResumeLeave"/>
         <Button Content="Quit" Name="Quit" Canvas.Left="454" Canvas.Top="195" Width="152" Height="46" FontSize="30" Visibility="Hidden" 
                 MouseEnter="QuitEnter" MouseLeave="QuitLeave"/>
+        <Label Canvas.Left="15" Canvas.Top="461" Content="On Track" Height="75" Name="Track" Width="309" FontSize="50" RenderTransformOrigin="0.503,1.612"/>
     </Canvas>
 </Page>
