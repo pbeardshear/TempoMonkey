@@ -46,15 +46,17 @@ namespace tempoMonkey
             }
         }
 
+        bool chooseReady = false;
         //Tell the MainWindow if the cursor is on the button.
         public Boolean isSelectionReady()
         {
+            chooseReady = isSelectionValid();
             return isReady;
         }
 
-        public Boolean isSelectionValid()
+        public bool isSelectionValid()
         {
-            return slidingMenu.hasCurrentSelectedBox();
+            return false;
         }
 
         public string getAddr()

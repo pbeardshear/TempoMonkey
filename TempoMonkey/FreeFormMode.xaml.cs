@@ -25,16 +25,16 @@ namespace tempoMonkey
     {
         BrushConverter bc = new BrushConverter();
         KinectGesturePlayer freePlayer;
+        bool isPaused = false;
 
         public void freeAllFramesReady(object sender, AllFramesReadyEventArgs e){
             Skeleton skeleton = KinectGesturePlayer.getFristSkeleton(e);
             if (skeleton != null)
             {
-                freePlayer.skeletonReady(e, skeleton);
-                DebugBox.Content = KinectGesturePlayer.GetBodySegmentAngle(
-                    freePlayer.currLeftHand, 
-                    freePlayer.currLeftShoulder, 
-                    freePlayer.currHipCenter).ToString();
+                if (!isPaused)
+                {
+                    freePlayer.skeletonReady(e, skeleton);
+                }
             }
         }
 
@@ -42,7 +42,15 @@ namespace tempoMonkey
         void pauseTrackingHandler(bool exist)
         {
             pause.Fill = exist ? (Brush)bc.ConvertFrom("GREEN") : (Brush)bc.ConvertFrom("RED");
-            // Add a pop-up with option to continue or quit
+            if (isPaused)
+            {
+                return;
+            }
+
+            if (exist)
+            {
+                Pause();
+            }
         }
 
         void debugTrackerHandler(double value)
@@ -100,5 +108,67 @@ namespace tempoMonkey
             freePlayer.registerCallBack(freePlayer.fistsPumpListener, tempoTrackingHandler, tempoChangeHandler);
             freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
         }
+
+        public void unPause()
+        {
+            isPaused = false;
+            Border.Visibility = System.Windows.Visibility.Hidden;
+            Resume.Visibility = System.Windows.Visibility.Hidden;
+            Quit.Visibility = System.Windows.Visibility.Hidden;
+        }
+
+        public void Pause()
+        {
+            isPaused = true;
+            Border.Visibility = System.Windows.Visibility.Visible;
+            Resume.Visibility = System.Windows.Visibility.Visible;
+            Quit.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void ResumeEnter(object sender, MouseEventArgs e){
+            setSelectionStatus(true);
+            direction = 6;
+        }
+
+        private void ResumeLeave(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(false);
+        }
+
+        private void QuitEnter(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(true);
+            direction = 7;
+        }
+
+        private void QuitLeave(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(false);
+        }
+
+        //Tell the MainWindow which menu button has been selected
+        public int getSelectedMenu()
+        {
+            return direction;
+        }
+
+
+        private void setSelectionStatus(Boolean value)
+        {
+            isReady = value;
+            if (!isReady)
+            {
+                RaiseEvent(new RoutedEventArgs(MainWindow.resetTimer));
+            }
+        }
+
+        //Tell the MainWindow if the cursor is on the button.
+        public Boolean isSelectionReady()
+        {
+            return isReady;
+        }
+
+        int direction = 999;
+        bool isReady = false;
     }
 }

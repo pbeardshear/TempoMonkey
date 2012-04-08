@@ -22,8 +22,6 @@ namespace tempoMonkey
     {
         ArrayList musicAddrList = new ArrayList();
         ArrayList musicList = new ArrayList();
-        //string[] musicAddrList = new string[20];
-        //string[] musicList = new string[20];
         Boolean selectionDone;
         int direction;
         Boolean isReady;
@@ -51,27 +49,37 @@ namespace tempoMonkey
             }
         }
 
+        bool musicChooser = false;
+        public bool getMusicChoose(){
+            return musicChooser;
+        }
         //Tell the MainWindow if the cursor is on the button.
         public Boolean isSelectionReady()
         {
+            musicChooser = isMenuSelectionValid();
             return isReady;
         }
 
-        public Boolean isMenuSelectionValid() //function used when push gesture is performed
+        public bool isMenuSelectionValid() //function used when push gesture is performed
         {
-            if(slidingMenu.hasCurrentSelectedBox())
+            if (slidingMenu.hasCurrentSelectedBox())
             {
                 foreach (var name in musicList)
                 {
                     if (((string)name).Equals(slidingMenu.getName()))
                     {
+
                         return false;
                     }
                 }
+                direction = 5;
+                isReady = true;
                 return true;
             }
             return false;
         }
+
+
 
         public void addingToMusicAddrList() 
         {

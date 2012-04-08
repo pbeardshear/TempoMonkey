@@ -21,12 +21,13 @@ namespace tempoMonkey
     /// </summary>
     public partial class TutorMode : Page
     {
+        bool isPaused = false;
         Boolean isClose = false;
         const int sklCount = 6;
         Skeleton[] allSkeletons = new Skeleton[sklCount];
-        string mediaAddress;
-        Boolean isReady;
-        int direction;
+        //string mediaAddress;
+        int direction = 999;
+        bool isReady = false;
         BrushConverter bc = new BrushConverter();
 
         KinectGesturePlayer tutorPlayer;
@@ -39,16 +40,15 @@ namespace tempoMonkey
             tipsRightHandPush.Visibility = Visibility.Collapsed;
             doneLabel.Visibility = Visibility.Collapsed;
             //Stop.IsEnabled = false;
-            mediaAddress = addr;
-            isReady = false;
-            direction = 999;
+            //mediaAddress = addr;
 
             tutorPlayer = new KinectGesturePlayer();
             tutorPlayer.registerCallBack(tutorPlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
             tutorPlayer.registerCallBack(tutorPlayer.handSwingListener, seekTrackingHandler, seekChangeHandler);
             tutorPlayer.registerCallBack(tutorPlayer.fistsPumpListener, tempoTrackingHandler, tempoChangeHandler);
             tutorPlayer.registerCallBack(tutorPlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
-
+            tutorPlayer.registerCallBack(tutorPlayer.kinectGuideListener, pauseTrackingHandler, debugTrackerHandler);
+            
             Instructions.Content = TaskInstructions[currentTaskIndex];
         }
 
@@ -57,21 +57,22 @@ namespace tempoMonkey
            Skeleton skeleton = KinectGesturePlayer.getFristSkeleton(e);
            if (skeleton != null)
            {
-                tutorPlayer.skeletonReady(e, skeleton);
+               if(!isPaused){
+                   tutorPlayer.skeletonReady(e, skeleton);
+               }
            }
         }
 
         int currentTaskIndex = 0;
-        String[] Task = {"Pause", "Seek", "Volume", "Pitch", "Tempo", "Switch Tracks" };
-        String[] TaskInstructions = {"To Pause the song put your left hand at a 45 degree angle and your right hand down",
-                                     "To Seek through a track just place your right hand up and move it left and right",
+        String[] Task = {"Seek", "Volume", "Pitch", "Tempo", "Switch Tracks" };
+        String[] TaskInstructions = {"To Seek through a track just place your right hand up and move it left and right",
                                     "To change volume put both of your hands into your mid section and expand/impact them",
                                     "To change the pitch put both hands over your head and move your head up or down",
                                     "To increase the tempo pump your right hand, to decrease the tempo pump your left hand",
                                     "To change tracks jump left and right" };
 
         Boolean[] taskCompleted = { false, false, false, false, false, };
-
+        
         void proceedIfGood(bool exist, String task)
         {
             if (exist && Task[currentTaskIndex] == task)
@@ -101,7 +102,16 @@ namespace tempoMonkey
         void pauseTrackingHandler(bool exist)
         {
             pause.Fill = exist ? (Brush)bc.ConvertFrom("GREEN") : (Brush)bc.ConvertFrom("RED");
-            proceedIfGood(exist, "Pause");
+
+            if (isPaused)
+            {
+                return;
+            }
+
+            if (exist)
+            {
+                Pause();
+            }
         }
 
         void debugTrackerHandler(double value)
@@ -153,6 +163,46 @@ namespace tempoMonkey
             proceedIfGood(exist, "Pitch");
         }
 
+
+        //Tell the MainWindow which menu button has been selected
+
+        public void unPause()
+        {
+            isPaused = false;
+            Border.Visibility = System.Windows.Visibility.Hidden;
+            Resume.Visibility = System.Windows.Visibility.Hidden;
+            Quit.Visibility = System.Windows.Visibility.Hidden;
+        }
+
+        public void Pause()
+        {
+            isPaused = true;
+            Border.Visibility = System.Windows.Visibility.Visible;
+            Resume.Visibility = System.Windows.Visibility.Visible;
+            Quit.Visibility = System.Windows.Visibility.Visible;
+        }
+
+        private void ResumeEnter(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(true);
+            direction = 6;
+        }
+
+        private void ResumeLeave(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(false);
+        }
+
+        private void QuitEnter(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(true);
+            direction = 7;
+        }
+
+        private void QuitLeave(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(false);
+        }
 
         //Tell the MainWindow which menu button has been selected
         public int getSelectedMenu()

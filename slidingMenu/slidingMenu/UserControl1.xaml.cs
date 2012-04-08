@@ -22,7 +22,7 @@ namespace slidingMenu
     /// </summary>
     public partial class UserControl1 : UserControl
     {
-
+        bool isMouseOverButton = false;
         int sizeOfBox;
         double position;
         double visibleArea;
@@ -83,7 +83,7 @@ namespace slidingMenu
             MenuBar.SetValue(Canvas.LeftProperty, position);
         }
 
-        private void moveRight(object sender, RoutedEventArgs e)
+        private void moveLeft(object sender, RoutedEventArgs e)
         {
             if (position < sizeOfBox) // not out of bound
             {
@@ -92,11 +92,11 @@ namespace slidingMenu
                 theOneChosenToHighlight += span;
                 moveMenu(position);
                 highlightBox(theOneChosenToHighlight);
-               
+                // RaiseEvent(new RoutedEventArgs(MainWindow.resetTimer));
             }
         }
 
-        private void moveLeft(object sender, RoutedEventArgs e)
+        private void moveRight(object sender, RoutedEventArgs e)
         {
             if (((numberOfItems * span) + position) >= visibleArea) // not out of bound
             {
@@ -105,8 +105,15 @@ namespace slidingMenu
                 theOneChosenToHighlight -= span;
                 moveMenu(position);
                 highlightBox(theOneChosenToHighlight);
+                // RaiseEvent(new RoutedEventArgs(MainWindow.resetTimer));
             }
         }
+
+
+        private void moveChoose(object sender, RoutedEventArgs e)
+        {
+        }
+
         public void highlightBox(double position)
         {
             foreach (var child in this.MenuBar.Children)
@@ -131,7 +138,7 @@ namespace slidingMenu
 
         public Boolean hasCurrentSelectedBox()
         {
-            if (currentSelectedBox != null)
+            if (currentSelectedBox != null && isMouseOverButton)
             {
                 return true;
             }
@@ -150,5 +157,13 @@ namespace slidingMenu
         {
             return currentSelectedBox.name;
         }
+
+        private void chooseMouseEnter(object sender, MouseEventArgs e) {
+            isMouseOverButton = true;
+        }
+        private void chooseMouseLeave(object sender, MouseEventArgs e) {
+            isMouseOverButton = false;
+        }
+
     }
 }

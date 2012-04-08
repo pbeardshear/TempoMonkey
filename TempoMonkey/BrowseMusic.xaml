@@ -14,5 +14,6 @@
         <Label Content="Selected Songs:" Height="48" HorizontalAlignment="Left" Margin="12,475,0,0" Name="label1" VerticalAlignment="Top" Width="232" FontSize="30" FontWeight="Bold" FontStretch="Normal" FontFamily="Segoe UI"  Foreground="#FF7F64FC"/>
         <StackPanel Height="117" HorizontalAlignment="Left" Margin="254,475,0,0" Name="selectedMusicList" VerticalAlignment="Top" Width="537" Orientation="Horizontal"/>
         <Button Content="Done" Height="53" HorizontalAlignment="Left" Margin="57,535,0,0" Name="done" VerticalAlignment="Top" Width="118" MouseEnter="done_MouseEnter" MouseLeave="done_MouseLeave" />
+        <Button Content="Button" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75"/>
     </Grid>
 </Page>

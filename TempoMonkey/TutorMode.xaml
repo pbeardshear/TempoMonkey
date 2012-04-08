@@ -45,5 +45,11 @@
 
         <Label Canvas.Left="396" Canvas.Top="135" Content="isPaused?" Height="30" Name="label3" Width="71" />
         <Ellipse Canvas.Left="388" Canvas.Top="105" Fill="Red" Height="24" Name="pause" Width="88" />
+
+        <Rectangle Fill="#FFF4F4F5" Name="Border" Height="138" Canvas.Left="98" Stroke="Black" Canvas.Top="142" Width="602" Visibility="Hidden"/>
+        <Button Content="Resume" Name="Resume" Canvas.Left="183" Canvas.Top="195" Width="152" Height="46" FontSize="30" Visibility="Hidden"
+                MouseEnter="ResumeEnter" MouseLeave="ResumeLeave"/>
+        <Button Content="Quit" Name="Quit" Canvas.Left="454" Canvas.Top="195" Width="152" Height="46" FontSize="30" Visibility="Hidden" 
+                MouseEnter="QuitEnter" MouseLeave="QuitLeave"/>
     </Canvas>
 </Page>
