@@ -68,6 +68,15 @@ namespace Processing
 		private static Thread audioProcessingThread;
 		
 		#endregion
+		
+		#region Public Accessors
+
+		public static float getTempo() { return (float)Normalize(_currentTempo, minTempo, maxTempo); }
+		public static float getPitch() { return (float)Normalize(_currentPitch, minPitch, maxPitch); }
+		public static float geVolume() { return (float)Normalize(_currentVolume, minVolume, maxVolume); }
+		public static float getPlaybackRate() { throw new NotImplementedException(); }
+
+		#endregion
 
 		#region Initialization Methods
 		public static void Initialize()
@@ -493,6 +502,17 @@ namespace Processing
 		private static bool IsBetween(double min, double max, double value)
 		{
 			return value >= min && value <= max && min <= max;
+		}
+
+		// Helper method
+		// Returns a float in the range [0, 100]
+		public static double Normalize(double value, double min, double max)
+		{
+			// Determine a linear map of the form: x -> ax + b
+			// Do this by solving a system of linear equations
+			double a = 100 / (max - min);
+			double b = -a * min;
+			return (a * value + b);
 		}
 
 		#endregion
