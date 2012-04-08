@@ -17,6 +17,7 @@ namespace Processing
 	{
 		#region Public Instance Variables
 		public static string CurrentTrack;
+		public static int CurrentTrackIndex;
 		public static bool IsInitialized = false;
 		#endregion
 
@@ -100,9 +101,8 @@ namespace Processing
 					{
 						//  This is the first audio file loaded
 						_currentWaveChannel = _waveChannel;
-						CurrentTrack = fileName;
 					}
-					AudioStream stream = new AudioStream(_waveChannel, fileName);
+					AudioStream stream = new AudioStream(_waveChannel, fileName, _audioStreamList.Count);
 					_audioStreams.Add(fileName, stream);
 					_audioStreamList.Add(stream);
 				}
@@ -196,6 +196,8 @@ namespace Processing
 		{
 			if (!Started)
 			{
+				CurrentTrackIndex = 0;
+				CurrentTrack = _audioStreamList[CurrentTrackIndex].Name;
 				// This is the first time playing, so we need to create a thread to run on
 				audioProcessingThread = new Thread(new ThreadStart(delegate
 				{
@@ -246,12 +248,17 @@ namespace Processing
 		{
 			_currentWaveChannel = _audioStreams[fileName].Stream;
 			CurrentTrack = fileName;
+			CurrentTrackIndex = _audioStreams[fileName].Index;
 		}
 
 		public static void SwapTrack(int fileNumber, bool keepOldPosition = true, bool keepNewPosition = true)
 		{
-			_currentWaveChannel = _audioStreamList[fileNumber].Stream;
-			CurrentTrack = _audioStreamList[fileNumber].Name;
+			// Only switch tracks if we have a track at that index
+			if (IsBetween(0, _audioStreamList.Count, fileNumber)) {
+				_currentWaveChannel = _audioStreamList[fileNumber].Stream;
+				CurrentTrack = _audioStreamList[fileNumber].Name;
+				CurrentTrackIndex = fileNumber;
+			}
 		}
 		#endregion
 
@@ -499,12 +506,14 @@ namespace Processing
 			public WaveChannel32 Stream;
 			public TimeSpan CurrentTime;
 			public string Name;
+			public int Index;
 
-			public AudioStream(WaveChannel32 outputStream, string fileName)
+			public AudioStream(WaveChannel32 outputStream, string fileName, int index)
 			{
 				Stream = outputStream;
 				CurrentTime = TimeSpan.FromSeconds(0);
 				Name = fileName;
+				Index = index;
 			}
 		}
 

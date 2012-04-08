@@ -127,6 +127,16 @@ namespace TempoMonkey
 
         public FreeFormMode(ArrayList addrList, ArrayList nameList)
         {
+			// Initialize the audio library
+			// This should only be done in one place
+			Processing.Audio.Initialize();
+
+			// Load the audio files
+			foreach (string uri in addrList)
+			{
+				Processing.Audio.LoadFile(uri);
+			}
+			
             System.Windows.Forms.Cursor.Show();
             InitializeComponent();
             freePlayer = new KinectGesturePlayer();
