@@ -71,7 +71,7 @@ class KinectGesturePlayer
         handled = false;
         kinectGuideListener();
         handsAboveHeadListener();
-        handsWidenListener2();
+        //handsWidenListener2();
         handsWidenListener();
         handSwingListener();
         fistsPumpListener();

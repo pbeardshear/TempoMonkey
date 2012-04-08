@@ -121,13 +121,13 @@ namespace TempoMonkey
                 //System.Windows.Forms.Cursor.Hide();
                 switch (frame.Content.GetType().ToString())
                 {
-                    case "tempoMonkey.FreeFormMode":
+                    case "TempoMonkey.FreeFormMode":
                         ((FreeFormMode)currentPage).freeAllFramesReady(sender, e);
                         break;
-                    case "tempoMonkey.TutorMode":
+                    case "TempoMonkey.TutorMode":
                         ((TutorMode)currentPage).tutorAllFramesReady(sender, e);
                         break;
-                    case "tempoMonkey.InteractiveMode":
+                    case "TempoMonkey.InteractiveMode":
                         ((InteractiveMode)currentPage).interAllFramesReady(sender, e);
                         break;
                 }
@@ -150,7 +150,7 @@ namespace TempoMonkey
                 
                 switch(pg.GetType().ToString())
                 {
-                    case "tempoMonkey.HomePage":
+                    case "TempoMonkey.HomePage":
                         HomePage p = (HomePage)pg;
                         if (p.isSelectionReady())
                         {
@@ -171,7 +171,7 @@ namespace TempoMonkey
                             }
                         }
                         break;
-                    case "tempoMonkey.LearningStudio":
+                    case "TempoMonkey.LearningStudio":
                         LearningStudio l = (LearningStudio)pg;
                         if (l.isSelectionReady())
                         {
@@ -202,7 +202,7 @@ namespace TempoMonkey
                             }
                         }
                         break;
-                    case "tempoMonkey.BrowseTutorials":
+                    case "TempoMonkey.BrowseTutorials":
                         BrowseTutorials b = (BrowseTutorials)pg;
                         //This is because it is hard to select the tutorial without a done button,
                         //So automatically select choose the first tutorial, later ill ask minzhi to add a done button
@@ -230,7 +230,7 @@ namespace TempoMonkey
                             }
                         }
                         break;
-                    case "tempoMonkey.FreeFormMode":
+                    case "TempoMonkey.FreeFormMode":
                         FreeFormMode f = (FreeFormMode)pg;
                         if (f.isSelectionReady())
                         {
@@ -254,7 +254,7 @@ namespace TempoMonkey
                             }
                         }
                         break;
-                    case "tempoMonkey.BrowseMusic":
+                    case "TempoMonkey.BrowseMusic":
                         BrowseMusic m = (BrowseMusic)pg;
 
                         if (m.isSelectionReady())
@@ -321,7 +321,7 @@ namespace TempoMonkey
                             }
                         }
                         break;
-                    case "tempoMonkey.BrowseMusicInteractiveMode":
+                    case "TempoMonkey.BrowseMusicInteractiveMode":
                         BrowseMusicInteractiveMode mbi = (BrowseMusicInteractiveMode)pg;
                         if (mbi.isSelectionReady())
                         {
@@ -366,7 +366,7 @@ namespace TempoMonkey
                         }
                         break;
 
-                    case "tempoMonkey.InteractiveMode":
+                    case "TempoMonkey.InteractiveMode":
                         InteractiveMode i = (InteractiveMode)pg;
                         if (i.isSelectionReady())
                         {

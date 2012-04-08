@@ -53,7 +53,14 @@ namespace TempoMonkey
             }
         }
 
-        int previousTrack = 2;
+
+        /// <summary>
+        ///          Kinect
+        ///      
+        ///           You
+        /// |   1  |   0  |  2   |
+        /// </summary>
+        int previousTrack = 1;
         void changeTrackHandler(double value)
         {
             DebugBox.Content = value.ToString();
@@ -61,19 +68,16 @@ namespace TempoMonkey
             {
                 Track.Content = "On Track 1";
                 previousTrack = 1;
-                //Go as Track 1
             }
-            else if (value > 450 && previousTrack != 3)
-            {
-                Track.Content = "On Track 3";
-                previousTrack = 3;
-                //Go as Track 3
-            }
-            else if( value >= 250 && value <= 450 && previousTrack != 2)
+            else if (value > 450 && previousTrack != 2)
             {
                 Track.Content = "On Track 2";
                 previousTrack = 2;
-                //Go as Track 2
+            }
+            else if( value >= 250 && value <= 450 && previousTrack != 0)
+            {
+                Track.Content = "On Track 0";
+                previousTrack = 0;
             }
 			Processing.Audio.SwapTrack(previousTrack);
         }
@@ -125,6 +129,7 @@ namespace TempoMonkey
             PitchPos.Fill = exist ? (Brush)bc.ConvertFrom("GREEN") : (Brush)bc.ConvertFrom("RED");
         }
 
+        
         public FreeFormMode(ArrayList addrList, ArrayList nameList)
         {
             System.Windows.Forms.Cursor.Show();
