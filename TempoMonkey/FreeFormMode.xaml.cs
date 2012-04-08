@@ -16,7 +16,7 @@ using Microsoft.Kinect;
 using Coding4Fun.Kinect.Wpf;
 
 
-namespace tempoMonkey
+namespace TempoMonkey
 {
     /// <summary>
     /// Interaction logic for FreeFormMode.xaml
@@ -75,11 +75,14 @@ namespace tempoMonkey
                 previousTrack = 2;
                 //Go as Track 2
             }
+			Processing.Audio.SwapTrack(previousTrack);
         }
 
         void volumeChangeHandler(double change)
         {
             Canvas.SetTop(VolumePos, Canvas.GetTop(VolumePos) + change);
+			// Change the denominator here to affect how quickly volume increases
+			Processing.Audio.ChangeVolume(change / 2);
         }
 
         void volumeTrackingHandler(bool exist)
@@ -90,6 +93,8 @@ namespace tempoMonkey
         void tempoChangeHandler(double change)
         {
             Canvas.SetTop(TempoPos, Canvas.GetTop(TempoPos) + change);
+			// Change the denominator here to affect how quickly tempo increases
+			Processing.Audio.ChangeTempo(change / 2);
         }
 
         void tempoTrackingHandler(bool exist)
@@ -100,6 +105,7 @@ namespace tempoMonkey
         void seekChangeHandler(double change)
         {
             Canvas.SetLeft(SeekPos, Canvas.GetLeft(SeekPos) + change);
+			Processing.Audio.Seek((long)change / 4);
         }
 
         void seekTrackingHandler(bool exist)
@@ -110,6 +116,8 @@ namespace tempoMonkey
         void pitchChangeHandler(double change)
         {
             Canvas.SetTop(PitchPos, Canvas.GetTop(PitchPos) + change);
+			// Change the denominator here to affect how quickly pitch increases
+			Processing.Audio.ChangePitch(change / 2);
         }
 
         void pitchTrackingHandler(bool exist)

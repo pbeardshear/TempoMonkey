@@ -14,7 +14,7 @@ using System.Windows.Shapes;
 using Microsoft.Kinect;
 using Coding4Fun.Kinect.Wpf;
 
-namespace tempoMonkey
+namespace TempoMonkey
 {
     /// <summary>
     /// Interaction logic for TutorMode.xaml

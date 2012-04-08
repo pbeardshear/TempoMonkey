@@ -1,4 +1,4 @@
-﻿<Window x:Class="tempoMonkey.MainWindow"
+﻿<Window x:Class="TempoMonkey.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="MainWindow" Height="630" Width="810" xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers"
