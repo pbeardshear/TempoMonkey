@@ -65,11 +65,21 @@ namespace tempoMonkey
         {
             if (slidingMenu.hasCurrentSelectedBox())
             {
-                direction = 5;
-                isReady = true;
-                return true;
+                if (musicAddrList.Count == 1)
+                {
+                    return false;
+                }
+                else
+                {
+                    direction = 5;
+                    isReady = true;
+                    return true;
+                }
             }
-            return false;
+            else
+            {
+                return false;
+            }
         }
 
 
