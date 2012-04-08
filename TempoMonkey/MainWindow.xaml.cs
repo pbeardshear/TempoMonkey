@@ -20,7 +20,7 @@ using Processing;
 using System.Diagnostics;
 using System.Threading;
 
-namespace tempoMonkey
+namespace TempoMonkey
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml

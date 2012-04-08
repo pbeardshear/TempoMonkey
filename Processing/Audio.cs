@@ -15,11 +15,18 @@ namespace Processing
 	/// </summary>
 	public class Audio
 	{
+		#region Public Instance Variables
+		public static string CurrentTrack;
+		public static bool IsInitialized = false;
+		#endregion
+
 		#region Private variables
 
 		private static SoundTouchSharp _soundTouchSharp;
 		private static WaveOut _waveOutDevice;
 		private static Dictionary<string, AudioStream> _audioStreams = new Dictionary<string, AudioStream>();
+		// An additional data structure to store audio files by index number, for swapping convenience
+		private static List<AudioStream> _audioStreamList = new List<AudioStream>();
 		private static WaveChannel32 _currentWaveChannel;
 
 		private static Mp3FileReader _waveReader;
@@ -36,9 +43,20 @@ namespace Processing
 		private static bool tempoChanged = false;
 		private static bool pitchChanged = false;
 		private static bool volumeChanged = false;
-		private static float newTempo;
-		private static float newPitch;
-		private static float newVolume;
+		private static float tempoOffset;
+		private static float pitchOffset;
+		private static float volumeOffset;
+
+		private static float _currentTempo;
+		private static float _currentPitch;
+		private static float _currentVolume;
+
+		private const double minPitch = -12;
+		private const double maxPitch = 12;
+		private const double minTempo = 0.1;
+		private const double maxTempo = 2;
+		private const double minVolume = 0;
+		private const double maxVolume = 1;
 
 		private static bool Started = false;
 
@@ -50,8 +68,6 @@ namespace Processing
 		
 		#endregion
 
-		public static bool isInitialized = false;
-
 		#region Initialization Methods
 		public static void Initialize()
 		{
@@ -62,7 +78,11 @@ namespace Processing
 			_soundTouchSharp = new SoundTouchSharp();
 			_soundTouchSharp.CreateInstance();
 
-			isInitialized = true;
+			_currentPitch = 0.0f;
+			_currentTempo = 1.0f;
+			_currentVolume = 0.25f;
+
+			IsInitialized = true;
 		}
 
 		/// <summary>
@@ -80,8 +100,11 @@ namespace Processing
 					{
 						//  This is the first audio file loaded
 						_currentWaveChannel = _waveChannel;
+						CurrentTrack = fileName;
 					}
-					_audioStreams.Add(fileName, new AudioStream(_waveChannel));
+					AudioStream stream = new AudioStream(_waveChannel, fileName);
+					_audioStreams.Add(fileName, stream);
+					_audioStreamList.Add(stream);
 				}
 				else
 				{
@@ -98,7 +121,7 @@ namespace Processing
 		/// Removes a song from the list of playable songs
 		/// </summary>
 		/// <param name="fileName">The filename of the song to remove</param>
-		public static void UnLoadFile(string fileName)
+		public static void UnloadFile(string fileName)
 		{
 			if (fileName.EndsWith(".mp3"))
 			{
@@ -114,6 +137,18 @@ namespace Processing
 			else
 			{
 				throw new InvalidOperationException("Unsupported file extension");
+			}
+		}
+
+		public static void UnloadFile(int index)
+		{
+			try
+			{
+				_audioStreamList.RemoveAt(index);
+			}
+			catch
+			{
+				throw new IndexOutOfRangeException("Unable to remove file at specified index.");
 			}
 		}
 		#endregion
@@ -159,6 +194,28 @@ namespace Processing
 		#region Basic Audio Methods
 		public static void Play()
 		{
+			if (!Started)
+			{
+				// This is the first time playing, so we need to create a thread to run on
+				audioProcessingThread = new Thread(new ThreadStart(delegate
+				{
+					try
+					{
+						ProcessAudio();
+					}
+					finally
+					{
+						Cleanup();
+						audioProcessingThread = null;
+					}
+				}));
+				audioProcessingThread.Name = "AudioProcessingThread";
+				audioProcessingThread.IsBackground = true;
+				audioProcessingThread.Priority = ThreadPriority.Highest;
+				audioProcessingThread.SetApartmentState(ApartmentState.MTA);
+				audioProcessingThread.Start();
+				return;
+			}
 			if (_waveOutDevice.PlaybackState == PlaybackState.Stopped || _waveOutDevice.PlaybackState == PlaybackState.Paused)
 			{
 				_waveOutDevice.Play();
@@ -188,6 +245,13 @@ namespace Processing
 		public static void SwapTrack(string fileName, bool keepOldPosition = true, bool keepNewPosition = true)
 		{
 			_currentWaveChannel = _audioStreams[fileName].Stream;
+			CurrentTrack = fileName;
+		}
+
+		public static void SwapTrack(int fileNumber, bool keepOldPosition = true, bool keepNewPosition = true)
+		{
+			_currentWaveChannel = _audioStreamList[fileNumber].Stream;
+			CurrentTrack = _audioStreamList[fileNumber].Name;
 		}
 		#endregion
 
@@ -196,10 +260,13 @@ namespace Processing
 		/// Change the volume of the current song.  Range: [0, 100], StepSize: 1.
 		/// </summary>
 		/// <returns>The new volume</returns>
-		public static void ChangeVolume(float value)
+		public static void ChangeVolume(double value)
 		{
-			volumeChanged = true;
-			newVolume = value / 100.0f;
+			volumeOffset = (float)(value / 100.0f);
+			if (IsBetween(minVolume, maxVolume, _currentVolume + volumeOffset))
+			{
+				volumeChanged = true;
+			}
 		}
 
 		/// <summary>
@@ -208,8 +275,11 @@ namespace Processing
 		/// <returns>The new tempo</returns>
 		public static void ChangeTempo(double value)
 		{
-			tempoChanged = true;
-			newTempo = (float)(value / 100.0f);
+			tempoOffset = (float)(value / 100.0f);
+			if (IsBetween(minTempo, maxTempo, _currentTempo + tempoOffset))
+			{
+				tempoChanged = true;
+			}
 		}
 
 		/// <summary>
@@ -218,8 +288,11 @@ namespace Processing
 		/// <returns>The new pitch</returns>
 		public static void ChangePitch(double value)
 		{
-			pitchChanged = true;
-			newPitch = (float)(value / 8);
+			pitchOffset = (float)(value / 8);
+			if (IsBetween(minPitch, maxPitch, _currentPitch + pitchOffset))
+			{
+				pitchChanged = true;
+			}
 		}
 
 		/// <summary>
@@ -314,9 +387,9 @@ namespace Processing
 			TimeSpan actualEndMarker = TimeSpan.Zero;
 			bool loop = false;
 
+			_currentWaveChannel.Volume = _currentVolume;
 			while (_currentWaveChannel.Position < _currentWaveChannel.Length)
 			{
-				_currentWaveChannel.Volume = 0.25f;
 				if (Started)
 				{
 					_currentWaveChannel.CurrentTime = TimeSpan.FromSeconds(0);
@@ -388,21 +461,31 @@ namespace Processing
 		{
 			if (tempoChanged)
 			{
-				_soundTouchSharp.SetTempo(newTempo);
+				_soundTouchSharp.SetTempo(_currentTempo + tempoOffset);
+				_currentTempo += tempoOffset;
+				tempoOffset = 0;
 				tempoChanged = false;
 			}
 
 			if (pitchChanged)
 			{
-				_soundTouchSharp.SetPitchSemiTones(newPitch);
+				_soundTouchSharp.SetPitchSemiTones(_currentPitch + pitchOffset);
+				_currentPitch += pitchOffset;
+				pitchOffset = 0;
 				pitchChanged = false;
 			}
 
 			if (volumeChanged)
 			{
-				_waveOutDevice.Volume = newVolume;
+				_waveOutDevice.Volume += volumeOffset;
 				volumeChanged = false;
 			}
+		}
+
+		// Helper method
+		private static bool IsBetween(double min, double max, double value)
+		{
+			return value >= min && value <= max && min <= max;
 		}
 
 		#endregion
@@ -415,13 +498,16 @@ namespace Processing
 		{
 			public WaveChannel32 Stream;
 			public TimeSpan CurrentTime;
+			public string Name;
 
-			public AudioStream(WaveChannel32 outputStream)
+			public AudioStream(WaveChannel32 outputStream, string fileName)
 			{
 				Stream = outputStream;
 				CurrentTime = TimeSpan.FromSeconds(0);
+				Name = fileName;
 			}
 		}
+
 		#endregion
 	}
 }
