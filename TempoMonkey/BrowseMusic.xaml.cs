@@ -101,6 +101,14 @@ namespace tempoMonkey
             musicList.Add(this.slidingMenu.getName());
         }
 
+        public void deletingMusic()
+        {
+            int i = musicList.Count - 1;            
+            selectedMusicList.Children.RemoveAt(i);
+            musicAddrList.RemoveAt(i);
+            musicList.RemoveAt(i);
+        }
+
 
         public Boolean isSelectionDone()
         {
@@ -140,6 +148,16 @@ namespace tempoMonkey
             setSelectionStatus(false);           
         }
 
+        private void delete_MouseEnter(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(true);
+            direction = 9;
+        }
+
+        private void delete_MouseLeave(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(false);
+        }
 
     }
 }
