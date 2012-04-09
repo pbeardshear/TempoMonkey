@@ -71,7 +71,7 @@ class KinectGesturePlayer
         handled = false;
         kinectGuideListener();
         handsAboveHeadListener();
-        //handsWidenListener2();
+        handsUppenListener();
         handsWidenListener();
         handSwingListener();
         fistsPumpListener();
@@ -363,61 +363,46 @@ class KinectGesturePlayer
      * * This is tracked by looking at both hands and seeing their position in relative to the hip and neck
      * */
     private double prevDist2 = 0;
-    private bool wasTrackingHandsWiden2 = false;
-    private int handsWidenTryCount2 = 0;
-    public void handsWidenListener2()
+    private bool wasTrackingHandsUppen = false;
+    private int handsUppenTryCount = 0;
+    public void handsUppenListener()
     {
         if (handled)
         {
-            callStaticCallBack(handsWidenListener2, false);
-            wasTrackingHandsWiden2 = false;
-            handsWidenTryCount2 = 0;
+            callStaticCallBack(handsUppenListener, false);
+            wasTrackingHandsUppen = false;
+            handsUppenTryCount = 0;
             return;
-        }
-
-        bool a = currRightHand.X < currRightElbow.X;
-        bool b = currLeftHand.X > currLeftElbow.X;
-        bool c = currRightHand.Y < currRightHand.Y;
-
-        if (a)
-        {
-            if (b)
-            {
-                if (c)
-                {
-                    Console.WriteLine("1");
-                }
-            }
         }
 
         if ((currRightHand.X < currRightElbow.X) &&
             (currLeftHand.X > currLeftElbow.X) &&
-            (currRightHand.Y < currRightHand.Y))
+            (currRightHand.Y < currLeftHand.Y))
         {
-            if (handsWidenTryCount2 >= 5)
+            if (handsUppenTryCount >= 5)
             {
-                callStaticCallBack(handsWidenListener2, true);
+                callStaticCallBack(handsUppenListener, true);
                 double currDist = currRightHand.Y - currLeftHand.Y;
-                if (wasTrackingHandsWiden2)
+                if (wasTrackingHandsUppen)
                 {
-                    callDynamicCallBack(handsWidenListener2, prevDist2 - currDist);
+                    callDynamicCallBack(handsUppenListener, prevDist2 - currDist);
                 }
                 prevDist2 = currDist;
-                wasTrackingHandsWiden2 = true;
+                wasTrackingHandsUppen = true;
                 handled = true;
             }
             else
             {
-                handsWidenTryCount2++;
+                handsUppenTryCount++;
             }
         }
         else
         {
-            callStaticCallBack(handsWidenListener, false);
-            wasTrackingHandsWiden = false;
-            if (handsWidenTryCount > 0)
+            callStaticCallBack(handsUppenListener, false);
+            wasTrackingHandsUppen = false;
+            if (handsUppenTryCount > 0)
             {
-                handsWidenTryCount--;
+                handsUppenTryCount--;
             }
         }
     }

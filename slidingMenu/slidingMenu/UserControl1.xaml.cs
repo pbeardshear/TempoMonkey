@@ -74,6 +74,10 @@ namespace slidingMenu
             littleBox.address = address;
             littleBox.name = name;
             littleBox.position = pos;
+            
+            string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Music\\Images\\" + name + ".jpg"; 
+            littleBox.Image.Source = new BitmapImage(new Uri(path));
+
             this.MenuBar.Children.Add(littleBox);
         }
  

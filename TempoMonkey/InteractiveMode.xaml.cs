@@ -57,7 +57,6 @@ namespace TempoMonkey
         //Handlers
         void pauseTrackingHandler(bool exist)
         {
-            pause.Fill = exist ? (Brush)bc.ConvertFrom("GREEN") : (Brush)bc.ConvertFrom("RED");
             if (isPaused)
             {
                 return;
@@ -69,91 +68,104 @@ namespace TempoMonkey
             }
         }
 
-        void debugTrackerHandler(double value)
+
+        /// <summary>
+        ///          Kinect
+        ///      
+        ///           You
+        /// |   1  |   0  |  2   |
+        /// </summary>
+        int previousTrack = 1;
+        void changeTrackHandler(double value)
         {
-            DebugBox.Content = value.ToString();
+            if (!wasSeeking)
+            {
+                SeekSlider.Value += .05; // THIS IS NOT REALLY TRUE
+            }
+
+            if (value < 250 && previousTrack != 1)
+            {
+                Track.Content = "On Track 1";
+                previousTrack = 1;
+            }
+            else if (value > 450 && previousTrack != 2)
+            {
+                Track.Content = "On Track 2";
+                previousTrack = 2;
+            }
+            else if (value >= 250 && value <= 450 && previousTrack != 0)
+            {
+                Track.Content = "On Track 0";
+                previousTrack = 0;
+            }
+            else
+            {
+                return;
+            }
+
+            Processing.Audio.SwapTrack(previousTrack);
+            Processing.Audio.Seek(SeekSlider.Value);
+            Processing.Audio.ChangeVolume(VolumeSlider.Value);
+            Processing.Audio.ChangeTempo(TempoSlider.Value);
+            Processing.Audio.ChangePitch(PitchSlider.Value);
         }
 
         void volumeChangeHandler(double change)
         {
-            Canvas.SetTop(VolumePos, Canvas.GetTop(VolumePos) + change);
+            VolumeSlider.Value -= change;
+            Processing.Audio.ChangeVolume(VolumeSlider.Value);
         }
 
         void volumeTrackingHandler(bool exist)
         {
-            VolumePos.Fill = exist ? (Brush)bc.ConvertFrom("GREEN") : (Brush)bc.ConvertFrom("RED");
+            Volume.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
         }
 
         void tempoChangeHandler(double change)
         {
-            Canvas.SetTop(TempoPos, Canvas.GetTop(TempoPos) + change);
+            TempoSlider.Value += change / 2;
+            Processing.Audio.ChangeTempo(TempoSlider.Value);
         }
+
 
         void tempoTrackingHandler(bool exist)
         {
-            TempoPos.Fill = exist ? (Brush)bc.ConvertFrom("GREEN") : (Brush)bc.ConvertFrom("RED");
+            Tempo.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
+
         }
 
+        bool wasSeeking = false;
         void seekChangeHandler(double change)
         {
-            Canvas.SetLeft(SeekPos, Canvas.GetLeft(SeekPos) + change);
+            SeekSlider.Value += change;
         }
 
         void seekTrackingHandler(bool exist)
         {
-            SeekPos.Fill = exist ? (Brush)bc.ConvertFrom("GREEN") : (Brush)bc.ConvertFrom("RED");
+            Seek.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
+            if (exist)
+            {
+                wasSeeking = true;
+            }
+            else
+            {
+                if (wasSeeking)
+                {
+                    Processing.Audio.Seek(SeekSlider.Value);
+                }
+                wasSeeking = false;
+            }
         }
 
         void pitchChangeHandler(double change)
         {
-            Canvas.SetTop(PitchPos, Canvas.GetTop(PitchPos) + change);
+            PitchSlider.Value -= change * 3;
+            Processing.Audio.ChangePitch(PitchSlider.Value);
         }
 
         void pitchTrackingHandler(bool exist)
         {
-            PitchPos.Fill = exist ? (Brush)bc.ConvertFrom("GREEN") : (Brush)bc.ConvertFrom("RED");
-        }
-
-
-
-        void volumeChangeHandler2(double change)
-        {
-            Canvas.SetTop(VolumePos2, Canvas.GetTop(VolumePos2) + change);
-        }
-
-        void volumeTrackingHandler2(bool exist)
-        {
-            VolumePos2.Fill = exist ? (Brush)bc.ConvertFrom("GREEN") : (Brush)bc.ConvertFrom("RED");
-        }
-
-        void tempoChangeHandler2(double change)
-        {
-            Canvas.SetTop(TempoPos2, Canvas.GetTop(TempoPos2) + change);
-        }
-
-        void tempoTrackingHandler2(bool exist)
-        {
-            TempoPos2.Fill = exist ? (Brush)bc.ConvertFrom("GREEN") : (Brush)bc.ConvertFrom("RED");
-        }
-
-        void seekChangeHandler2(double change)
-        {
-            Canvas.SetLeft(SeekPos2, Canvas.GetLeft(SeekPos2) + change);
-        }
-
-        void seekTrackingHandler2(bool exist)
-        {
-            SeekPos2.Fill = exist ? (Brush)bc.ConvertFrom("GREEN") : (Brush)bc.ConvertFrom("RED");
-        }
-
-        void pitchChangeHandler2(double change)
-        {
-            Canvas.SetTop(PitchPos2, Canvas.GetTop(PitchPos2) + change);
-        }
-
-        void pitchTrackingHandler2(bool exist)
-        {
-            PitchPos2.Fill = exist ? (Brush)bc.ConvertFrom("GREEN") : (Brush)bc.ConvertFrom("RED");
+            Pitch.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
         }
 
         public void unPause()
@@ -228,20 +240,18 @@ namespace TempoMonkey
             leftPlayer = new KinectGesturePlayer();
             rightPlayer = new KinectGesturePlayer();
 
-            leftPlayer.registerCallBack(leftPlayer.kinectGuideListener, pauseTrackingHandler, debugTrackerHandler);
+            leftPlayer.registerCallBack(leftPlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
             leftPlayer.registerCallBack(leftPlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
             leftPlayer.registerCallBack(leftPlayer.handSwingListener, seekTrackingHandler, seekChangeHandler);
             leftPlayer.registerCallBack(leftPlayer.fistsPumpListener, tempoTrackingHandler, tempoChangeHandler);
             leftPlayer.registerCallBack(leftPlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
 
-            rightPlayer.registerCallBack(rightPlayer.kinectGuideListener, pauseTrackingHandler, debugTrackerHandler);
-            rightPlayer.registerCallBack(rightPlayer.handsAboveHeadListener, pitchTrackingHandler2, pitchChangeHandler2);
-            rightPlayer.registerCallBack(rightPlayer.handSwingListener, seekTrackingHandler2, seekChangeHandler2);
-            rightPlayer.registerCallBack(rightPlayer.fistsPumpListener, tempoTrackingHandler2, tempoChangeHandler2);
-            rightPlayer.registerCallBack(rightPlayer.handsWidenListener, volumeTrackingHandler2, volumeChangeHandler2);
+            rightPlayer.registerCallBack(rightPlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
+            rightPlayer.registerCallBack(rightPlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
+            rightPlayer.registerCallBack(rightPlayer.handSwingListener, seekTrackingHandler, seekChangeHandler);
+            rightPlayer.registerCallBack(rightPlayer.handsUppenListener, tempoTrackingHandler, tempoChangeHandler);
+            rightPlayer.registerCallBack(rightPlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
         }
-
-
 
         private void Back_MouseEnter(object sender, MouseEventArgs e)
         {

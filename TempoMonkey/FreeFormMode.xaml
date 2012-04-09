@@ -7,39 +7,39 @@
       d:DesignHeight="600" d:DesignWidth="800"
 	Title="FreeFormMode">
 
-    <Canvas Name="MainCanvas">
-        <!--KinectSensorChooser Canvas.Left="211" Canvas.Top="167" Name="kinectSensorChooser" Width="328" /-->
-        <!--KinectSkeletonViewer Canvas.Left="0" Canvas.Top="0" Width="640" Height="480" Name="kinectColorViewer1" 
-                              Kinect="{Binding ElementName=freeKinectSensorChooser, Path=Kinect}" /-->
-       
-        <Rectangle Canvas.Left="15" Canvas.Top="45" Height="24" Name="SeekBar" Stroke="Black" Width="542" />
-        <Label Canvas.Left="15" Canvas.Top="9" Content="Seek Bar" Height="31" Name="label1" Width="54" />
-        <Ellipse Canvas.Left="254" Canvas.Top="17" Height="76" Name="SeekPos" Fill="RED" Width="14" />
+    <Canvas Name="MainCanvas" Margin="0,6,0,-6">
 
+        <Grid Height="248" Name="myPanel" Width="424" Canvas.Left="25" Canvas.Top="230">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+        </Grid>
 
-        <Label Canvas.Left="612" Canvas.Top="431" Content="Pitch Bar" Height="30" Name="Box" Width="71" />
-        <Rectangle Canvas.Left="646" Canvas.Top="65" Height="360" Name="PitchBar" Fill="Black" Width="20" />
-        <Ellipse Canvas.Left="612" Canvas.Top="285" Height="24" Name="PitchPos" Fill="Red" Width="88" />
+        <Label Canvas.Left="470" Canvas.Top="232" Name="Volume" Content="Volume" Height="39" Width="87" FontSize="20" FontStyle="Normal"/>
+        <Label Canvas.Left="470" Canvas.Top="318" Name="Pitch" Content="Picth" Height="38" Width="98" FontSize="20"  FontStyle="Normal"/>
+        <Label Canvas.Left="470" Canvas.Top="400" Name="Tempo" Content="Tempo" Height="39" Width="99" FontSize="20"  FontStyle="Normal"/>
+        
+        <Label Canvas.Left="10" Canvas.Top="376" Content="" Height="80" Name="DebugBox" Width="373" FontSize="50"/>
+        <Label Canvas.Left="15" Canvas.Top="456" Content="" Height="80" Name="DebugBox2" Width="373" FontSize="50" RenderTransformOrigin="0.378,0.5"/>
 
-        <Label Canvas.Left="706" Canvas.Top="431" Content="Tempo Bar" Height="30" Name="label2" Width="71" />
-        <Rectangle Canvas.Left="740" Canvas.Top="65" Fill="Black" Height="360" Name="Tempobar" Width="20" />
-        <Ellipse Canvas.Left="706" Canvas.Top="285" Fill="Red" Height="24" Name="TempoPos" Width="88" />
-
-        <Label Canvas.Left="10" Canvas.Top="376" Content="Debug Bar" Height="80" Name="DebugBox" Width="165" FontSize="50"/>
-        <Rectangle Canvas.Left="44" Canvas.Top="10" Fill="Black" Height="360" Name="debugBar" Width="20" />
-        <Ellipse Canvas.Left="10" Canvas.Top="230" Fill="Red" Height="24" Name="debugPos" Width="88" />
-
-        <Label Canvas.Left="518" Canvas.Top="431" Content="Volume Bar" Height="30" Name="label5" Width="71" />
-        <Rectangle Canvas.Left="552" Canvas.Top="65" Fill="Black" Height="360" Name="volubmeBar" Width="20" />
-        <Ellipse Canvas.Left="518" Canvas.Top="285" Fill="Red" Height="24" Name="VolumePos" Width="88" />
-
-        <Label Canvas.Left="396" Canvas.Top="135" Content="isPaused?" Height="30" Name="label3" Width="71" />
-        <Ellipse Canvas.Left="388" Canvas.Top="105" Fill="Red" Height="24" Name="pause" Width="88" />
         <Rectangle Fill="#FFF4F4F5" Name="Border" Height="138" Canvas.Left="98" Stroke="Black" Canvas.Top="142" Width="602" Visibility="Hidden"/>
         <Button Content="Resume" Name="Resume" Canvas.Left="183" Canvas.Top="195" Width="152" Height="46" FontSize="30" Visibility="Hidden"
                 MouseEnter="ResumeEnter" MouseLeave="ResumeLeave"/>
         <Button Content="Quit" Name="Quit" Canvas.Left="454" Canvas.Top="195" Width="152" Height="46" FontSize="30" Visibility="Hidden" 
                 MouseEnter="QuitEnter" MouseLeave="QuitLeave"/>
-        <Label Canvas.Left="15" Canvas.Top="461" Content="On Track" Height="75" Name="Track" Width="309" FontSize="50" RenderTransformOrigin="0.503,1.612"/>
+        <Label Canvas.Left="10" Canvas.Top="541" Content="" Height="75" Name="Track" Width="320" FontSize="50" RenderTransformOrigin="0.503,1.612"/>
+
+        <Label Canvas.Top="10" Name="Seek" Content="Seek Bar" Height="40" Width="94" FontSize="20" FontStyle="Normal" Canvas.Left="294"/>
+
+        <Slider Name="SeekSlider" Canvas.Left="98" Canvas.Top="55" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
+        <Slider Name="VolumeSlider" Canvas.Left="440" Canvas.Top="285" Height="28" Width="260" Value="25" Minimum="0" Maximum="100" TickFrequency=".1"/>
+        <Slider Name="PitchSlider" Canvas.Left="440" Canvas.Top="372" Height="28" Width="260" Value="50" Minimum="0" Maximum="100" TickFrequency=".1"/>
+        <Slider Name="TempoSlider" Canvas.Left="440" Canvas.Top="450" Height="28" Width="260" Value="100" Minimum="10" Maximum="200" TickFrequency=".1"/>
     </Canvas>
 </Page>
