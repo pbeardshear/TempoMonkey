@@ -284,7 +284,7 @@ namespace Processing
 		/// <returns>The new volume</returns>
 		public static void ChangeVolume(double value)
 		{
-			newVolume = (float)(value / 100.0f);
+			newVolume = (float)(Normalize(value, 0, 100, minVolume, maxVolume) / 100.0f);
 			if (IsBetween(minVolume, maxVolume, newVolume))
 			{
 				volumeChanged = true;
@@ -297,7 +297,7 @@ namespace Processing
 		/// <returns>The new tempo</returns>
 		public static void ChangeTempo(double value)
 		{
-			newTempo = (float)(value / 100.0f);
+			newTempo = (float)(Normalize(value, 10, 200, minTempo, maxTempo) / 100.0f);
 			if (IsBetween(minTempo, maxTempo, newTempo))
 			{
 				tempoChanged = true;
@@ -310,7 +310,7 @@ namespace Processing
 		/// <returns>The new pitch</returns>
 		public static void ChangePitch(double value)
 		{
-			newPitch = (float)(value / 8);
+			newPitch = (float)(Normalize(value, 0, 100, minPitch, maxPitch) / 8);
 			if (IsBetween(minPitch, maxPitch, newPitch))
 			{
 				pitchChanged = true;
