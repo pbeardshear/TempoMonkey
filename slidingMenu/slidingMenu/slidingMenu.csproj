@@ -8,8 +8,8 @@
     <ProjectGuid>{983E3261-4510-43D5-97B8-A50E9E736E28}</ProjectGuid>
     <OutputType>library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>slidingMenu</RootNamespace>
-    <AssemblyName>slidingMenu</AssemblyName>
+    <RootNamespace>SlidingMenu</RootNamespace>
+    <AssemblyName>SlidingMenu</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>

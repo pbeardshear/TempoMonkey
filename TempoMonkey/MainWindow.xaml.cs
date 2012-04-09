@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -15,8 +16,11 @@ using Microsoft.Kinect;
 using Coding4Fun.Kinect.Wpf;
 using System.Drawing;
 using System.Collections;
+using Processing;
+using System.Diagnostics;
+using System.Threading;
 
-namespace tempoMonkey
+namespace TempoMonkey
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -117,13 +121,13 @@ namespace tempoMonkey
                 //System.Windows.Forms.Cursor.Hide();
                 switch (frame.Content.GetType().ToString())
                 {
-                    case "tempoMonkey.FreeFormMode":
+                    case "TempoMonkey.FreeFormMode":
                         ((FreeFormMode)currentPage).freeAllFramesReady(sender, e);
                         break;
-                    case "tempoMonkey.TutorMode":
+                    case "TempoMonkey.TutorMode":
                         ((TutorMode)currentPage).tutorAllFramesReady(sender, e);
                         break;
-                    case "tempoMonkey.InteractiveMode":
+                    case "TempoMonkey.InteractiveMode":
                         ((InteractiveMode)currentPage).interAllFramesReady(sender, e);
                         break;
                 }
@@ -146,7 +150,7 @@ namespace tempoMonkey
                 
                 switch(pg.GetType().ToString())
                 {
-                    case "tempoMonkey.HomePage":
+                    case "TempoMonkey.HomePage":
                         HomePage p = (HomePage)pg;
                         if (p.isSelectionReady())
                         {
@@ -167,7 +171,7 @@ namespace tempoMonkey
                             }
                         }
                         break;
-                    case "tempoMonkey.LearningStudio":
+                    case "TempoMonkey.LearningStudio":
                         LearningStudio l = (LearningStudio)pg;
                         if (l.isSelectionReady())
                         {
@@ -198,7 +202,7 @@ namespace tempoMonkey
                             }
                         }
                         break;
-                    case "tempoMonkey.BrowseTutorials":
+                    case "TempoMonkey.BrowseTutorials":
                         BrowseTutorials b = (BrowseTutorials)pg;
                         //This is because it is hard to select the tutorial without a done button,
                         //So automatically select choose the first tutorial, later ill ask minzhi to add a done button
@@ -226,7 +230,7 @@ namespace tempoMonkey
                             }
                         }
                         break;
-                    case "tempoMonkey.FreeFormMode":
+                    case "TempoMonkey.FreeFormMode":
                         FreeFormMode f = (FreeFormMode)pg;
                         if (f.isSelectionReady())
                         {
@@ -250,7 +254,7 @@ namespace tempoMonkey
                             }
                         }
                         break;
-                    case "tempoMonkey.BrowseMusic":
+                    case "TempoMonkey.BrowseMusic":
                         BrowseMusic m = (BrowseMusic)pg;
 
                         if (m.isSelectionReady())
@@ -332,7 +336,7 @@ namespace tempoMonkey
                             }
                         }
                         break;
-                    case "tempoMonkey.BrowseMusicInteractiveMode":
+                    case "TempoMonkey.BrowseMusicInteractiveMode":
                         BrowseMusicInteractiveMode mbi = (BrowseMusicInteractiveMode)pg;
                         if (mbi.isSelectionReady())
                         {
@@ -377,7 +381,7 @@ namespace tempoMonkey
                         }
                         break;
 
-                    case "tempoMonkey.InteractiveMode":
+                    case "TempoMonkey.InteractiveMode":
                         InteractiveMode i = (InteractiveMode)pg;
                         if (i.isSelectionReady())
                         {
@@ -466,6 +470,5 @@ namespace tempoMonkey
             };
             return ready;
         }
-
     }
 }

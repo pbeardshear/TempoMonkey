@@ -13,7 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 
-namespace tempoMonkey
+namespace TempoMonkey
 {
     /// <summary>
     /// Interaction logic for LearningStudio.xaml

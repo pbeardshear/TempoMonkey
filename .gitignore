@@ -3,3 +3,7 @@ TempoMonkey/bin
 TempoMonkey/obj
 Processing/bin
 Processing/obj
+Processing/lib/MixDiff/
+Processing/lib/PracticeSharpApp/
+Processing/lib/SoundTouch/
+Processing/lib/Bass.Net.dll

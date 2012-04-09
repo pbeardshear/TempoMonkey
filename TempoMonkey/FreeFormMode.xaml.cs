@@ -16,7 +16,7 @@ using Microsoft.Kinect;
 using Coding4Fun.Kinect.Wpf;
 
 
-namespace tempoMonkey
+namespace TempoMonkey
 {
     /// <summary>
     /// Interaction logic for FreeFormMode.xaml
@@ -53,7 +53,14 @@ namespace tempoMonkey
             }
         }
 
-        int previousTrack = 2;
+
+        /// <summary>
+        ///          Kinect
+        ///      
+        ///           You
+        /// |   1  |   0  |  2   |
+        /// </summary>
+        int previousTrack = 1;
         void changeTrackHandler(double value)
         {
             DebugBox.Content = value.ToString();
@@ -61,25 +68,25 @@ namespace tempoMonkey
             {
                 Track.Content = "On Track 1";
                 previousTrack = 1;
-                //Go as Track 1
             }
-            else if (value > 450 && previousTrack != 3)
-            {
-                Track.Content = "On Track 3";
-                previousTrack = 3;
-                //Go as Track 3
-            }
-            else if( value >= 250 && value <= 450 && previousTrack != 2)
+            else if (value > 450 && previousTrack != 2)
             {
                 Track.Content = "On Track 2";
                 previousTrack = 2;
-                //Go as Track 2
             }
+            else if( value >= 250 && value <= 450 && previousTrack != 0)
+            {
+                Track.Content = "On Track 0";
+                previousTrack = 0;
+            }
+			Processing.Audio.SwapTrack(previousTrack);
         }
 
         void volumeChangeHandler(double change)
         {
             Canvas.SetTop(VolumePos, Canvas.GetTop(VolumePos) + change);
+			// Change the denominator here to affect how quickly volume increases
+			Processing.Audio.ChangeVolume(change / 2);
         }
 
         void volumeTrackingHandler(bool exist)
@@ -90,6 +97,8 @@ namespace tempoMonkey
         void tempoChangeHandler(double change)
         {
             Canvas.SetTop(TempoPos, Canvas.GetTop(TempoPos) + change);
+			// Change the denominator here to affect how quickly tempo increases
+			Processing.Audio.ChangeTempo(change / 2);
         }
 
         void tempoTrackingHandler(bool exist)
@@ -100,6 +109,7 @@ namespace tempoMonkey
         void seekChangeHandler(double change)
         {
             Canvas.SetLeft(SeekPos, Canvas.GetLeft(SeekPos) + change);
+			Processing.Audio.Seek((long)change / 4);
         }
 
         void seekTrackingHandler(bool exist)
@@ -110,6 +120,8 @@ namespace tempoMonkey
         void pitchChangeHandler(double change)
         {
             Canvas.SetTop(PitchPos, Canvas.GetTop(PitchPos) + change);
+			// Change the denominator here to affect how quickly pitch increases
+			Processing.Audio.ChangePitch(change / 2);
         }
 
         void pitchTrackingHandler(bool exist)
@@ -117,8 +129,19 @@ namespace tempoMonkey
             PitchPos.Fill = exist ? (Brush)bc.ConvertFrom("GREEN") : (Brush)bc.ConvertFrom("RED");
         }
 
+        
         public FreeFormMode(ArrayList addrList, ArrayList nameList)
         {
+			// Initialize the audio library
+			// This should only be done in one place
+			Processing.Audio.Initialize();
+
+			// Load the audio files
+			foreach (string uri in addrList)
+			{
+				Processing.Audio.LoadFile(uri);
+			}
+			
             System.Windows.Forms.Cursor.Show();
             InitializeComponent();
             freePlayer = new KinectGesturePlayer();

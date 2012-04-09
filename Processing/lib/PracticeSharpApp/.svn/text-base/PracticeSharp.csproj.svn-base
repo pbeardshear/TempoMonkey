@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{BBEECE8C-8D5A-42F5-9901-34E8D07490AE}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BigMansStuff.PracticeSharp</RootNamespace>
+    <AssemblyName>PracticeSharp</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Res\PracticeSharp.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NAudio, Version=1.3.15.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>3rdPartyDLL\NAudioDLL\NAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.WindowsMediaFormat, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>3rdPartyDLL\NAudioDLL\NAudio.WindowsMediaFormat.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>3rdPartyDLL\NLogDLL\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\AdvancedBufferedWaveProvider.cs" />
+    <Compile Include="Core\DSPEffect.cs" />
+    <Compile Include="Core\DSPEffectFactor.cs" />
+    <Compile Include="Core\EqualizerEffect.cs" />
+    <Compile Include="Core\PracticeSharpLogic.cs" />
+    <Compile Include="Core\SoundTouchSharp.cs" />
+    <Compile Include="Core\PresetData.cs" />
+    <Compile Include="Core\TimeStretchProfile.cs" />
+    <Compile Include="Core\TimeStretchProfileManager.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\AboutForm.Designer.cs">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\AppExceptionHandler.cs" />
+    <Compile Include="UI\FlickerFreePanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\HoverLabel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="UI\KeyboardShortcutsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\KeyboardShortcutsForm.Designer.cs">
+      <DependentUpon>KeyboardShortcutsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\MRUManager.cs" />
+    <Compile Include="UI\PresetBankFile.cs" />
+    <Compile Include="UI\PresetControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="UI\PresetControl.Designer.cs">
+      <DependentUpon>PresetControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\PresetTextInputDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\PresetTextInputDialog.Designer.cs">
+      <DependentUpon>PresetTextInputDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\VersionUpdater.cs" />
+    <Compile Include="UI\UltraButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\AboutForm.resx">
+      <DependentUpon>AboutForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\KeyboardShortcutsForm.resx">
+      <DependentUpon>KeyboardShortcutsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PresetControl.resx">
+      <DependentUpon>PresetControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PresetTextInputDialog.resx">
+      <DependentUpon>PresetTextInputDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\UltraButton.resx">
+      <DependentUpon>UltraButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\Play-Normal-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\Pause-Hot-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\Pause-Normal-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\Play-Hot-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\Eraser-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\save-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\green-on-16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\green-off-16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\amber-on-16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\amber-off-16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\yellow-on-16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\yellow-off-16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\red-on-16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\red-off-16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Res\open-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="LICENSES.txt" />
+    <Content Include="Res\blue-off-16.png" />
+    <Content Include="Res\blue-on-16.png" />
+    <Content Include="Res\KeyboardShortcuts.png" />
+    <Content Include="Res\lgplv3-147x51.png" />
+    <Content Include="Res\PracticeSharp.ico" />
+    <Content Include="Res\PracticeSharp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NAudioFLAC\Library\NAudioFLAC.csproj">
+      <Project>{A589C62F-4A8B-447D-BD85-6D6E4F985B80}</Project>
+      <Name>NAudioFLAC</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NAudioOggVorbis\Library\NAudioOggVorbis.csproj">
+      <Project>{B2D3B85A-252C-4A0E-BB07-816A62AB20A8}</Project>
+      <Name>NAudioOggVorbis</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PreBuildEvent>copy $(ProjectDir)3rdPartyDLL\SoundTouchDLL\SoundTouch.dll $(TargetDir)
+copy $(SolutionDir)..\NAudioFLAC\Library\LibFLACDLL $(TargetDir)
+copy $(ProjectDir)LICENSES.txt $(TargetDir)
+</PreBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
