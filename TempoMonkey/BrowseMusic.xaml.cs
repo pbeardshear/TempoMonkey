@@ -13,6 +13,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections;
 
+
 namespace tempoMonkey
 {
     /// <summary>
@@ -25,6 +26,7 @@ namespace tempoMonkey
         Boolean selectionDone;
         int direction;
         Boolean isReady;
+        string theItemToDelete;
 
         public BrowseMusic()
         {
@@ -33,6 +35,7 @@ namespace tempoMonkey
             selectionDone = false;
             direction = 999;
             isReady = false;
+            DisableConfirmationCanvas();
         }
 
         public int getSelectedMenu()
@@ -85,9 +88,7 @@ namespace tempoMonkey
             }
             return false;
         }
-
-
-
+            
         public void addingToMusicAddrList() 
         {
             musicAddrList.Add(this.slidingMenu.getAddress());
@@ -95,18 +96,92 @@ namespace tempoMonkey
 
         public void addingToMusicList()
         {
+            Button myButton = new Button();
+            myButton.Content = this.slidingMenu.getName();
+            myButton.IsEnabled = false;
+            myButton.Width = 179;
+            myButton.Height = 46;
+            myButton.FontSize = 30;
+            myButton.MouseEnter += new MouseEventHandler(itemDeletionMouseEnter);
+            myButton.MouseLeave += new MouseEventHandler(itemDelectionMouseLeave);
+            selectedMusicList.Children.Add(myButton);
+            musicList.Add(this.slidingMenu.getName());
+            /*
             Label myLabel = new Label();
             myLabel.Content = this.slidingMenu.getName();
             selectedMusicList.Children.Add(myLabel);
             musicList.Add(this.slidingMenu.getName());
+             * */
         }
 
         public void deletingMusic()
         {
+            int i=0;
+            if (selectedMusicList.Children.Count != 0)
+            {
+                foreach (var child in selectedMusicList.Children)
+                {
+                    
+                    if (((Button)child).Content.Equals(theItemToDelete))
+                    {
+                        selectedMusicList.Children.RemoveAt(i);
+                        musicAddrList.RemoveAt(i);
+                        musicList.RemoveAt(i);
+                        return;
+                    }
+                    i++;
+                }
+
+            }
+
+            /*
             int i = musicList.Count - 1;            
             selectedMusicList.Children.RemoveAt(i);
             musicAddrList.RemoveAt(i);
             musicList.RemoveAt(i);
+             * */
+        }
+
+
+
+        public void EnalbeConfirmationCanvas()
+        {
+            confirmationCanvas.Visibility = Visibility.Visible;
+            back.IsEnabled = false;
+            done.IsEnabled = false;
+            //delele.IsEnabled = false;
+            itemName.Content = theItemToDelete;
+        }
+        public void DisableConfirmationCanvas()
+        {
+            confirmationCanvas.Visibility = Visibility.Collapsed;
+            back.IsEnabled = true;
+            done.IsEnabled = true;
+            delele.IsEnabled = true;
+        }
+
+        public void EnableButtons()
+        {
+            delele.IsEnabled = false;
+            foreach (var child in selectedMusicList.Children)
+            {
+                BrushConverter converter = new BrushConverter();
+                ((Button)child).IsEnabled = true;
+                ((Button)child).BorderBrush = converter.ConvertFromString("#FFE81515") as Brush;
+                ((Button)child).Background = converter.ConvertFromString("#FFAD4CA6") as Brush;
+                ((Button)child).FontSize = 30.0;
+                ((Button)child).Foreground = converter.ConvertFromString("#FF9264DE") as Brush; 
+            }
+        }
+        public void DisableButtons()
+        {
+            foreach (var child in selectedMusicList.Children)
+            {
+                BrushConverter converter = new BrushConverter();
+                ((Button)child).IsEnabled = false;
+                ((Button)child).Foreground = converter.ConvertFromString("Black") as Brush; 
+            }
+
         }
 
 
@@ -155,6 +230,48 @@ namespace tempoMonkey
         }
 
         private void delete_MouseLeave(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(false);
+        }
+
+        private void No_MouseEnter(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(true);
+            direction = 10;
+        }
+
+        private void No_MouseLeave(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(false);
+        }
+
+        private void Yes_MouseLeave(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(false);
+        }
+
+        private void Yes_MouseEnter(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(true);
+            direction = 11;
+        }
+
+        private void itemDeletionMouseEnter(object sender, MouseEventArgs e)
+        {
+            
+            foreach (var child in selectedMusicList.Children)
+            {
+                string name = (string)((Button)child).Content;
+                if(((Button)sender).Content.Equals(name))
+                {
+                    theItemToDelete = name;
+                }
+            }
+            setSelectionStatus(true);
+            direction = 12;
+        }
+
+        private void itemDelectionMouseLeave(object sender, MouseEventArgs e)
         {
             setSelectionStatus(false);
         }

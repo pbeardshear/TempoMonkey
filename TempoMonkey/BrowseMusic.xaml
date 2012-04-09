@@ -11,9 +11,15 @@
         <Label Content="Browse Music" Height="86" HorizontalAlignment="Left" Margin="187,45,0,0" Name="Title" VerticalAlignment="Top" Width="424" FontSize="56" FontFamily="Sylfaen" FontWeight="Bold" Foreground="#FF7F64FC" />
         <Button Content="Back" Height="47" HorizontalAlignment="Left" Margin="19,64,0,0" Name="back" VerticalAlignment="Top" Width="103" MouseEnter="back_MouseEnter" MouseLeave="back_MouseLeave" />
         <my:UserControl1 Height="300" HorizontalAlignment="Left" Margin="32,150,0,0" Name="slidingMenu" VerticalAlignment="Top" Width="732" />
-        <Label Content="Selected Songs:" Height="48" HorizontalAlignment="Left" Margin="12,475,0,0" Name="label1" VerticalAlignment="Top" Width="232" FontSize="30" FontWeight="Bold" FontStretch="Normal" FontFamily="Segoe UI"  Foreground="#FF7F64FC"/>
+        <Label Content="Selected Songs:" Height="48" HorizontalAlignment="Left" Margin="12,475,0,0" Name="name" VerticalAlignment="Top" Width="232" FontSize="30" FontWeight="Bold" FontStretch="Normal" FontFamily="Segoe UI"  Foreground="#FF7F64FC"/>
         <StackPanel Height="48" HorizontalAlignment="Left" Margin="254,475,0,0" Name="selectedMusicList" VerticalAlignment="Top" Width="537" Orientation="Horizontal"/>
         <Button Content="Done" Height="53" HorizontalAlignment="Left" Margin="569,535,0,0" Name="done" VerticalAlignment="Top" Width="118" MouseEnter="done_MouseEnter" MouseLeave="done_MouseLeave" />
         <Button Content="Delete" Height="53" HorizontalAlignment="Left" Margin="321,535,0,0" Name="delele" VerticalAlignment="Top" Width="118" MouseEnter="delete_MouseEnter" MouseLeave="delete_MouseLeave"/>
+        <Canvas Height="244" HorizontalAlignment="Left" Margin="136,206,0,0" Name="confirmationCanvas" VerticalAlignment="Top" Width="488" Background="#FFB1AEAE">
+            <TextBox Canvas.Left="51" Canvas.Top="31" Height="30" Name="infoText" Width="293" Text="The item you want to delete: " Background="#FFB1AEAE" BorderBrush="#FFB1AEAE" FontSize="20" />
+            <Label Canvas.Left="153" Canvas.Top="81" Content="Label" Height="55" Name="itemName" Width="191" FontSize="20"/>
+            <Button Canvas.Left="88" Canvas.Top="151" Content="Yes" Height="66" Name="Yes" Width="139" MouseLeave="Yes_MouseLeave" MouseEnter="Yes_MouseEnter" />
+            <Button Canvas.Left="280" Canvas.Top="151" Content="No" Height="66" Name="No" Width="139" MouseEnter="No_MouseEnter" MouseLeave="No_MouseLeave" />
+        </Canvas>
     </Grid>
 </Page>
