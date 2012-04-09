@@ -289,9 +289,24 @@ namespace TempoMonkey
                                         timer = 0;
                                         break;
                                     case 9:
-                                        m.deletingMusic();
+                                        m.EnableButtons();
                                         timer = 0;
                                         break;
+                                    case 10: //no
+                                        m.DisableConfirmationCanvas();
+                                        m.DisableButtons();
+                                        timer = 0;
+                                        break;
+                                    case 11: //yes
+                                        m.deletingMusic();
+                                        m.DisableConfirmationCanvas();
+                                        timer = 0;
+                                        break;
+                                    case 12:
+                                        m.EnalbeConfirmationCanvas();
+                                        timer = 0;
+                                        break;
+
                                 }
                             }
                         }
