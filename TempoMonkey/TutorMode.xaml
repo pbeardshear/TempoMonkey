@@ -23,7 +23,7 @@
         
         
         <Label Canvas.Left="470" Canvas.Top="232" Name="Volume" Content="Volume" Height="39" Width="87" FontSize="20" FontStyle="Normal"/>
-        <Label Canvas.Left="470" Canvas.Top="318" Name="Pitch" Content="Picth" Height="38" Width="98" FontSize="20"  FontStyle="Normal"/>
+        <Label Canvas.Left="470" Canvas.Top="318" Name="Pitch" Content="Pitch" Height="38" Width="98" FontSize="20"  FontStyle="Normal"/>
         <Label Canvas.Left="470" Canvas.Top="400" Name="Tempo" Content="Tempo" Height="39" Width="99" FontSize="20"  FontStyle="Normal"/>
 
         <Label Canvas.Left="10" Canvas.Top="376" Content="" Height="80" Name="DebugBox" Width="373" FontSize="50"/>
@@ -42,5 +42,9 @@
         <TextBlock TextWrapping="WrapWithOverflow" Name="Instructions" Canvas.Left="89" Canvas.Top="499" Height="91" Width="582" FontFamily="Georgia" FontSize="20">
                 Here Goes the Content, sometimes it could be long and wrap multiple lines
         </TextBlock>
+        <Border Name="TempoFocus" Visibility="Hidden" BorderBrush="Green" BorderThickness="3" Height="44" Canvas.Left="460" Canvas.Top="399" Width="94"/>
+        <Border Name="PitchFocus" Visibility="Hidden" BorderBrush="Green" BorderThickness="3" Height="44" Canvas.Left="460" Canvas.Top="321" Width="94"/>
+        <Border Name="VolumeFocus" Visibility="Hidden" BorderBrush="Green" BorderThickness="3" Height="44" Canvas.Left="463" Canvas.Top="230" Width="94"/>
+
     </Canvas>
 </Page>

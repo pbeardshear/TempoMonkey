@@ -114,6 +114,7 @@ namespace TempoMonkey
         void volumeTrackingHandler(bool exist)
         {
             Volume.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
+            VolumeFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
         }
 
         void tempoChangeHandler(double change)
@@ -126,7 +127,7 @@ namespace TempoMonkey
         void tempoTrackingHandler(bool exist)
         {
             Tempo.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
-
+            TempoFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
         }
 
         bool wasSeeking = false;
@@ -156,11 +157,13 @@ namespace TempoMonkey
         {
             PitchSlider.Value -= change*3;
             Processing.Audio.ChangePitch(PitchSlider.Value);
+
         }
 
         void pitchTrackingHandler(bool exist)
         {
-            Pitch.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal; 
+            Pitch.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
+            PitchFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
         }
 
         

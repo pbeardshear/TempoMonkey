@@ -40,6 +40,7 @@ namespace TempoMonkey
 
             Processing.Audio.Initialize();
             Processing.Audio.LoadFile("C:\\Users\\Doboy\\Desktop\\Minh\\TempoMonkey\\bin\\Debug\\Music\\Enough To Fly With You.mp3");
+            Processing.Audio.LoadFile("C:\\Users\\Doboy\\Desktop\\Minh\\TempoMonkey\\bin\\Debug\\Music\\Chasing Pavements.mp3");
             Processing.Audio.Play();
 
             initVisualizer();
@@ -67,8 +68,8 @@ namespace TempoMonkey
         int currentTaskIndex = 0;
         String[] Task = {"Seek", "Volume", "Pitch", "Switch Tracks" };
         String[] TaskInstructions = {"To Seek through a track just place your right hand up and move it left and right",
-                                    "To change volume put both of your hands into your mid section and expand/impact them",
-                                    "To change the pitch put both hands over your head and move your head up or down",
+                                    "To change volume put both of your hands into your mid section and expand/intract them",
+                                    "To change the pitch put both hands over your head and move your body up or down",
                                     "To change tracks jump left and right" };
 
         Boolean[] taskCompleted = { false, false, false, false, false, };
@@ -118,7 +119,7 @@ namespace TempoMonkey
         {
             if (!wasSeeking)
             {
-                SeekSlider.Value += .1; // THIS IS NOT REALLY TRUE
+                SeekSlider.Value += .05; // THIS IS NOT REALLY TRUE
             }
 
             if (value < 250 && previousTrack != 1)
@@ -155,6 +156,7 @@ namespace TempoMonkey
         {
             Volume.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
             proceedIfGood(exist, "Volume");
+            VolumeFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
         }
 
         void tempoChangeHandler(double change)
@@ -169,6 +171,8 @@ namespace TempoMonkey
         {
             Tempo.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
             proceedIfGood(exist, "Tempo");
+            TempoFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+
         }
 
         bool wasSeeking = false;
@@ -209,6 +213,7 @@ namespace TempoMonkey
         {
             Pitch.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
             proceedIfGood(exist, "Pitch");
+            PitchFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
         }
         //Tell the MainWindow which menu button has been selected
 

@@ -33,13 +33,17 @@
                 MouseEnter="ResumeEnter" MouseLeave="ResumeLeave"/>
         <Button Content="Quit" Name="Quit" Canvas.Left="454" Canvas.Top="195" Width="152" Height="46" FontSize="30" Visibility="Hidden" 
                 MouseEnter="QuitEnter" MouseLeave="QuitLeave"/>
-        <Label Canvas.Left="10" Canvas.Top="541" Content="" Height="75" Name="Track" Width="320" FontSize="50" RenderTransformOrigin="0.503,1.612"/>
-
+        
         <Label Canvas.Top="10" Name="Seek" Content="Seek Bar" Height="40" Width="94" FontSize="20" FontStyle="Normal" Canvas.Left="294"/>
 
         <Slider Name="SeekSlider" Canvas.Left="98" Canvas.Top="55" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
         <Slider Name="VolumeSlider" Canvas.Left="440" Canvas.Top="285" Height="28" Width="260" Value="25" Minimum="0" Maximum="100" TickFrequency=".1"/>
         <Slider Name="PitchSlider" Canvas.Left="440" Canvas.Top="372" Height="28" Width="260" Value="50" Minimum="0" Maximum="100" TickFrequency=".1"/>
         <Slider Name="TempoSlider" Canvas.Left="440" Canvas.Top="450" Height="28" Width="260" Value="100" Minimum="10" Maximum="200" TickFrequency=".1"/>
+
+        <Border Name="TempoFocus" Visibility="Hidden" BorderBrush="Green" BorderThickness="3" Height="44" Canvas.Left="460" Canvas.Top="399" Width="94"/>
+        <Border Name="PitchFocus" Visibility="Hidden" BorderBrush="Green" BorderThickness="3" Height="44" Canvas.Left="460" Canvas.Top="321" Width="94"/>
+        <Border Name="VolumeFocus" Visibility="Hidden" BorderBrush="Green" BorderThickness="3" Height="44" Canvas.Left="463" Canvas.Top="230" Width="94"/>
+
     </Canvas>
 </Page>

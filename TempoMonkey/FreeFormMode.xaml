@@ -22,7 +22,7 @@
         </Grid>
 
         <Label Canvas.Left="470" Canvas.Top="232" Name="Volume" Content="Volume" Height="39" Width="87" FontSize="20" FontStyle="Normal"/>
-        <Label Canvas.Left="470" Canvas.Top="318" Name="Pitch" Content="Picth" Height="38" Width="98" FontSize="20"  FontStyle="Normal"/>
+        <Label Canvas.Left="470" Canvas.Top="318" Name="Pitch" Content="Pitch" Height="38" Width="98" FontSize="20"  FontStyle="Normal"/>
         <Label Canvas.Left="470" Canvas.Top="400" Name="Tempo" Content="Tempo" Height="39" Width="99" FontSize="20"  FontStyle="Normal"/>
         
         <Label Canvas.Left="10" Canvas.Top="376" Content="" Height="80" Name="DebugBox" Width="373" FontSize="50"/>
@@ -41,5 +41,10 @@
         <Slider Name="VolumeSlider" Canvas.Left="440" Canvas.Top="285" Height="28" Width="260" Value="25" Minimum="0" Maximum="100" TickFrequency=".1"/>
         <Slider Name="PitchSlider" Canvas.Left="440" Canvas.Top="372" Height="28" Width="260" Value="50" Minimum="0" Maximum="100" TickFrequency=".1"/>
         <Slider Name="TempoSlider" Canvas.Left="440" Canvas.Top="450" Height="28" Width="260" Value="100" Minimum="10" Maximum="200" TickFrequency=".1"/>
+        <Border Name="TempoFocus" Visibility="Hidden" BorderBrush="Green" BorderThickness="3" Height="44" Canvas.Left="460" Canvas.Top="399" Width="94"/>
+        <Border Name="PitchFocus" Visibility="Hidden" BorderBrush="Green" BorderThickness="3" Height="44" Canvas.Left="460" Canvas.Top="321" Width="94"/>
+        <Border Name="VolumeFocus" Visibility="Hidden" BorderBrush="Green" BorderThickness="3" Height="44" Canvas.Left="463" Canvas.Top="230" Width="94"/>
+
+
     </Canvas>
 </Page>

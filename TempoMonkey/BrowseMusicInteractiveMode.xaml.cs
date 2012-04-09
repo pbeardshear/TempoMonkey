@@ -25,6 +25,7 @@ namespace TempoMonkey
         Boolean selectionDone;
         int direction;
         Boolean isReady;
+        string theItemToDelete;
 
         public BrowseMusicInteractiveMode()
         {
@@ -33,6 +34,7 @@ namespace TempoMonkey
             selectionDone = false;
             direction = 999;
             isReady = false;
+            DisableConfirmationCanvas();
         }
 
         public int getSelectedMenu()
@@ -91,12 +93,62 @@ namespace TempoMonkey
 
         public void addingToMusicList()
         {
+            Button myButton = new Button();
+            myButton.Content = this.slidingMenu.getName();
+            myButton.IsEnabled = false;
+            myButton.Width = 510;
+            myButton.Height = 46;
+            myButton.FontSize = 30;
+            myButton.MouseEnter += new MouseEventHandler(itemDeletionMouseEnter);
+            myButton.MouseLeave += new MouseEventHandler(itemDelectionMouseLeave);
+            selectedMusicList.Children.Add(myButton);
+            musicList.Add(this.slidingMenu.getName());
+            /*
             Label myLabel = new Label();
             myLabel.Content = this.slidingMenu.getName();
             selectedMusicList.Children.Add(myLabel);
             musicList.Add(this.slidingMenu.getName());
+             * */
+        }
+        public void EnalbeConfirmationCanvas()
+        {
+            confirmationCanvas.Visibility = Visibility.Visible;
+            back.IsEnabled = false;
+            done.IsEnabled = false;
+            //delele.IsEnabled = false;
+            itemName.Content = theItemToDelete;
+        }
+        public void DisableConfirmationCanvas()
+        {
+            confirmationCanvas.Visibility = Visibility.Collapsed;
+            back.IsEnabled = true;
+            done.IsEnabled = true;
+            delete.IsEnabled = true;
         }
 
+        public void EnableButtons()
+        {
+            delete.IsEnabled = false;
+            foreach (var child in selectedMusicList.Children)
+            {
+                BrushConverter converter = new BrushConverter();
+                ((Button)child).IsEnabled = true;
+                ((Button)child).BorderBrush = converter.ConvertFromString("#FFE81515") as Brush;
+                ((Button)child).Background = converter.ConvertFromString("Yellow") as Brush;
+                ((Button)child).FontSize = 25.0;
+                ((Button)child).Foreground = converter.ConvertFromString("#FF9264DE") as Brush;
+            }
+        }
+        public void DisableButtons()
+        {
+            foreach (var child in selectedMusicList.Children)
+            {
+                BrushConverter converter = new BrushConverter();
+                ((Button)child).IsEnabled = false;
+                ((Button)child).Foreground = converter.ConvertFromString("Black") as Brush;
+            }
+
+        }
         public void deletingMusic()
         {
             selectedMusicList.Children.Clear();
@@ -150,6 +202,48 @@ namespace TempoMonkey
         }
 
         private void delete_MouseLeave(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(false);
+        }
+
+        private void No_MouseEnter(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(true);
+            direction = 10;
+        }
+
+        private void No_MouseLeave(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(false);
+        }
+
+        private void Yes_MouseLeave(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(false);
+        }
+
+        private void Yes_MouseEnter(object sender, MouseEventArgs e)
+        {
+            setSelectionStatus(true);
+            direction = 11;
+        }
+
+        private void itemDeletionMouseEnter(object sender, MouseEventArgs e)
+        {
+
+            foreach (var child in selectedMusicList.Children)
+            {
+                string name = (string)((Button)child).Content;
+                if (((Button)sender).Content.Equals(name))
+                {
+                    theItemToDelete = name;
+                }
+            }
+            setSelectionStatus(true);
+            direction = 12;
+        }
+
+        private void itemDelectionMouseLeave(object sender, MouseEventArgs e)
         {
             setSelectionStatus(false);
         }

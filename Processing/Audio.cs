@@ -284,7 +284,7 @@ namespace Processing
 		/// <returns>The new volume</returns>
 		public static void ChangeVolume(double value)
 		{
-			newVolume = (float)(Normalize(value, 0, 100, minVolume, maxVolume) / 100.0f);
+            newVolume = (float)(value / 100);// (float)(Normalize(value, 0, 100, minVolume, maxVolume) / 100.0f);
 			if (IsBetween(minVolume, maxVolume, newVolume))
 			{
 				volumeChanged = true;
@@ -297,7 +297,7 @@ namespace Processing
 		/// <returns>The new tempo</returns>
 		public static void ChangeTempo(double value)
 		{
-			newTempo = (float)(Normalize(value, 10, 200, minTempo, maxTempo) / 100.0f);
+            newTempo = (float)(value / 100);// (float)(Normalize(value, 10, 200, minTempo, maxTempo) / 100.0f);
 			if (IsBetween(minTempo, maxTempo, newTempo))
 			{
 				tempoChanged = true;
@@ -322,7 +322,7 @@ namespace Processing
 		/// </summary>
 		/// <param name="position">The position of the song as a percentage of the total time</param>
 		/// <returns>The new current time of the song</returns>
-		public static void Seek(float position)
+		public static void Seek(double position)
 		{
 			TimeSpan totalTime = _currentWaveChannel.TotalTime;
 			double newSeconds = totalTime.TotalSeconds * (position / 100.0);

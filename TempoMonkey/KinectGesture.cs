@@ -288,7 +288,7 @@ class KinectGesturePlayer
 
         if (currHead.Y > currLeftHand.Y + 50 && currHead.Y > currRightHand.Y + 50)
         {
-            if (handsAboveHeadTryCount >= 5)
+            if (handsAboveHeadTryCount >= 1)
             {
                 callDynamicCallBack(handsAboveHeadListener, currHead.Y - lastHead.Y);
                 callStaticCallBack(handsAboveHeadListener, true);

@@ -370,7 +370,21 @@ namespace TempoMonkey
                                         timer = 0;
                                         break;
                                     case 9:
+                                        mbi.EnableButtons();
+                                        timer = 0;
+                                        break;
+                                    case 10: //no
+                                        mbi.DisableConfirmationCanvas();
+                                        mbi.DisableButtons();
+                                        timer = 0;
+                                        break;
+                                    case 11: //yes
                                         mbi.deletingMusic();
+                                        mbi.DisableConfirmationCanvas();
+                                        timer = 0;
+                                        break;
+                                    case 12:
+                                        mbi.EnalbeConfirmationCanvas();
                                         timer = 0;
                                         break;
                                 }

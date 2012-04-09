@@ -9,8 +9,8 @@
 
     <Grid>
         <Label Content="Learning Studio" Height="86" HorizontalAlignment="Left" Margin="187,45,0,0" Name="Title" VerticalAlignment="Top" Width="415" FontSize="56" FontFamily="Sylfaen" FontWeight="Bold" Foreground="#FF7F64FC"/>
-        <Button Content="Tutor" Height="106" Width="447" HorizontalAlignment="Left" Name="TutorButton" VerticalAlignment="Top" Foreground="#FF604EB4" FontSize="48" FontFamily="Palatino Linotype" Margin="167,198,0,0" Click="Tutor_Click" MouseEnter="TutorButton_MouseEnter" MouseLeave="TutorButton_MouseLeave" />
-        <Button Content="Interactive Mode" Height="106" Width="447" HorizontalAlignment="Left" Name="InteractiveModeButton" VerticalAlignment="Top" Foreground="#FF604EB4" FontSize="48" FontFamily="Palatino Linotype" Margin="167,375,0,0" Click="InteractiveModeButton_Click" MouseLeave="InteractiveModeButton_MouseLeave" MouseEnter="InteractiveModeButton_MouseEnter" />
+        <Button Content="With a Tutor" Height="106" Width="447" HorizontalAlignment="Left" Name="TutorButton" VerticalAlignment="Top" Foreground="#FF604EB4" FontSize="48" FontFamily="Palatino Linotype" Margin="167,198,0,0" Click="Tutor_Click" MouseEnter="TutorButton_MouseEnter" MouseLeave="TutorButton_MouseLeave" />
+        <Button Content="With a Friend" Height="106" Width="447" HorizontalAlignment="Left" Name="InteractiveModeButton" VerticalAlignment="Top" Foreground="#FF604EB4" FontSize="48" FontFamily="Palatino Linotype" Margin="167,375,0,0" Click="InteractiveModeButton_Click" MouseLeave="InteractiveModeButton_MouseLeave" MouseEnter="InteractiveModeButton_MouseEnter" />
         <Button Content="Back" Height="42" HorizontalAlignment="Left" Margin="34,29,0,0" Name="Back" VerticalAlignment="Top" Width="81" Click="Back_Click" MouseEnter="Back_MouseEnter" MouseLeave="Back_MouseLeave" />
    </Grid>
 </Page>

@@ -99,7 +99,7 @@ namespace TempoMonkey
             Button myButton = new Button();
             myButton.Content = this.slidingMenu.getName();
             myButton.IsEnabled = false;
-            myButton.Width = 179;
+            myButton.Width = 214;
             myButton.Height = 46;
             myButton.FontSize = 30;
             myButton.MouseEnter += new MouseEventHandler(itemDeletionMouseEnter);
@@ -168,8 +168,8 @@ namespace TempoMonkey
                 BrushConverter converter = new BrushConverter();
                 ((Button)child).IsEnabled = true;
                 ((Button)child).BorderBrush = converter.ConvertFromString("#FFE81515") as Brush;
-                ((Button)child).Background = converter.ConvertFromString("#FFAD4CA6") as Brush;
-                ((Button)child).FontSize = 30.0;
+                ((Button)child).Background = converter.ConvertFromString("Yellow") as Brush;
+                ((Button)child).FontSize = 25.0;
                 ((Button)child).Foreground = converter.ConvertFromString("#FF9264DE") as Brush; 
             }
         }
