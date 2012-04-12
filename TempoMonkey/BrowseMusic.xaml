@@ -5,22 +5,24 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
       d:DesignHeight="600" d:DesignWidth="800"
-	Title="BrowseMusic" xmlns:my="clr-namespace:slidingMenu;assembly=slidingMenu">
+	Title="BrowseMusic">
 
-    <Grid>
-        <Label Content="Browse Music" Height="86" HorizontalAlignment="Left" Margin="187,45,0,0" Name="Title" VerticalAlignment="Top" Width="424" FontSize="56" FontFamily="Sylfaen" FontWeight="Bold" Foreground="#FF7F64FC" />
-        <Button Content="Back" Height="47" HorizontalAlignment="Left" Margin="19,64,0,0" Name="back" VerticalAlignment="Top" Width="103" MouseEnter="back_MouseEnter" MouseLeave="back_MouseLeave" />
-        <my:UserControl1 Height="300" HorizontalAlignment="Left" Margin="32,150,0,0" Name="slidingMenu" VerticalAlignment="Top" Width="732" />
+    <Canvas>
+        <Label Content="Browse Music" Height="66" HorizontalAlignment="Left" Margin="225,45,0,0" Name="Title" VerticalAlignment="Top" Width="362" FontSize="56" FontFamily="Sylfaen" FontWeight="Bold" Foreground="#FF7F64FC" />
+        <Button Content="Back" Height="66" HorizontalAlignment="Left" Margin="12,45,0,0" Name="back" VerticalAlignment="Top" Width="174" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Back_Click"/>
+
+        <StackPanel Name="MenuBar" Orientation="Horizontal" Height="300" Canvas.Left="25" Canvas.Top="126" Width="3023"/>
+
+
+        <Button Canvas.Left="723" Canvas.Top="126" Content=">" Width="80" Height="300" Name="right" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Right_Click"/>
+        <Button Canvas.Top="126" Content="&lt;" Height="300" Name="left" Width="80" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Left_Click" />
+        <Button Content="Choose" Canvas.Left="263" Canvas.Top="398" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Choose_Click" Height="80" Width="244"/>
+
         <Label Content="Selected" Height="48" HorizontalAlignment="Left" Margin="12,459,0,0" Name="label1" VerticalAlignment="Top" Width="136" FontSize="30" FontWeight="Bold" FontStretch="Normal" FontFamily="Segoe UI"  Foreground="#FF7F64FC"/>
         <Label Content="Songs :" Height="48" HorizontalAlignment="Left" Margin="12,489,0,0" Name="label2" VerticalAlignment="Top" Width="136" FontSize="30" FontWeight="Bold" FontStretch="Normal" FontFamily="Segoe UI"  Foreground="#FF7F64FC"/>
         <StackPanel Height="48" HorizontalAlignment="Left" Margin="148,475,0,0" Name="selectedMusicList" VerticalAlignment="Top" Width="643" Orientation="Horizontal"/>
-        <Button Content="Done" Height="53" HorizontalAlignment="Left" Margin="569,535,0,0" Name="done" VerticalAlignment="Top" Width="118" MouseEnter="done_MouseEnter" MouseLeave="done_MouseLeave" />
-        <Button Content="Delete" Height="53" HorizontalAlignment="Left" Margin="321,535,0,0" Name="delele" VerticalAlignment="Top" Width="118" MouseEnter="delete_MouseEnter" MouseLeave="delete_MouseLeave"/>
-        <Canvas Height="244" HorizontalAlignment="Left" Margin="136,206,0,0" Name="confirmationCanvas" VerticalAlignment="Top" Width="488" Background="#FFB1AEAE">
-            <TextBox Canvas.Left="51" Canvas.Top="31" Height="30" Name="infoText" Width="293" Text="The item you want to delete: " Background="#FFB1AEAE" BorderBrush="#FFB1AEAE" FontSize="20" />
-            <Label Canvas.Left="153" Canvas.Top="81" Content="Label" Height="55" Name="itemName" Width="191" FontSize="20"/>
-            <Button Canvas.Left="88" Canvas.Top="151" Content="Yes" Height="66" Name="Yes" Width="139" MouseLeave="Yes_MouseLeave" MouseEnter="Yes_MouseEnter" />
-            <Button Canvas.Left="280" Canvas.Top="151" Content="No" Height="66" Name="No" Width="139" MouseEnter="No_MouseEnter" MouseLeave="No_MouseLeave" />
-        </Canvas>
-    </Grid>
+        <Button Content="Done" Height="53" HorizontalAlignment="Left" Margin="569,535,0,0" Name="done" VerticalAlignment="Top" Width="118" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Done_Click"/>
+        <Button Content="Delete" Height="53" HorizontalAlignment="Left" Margin="321,535,0,0" Name="delete" VerticalAlignment="Top" Width="118" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Delete_Click"/>
+
+    </Canvas>
 </Page>

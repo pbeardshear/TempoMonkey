@@ -21,85 +21,37 @@ namespace TempoMonkey
     public partial class LearningStudio : Page
     {
 
-        Boolean isReady;
-        int direction;
-
         public LearningStudio()
         {
             InitializeComponent();
-            isReady = false;
-            direction = 999;
         }
 
-        //Tell the MainWindow which menu button has been selected
-        public int getSelectedMenu()
+        private void Mouse_Enter(object sender, MouseEventArgs e)
         {
-            return direction;
+            MainWindow.Mouse_Enter(sender, e);
         }
 
-
-        private void setSelectionStatus(Boolean value)
+        private void Mouse_Leave(object sender, MouseEventArgs e)
         {
-            isReady = value;
-            if (!isReady)
-            {
-                RaiseEvent(new RoutedEventArgs(MainWindow.resetTimer));
-            }
-        }
-
-        //Tell the MainWindow if the cursor is on the button.
-        public Boolean isSelectionReady()
-        {
-            return isReady;
-        }
-
-
-        private void TutorButton_MouseEnter(object sender, MouseEventArgs e)
-        {
-            setSelectionStatus(true);
-            direction = 1;
-        }
-
-        private void TutorButton_MouseLeave(object sender, MouseEventArgs e)
-        {
-            setSelectionStatus(false);
-        }
-
-        private void InteractiveModeButton_MouseEnter(object sender, MouseEventArgs e)
-        {
-            setSelectionStatus(true);
-            direction = 2;
-        }
-
-        private void InteractiveModeButton_MouseLeave(object sender, MouseEventArgs e)
-        {
-            setSelectionStatus(false);
-        }
-
-        private void Back_MouseEnter(object sender, MouseEventArgs e)
-        {
-            setSelectionStatus(true);
-            direction = 3;
-        }
-
-        private void Back_MouseLeave(object sender, MouseEventArgs e)
-        {
-            setSelectionStatus(false);
+            MainWindow.Mouse_Leave(sender, e);
         }
 
         private void Tutor_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("TutorMode.xaml", UriKind.Relative));
+            MainWindow.currentPage = new TutorMode();
+            NavigationService.Navigate(MainWindow.currentPage);
         }
 
         private void InteractiveModeButton_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("InteractiveMode.xaml", UriKind.Relative));
+            MainWindow.currentPage = new BrowseMusic("Interactive");
+            NavigationService.Navigate(MainWindow.currentPage);
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
         {
-            this.NavigationService.Navigate(new Uri("HomePage.xaml", UriKind.Relative));
+            MainWindow.currentPage = new HomePage();
+            NavigationService.Navigate(MainWindow.currentPage);
         }
 
 

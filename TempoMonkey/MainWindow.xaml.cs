@@ -19,6 +19,21 @@ using System.Collections;
 using Processing;
 using System.Diagnostics;
 using System.Threading;
+using System.Windows.Threading;
+//using System.Windows.Forms;
+
+
+
+namespace System.Windows.Controls
+{
+    public static class MyExt
+    {
+        public static void PerformClick(this Button btn)
+        {
+            btn.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+        }
+    }
+}
 
 namespace TempoMonkey
 {
@@ -30,33 +45,47 @@ namespace TempoMonkey
         const int sklCount = 6;
         System.Drawing.Point curPos = new System.Drawing.Point(0, 0);
         Skeleton[] allSkeletons = new Skeleton[sklCount];
-        int timer = 0;
-        int waitTime = 50;
-        bool isManipulating = false;
-        Page currentPage;
+        static public Page currentPage;
+
+        static public Button currentlySelectedButton;
+        static public int timeOnCurrentButton;
+
+        static public void Mouse_Enter(object sender, MouseEventArgs e)
+        {
+            currentlySelectedButton = ((Button)sender);
+        }
+
+        static public void Mouse_Leave(object sender, MouseEventArgs e)
+        {
+            currentlySelectedButton = null;
+            timeOnCurrentButton = 0;
+        }
 
         public MainWindow()
         {
             InitializeComponent();
+
+            DispatcherTimer Timer = new DispatcherTimer();
+            Timer.Interval = TimeSpan.FromSeconds(1);
+            Timer.Tick += (delegate(object s, EventArgs args)
+            {
+                if (currentlySelectedButton != null)
+                {
+                    if (timeOnCurrentButton >= 2)
+                    {
+                        currentlySelectedButton.PerformClick();
+                    }
+                    else
+                    {
+                        timeOnCurrentButton++;
+                    }
+                }
+            });
+
             Page homepage = new HomePage();
             frame.Navigate(homepage);
             currentPage = homepage;
-            this.setTimer +=new RoutedEventHandler(handle_resetTimer);
-        }
-
-        public static readonly RoutedEvent resetTimer =
-            EventManager.RegisterRoutedEvent("resetTimer", RoutingStrategy.Bubble,
-            typeof(RoutedEventHandler), typeof(MainWindow));
-
-        public event RoutedEventHandler setTimer
-        {
-            add { AddHandler(resetTimer, value); }
-            remove { RemoveHandler(resetTimer, value); }
-        }
-
-        private void handle_resetTimer(object sender, RoutedEventArgs e)
-        {
-            timer = 0;
+            Timer.Start();
         }
 
         //hide the NavigationBar
@@ -100,7 +129,7 @@ namespace TempoMonkey
             theNewSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
             theNewSensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
             theNewSensor.SkeletonStream.Enable(parameters);
-            theNewSensor.AllFramesReady += new EventHandler<AllFramesReadyEventArgs>(theNewSensor_AllFramesReady);
+            theNewSensor.AllFramesReady += new EventHandler<AllFramesReadyEventArgs>(allFramesReady);
             try
             {
                 theNewSensor.Start();
@@ -111,313 +140,34 @@ namespace TempoMonkey
             }
         }
 
-        void theNewSensor_AllFramesReady(object sender, AllFramesReadyEventArgs e)
+        public static bool isManipulating = false;
+        void allFramesReady(object sender, AllFramesReadyEventArgs e)
         {
-            
-            //System.Windows.Forms.Cursor.Show();
-            handleCursorDetection(e);
             if (isManipulating)
             {
-                //System.Windows.Forms.Cursor.Hide();
-                switch (frame.Content.GetType().ToString())
+                switch (currentPage.ToString())
                 {
                     case "TempoMonkey.FreeFormMode":
-                        ((FreeFormMode)currentPage).freeAllFramesReady(sender, e);
+                        ((FreeFormMode)currentPage).allFramesReady(sender, e);
                         break;
                     case "TempoMonkey.TutorMode":
-                        ((TutorMode)currentPage).tutorAllFramesReady(sender, e);
+                        ((TutorMode)currentPage).allFramesReady(sender, e);
                         break;
                     case "TempoMonkey.InteractiveMode":
-                        ((InteractiveMode)currentPage).interAllFramesReady(sender, e);
+                        ((InteractiveMode)currentPage).allFramesReady(sender, e);
                         break;
+                    default:
+                        throw new Exception(currentPage.ToString());
                 }
             }
-        }
-
-        public void handleCursorDetection(AllFramesReadyEventArgs e)
-        {
-                Object pg = frame.Content;
+            else
+            {
                 Skeleton skl = getSkeleton(e);
-                if (skl == null) {
-                        return; 
-                }
-                moveMouse(skl);
-    
-                float rightHandY = skl.Joints[JointType.HandRight].Position.Y;
-                float rightHandX = skl.Joints[JointType.HandRight].Position.X;
-                float rightHandDiffX = Math.Abs(skl.Joints[JointType.HandRight].Position.X - skl.Joints[JointType.ShoulderCenter].Position.X);
-            float rightHandDiffZ = Math.Abs(skl.Joints[JointType.HandRight].Position.Z - skl.Joints[JointType.ShoulderCenter].Position.Z);
-                
-                switch(pg.GetType().ToString())
+                if (skl != null)
                 {
-                    case "TempoMonkey.HomePage":
-                        HomePage p = (HomePage)pg;
-                        if (p.isSelectionReady())
-                        {
-                            timer++;
-                            if (timer > waitTime)
-                            {
-                                switch (p.getSelectedMenu())
-                                {
-                                    case 1:
-                                        frame.Navigate(new Uri("BrowseMusic.xaml", UriKind.Relative));
-                                        timer = 0;
-                                        break;
-                                    case 2:
-                                        frame.Navigate(new Uri("LearningStudio.xaml", UriKind.Relative));
-                                        timer = 0;
-                                        break;
-                                }
-                            }
-                        }
-                        break;
-                    case "TempoMonkey.LearningStudio":
-                        LearningStudio l = (LearningStudio)pg;
-                        if (l.isSelectionReady())
-                        {
-                            int menu = l.getSelectedMenu();
-                            timer++;
-                            if (timer > waitTime)
-                            {
-                                switch (l.getSelectedMenu())
-                                {
-                                    case 1:
-                                        currentPage = new TutorMode("");
-                                        isManipulating = true;
-                                        frame.Navigate(currentPage);
-                                        timer = 0;
-                                        break;
-                                    case 2:
-                                        isManipulating = true;
-                                        currentPage = new BrowseMusicInteractiveMode();
-                                        frame.Navigate(currentPage);
-                                        timer = 0;
-                                        break;
-                                    case 3:
-                                        frame.Navigate(new Uri("HomePage.xaml", UriKind.Relative));
-                                        timer = 0;
-                                        isManipulating = false;
-                                        break;
-                                }
-                            }
-                        }
-                        break;
-                    case "TempoMonkey.BrowseTutorials":
-                        BrowseTutorials b = (BrowseTutorials)pg;
-                        //This is because it is hard to select the tutorial without a done button,
-                        //So automatically select choose the first tutorial, later ill ask minzhi to add a done button
-                        if (b.isSelectionReady())
-                        {
-                            int menu = b.getSelectedMenu();
-
-                            timer++;
-                            if (timer > waitTime)
-                            {
-                                switch (b.getSelectedMenu())
-                                {
-                                    case 3:
-                                        frame.Navigate(new Uri("LearningStudio.xaml", UriKind.Relative));
-                                        timer = 0;
-                                        break;
-                                    case 5:
-                                        string addr = b.getAddr();
-                                        currentPage = new TutorMode(addr);
-                                        isManipulating = true;
-                                        frame.Navigate(currentPage);
-                                        timer = 0;
-                                        break;
-                                }
-                            }
-                        }
-                        break;
-                    case "TempoMonkey.FreeFormMode":
-                        FreeFormMode f = (FreeFormMode)pg;
-                        if (f.isSelectionReady())
-                        {
-                            int menu = f.getSelectedMenu();
-                            //p.textBox1.Text = "iam in";
-
-                            timer++;
-                            if (timer > waitTime)
-                            {
-                                switch (f.getSelectedMenu())
-                                {
-                                    case 6:
-                                        f.unPause();
-                                        break;
-                                    case 7:
-                                        frame.Navigate(new Uri("HomePage.xaml", UriKind.Relative));
-                                        timer = 0;
-                                        isManipulating = false;
-                                        break;
-                                }
-                            }
-                        }
-                        break;
-                    case "TempoMonkey.BrowseMusic":
-                        BrowseMusic m = (BrowseMusic)pg;
-
-                        if (m.isSelectionReady())
-                        {
-                            int menu = m.getSelectedMenu();
-
-                            timer++;
-                            if (timer > waitTime)
-                            {
-                                switch (menu)
-                                {
-                                    case 3:
-                                        frame.Navigate(new Uri("HomePage.xaml", UriKind.Relative));
-                                        timer = 0;
-                                        isManipulating = false;
-                                        break;
-                                    case 4:
-                                        if (m.isSelectionDone())
-                                        {
-                                            isManipulating = true;
-                                            currentPage = new FreeFormMode(m.getMusicAddrList(), m.getMusicList());
-                                            frame.Navigate(currentPage);
-                                        }
-                                        timer = 0;
-                                        break;
-                                    case 5:
-                                        if (m.getMusicChoose())
-                                        {
-                                            m.addingToMusicAddrList();
-                                            m.addingToMusicList();    
-                                        }
-                                        timer = 0;
-                                        break;
-                                    case 9:
-                                        m.EnableButtons();
-                                        timer = 0;
-                                        break;
-                                    case 10: //no
-                                        m.DisableConfirmationCanvas();
-                                        m.DisableButtons();
-                                        timer = 0;
-                                        break;
-                                    case 11: //yes
-                                        m.deletingMusic();
-                                        m.DisableConfirmationCanvas();
-                                        timer = 0;
-                                        break;
-                                    case 12:
-                                        m.EnalbeConfirmationCanvas();
-                                        timer = 0;
-                                        break;
-
-                                }
-                            }
-                        }
-                        else {
-                            timer = 0;
-                        }
-                        break;
-                    case "tempoMonkey.TutorMode":
-                        TutorMode t = (TutorMode)pg;
-                        if (t.isSelectionReady())
-                        {
-                            int menu = t.getSelectedMenu();
-                            timer++;
-                            if (timer > waitTime)
-                            {
-                                switch (t.getSelectedMenu())
-                                {
-                                    case 6:
-                                        t.unPause();
-                                        break;
-                                    case 7:
-                                        frame.Navigate(new Uri("HomePage.xaml", UriKind.Relative));
-                                        timer = 0;
-                                        isManipulating = false;
-                                        break;
-                                }
-                            }
-                        }
-                        break;
-                    case "TempoMonkey.BrowseMusicInteractiveMode":
-                        BrowseMusicInteractiveMode mbi = (BrowseMusicInteractiveMode)pg;
-                        if (mbi.isSelectionReady())
-                        {
-                            int menu = mbi.getSelectedMenu();
-
-                            timer++;
-                            if (timer > waitTime)
-                            {
-                                switch (menu)
-                                {
-                                    case 3:
-                                        frame.Navigate(new Uri("HomePage.xaml", UriKind.Relative));
-                                        timer = 0;
-                                        isManipulating = false;
-                                        break;
-                                    case 4:
-                                        if (mbi.isSelectionDone())
-                                        {
-                                            isManipulating = true;
-                                            currentPage = new InteractiveMode(mbi.getMusicAddrList(), mbi.getMusicList());
-                                            frame.Navigate(currentPage);
-                                        }
-                                        timer = 0;
-                                        break;
-                                    case 5:
-                                        if (mbi.getMusicChoose())
-                                        {
-                                            mbi.addingToMusicAddrList();
-                                            mbi.addingToMusicList();
-                                        }
-                                        timer = 0;
-                                        break;
-                                    case 9:
-                                        mbi.EnableButtons();
-                                        timer = 0;
-                                        break;
-                                    case 10: //no
-                                        mbi.DisableConfirmationCanvas();
-                                        mbi.DisableButtons();
-                                        timer = 0;
-                                        break;
-                                    case 11: //yes
-                                        mbi.deletingMusic();
-                                        mbi.DisableConfirmationCanvas();
-                                        timer = 0;
-                                        break;
-                                    case 12:
-                                        mbi.EnalbeConfirmationCanvas();
-                                        timer = 0;
-                                        break;
-                                }
-                            }
-                        }
-                        else {
-                            timer = 0;
-                        }
-                        break;
-
-                    case "TempoMonkey.InteractiveMode":
-                        InteractiveMode i = (InteractiveMode)pg;
-                        if (i.isSelectionReady())
-                        {
-                            int menu = i.getSelectedMenu();
-                            timer++;
-                            if (timer > waitTime)
-                            {
-                                switch (i.getSelectedMenu())
-                                {
-                                    case 6:
-                                        i.unPause();
-                                        break;
-                                    case 7:
-                                        frame.Navigate(new Uri("HomePage.xaml", UriKind.Relative));
-                                        timer = 0;
-                                        isManipulating = false;
-                                        break;
-                                }
-                            }
-                        }
-                        break;
+                    moveMouse(skl);
                 }
+            }
         }
 
         Skeleton getSkeleton(AllFramesReadyEventArgs e)
@@ -468,21 +218,10 @@ namespace TempoMonkey
             }
         }
 
-
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             stopKinect(kinectSensorChooser1.Kinect);
-           
-        }
 
-        private Boolean isFrameContentReady()
-        {
-            Boolean ready = false;
-            frame.Navigated += delegate(object sender, NavigationEventArgs e)
-            {
-                ready = true;
-            };
-            return ready;
         }
     }
 }

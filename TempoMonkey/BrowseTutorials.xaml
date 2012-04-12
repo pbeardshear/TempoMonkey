@@ -9,7 +9,6 @@
 
     <Grid>
         <Label Content="Choose a Lesson" Height="86" HorizontalAlignment="Left" Margin="187,45,0,0" Name="Title" VerticalAlignment="Top" Width="424" FontSize="56" FontFamily="Sylfaen" FontWeight="Bold" Foreground="#FF7F64FC" />
-        <my:UserControl1 Height="304" HorizontalAlignment="Left" Margin="33,198,0,0" Name="slidingMenu" VerticalAlignment="Top" Width="735" />
-        <Button Content="Back" Height="50" HorizontalAlignment="Left" Margin="25,12,0,0" Name="Back" VerticalAlignment="Top" Width="110" MouseEnter="Back_MouseEnter" MouseLeave="Back_MouseLeave" />
+        <Button Content="Back" Height="50" HorizontalAlignment="Left" Margin="25,12,0,0" Name="Back" VerticalAlignment="Top" Width="110" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" />
     </Grid>
 </Page>

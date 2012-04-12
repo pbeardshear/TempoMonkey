@@ -4,16 +4,6 @@
         Title="MainWindow" Height="630" Width="810" xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers"
         Loaded="Window_Loaded" Closing="Window_Closing">
     <Canvas Height="600" Width="800" Name="MainCanvas">
-        <!--
-        <Canvas Height="600" Width="800" Name="HomePage">
-            <Label Canvas.Left="172" Canvas.Top="60" Content="TempoMonkey" Height="92" Name="label1" Width="387" FontSize="56" FontFamily="Sylfaen" FontWeight="Bold" Foreground="#FF7F64FC" />
-            <Image Canvas.Left="588" Canvas.Top="30" Height="177" Name="image1" Stretch="Fill" Width="183" Source="/tempoMonkey;component/images/Mb-logo.png" />
-            <Button Canvas.Left="174" Canvas.Top="273" Content="Learning Studio"  Name="learningStudioButton" Height="106" Width="447" Foreground="#FF604EB4" FontSize="48" FontFamily="Palatino Linotype" />
-            <Button Canvas.Left="174" Canvas.Top="425" Content="Browse Music"  Name="browseMusic" Height="106" Width="447" Foreground="#FF604EB4" FontSize="48" FontFamily="Palatino Linotype" />
-        </Canvas>
-        
-        -->
-        
         <my:KinectSensorChooser Height="203" Name="kinectSensorChooser1" Width="428" Canvas.Left="227" Canvas.Top="194" />
         <Frame Canvas.Left="0" Canvas.Top="0" Height="600" Name="frame" Width="800" ContentRendered="myFrame_ContentRendered"/>
     </Canvas>

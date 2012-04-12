@@ -27,7 +27,8 @@ class KinectGesturePlayer
     public DepthImagePoint currLeftWrist, currLeftHand, currLeftElbow, currLeftShoulder;
     public DepthImagePoint currRightWrist, currRightHand, currRightElbow, currRightShoulder;
 
-    public void registerCallBack(listener listener, staticCallBack staticCallBack, dynamicCallBack dynamicCallback){
+    public void registerCallBack(listener listener, staticCallBack staticCallBack, dynamicCallBack dynamicCallback)
+    {
         if (staticCallBack != null)
         {
             staticCallBacks[listener] = staticCallBack;
@@ -35,7 +36,7 @@ class KinectGesturePlayer
         if (dynamicCallback != null)
         {
             dynamicCallBacks[listener] = dynamicCallback;
-        }    
+        }
     }
 
     private void callDynamicCallBack(listener listener, double change)
@@ -251,7 +252,7 @@ class KinectGesturePlayer
             return;
         }
 
-        if (currRightHand.Y < currRightWrist.Y && currRightHand.Y > currHead.Y && currHead.Depth > currRightHand.Depth + 300 )
+        if (currRightHand.Y < currRightWrist.Y && currRightHand.Y > currHead.Y && currHead.Depth > currRightHand.Depth + 300)
         {
             if (seekTryCount >= 10)
             {
@@ -424,7 +425,7 @@ class KinectGesturePlayer
                 return (from s in allSkeletons
                         where s.TrackingState == SkeletonTrackingState.Tracked
                         select s).FirstOrDefault();
-           }
+            }
         }
     }
 

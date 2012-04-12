@@ -15,8 +15,6 @@ using System.Collections;
 using Microsoft.Kinect;
 using Coding4Fun.Kinect.Wpf;
 using System.Windows.Media.Animation;
-
-
 namespace TempoMonkey
 {
     /// <summary>
@@ -24,12 +22,47 @@ namespace TempoMonkey
     /// </summary>
     public partial class InteractiveMode : Page
     {
-
         BrushConverter bc = new BrushConverter();
         KinectGesturePlayer leftPlayer, rightPlayer;
         bool isPaused = false;
 
-        public void interAllFramesReady(object sender, AllFramesReadyEventArgs e)
+        public InteractiveMode()
+        {
+            throw new Exception();
+        }
+
+        public InteractiveMode(ArrayList addrList, ArrayList nameList)
+        {
+            // Initialize the audio library
+            // This should only be done in one place
+            Processing.Audio.Initialize();
+
+            // Load the audio files
+            foreach (string uri in addrList)
+            {
+                Processing.Audio.LoadFile(uri);
+            }
+
+            System.Windows.Forms.Cursor.Hide();
+            InitializeComponent();
+            leftPlayer = new KinectGesturePlayer();
+            rightPlayer = new KinectGesturePlayer();
+
+            initVisualizer();
+            leftPlayer.registerCallBack(leftPlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
+            leftPlayer.registerCallBack(leftPlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
+            leftPlayer.registerCallBack(leftPlayer.handSwingListener, seekTrackingHandler, seekChangeHandler);
+            leftPlayer.registerCallBack(leftPlayer.handsUppenListener, tempoTrackingHandler, tempoChangeHandler);
+            leftPlayer.registerCallBack(leftPlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
+
+            rightPlayer.registerCallBack(rightPlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
+            rightPlayer.registerCallBack(rightPlayer.handsAboveHeadListener, pitchTrackingHandler2, pitchChangeHandler);
+            rightPlayer.registerCallBack(rightPlayer.handSwingListener, seekTrackingHandler, seekChangeHandler);
+            rightPlayer.registerCallBack(rightPlayer.handsUppenListener, tempoTrackingHandler2, tempoChangeHandler);
+            rightPlayer.registerCallBack(rightPlayer.handsWidenListener, volumeTrackingHandler2, volumeChangeHandler);
+        }
+
+        public void allFramesReady(object sender, AllFramesReadyEventArgs e)
         {
             if (!isPaused)
             {
@@ -60,6 +93,7 @@ namespace TempoMonkey
             }
         }
 
+        #region Gesture Handlers
         int timer = 0;
 
         //Handlers
@@ -77,12 +111,6 @@ namespace TempoMonkey
         }
 
 
-        /// <summary>
-        ///          Kinect
-        ///      
-        ///           You
-        /// |   1  |   0  |  2   |
-        /// </summary>
         int previousTrack = 1;
         void changeTrackHandler(double value)
         {
@@ -94,17 +122,14 @@ namespace TempoMonkey
 
             if (value < 250 && previousTrack != 1)
             {
-                //Track.Content = "On Track 1";
                 previousTrack = 1;
             }
             else if (value > 450 && previousTrack != 2)
             {
-                //Track.Content = "On Track 2";
                 previousTrack = 2;
             }
             else if (value >= 250 && value <= 450 && previousTrack != 0)
             {
-                //Track.Content = "On Track 0";
                 previousTrack = 0;
             }
             else
@@ -214,122 +239,56 @@ namespace TempoMonkey
             }
         }
 
-        public void unPause()
+        public void Resumee()
         {
             isPaused = false;
+            Processing.Audio.Play();
             Border.Visibility = System.Windows.Visibility.Hidden;
             Resume.Visibility = System.Windows.Visibility.Hidden;
             Quit.Visibility = System.Windows.Visibility.Hidden;
             System.Windows.Forms.Cursor.Hide();
+            MainWindow.isManipulating = true;
         }
 
         public void Pause()
         {
             isPaused = true;
+            Processing.Audio.Pause();
             Border.Visibility = System.Windows.Visibility.Visible;
             Resume.Visibility = System.Windows.Visibility.Visible;
             Quit.Visibility = System.Windows.Visibility.Visible;
             System.Windows.Forms.Cursor.Show();
+            MainWindow.isManipulating = false;
         }
 
-        private void ResumeEnter(object sender, MouseEventArgs e){
-            setSelectionStatus(true);
-            direction = 6;
-        }
 
-        private void ResumeLeave(object sender, MouseEventArgs e)
+
+        #endregion
+
+        #region Navigation
+        void Mouse_Enter(object sender, MouseEventArgs e)
         {
-            setSelectionStatus(false);
+            MainWindow.Mouse_Enter(sender, e);
         }
 
-        private void QuitEnter(object sender, MouseEventArgs e)
+        void Mouse_Leave(object sender, MouseEventArgs e)
         {
-            setSelectionStatus(true);
-            direction = 7;
+            MainWindow.Mouse_Leave(sender, e);
         }
 
-        private void QuitLeave(object sender, MouseEventArgs e)
+        void Quit_Click(object sender, MouseEventArgs e)
         {
-            setSelectionStatus(false);
+            throw new Exception();
         }
 
-        //Tell the MainWindow which menu button has been selected
-        public int getSelectedMenu()
+        void Resume_Click(object sender, MouseEventArgs e)
         {
-            return direction;
+            Resumee();
         }
 
+        #endregion
 
-        private void setSelectionStatus(Boolean value)
-        {
-            isReady = value;
-            if (!isReady)
-            {
-                RaiseEvent(new RoutedEventArgs(MainWindow.resetTimer));
-            }
-        }
-
-        //Tell the MainWindow if the cursor is on the button.
-        public Boolean isSelectionReady()
-        {
-            return isReady;
-        }
-
-        int direction = 999;
-        bool isReady = false;
-
-
-        public InteractiveMode(ArrayList addrList, ArrayList nameList)
-        {
-            System.Windows.Forms.Cursor.Hide();
-            InitializeComponent();
-            leftPlayer = new KinectGesturePlayer();
-            rightPlayer = new KinectGesturePlayer();
-
-
-            // This should only be done in one place
-            Processing.Audio.Initialize();
-
-            // Load the audio files
-            foreach (string uri in addrList)
-            {
-                Processing.Audio.LoadFile(uri);
-            }
-
-
-            Processing.Audio.Play();
-
-            System.Windows.Forms.Cursor.Show();
-            initVisualizer();
-
-            leftPlayer.registerCallBack(leftPlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
-            leftPlayer.registerCallBack(leftPlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
-            leftPlayer.registerCallBack(leftPlayer.handSwingListener, seekTrackingHandler, seekChangeHandler);
-            leftPlayer.registerCallBack(leftPlayer.handsUppenListener, tempoTrackingHandler, tempoChangeHandler);
-            leftPlayer.registerCallBack(leftPlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
-
-            rightPlayer.registerCallBack(rightPlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
-            rightPlayer.registerCallBack(rightPlayer.handsAboveHeadListener, pitchTrackingHandler2, pitchChangeHandler);
-            rightPlayer.registerCallBack(rightPlayer.handSwingListener, seekTrackingHandler, seekChangeHandler);
-            rightPlayer.registerCallBack(rightPlayer.handsUppenListener, tempoTrackingHandler2, tempoChangeHandler);
-            rightPlayer.registerCallBack(rightPlayer.handsWidenListener, volumeTrackingHandler2, volumeChangeHandler);
-        }
-
-        private void Back_MouseEnter(object sender, MouseEventArgs e)
-        {
-            setSelectionStatus(true);
-            direction = 3;
-        }
-
-        private void Back_MouseLeave(object sender, MouseEventArgs e)
-        {
-            setSelectionStatus(false);
-        }
-
-
-
-
-
+        #region Visualization
         private Storyboard myStoryboard;
         private float ione = 125F;
         private float itwo = .5F;
@@ -526,6 +485,8 @@ namespace TempoMonkey
         {
             myStoryboard.Begin(this);
         }
+
+        #endregion
 
     }
 }

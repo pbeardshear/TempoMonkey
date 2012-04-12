@@ -64,9 +64,6 @@
     <Compile Include="BrowseMusic.xaml.cs">
       <DependentUpon>BrowseMusic.xaml</DependentUpon>
     </Compile>
-    <Compile Include="BrowseMusicInteractiveMode.xaml.cs">
-      <DependentUpon>BrowseMusicInteractiveMode.xaml</DependentUpon>
-    </Compile>
     <Compile Include="BrowseTutorials.xaml.cs">
       <DependentUpon>BrowseTutorials.xaml</DependentUpon>
     </Compile>
@@ -82,10 +79,6 @@
     </Compile>
     <Compile Include="Vector3.cs" />
     <Page Include="BrowseMusic.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="BrowseMusicInteractiveMode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

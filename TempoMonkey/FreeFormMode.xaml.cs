@@ -26,31 +26,46 @@ namespace TempoMonkey
         BrushConverter bc = new BrushConverter();
         KinectGesturePlayer freePlayer;
         bool isPaused = false;
-        bool first = true;
 
-        public void freeAllFramesReady(object sender, AllFramesReadyEventArgs e){
-            if (first)
+        public FreeFormMode(ArrayList addrList, ArrayList nameList)
+        {
+            // Initialize the audio library
+            // This should only be done in one place
+            Processing.Audio.Initialize();
+
+            // Load the audio files
+            foreach (string uri in addrList)
             {
-                first = false;
+                Processing.Audio.LoadFile(uri);
             }
-            
-            Skeleton skeleton = KinectGesturePlayer.getFristSkeleton(e);
-            if (skeleton != null)
+
+            Processing.Audio.Play();
+
+            System.Windows.Forms.Cursor.Hide();
+            InitializeComponent();
+            initVisualizer();
+            freePlayer = new KinectGesturePlayer();
+            freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
+            freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
+            freePlayer.registerCallBack(freePlayer.handSwingListener, seekTrackingHandler, seekChangeHandler);
+            freePlayer.registerCallBack(freePlayer.handsUppenListener, tempoTrackingHandler, tempoChangeHandler);
+            freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
+        }
+
+        public void allFramesReady(object sender, AllFramesReadyEventArgs e)
+        {
+            if (!isPaused)
             {
-                if (!isPaused)
+                Skeleton skeleton = KinectGesturePlayer.getFristSkeleton(e);
+
+                if (skeleton != null)
                 {
                     freePlayer.skeletonReady(e, skeleton);
                 }
             }
         }
 
-        private float RandomNumber(int min, int max)
-        {
-            Random random = new Random();
-            return (float)random.Next(min, max);
-        }
-
-        //Handlers
+        #region Gesture Handlers
         void pauseTrackingHandler(bool exist)
         {
             if (isPaused)
@@ -65,32 +80,24 @@ namespace TempoMonkey
         }
 
 
-        /// <summary>
-        ///          Kinect
-        ///      
-        ///           You
-        /// |   1  |   0  |  2   |
-        /// </summary>
         int previousTrack = 1;
         void changeTrackHandler(double value)
         {
-            if(!wasSeeking) {
-                SeekSlider.Value += .05; // THIS IS NOT REALLY TRUE
+            if (!wasSeeking)
+            {
+                SeekSlider.Value += .05; // XXX THIS IS NOT REALLY TRUE
             }
 
             if (value < 250 && previousTrack != 1)
             {
-                Track.Content = "On Track 1";
                 previousTrack = 1;
             }
             else if (value > 450 && previousTrack != 2)
             {
-                Track.Content = "On Track 2";
                 previousTrack = 2;
             }
             else if (value >= 250 && value <= 450 && previousTrack != 0)
             {
-                Track.Content = "On Track 0";
                 previousTrack = 0;
             }
             else
@@ -98,7 +105,7 @@ namespace TempoMonkey
                 return;
             }
 
-			Processing.Audio.SwapTrack(previousTrack);
+            Processing.Audio.SwapTrack(previousTrack);
             Processing.Audio.Seek(SeekSlider.Value);
             Processing.Audio.ChangeVolume(VolumeSlider.Value);
             Processing.Audio.ChangeTempo(TempoSlider.Value);
@@ -108,7 +115,7 @@ namespace TempoMonkey
         void volumeChangeHandler(double change)
         {
             VolumeSlider.Value -= change;
-			Processing.Audio.ChangeVolume(VolumeSlider.Value);
+            Processing.Audio.ChangeVolume(VolumeSlider.Value);
         }
 
         void volumeTrackingHandler(bool exist)
@@ -123,7 +130,7 @@ namespace TempoMonkey
             Processing.Audio.ChangeTempo(TempoSlider.Value);
         }
 
-       
+
         void tempoTrackingHandler(bool exist)
         {
             Tempo.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
@@ -152,10 +159,10 @@ namespace TempoMonkey
                 wasSeeking = false;
             }
         }
-        
+
         void pitchChangeHandler(double change)
         {
-            PitchSlider.Value -= change*3;
+            PitchSlider.Value -= change * 3;
             Processing.Audio.ChangePitch(PitchSlider.Value);
 
         }
@@ -166,120 +173,54 @@ namespace TempoMonkey
             PitchFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
         }
 
-        
-        public FreeFormMode(ArrayList addrList, ArrayList nameList)
+        public void Resumee()
         {
-			// Initialize the audio library
-			// This should only be done in one place
-			Processing.Audio.Initialize();
-
-			// Load the audio files
-			foreach (string uri in addrList)
-			{
-				Processing.Audio.LoadFile(uri);
-			}
-            
-
-            Processing.Audio.Play();
-			
-            System.Windows.Forms.Cursor.Show();
-            InitializeComponent();
-            initVisualizer();
-            freePlayer = new KinectGesturePlayer();
-            freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
-            freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
-            freePlayer.registerCallBack(freePlayer.handSwingListener, seekTrackingHandler, seekChangeHandler);
-            freePlayer.registerCallBack(freePlayer.handsUppenListener, tempoTrackingHandler, tempoChangeHandler);
-            freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
-        }
-
-        public void unPause()
-        {
-            Processing.Audio.Play();
             isPaused = false;
+            Processing.Audio.Pause();
             Border.Visibility = System.Windows.Visibility.Hidden;
             Resume.Visibility = System.Windows.Visibility.Hidden;
             Quit.Visibility = System.Windows.Visibility.Hidden;
             System.Windows.Forms.Cursor.Hide();
+            MainWindow.isManipulating = true;
         }
 
         public void Pause()
         {
-            Processing.Audio.Pause();
             isPaused = true;
+            Processing.Audio.Play();
             Border.Visibility = System.Windows.Visibility.Visible;
             Resume.Visibility = System.Windows.Visibility.Visible;
             Quit.Visibility = System.Windows.Visibility.Visible;
             System.Windows.Forms.Cursor.Show();
+            MainWindow.isManipulating = true;
         }
 
-        private void ResumeEnter(object sender, MouseEventArgs e){
-            setSelectionStatus(true);
-            direction = 6;
-        }
+        #endregion
 
-        private void ResumeLeave(object sender, MouseEventArgs e)
+        #region Navigation
+        void Mouse_Enter(object sender, MouseEventArgs e)
         {
-            setSelectionStatus(false);
+            MainWindow.Mouse_Enter(sender, e);
         }
 
-        private void QuitEnter(object sender, MouseEventArgs e)
+        void Mouse_Leave(object sender, MouseEventArgs e)
         {
-            setSelectionStatus(true);
-            direction = 7;
+            MainWindow.Mouse_Leave(sender, e);
         }
 
-        private void QuitLeave(object sender, MouseEventArgs e)
+        void Quit_Click(object sender, MouseEventArgs e)
         {
-            setSelectionStatus(false);
+            throw new Exception();
         }
 
-        //Tell the MainWindow which menu button has been selected
-        public int getSelectedMenu()
+        void Resume_Click(object sender, MouseEventArgs e)
         {
-            return direction;
+            Resumee();
         }
 
+        #endregion
 
-        private void setSelectionStatus(Boolean value)
-        {
-            isReady = value;
-            if (!isReady)
-            {
-                RaiseEvent(new RoutedEventArgs(MainWindow.resetTimer));
-            }
-        }
-
-        //Tell the MainWindow if the cursor is on the button.
-        public Boolean isSelectionReady()
-        {
-            return isReady;
-        }
-
-        int direction = 999;
-        bool isReady = false;
-
-
-
-
-
-
-
-
-
-
-
-
-        //////////////////////////////Music Visualizer by Andrew Wun/////////////////////////////////
-
-
-
-
-
-
-
-
-
+        #region Visualization
         private Storyboard myStoryboard;
         private float ione = 125F;
         private float itwo = .5F;
@@ -477,6 +418,6 @@ namespace TempoMonkey
             myStoryboard.Begin(this);
         }
 
-
+        #endregion
     }
 }
