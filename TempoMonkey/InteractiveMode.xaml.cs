@@ -52,13 +52,13 @@ namespace TempoMonkey
             leftPlayer.registerCallBack(leftPlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
             leftPlayer.registerCallBack(leftPlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
             leftPlayer.registerCallBack(leftPlayer.handSwingListener, seekTrackingHandler, seekChangeHandler);
-            leftPlayer.registerCallBack(leftPlayer.handsUppenListener, tempoTrackingHandler, tempoChangeHandler);
+            leftPlayer.registerCallBack(leftPlayer.leanListener, tempoTrackingHandler, tempoChangeHandler);
             leftPlayer.registerCallBack(leftPlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
 
             rightPlayer.registerCallBack(rightPlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
             rightPlayer.registerCallBack(rightPlayer.handsAboveHeadListener, pitchTrackingHandler2, pitchChangeHandler);
             rightPlayer.registerCallBack(rightPlayer.handSwingListener, seekTrackingHandler, seekChangeHandler);
-            rightPlayer.registerCallBack(rightPlayer.handsUppenListener, tempoTrackingHandler2, tempoChangeHandler);
+            rightPlayer.registerCallBack(rightPlayer.leanListener, tempoTrackingHandler2, tempoChangeHandler);
             rightPlayer.registerCallBack(rightPlayer.handsWidenListener, volumeTrackingHandler2, volumeChangeHandler);
         }
 

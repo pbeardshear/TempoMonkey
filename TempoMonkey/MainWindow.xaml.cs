@@ -66,12 +66,12 @@ namespace TempoMonkey
             InitializeComponent();
 
             DispatcherTimer Timer = new DispatcherTimer();
-            Timer.Interval = TimeSpan.FromSeconds(1);
+            Timer.Interval = TimeSpan.FromSeconds(.25);
             Timer.Tick += (delegate(object s, EventArgs args)
             {
                 if (currentlySelectedButton != null)
                 {
-                    if (timeOnCurrentButton >= 2)
+                    if (timeOnCurrentButton >= 4)
                     {
                         currentlySelectedButton.PerformClick();
                     }

@@ -26,6 +26,7 @@ namespace TempoMonkey
         BrushConverter bc = new BrushConverter();
         KinectGesturePlayer freePlayer;
         bool isPaused = false;
+        ArrayList _nameList;
 
         public FreeFormMode(ArrayList addrList, ArrayList nameList)
         {
@@ -38,6 +39,7 @@ namespace TempoMonkey
             {
                 Processing.Audio.LoadFile(uri);
             }
+            _nameList = nameList;
 
             Processing.Audio.Play();
 
@@ -48,7 +50,7 @@ namespace TempoMonkey
             freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
             freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
             freePlayer.registerCallBack(freePlayer.handSwingListener, seekTrackingHandler, seekChangeHandler);
-            freePlayer.registerCallBack(freePlayer.handsUppenListener, tempoTrackingHandler, tempoChangeHandler);
+            freePlayer.registerCallBack(freePlayer.leanListener, tempoTrackingHandler, tempoChangeHandler);
             freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
         }
 
@@ -85,7 +87,7 @@ namespace TempoMonkey
         {
             if (!wasSeeking)
             {
-                SeekSlider.Value += .05; // XXX THIS IS NOT REALLY TRUE
+                SeekSlider.Value += .05;
             }
 
             if (value < 250 && previousTrack != 1)

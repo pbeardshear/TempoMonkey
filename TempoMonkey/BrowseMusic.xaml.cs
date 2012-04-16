@@ -60,6 +60,7 @@ namespace TempoMonkey
             littleBox.boxName = name;
             littleBox.address = address;
             littleBox.name = name;
+            littleBox.setImage(name);
             littleBox.position = pos;
             Boxes.Add(littleBox);
             MenuBar.Children.Add(littleBox);

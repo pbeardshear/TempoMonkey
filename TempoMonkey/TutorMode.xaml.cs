@@ -41,7 +41,7 @@ namespace TempoMonkey
             tutoree.registerCallBack(tutoree.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
             tutoree.registerCallBack(tutoree.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
             tutoree.registerCallBack(tutoree.handSwingListener, seekTrackingHandler, seekChangeHandler);
-            tutoree.registerCallBack(tutoree.handsUppenListener, tempoTrackingHandler, tempoChangeHandler);
+            tutoree.registerCallBack(tutoree.leanListener, tempoTrackingHandler, tempoChangeHandler);
             tutoree.registerCallBack(tutoree.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
         }
 

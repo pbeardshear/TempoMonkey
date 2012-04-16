@@ -16,11 +16,11 @@
 
         <Button Canvas.Left="723" Canvas.Top="126" Content=">" Width="80" Height="300" Name="right" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Right_Click"/>
         <Button Canvas.Top="126" Content="&lt;" Height="300" Name="left" Width="80" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Left_Click" />
-        <Button Content="Choose" Canvas.Left="263" Canvas.Top="398" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Choose_Click" Height="80" Width="244"/>
+        <Button Content="Choose" Canvas.Left="263" Canvas.Top="406" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Choose_Click" Height="64" Width="244"/>
 
-        <Label Content="Selected" Height="48" HorizontalAlignment="Left" Margin="12,459,0,0" Name="label1" VerticalAlignment="Top" Width="136" FontSize="30" FontWeight="Bold" FontStretch="Normal" FontFamily="Segoe UI"  Foreground="#FF7F64FC"/>
-        <Label Content="Songs :" Height="48" HorizontalAlignment="Left" Margin="12,489,0,0" Name="label2" VerticalAlignment="Top" Width="136" FontSize="30" FontWeight="Bold" FontStretch="Normal" FontFamily="Segoe UI"  Foreground="#FF7F64FC"/>
-        <StackPanel Height="48" HorizontalAlignment="Left" Margin="148,475,0,0" Name="selectedMusicList" VerticalAlignment="Top" Width="643" Orientation="Horizontal"/>
+        <Label Content="Selected" Height="48" HorizontalAlignment="Left" Name="label1" VerticalAlignment="Top" Width="136" FontSize="30" FontWeight="Bold" FontStretch="Normal" FontFamily="Segoe UI"  Foreground="#FF7F64FC" Canvas.Left="12" Canvas.Top="468"/>
+        <Label Content="Songs :" Height="48" HorizontalAlignment="Left" Name="label2" VerticalAlignment="Top" Width="136" FontSize="30" FontWeight="Bold" FontStretch="Normal" FontFamily="Segoe UI"  Foreground="#FF7F64FC" Canvas.Left="12" Canvas.Top="498"/>
+        <StackPanel Height="48" HorizontalAlignment="Left" Name="selectedMusicList" VerticalAlignment="Top" Width="643" Orientation="Horizontal" Canvas.Left="148" Canvas.Top="484"/>
         <Button Content="Done" Height="53" HorizontalAlignment="Left" Margin="569,535,0,0" Name="done" VerticalAlignment="Top" Width="118" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Done_Click"/>
         <Button Content="Delete" Height="53" HorizontalAlignment="Left" Margin="321,535,0,0" Name="delete" VerticalAlignment="Top" Width="118" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Delete_Click"/>
 

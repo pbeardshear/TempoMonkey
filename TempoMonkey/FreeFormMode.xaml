@@ -36,5 +36,6 @@
         <Border Name="TempoFocus" Visibility="Hidden" BorderBrush="Green" BorderThickness="3" Height="44" Canvas.Left="460" Canvas.Top="399" Width="94"/>
         <Border Name="PitchFocus" Visibility="Hidden" BorderBrush="Green" BorderThickness="3" Height="44" Canvas.Left="460" Canvas.Top="321" Width="94"/>
         <Border Name="VolumeFocus" Visibility="Hidden" BorderBrush="Green" BorderThickness="3" Height="44" Canvas.Left="463" Canvas.Top="230" Width="94"/>
+        <Label Canvas.Left="108" Canvas.Top="518" Name="Track" Content="" Height="72" Width="592" FontSize="20"  FontStyle="Normal"/>
     </Canvas>
 </Page>

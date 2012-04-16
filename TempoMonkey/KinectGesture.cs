@@ -72,6 +72,7 @@ class KinectGesturePlayer
         handled = false;
         kinectGuideListener();
         handsAboveHeadListener();
+        leanListener();
         handsUppenListener();
         handsWidenListener();
         handSwingListener();
@@ -405,6 +406,40 @@ class KinectGesturePlayer
             {
                 handsUppenTryCount--;
             }
+        }
+    }
+
+    /* Detches leaning right/left
+     * */
+    public int beenLeaning = 0;
+    public void leanListener()
+    {
+        if (handled)
+        {
+            callStaticCallBack(leanListener, false);
+            wasTrackingHandsUppen = false;
+            handsUppenTryCount = 0;
+            return;
+        }
+
+        if (currHead.X > currHipCenter.X + 50)
+        {
+            beenLeaning++;
+            handled = true;
+            callStaticCallBack(leanListener, true);
+            callDynamicCallBack(leanListener, +.2 * beenLeaning);
+        }
+        else if (currHead.X < currHipCenter.X - 50)
+        {
+            beenLeaning++;
+            handled = true;
+            callStaticCallBack(leanListener, true);
+            callDynamicCallBack(leanListener, -.2 * beenLeaning);
+        }
+        else
+        {
+            beenLeaning = 0;
+            callStaticCallBack(leanListener, false);
         }
     }
 
