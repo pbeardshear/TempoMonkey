@@ -17,6 +17,7 @@ class KinectGesturePlayer
 
     private Dictionary<listener, dynamicCallBack> dynamicCallBacks = new Dictionary<listener, dynamicCallBack>();
     private Dictionary<listener, staticCallBack> staticCallBacks = new Dictionary<listener, staticCallBack>();
+    private Dictionary<listener, bool> staticWas = new Dictionary<listener, bool>();
     private bool handled = false;
 
     public DepthImagePoint lastHead, lastNeck, lastSpine, lastHipCenter;
@@ -32,6 +33,7 @@ class KinectGesturePlayer
         if (staticCallBack != null)
         {
             staticCallBacks[listener] = staticCallBack;
+            staticWas[listener] = false;
         }
         if (dynamicCallback != null)
         {
@@ -55,7 +57,11 @@ class KinectGesturePlayer
     {
         if (staticCallBacks.ContainsKey(listener))
         {
-            staticCallBacks[listener](exists);
+            if (staticWas[listener] != exists)
+            {
+                staticCallBacks[listener](exists);
+                staticWas[listener] = exists;
+            }
         }
         else
         {
