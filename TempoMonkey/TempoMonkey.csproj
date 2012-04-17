@@ -173,6 +173,19 @@
   <ItemGroup>
     <None Include="Resources\Maid with the Flaxen Hair.mp3" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\volume-avatar.png" />
+    <None Include="Resources\Images\seek-avatar.png" />
+    <None Include="Resources\Images\pitch-avatar.png" />
+    <None Include="Resources\Images\tempo-avatar.png" />
+    <Content Include="Resources\Enough To Fly With You.mp3" />
+    <None Include="Resources\Images\pitch-avatar-disabled.png" />
+    <None Include="Resources\Images\seek-avatar-disabled.png" />
+    <None Include="Resources\Images\tempo-avatar-disabled.png" />
+    <None Include="Resources\Images\volume-avatar-disabled.png" />
+    <Content Include="Resources\Set Fire to the Rain.m4a" />
+    <Content Include="Resources\Your Song.m4a" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "..\..\Resources\*.mp3" "."</PostBuildEvent>

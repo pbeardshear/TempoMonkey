@@ -67,10 +67,66 @@ namespace TempoMonkey.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap pitch_avatar {
+            get {
+                object obj = ResourceManager.GetObject("pitch_avatar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap pitch_avatar_disabled {
+            get {
+                object obj = ResourceManager.GetObject("pitch_avatar_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap seek_avatar {
+            get {
+                object obj = ResourceManager.GetObject("seek_avatar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap seek_avatar_disabled {
+            get {
+                object obj = ResourceManager.GetObject("seek_avatar_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static byte[] Sleep_Away {
             get {
                 object obj = ResourceManager.GetObject("Sleep_Away", resourceCulture);
                 return ((byte[])(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tempo_avatar {
+            get {
+                object obj = ResourceManager.GetObject("tempo_avatar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tempo_avatar_disabled {
+            get {
+                object obj = ResourceManager.GetObject("tempo_avatar_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap volume_avatar {
+            get {
+                object obj = ResourceManager.GetObject("volume_avatar", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap volume_avatar_disabled {
+            get {
+                object obj = ResourceManager.GetObject("volume_avatar_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
     }
