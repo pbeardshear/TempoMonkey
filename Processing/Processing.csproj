@@ -70,7 +70,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Visualizer\Visualizer.csproj">
+      <Project>{0B26333F-1ECD-4260-8DDC-C16C7B28A59B}</Project>
+      <Name>Visualizer</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Properties\Settings.settings">
