@@ -7,6 +7,7 @@ using NAudio.Wave;
 using System.IO;
 using System.Diagnostics;
 using System.Threading;
+using Visualizer;
 
 namespace Processing
 {
@@ -344,6 +345,9 @@ namespace Processing
             _blockAlignStream = new BlockAlignReductionStream(_waveReader);
             _waveChannel = new WaveChannel32(_blockAlignStream);
 
+			// Attach a handler to the channel sample event
+			_waveChannel.Sample += new EventHandler<SampleEventArgs>(_waveChannel_Sample);
+
             // Create the input provider
             _inputProvider = new AdvancedBufferedWaveProvider(_waveChannel.WaveFormat);
             _inputProvider.MaxQueuedBuffers = 100;
@@ -363,6 +367,11 @@ namespace Processing
             _waveOutDevice.Init(_inputProvider);
             _waveOutDevice.Play();
         }
+
+		static void _waveChannel_Sample(object sender, SampleEventArgs e)
+		{
+			Sampler.Add(e.Left, e.Right);
+		}
 
         private static void ApplyTimeStretchProfiles(bool useDefault = true)
         {
