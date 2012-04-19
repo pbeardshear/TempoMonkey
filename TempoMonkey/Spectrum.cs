@@ -9,6 +9,7 @@ using NAudio.Wave;
 using System.Windows.Shapes;
 using System.Windows;
 using System.Windows.Media;
+using Processing;
 
 namespace Visualizer
 {
@@ -30,9 +31,13 @@ namespace Visualizer
 		private double barWidth = 1;
 		private int BarCount = 12;
 		private double BarSpacing = 20.0;
-		private int barIndex = 0;
+		private int maxBarHeight = 120;
 		private const int scaleFactorLinear = 15;
 		private Random rand = new Random();
+
+		private float currentTempo;
+		private float currentPitch;
+		private float currentVolume;
 
 		public Spectrum(Canvas spectrumContainer)
 		{
@@ -65,9 +70,16 @@ namespace Visualizer
 			double PeakFallDelay = 30;
 			int barIndex = 0;
 			double fftBucketHeight = 0f;
-			double height = canv.RenderSize.Height;
+			double height = canv.RenderSize.Height - 20;		// This places the visualizer at the bottom of the screen
 			double peakDotHeight = Math.Max(barWidth / 2.0f, 1);
 			double barHeightScale = (height - peakDotHeight);
+
+			currentTempo = Audio.getTempo();
+			currentVolume = Audio.geVolume();
+			if (Audio.getPitch() != currentPitch)
+			{
+				UpdatePitch(Audio.getPitch());
+			}
 			for (int i = min; i <= max; i++)
 			{
 				fftBucketHeight = (channelData[i] * scaleFactorLinear) * barHeightScale;
@@ -76,13 +88,18 @@ namespace Visualizer
 				if (barHeight < 0f)
 					barHeight = 0f;
 
-				int currentIndexMax = false ? barIndexMax[barIndex] : barLogScaleIndexMax[barIndex];
+				int currentIndexMax = barLogScaleIndexMax[barIndex];
 				if (i == currentIndexMax)
 				{
 					if (barHeight > height)
 						barHeight = height;
 					if (barIndex > 0)
 						barHeight = (lastPeakHeight + barHeight) / (rand.NextDouble() < 0.3 ? 1.2 : 1.8);
+					// Apply the current volume to the bar height
+					barHeight += currentVolume / 5;
+					// Apply the tempo to the volume
+					// Depending on the value, we add a random offset to the height
+					barHeight += rand.Next(0, (int)(currentTempo / 4));
 					peakYPos = barHeight;
 					if (channelPeakData[barIndex] < peakYPos)
 						channelPeakData[barIndex] = (float)peakYPos;
@@ -91,19 +108,13 @@ namespace Visualizer
 
 					double xCoord = BarSpacing + (barWidth * barIndex) + (BarSpacing * barIndex) + 1;
 					
-					barShapes[barIndex].Margin = new Thickness(xCoord, (height - 1) - barHeight, 0, 0);
-					barShapes[barIndex].Height = barHeight;
+					barShapes[barIndex].Margin = new Thickness(xCoord, (height - 1) - Math.Min(barHeight, maxBarHeight), 0, 0);
+					barShapes[barIndex].Height = Math.Min(barHeight, maxBarHeight);
 					lastPeakHeight = barHeight;
 					barHeight = 0f;
 					barIndex++;
 				}
 			}
-		}
-
-		private float RandomNumber()
-		{
-			Random random = new Random();
-			return (float)(random.Next(0, 2047) * random.NextDouble());
 		}
 
 		/*
@@ -169,13 +180,6 @@ namespace Visualizer
 					StrokeLineJoin = PenLineJoin.Round
 				};
 				barShapes.Add(barRectangle);
-				//Rectangle peakRectangle = new Rectangle()
-				//{
-				//    Margin = new Thickness(xCoord, height - peakDotHeight, 0, 0),
-				//    Width = barWidth,
-				//    Height = peakDotHeight,
-				//};
-				//peakShapes.Add(peakRectangle);
 			}
 
 			foreach (Shape shape in barShapes)
@@ -185,5 +189,26 @@ namespace Visualizer
 
 			ActualBarWidth = barWidth;
 		}
+
+		#region Update Style Handlers
+
+		// Pitch affects color of bars
+		public void UpdatePitch(float newValue)
+		{
+			currentPitch = newValue;
+			// We need to apply the pitch to the color, since its
+			// more efficient not to apply this every update
+			
+			// We want maxPitch -> red, and minPitch -> blue/purple
+			for (int i = 0; i < barShapes.Count; i++)
+			{
+				barShapes[i].Fill = new LinearGradientBrush(Color.FromRgb((byte)(currentPitch * 2.5), 50, (byte)(130 - currentPitch)),
+										Color.FromRgb((byte)(currentPitch * 1.3), 50, (byte)(100 - currentPitch)),
+										new Point(0.5, 0),
+										new Point(0.5, 1));
+			}
+		}
+		
+		#endregion
 	}
 }

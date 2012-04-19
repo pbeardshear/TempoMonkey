@@ -214,6 +214,7 @@ namespace Processing
             {
                 CurrentTrackIndex = 0;
                 CurrentTrack = _audioStreamList[CurrentTrackIndex].Name;
+				
                 // This is the first time playing, so we need to create a thread to run on
                 audioProcessingThread = new Thread(new ThreadStart(delegate
                 {
