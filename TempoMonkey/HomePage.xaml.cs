@@ -32,7 +32,6 @@ namespace TempoMonkey
             FrameworkElement element = myCursor;
             Canvas.SetLeft(element, point.X);// - element.Width / 2);
             Canvas.SetTop(element, point.Y);// - element.Height / 2);
-            myTitle.Content = point.X + " " + point.Y;
         }
 
         public Ellipse getCursor()

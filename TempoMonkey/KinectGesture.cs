@@ -417,6 +417,7 @@ class KinectGesturePlayer
 
     /* Detches leaning right/left
      * */
+    public int LEANING_CONSTANT = 40;
     public int beenLeaning = 0;
     public void leanListener()
     {
@@ -428,19 +429,20 @@ class KinectGesturePlayer
             return;
         }
 
-        if (currHead.X > currHipCenter.X + 50)
+
+        if (currHead.X > currHipCenter.X + LEANING_CONSTANT)
         {
             beenLeaning++;
             handled = true;
             callStaticCallBack(leanListener, true);
-            callDynamicCallBack(leanListener, +.2 * beenLeaning);
+            callDynamicCallBack(leanListener, .2 * Math.Max(beenLeaning, 10));
         }
-        else if (currHead.X < currHipCenter.X - 50)
+        else if (currHead.X < currHipCenter.X - LEANING_CONSTANT)
         {
             beenLeaning++;
             handled = true;
             callStaticCallBack(leanListener, true);
-            callDynamicCallBack(leanListener, -.2 * beenLeaning);
+            callDynamicCallBack(leanListener, -.2 * Math.Max(beenLeaning, 10));
         }
         else
         {

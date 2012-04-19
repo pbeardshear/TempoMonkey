@@ -359,7 +359,8 @@ namespace TempoMonkey
 
 		void Quit_Click(object sender, RoutedEventArgs e)
 		{
-			throw new Exception();
+            MainWindow.currentPage = new HomePage();
+            NavigationService.Navigate(MainWindow.currentPage);
 		}
 
         void Resume_Click(object sender, RoutedEventArgs e)
