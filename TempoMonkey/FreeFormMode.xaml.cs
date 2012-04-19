@@ -18,6 +18,7 @@ using System.Windows.Media.Animation;
 using System.IO;
 using System.Drawing;
 using System.Windows.Threading;
+using Visualizer;
 
 namespace TempoMonkey
 {
@@ -48,7 +49,11 @@ namespace TempoMonkey
 
 			System.Windows.Forms.Cursor.Hide();
 			InitializeComponent();
-			initVisualizer();
+			// initVisualizer();
+
+			// Initialize the visualizer
+			Spectrum spectrumVisualizer = new Spectrum(MainCanvas);
+			spectrumVisualizer.RegisterSoundPlayer();
 
 			InitializeAvatars();
 			freePlayer = new KinectGesturePlayer();

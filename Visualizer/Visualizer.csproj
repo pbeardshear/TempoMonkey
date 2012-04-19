@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{034DC868-D097-4B27-BF3B-0D4CC4AA8AFF}</ProjectGuid>
+    <ProjectGuid>{0B26333F-1ECD-4260-8DDC-C16C7B28A59B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Processing</RootNamespace>
-    <AssemblyName>Processing</AssemblyName>
+    <RootNamespace>Visualizer</RootNamespace>
+    <AssemblyName>Visualizer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,26 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Bass.Net, Version=2.4.8.6, Culture=neutral, PublicKeyToken=b7566c273e6ef480, processorArchitecture=MSIL">
-      <HintPath>lib\Bass.Net.dll</HintPath>
-    </Reference>
     <Reference Include="NAudio">
-      <HintPath>lib\NAudio.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudio.WindowsMediaFormat">
-      <HintPath>lib\NAudio.WindowsMediaFormat.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudioFLAC">
-      <HintPath>lib\NAudioFLAC.dll</HintPath>
-    </Reference>
-    <Reference Include="NAudioOggVorbis">
-      <HintPath>lib\NAudioOggVorbis.dll</HintPath>
-    </Reference>
-    <Reference Include="NLog">
-      <HintPath>lib\NLog.dll</HintPath>
+      <HintPath>..\Processing\lib\NAudio.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -59,29 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio.cs" />
-    <Compile Include="lib\AdvancedBufferedWaveProvider.cs" />
-    <Compile Include="lib\SoundTouchSharp.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="BarHeightScalingStyles.cs" />
+    <Compile Include="FFTDataSize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Visualizer\Visualizer.csproj">
-      <Project>{0B26333F-1ECD-4260-8DDC-C16C7B28A59B}</Project>
-      <Name>Visualizer</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
+    <Compile Include="Sampler.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
