@@ -192,6 +192,9 @@
     <None Include="Resources\Images\seek-avatar-disabled.png" />
     <None Include="Resources\Images\tempo-avatar-disabled.png" />
     <None Include="Resources\Images\volume-avatar-disabled.png" />
+    <Resource Include="Resources\Images\tempo_monkey_logo2.png" />
+    <Resource Include="Resources\Images\tempo_monkey02_cartoonish.png" />
+    <Resource Include="Resources\Images\tempo_monkey_text.png" />
     <Content Include="Resources\Set Fire to the Rain.m4a" />
     <Content Include="Resources\Your Song.m4a" />
   </ItemGroup>

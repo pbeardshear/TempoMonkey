@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d">
     <Canvas x:Name="boxCanvas" RenderTransformOrigin="0.5,0.5" Canvas.ZIndex="0">
-        <Border BorderBrush="PaleGreen" BorderThickness="5" Canvas.Left="0" Canvas.Top="0" Height="100" Name="Highlight" Width="100" />
-        <TextBox Canvas.Left="5" Canvas.Top="5" Height="90" Name="textBox" HorizontalAlignment="Center" Width="90" />
+        <Border BorderBrush="#F6B029" BorderThickness="5" Canvas.Left="0" Canvas.Top="0" Height="100" Name="Highlight" Width="100" />
+        <TextBox Canvas.Left="5" Canvas.Top="5" Height="90" Name="textBox" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Width="90" />
         <Image Height="56" Canvas.Left="18" Canvas.Top="27" Width="60" Name="Image"></Image>
     </Canvas>
 </UserControl>
