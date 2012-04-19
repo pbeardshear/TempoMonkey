@@ -20,16 +20,11 @@ namespace TempoMonkey
     /// <summary>
     /// Interaction logic for InteractiveMode.xaml
     /// </summary>
-    public partial class InteractiveMode : Page
+    public partial class InteractiveMode : Page, KinectPage, CursorPage
     {
         BrushConverter bc = new BrushConverter();
         KinectGesturePlayer leftPlayer, rightPlayer;
         bool isPaused = false;
-
-        public InteractiveMode()
-        {
-            throw new Exception();
-        }
 
         public InteractiveMode(ArrayList addrList, ArrayList nameList)
         {
@@ -60,6 +55,7 @@ namespace TempoMonkey
             rightPlayer.registerCallBack(rightPlayer.handSwingListener, seekTrackingHandler, seekChangeHandler);
             rightPlayer.registerCallBack(rightPlayer.leanListener, tempoTrackingHandler2, tempoChangeHandler);
             rightPlayer.registerCallBack(rightPlayer.handsWidenListener, volumeTrackingHandler2, volumeChangeHandler);
+            MainWindow.changeFonts(mainCanvas);
         }
 
         public void allFramesReady(object sender, AllFramesReadyEventArgs e)
@@ -91,6 +87,18 @@ namespace TempoMonkey
                     }
                 }
             }
+        }
+
+        public void setCursor(SkeletonPoint point)
+        {
+            FrameworkElement element = myCursor;
+            Canvas.SetLeft(element, point.X );//- element.Width / 2);
+            Canvas.SetTop(element, point.Y );//- element.Height / 2);
+        }
+
+        public Ellipse getCursor()
+        {
+            return myCursor;
         }
 
         #region Gesture Handlers
@@ -246,7 +254,7 @@ namespace TempoMonkey
             Border.Visibility = System.Windows.Visibility.Hidden;
             Resume.Visibility = System.Windows.Visibility.Hidden;
             Quit.Visibility = System.Windows.Visibility.Hidden;
-            System.Windows.Forms.Cursor.Hide();
+            myCursor.Visibility = System.Windows.Visibility.Hidden;
             MainWindow.isManipulating = true;
         }
 
@@ -257,7 +265,7 @@ namespace TempoMonkey
             Border.Visibility = System.Windows.Visibility.Visible;
             Resume.Visibility = System.Windows.Visibility.Visible;
             Quit.Visibility = System.Windows.Visibility.Visible;
-            System.Windows.Forms.Cursor.Show();
+            myCursor.Visibility = System.Windows.Visibility.Visible;
             MainWindow.isManipulating = false;
         }
 

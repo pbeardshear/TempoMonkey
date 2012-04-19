@@ -20,9 +20,6 @@ using Processing;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Threading;
-//using System.Windows.Forms;
-
-
 
 namespace System.Windows.Controls
 {
@@ -35,8 +32,22 @@ namespace System.Windows.Controls
     }
 }
 
+
 namespace TempoMonkey
 {
+
+    interface KinectPage
+    {
+        void allFramesReady(object sender, AllFramesReadyEventArgs e);
+    }
+
+    interface CursorPage
+    {
+        Ellipse getCursor();
+        void setCursor(SkeletonPoint skeletonPoint);
+    }
+
+    
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -46,7 +57,9 @@ namespace TempoMonkey
         System.Drawing.Point curPos = new System.Drawing.Point(0, 0);
         Skeleton[] allSkeletons = new Skeleton[sklCount];
         static public Page currentPage;
+        public bool mouseOverride = false;
 
+        #region functions
         static public Button currentlySelectedButton;
         static public int timeOnCurrentButton;
 
@@ -61,23 +74,65 @@ namespace TempoMonkey
             timeOnCurrentButton = 0;
         }
 
+        private void HandleKeyDownEvent(object sender, KeyEventArgs e)
+        {
+            if (System.Windows.Input.Key.LeftShift == e.Key)
+            {
+                mouseOverride = true;
+            }
+        }
+
+        private void HandleKeyUpEvent(object sender, KeyEventArgs e)
+        {
+            if (System.Windows.Input.Key.LeftShift == e.Key)
+            {
+                mouseOverride = false;
+            }
+        }
+
+        static public void changeFonts(Canvas currCanvas)
+        {
+            foreach (FrameworkElement c in currCanvas.Children)
+            {
+                if (c is Label)
+                {
+                    ((Label)c).FontFamily = new System.Windows.Media.FontFamily("Bold Art");
+                }
+            }
+        }
+
+        #endregion
+
         public MainWindow()
         {
             InitializeComponent();
-
             DispatcherTimer Timer = new DispatcherTimer();
-            Timer.Interval = TimeSpan.FromSeconds(.25);
+            Timer.Interval = TimeSpan.FromSeconds(.1);
             Timer.Tick += (delegate(object s, EventArgs args)
             {
-                if (currentlySelectedButton != null)
-                {
-                    if (timeOnCurrentButton >= 4)
+                if(!isManipulating){
+
+                    Ellipse currentlySelectedEllipse = ((CursorPage)currentPage).getCursor();
+                    if (currentlySelectedButton != null)
                     {
-                        currentlySelectedButton.PerformClick();
+                        if (timeOnCurrentButton >= 55/3)
+                        {
+                            currentlySelectedButton.PerformClick();
+                        }
+                        else
+                        {
+                            currentlySelectedEllipse.Width = 55 - timeOnCurrentButton*3;
+                            currentlySelectedEllipse.Height = 55 - timeOnCurrentButton*3;
+                            timeOnCurrentButton++;
+                        }
                     }
                     else
                     {
-                        timeOnCurrentButton++;
+                        if (currentlySelectedEllipse.Width <= 55)
+                        {
+                            currentlySelectedEllipse.Width += 6;
+                            currentlySelectedEllipse.Height += 6;
+                        }
                     }
                 }
             });
@@ -86,6 +141,10 @@ namespace TempoMonkey
             frame.Navigate(homepage);
             currentPage = homepage;
             Timer.Start();
+            AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
+            AddHandler(Keyboard.KeyUpEvent, (KeyEventHandler)HandleKeyUpEvent);
+            //System.Windows.Forms.Cursor.Hide();
+            //this.Cursor = new Cursor();
         }
 
         //hide the NavigationBar
@@ -98,7 +157,6 @@ namespace TempoMonkey
         {
             kinectSensorChooser1.KinectSensorChanged += new DependencyPropertyChangedEventHandler(kinectSensorChooser1_KinectSensorChanged);
 
-
             //for the cursor
             System.Drawing.Point winPos = new System.Drawing.Point((int)this.Left, (int)this.Top);
             System.Drawing.Size winSize = new System.Drawing.Size((int)this.Width, (int)this.Height);
@@ -108,15 +166,11 @@ namespace TempoMonkey
         {
             KinectSensor theOldSensor = (KinectSensor)e.OldValue;
             stopKinect(theOldSensor);
-
             KinectSensor theNewSensor = (KinectSensor)e.NewValue;
-
-
             if (theNewSensor == null)
             {
                 return;
             }
-
             var parameters = new TransformSmoothParameters
             {
                 Smoothing = 0.3f,
@@ -125,7 +179,6 @@ namespace TempoMonkey
                 JitterRadius = 1.0f,
                 MaxDeviationRadius = 0.5f
             };
-
             theNewSensor.ColorStream.Enable(ColorImageFormat.RgbResolution640x480Fps30);
             theNewSensor.DepthStream.Enable(DepthImageFormat.Resolution640x480Fps30);
             theNewSensor.SkeletonStream.Enable(parameters);
@@ -145,25 +198,12 @@ namespace TempoMonkey
         {
             if (isManipulating)
             {
-                switch (currentPage.ToString())
-                {
-                    case "TempoMonkey.FreeFormMode":
-                        ((FreeFormMode)currentPage).allFramesReady(sender, e);
-                        break;
-                    case "TempoMonkey.TutorMode":
-                        ((TutorMode)currentPage).allFramesReady(sender, e);
-                        break;
-                    case "TempoMonkey.InteractiveMode":
-                        ((InteractiveMode)currentPage).allFramesReady(sender, e);
-                        break;
-                    default:
-                        throw new Exception(currentPage.ToString());
-                }
+                ((KinectPage)currentPage).allFramesReady(sender, e);
             }
             else
             {
                 Skeleton skl = getSkeleton(e);
-                if (skl != null)
+                if (skl != null && !mouseOverride)
                 {
                     moveMouse(skl);
                 }
@@ -201,6 +241,7 @@ namespace TempoMonkey
             curPos.X = (int)thePoint.X;
             curPos.Y = (int)thePoint.Y;
             System.Windows.Forms.Cursor.Position = curPos;
+            ((CursorPage)currentPage).setCursor(hand.Position);
         }
 
         void stopKinect(KinectSensor theSensor)
@@ -221,7 +262,7 @@ namespace TempoMonkey
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             stopKinect(kinectSensorChooser1.Kinect);
-
         }
+
     }
 }

@@ -7,8 +7,8 @@
       d:DesignHeight="600" d:DesignWidth="800"
 	Title="BrowseMusic">
 
-    <Canvas>
-        <Label Content="Browse Music" Height="66" HorizontalAlignment="Left" Margin="225,45,0,0" Name="Title" VerticalAlignment="Top" Width="362" FontSize="56" FontFamily="Sylfaen" FontWeight="Bold" Foreground="#FF7F64FC" />
+    <Canvas Name="mainCanvas">
+        <Label Content="Browse Music" Height="66" HorizontalAlignment="Left" Margin="225,45,0,0" Name="myTitle" VerticalAlignment="Top" Width="362" FontSize="56" FontFamily="Sylfaen" FontWeight="Bold" Foreground="#FF7F64FC" />
         <Button Content="Back" Height="66" HorizontalAlignment="Left" Margin="12,45,0,0" Name="back" VerticalAlignment="Top" Width="174" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Back_Click"/>
 
         <StackPanel Name="MenuBar" Orientation="Horizontal" Height="300" Canvas.Left="25" Canvas.Top="126" Width="3023"/>
@@ -23,6 +23,6 @@
         <StackPanel Height="48" HorizontalAlignment="Left" Name="selectedMusicList" VerticalAlignment="Top" Width="643" Orientation="Horizontal" Canvas.Left="148" Canvas.Top="484"/>
         <Button Content="Done" Height="53" HorizontalAlignment="Left" Margin="569,535,0,0" Name="done" VerticalAlignment="Top" Width="118" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Done_Click"/>
         <Button Content="Delete" Height="53" HorizontalAlignment="Left" Margin="321,535,0,0" Name="delete" VerticalAlignment="Top" Width="118" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Delete_Click"/>
-
+        <Ellipse Fill="Purple" Name="myCursor" Height="55" Width="55"/>
     </Canvas>
 </Page>

@@ -24,15 +24,16 @@ namespace TempoMonkey
 	/// <summary>
 	/// Interaction logic for FreeFormMode.xaml
 	/// </summary>
-	public partial class FreeFormMode : Page
+    public partial class FreeFormMode : Page, KinectPage, CursorPage
 	{
 		BrushConverter bc = new BrushConverter();
 		KinectGesturePlayer freePlayer;
 		bool isPaused = false;
-		ArrayList _nameList;
+        ArrayList _nameList = new ArrayList();
 
 		public FreeFormMode(ArrayList addrList, ArrayList nameList)
 		{
+            
 			// Initialize the audio library
 			// This should only be done in one place
 			Processing.Audio.Initialize();
@@ -42,15 +43,30 @@ namespace TempoMonkey
 			{
 				Processing.Audio.LoadFile(uri);
 			}
-			_nameList = nameList;
+
+            foreach (string song in nameList)
+            {
+                _nameList.Add(song);
+            }
+
+            if (_nameList.Count > 1)
+            {
+                currentTrackIndex = 1;
+            }
+            else
+            {
+                currentTrackIndex = 0;
+            }
 
 			Processing.Audio.Play();
 
 			System.Windows.Forms.Cursor.Hide();
 			InitializeComponent();
+            InitializeAvatars();
+
 			initVisualizer();
 
-			InitializeAvatars();
+            Track.Content = _nameList[currentTrackIndex];
 			freePlayer = new KinectGesturePlayer();
 			freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
 			freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
@@ -124,7 +140,7 @@ namespace TempoMonkey
 		}
 
 
-		int previousTrack = 1;
+		int currentTrackIndex;
 		void changeTrackHandler(double value)
 		{
 			if (!wasSeeking)
@@ -132,24 +148,25 @@ namespace TempoMonkey
 				SeekSlider.Value += .05;
 			}
 
-			if (value < 250 && previousTrack != 1)
+			if (value < 250 && currentTrackIndex != 1 && _nameList.Count > 1)
 			{
-				previousTrack = 1;
+				currentTrackIndex = 1;
 			}
-			else if (value > 450 && previousTrack != 2)
+			else if (value > 450 && currentTrackIndex != 2 && _nameList.Count > 2)
 			{
-				previousTrack = 2;
+				currentTrackIndex = 2;
 			}
-			else if (value >= 250 && value <= 450 && previousTrack != 0)
+			else if (value >= 250 && value <= 450 && currentTrackIndex != 0)
 			{
-				previousTrack = 0;
+				currentTrackIndex = 0;
 			}
 			else
 			{
 				return;
 			}
 
-			Processing.Audio.SwapTrack(previousTrack);
+            Track.Content = _nameList[currentTrackIndex];
+			Processing.Audio.SwapTrack(currentTrackIndex);
 			Processing.Audio.Seek(SeekSlider.Value);
 			Processing.Audio.ChangeVolume(VolumeSlider.Value);
 			Processing.Audio.ChangeTempo(TempoSlider.Value);
@@ -167,8 +184,7 @@ namespace TempoMonkey
 		{
 			Volume.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
 			VolumeFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
-
-			SetAvatarState(exist, volumeAvatar, exist ? loadedImages[Properties.Resources.volume_avatar] : loadedImages[Properties.Resources.volume_avatar_disabled]);
+			//SetAvatarState(exist, volumeAvatar, exist ? loadedImages[Properties.Resources.volume_avatar] : loadedImages[Properties.Resources.volume_avatar_disabled]);
 		}
 
 		void tempoChangeHandler(double change)
@@ -182,8 +198,7 @@ namespace TempoMonkey
 		{
 			Tempo.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
 			TempoFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
-
-			SetAvatarState(exist, tempoAvatar, exist ? loadedImages[Properties.Resources.tempo_avatar] : loadedImages[Properties.Resources.tempo_avatar_disabled]);
+			//SetAvatarState(exist, tempoAvatar, exist ? loadedImages[Properties.Resources.tempo_avatar] : loadedImages[Properties.Resources.tempo_avatar_disabled]);
 		}
 
 		bool wasSeeking = false;
@@ -194,7 +209,6 @@ namespace TempoMonkey
 
 		void seekTrackingHandler(bool exist)
 		{
-			Seek.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
 			if (exist)
 			{
 				wasSeeking = true;
@@ -208,7 +222,7 @@ namespace TempoMonkey
 				wasSeeking = false;
 			}
 
-			SetAvatarState(exist, seekAvatar, exist ? loadedImages[Properties.Resources.seek_avatar] : loadedImages[Properties.Resources.seek_avatar_disabled]);
+			//SetAvatarState(exist, seekAvatar, exist ? loadedImages[Properties.Resources.seek_avatar] : loadedImages[Properties.Resources.seek_avatar_disabled]);
 		}
 
 		void pitchChangeHandler(double change)
@@ -222,33 +236,44 @@ namespace TempoMonkey
 		{
 			Pitch.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
 			PitchFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
-
-			SetAvatarState(exist, pitchAvatar, exist ? loadedImages[Properties.Resources.pitch_avatar] : loadedImages[Properties.Resources.pitch_avatar_disabled]);
+            //SetAvatarState(exist, pitchAvatar, exist ? loadedImages[Properties.Resources.pitch_avatar] : loadedImages[Properties.Resources.pitch_avatar_disabled]);
 		}
 
 		public void Resumee()
 		{
 			isPaused = false;
-			Processing.Audio.Pause();
+			Processing.Audio.Play();
 			Border.Visibility = System.Windows.Visibility.Hidden;
 			Resume.Visibility = System.Windows.Visibility.Hidden;
 			Quit.Visibility = System.Windows.Visibility.Hidden;
-			System.Windows.Forms.Cursor.Hide();
+            myCursor.Visibility = System.Windows.Visibility.Hidden;
 			MainWindow.isManipulating = true;
 		}
 
 		public void Pause()
 		{
 			isPaused = true;
-			Processing.Audio.Play();
+            Processing.Audio.Pause();
 			Border.Visibility = System.Windows.Visibility.Visible;
 			Resume.Visibility = System.Windows.Visibility.Visible;
 			Quit.Visibility = System.Windows.Visibility.Visible;
-			System.Windows.Forms.Cursor.Show();
-			MainWindow.isManipulating = true;
+            myCursor.Visibility = System.Windows.Visibility.Visible;
+			MainWindow.isManipulating = false;
 		}
 
 		#endregion
+
+        public void setCursor(SkeletonPoint point)
+        {
+            FrameworkElement element = myCursor;
+            Canvas.SetLeft(element, point.X);//- element.Width / 2);
+            Canvas.SetTop(element, point.Y);//- element.Height / 2);
+        }
+
+        public Ellipse getCursor()
+        {
+            return myCursor;
+        }
 
 		#region Navigation
 		void Mouse_Enter(object sender, MouseEventArgs e)

@@ -21,7 +21,7 @@ namespace TempoMonkey
     /// <summary>
     /// Interaction logic for TutorMode.xaml
     /// </summary>
-    public partial class TutorMode : Page
+    public partial class TutorMode : Page, KinectPage, CursorPage
     {
         BrushConverter bc = new BrushConverter();
         KinectGesturePlayer tutoree;
@@ -43,6 +43,7 @@ namespace TempoMonkey
             tutoree.registerCallBack(tutoree.handSwingListener, seekTrackingHandler, seekChangeHandler);
             tutoree.registerCallBack(tutoree.leanListener, tempoTrackingHandler, tempoChangeHandler);
             tutoree.registerCallBack(tutoree.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
+            MainWindow.changeFonts(mainCanvas);
         }
 
         public void allFramesReady(object sender, AllFramesReadyEventArgs e)
@@ -57,6 +58,15 @@ namespace TempoMonkey
                 }
             }
         }
+
+        public void setCursor(Microsoft.Kinect.SkeletonPoint point)
+        {
+            FrameworkElement element = myCursor;
+            Canvas.SetLeft(element, point.X - element.Width / 2);
+            Canvas.SetTop(element, point.Y - element.Height / 2);
+        }
+
+
 
         #region Gesture Handlers
         void pauseTrackingHandler(bool exist)
@@ -172,7 +182,7 @@ namespace TempoMonkey
             Border.Visibility = System.Windows.Visibility.Hidden;
             Resume.Visibility = System.Windows.Visibility.Hidden;
             Quit.Visibility = System.Windows.Visibility.Hidden;
-            System.Windows.Forms.Cursor.Hide();
+            myCursor.Visibility = System.Windows.Visibility.Hidden;
             MainWindow.isManipulating = true;
         }
 
@@ -183,7 +193,7 @@ namespace TempoMonkey
             Border.Visibility = System.Windows.Visibility.Visible;
             Resume.Visibility = System.Windows.Visibility.Visible;
             Quit.Visibility = System.Windows.Visibility.Visible;
-            System.Windows.Forms.Cursor.Show();
+            myCursor.Visibility = System.Windows.Visibility.Visible;
             MainWindow.isManipulating = false;
         }
 
@@ -411,5 +421,10 @@ namespace TempoMonkey
         }
 
         #endregion
+
+        public Ellipse getCursor()
+        {
+            return myCursor;
+        }
     }
 }

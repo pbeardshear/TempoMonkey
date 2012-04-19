@@ -7,8 +7,9 @@
       d:DesignHeight="600" d:DesignWidth="800"
 	Title="BrowseTutorials" xmlns:my="clr-namespace:slidingMenu;assembly=slidingMenu">
 
-    <Grid>
-        <Label Content="Choose a Lesson" Height="86" HorizontalAlignment="Left" Margin="187,45,0,0" Name="Title" VerticalAlignment="Top" Width="424" FontSize="56" FontFamily="Sylfaen" FontWeight="Bold" Foreground="#FF7F64FC" />
+    <Canvas Name="mainCanvas">
+        <Label Content="Choose a Lesson" Height="86" HorizontalAlignment="Left" Margin="187,45,0,0" Name="myTitle" VerticalAlignment="Top" Width="424" FontSize="56" FontFamily="Sylfaen" FontWeight="Bold" Foreground="#FF7F64FC" />
         <Button Content="Back" Height="50" HorizontalAlignment="Left" Margin="25,12,0,0" Name="Back" VerticalAlignment="Top" Width="110" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" />
-    </Grid>
+        <Ellipse Fill="Purple" Name="myCursor" HorizontalAlignment="Left" Height="55" Margin="88,55,0,0"  VerticalAlignment="Top" Width="55"/>
+    </Canvas>
 </Page>
