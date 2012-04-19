@@ -64,13 +64,19 @@ namespace TempoMonkey
         static public Button currentlySelectedButton;
         static public int timeOnCurrentButton;
 
+		// Store the button's text color, so that when we reset it, we can put it back correctly
+		private static System.Windows.Media.Brush lastForegroundColor;
+
         static public void Mouse_Enter(object sender, MouseEventArgs e)
         {
+			lastForegroundColor = ((Button)sender).Foreground;
+			((Button)sender).Foreground = System.Windows.Media.Brushes.DarkSlateBlue;
             currentlySelectedButton = ((Button)sender);
         }
 
         static public void Mouse_Leave(object sender, MouseEventArgs e)
         {
+			((Button)sender).Foreground = lastForegroundColor;
             currentlySelectedButton = null;
             timeOnCurrentButton = 0;
         }
