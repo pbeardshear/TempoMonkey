@@ -8,11 +8,13 @@
 	Title="LearningStudio" xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers">
 
     <Canvas Name="mainCanvas">
-        <Label Content="Learning Studio" Height="86" HorizontalAlignment="Left" Margin="187,45,0,0" Name="myTitle" VerticalAlignment="Top" Width="415" FontSize="56" FontFamily="Sylfaen" FontWeight="Bold" Foreground="#FF7F64FC"/>
-        <Button Content="With a Tutor" Height="106" Width="447" HorizontalAlignment="Left" Name="TutorButton" VerticalAlignment="Top" Foreground="#FF604EB4" FontSize="48" FontFamily="Palatino Linotype" Margin="167,198,0,0" Click="Tutor_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" />
-        <Button Content="With a Friend" Height="106" Width="447" HorizontalAlignment="Left" Name="InteractiveModeButton" VerticalAlignment="Top" Foreground="#FF604EB4" FontSize="48" FontFamily="Palatino Linotype" Margin="167,375,0,0" Click="InteractiveModeButton_Click" MouseLeave="Mouse_Leave" MouseEnter="Mouse_Enter" />
-        <Button Content="Back" Height="42" HorizontalAlignment="Left" Margin="34,29,0,0" Name="Back" VerticalAlignment="Top" Width="81" Click="Back_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" />
+      <Grid Background="Black">
+        <Image Source="/Resources/images/tempo_monkey02_cartoonish.png" Height="200" Margin="0,162,0,238" />
+        <Label Content="LEARNING STUDIO" Height="86" HorizontalAlignment="Left" Margin="186,44,0,0" Name="Title" VerticalAlignment="Top" Width="415" FontSize="45" FontFamily="Bold Art" FontWeight="Bold" Foreground="White"/>
+        <Button Content="With a Tutor" Height="98" Width="249" HorizontalAlignment="Left" Name="TutorButton" VerticalAlignment="Top" Foreground="White" Background="Black" FontSize="35" FontFamily="Bold Art" FontWeight="Bold" Margin="56,396,0,0" Click="Tutor_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" />
+        <Button Content="With a Friend" Height="98" Name="InteractiveModeButton" VerticalAlignment="Top" Foreground="White" Background="Black" FontSize="35" FontFamily="Bold Art" FontWeight="Bold" Margin="488,396,63,0" Click="InteractiveModeButton_Click" MouseLeave="Mouse_Leave" MouseEnter="Mouse_Enter" />
+        <Button Content="Back" Height="69" HorizontalAlignment="Left" Margin="40,61,0,0" Name="Back" Background="Black" Foreground="Gray" FontFamily="Bold Art" FontSize="20" VerticalAlignment="Top" Width="83" Click="Back_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" />
         <Ellipse Fill="Purple" Name="myCursor" Height="55" Width="55" Canvas.Left="10" Canvas.Top="10"/>
+        </Grid>
     </Canvas>
-    
 </Page>

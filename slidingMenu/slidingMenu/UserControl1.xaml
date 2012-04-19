@@ -7,9 +7,9 @@
     <Canvas Width="730" Height="300" x:Name="MenuBarWindow" Background="#FF8D8D8D">
         <StackPanel x:Name="MenuBar" Orientation="Horizontal">
         </StackPanel>
-        <Button Canvas.Left="730" Canvas.Top="0" Content=">" Height="300" Name="right" Width="35" MouseEnter="moveRight" />
-        <Button Canvas.Left="-35" Canvas.Top="0" Content="&lt;" Height="300" Name="left" Width="35" MouseEnter="moveLeft" />
-        <Button Content="Choose" Canvas.Left="284" Canvas.Top="240" Width="135" Height="60" MouseEnter="chooseMouseEnter" MouseLeave="chooseMouseLeave"/>
+        <Button Canvas.Left="730" Canvas.Top="0" Content=">" FontSize="50" Height="300" Name="right" Width="35" MouseEnter="moveRight" />
+        <Button Canvas.Left="-35" Canvas.Top="0" Content="&lt;" FontSize="50" Height="300" Name="left" Width="35" MouseEnter="moveLeft" />
+        <Button Content="Choose" Canvas.Left="284" Canvas.Top="240" Width="135" Height="60" FontFamily="Bold Art" FontSize="20" MouseEnter="chooseMouseEnter" MouseLeave="chooseMouseLeave"/>
 
     </Canvas>
 </UserControl>

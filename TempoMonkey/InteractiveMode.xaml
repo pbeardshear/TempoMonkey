@@ -1,0 +1,40 @@
+﻿<Page x:Class="TempoMonkey.InteractiveMode"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      mc:Ignorable="d" 
+      d:DesignHeight="600" d:DesignWidth="800"
+	  Title="InteractiveMode" xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers">
+
+    <Canvas Name="MainCanvas" Margin="0,6,0,-6">
+        <Grid Height="248" Name="myPanel" Width="424" Canvas.Left="25" Canvas.Top="230">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+        </Grid>
+
+        <Label Canvas.Left="470" Canvas.Top="222" Name="Volume" Content="VOLUME" Height="57" Width="87" FontSize="20" FontFamily="Bold Art" FontStyle="Normal"/>
+        <Label Canvas.Left="470" Canvas.Top="308" Name="Pitch" Content="PITCH" Height="57" Width="98" FontSize="20" FontFamily="Bold Art" FontStyle="Normal"/>
+        <Label Canvas.Left="470" Canvas.Top="393" Name="Tempo" Content="TEMPO" Height="53" Width="99" FontSize="20" FontFamily="Bold Art" FontStyle="Normal"/>
+        <Rectangle Fill="#FFF4F4F5" Name="Border" Height="138" Stroke="Black" Width="602" Visibility="Hidden" Canvas.Left="98" Canvas.Top="149" />
+        <Button Content="Resume" Name="Resume" Canvas.Left="183" Canvas.Top="195" Width="152" Height="46" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave"/>
+        <Button Content="Quit" Name="Quit" Canvas.Left="454" Canvas.Top="195" Width="152" Height="46" FontSize="30" Visibility="Hidden"  MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave"/>
+
+        <Label Canvas.Top="12" Name="Seek" Content="SEEK BAR" Height="37" Width="120" FontSize="20" FontStyle="Normal" Canvas.Left="360"/>
+        <Slider Name="SeekSlider" Canvas.Left="98" Canvas.Top="55" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
+        <Slider Name="VolumeSlider" Canvas.Left="440" Canvas.Top="285" Height="28" Width="260" Value="25" Minimum="0" Maximum="100" TickFrequency=".1"/>
+        <Slider Name="PitchSlider" Canvas.Left="440" Canvas.Top="372" Height="28" Width="260" Value="50" Minimum="0" Maximum="100" TickFrequency=".1"/>
+        <Slider Name="TempoSlider" Canvas.Left="440" Canvas.Top="450" Height="28" Width="260" Value="100" Minimum="10" Maximum="200" TickFrequency=".1"/>
+        <Border Name="TempoFocus" Visibility="Hidden" BorderBrush="#CDE431" BorderThickness="3" Height="53" Canvas.Left="460" Canvas.Top="393" Width="94"/>
+        <Border Name="PitchFocus" Visibility="Hidden" BorderBrush="#CDE431" BorderThickness="3" Height="57" Canvas.Left="458" Canvas.Top="308" Width="94"/>
+        <Border Name="VolumeFocus" Visibility="Hidden" BorderBrush="#CDE431" BorderThickness="3" Height="57" Canvas.Left="458" Canvas.Top="222" Width="110"/>
+        <Image Source="/Resources/images/tempo_monkey_logo2.png" Stretch="Fill" Canvas.Left="625" Canvas.Top="411" />
+    </Canvas>
+</Page>

@@ -23,7 +23,7 @@ namespace TempoMonkey
 
         public LearningStudio()
         {
-            //InitializeComponent();
+            InitializeComponent();
             //changeFonts();
         }
 

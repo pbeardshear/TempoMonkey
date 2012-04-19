@@ -7,18 +7,7 @@
       d:DesignHeight="600" d:DesignWidth="800"
 	  Title="TutorMode" xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers">
     <Canvas Name="mainCanvas" Margin="0,6,0,-6">
-        <Grid Height="248" Name="myPanel" Width="424" Canvas.Left="25" Canvas.Top="230">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-        </Grid>
-
+        <Label Content="Work in Progress.. Come back later"/>
         <Label Canvas.Left="470" Canvas.Top="232" Name="Volume" Content="Volume" Height="39" Width="87" FontSize="20" FontStyle="Normal"/>
         <Label Canvas.Left="470" Canvas.Top="318" Name="Pitch" Content="Pitch" Height="38" Width="98" FontSize="20"  FontStyle="Normal"/>
         <Label Canvas.Left="470" Canvas.Top="400" Name="Tempo" Content="Tempo" Height="39" Width="99" FontSize="20"  FontStyle="Normal"/>

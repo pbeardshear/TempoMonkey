@@ -1,4 +1,4 @@
-﻿<Page x:Class="TempoMonkey.FreeFormMode"
+<Page x:Class="TempoMonkey.FreeFormMode"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -8,37 +8,28 @@
 	Title="FreeFormMode">
 
     <Canvas Name="mainCanvas" Margin="0,6,0,-6">
-        <Grid Height="248" Name="myPanel" Width="424" Canvas.Left="25" Canvas.Top="230">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-        </Grid>
 
-        <Label Canvas.Left="470" Canvas.Top="232" Name="Volume" Content="Volume" Height="39" Width="87" FontSize="20" FontStyle="Normal"/>
-        <Label Canvas.Left="470" Canvas.Top="318" Name="Pitch" Content="Pitch" Height="38" Width="98" FontSize="20"  FontStyle="Normal"/>
-        <Label Canvas.Left="470" Canvas.Top="400" Name="Tempo" Content="Tempo" Height="39" Width="99" FontSize="20"  FontStyle="Normal"/>
+        <Label Canvas.Left="516" Canvas.Top="171" Name="Volume" Content="VOLUME" Height="46" Width="87" FontSize="20" FontFamily="Bold Art" FontStyle="Normal"/>
+        <Label Canvas.Left="516" Canvas.Top="256" Name="Pitch" Content="PITCH" Height="48" Width="98" FontSize="20" FontFamily="Bold Art" FontStyle="Normal"/>
+        <Label Canvas.Left="516" Canvas.Top="338" Name="Tempo" Content="TEMPO" Height="50" Width="99" FontSize="20" FontFamily="Bold Art" FontStyle="Normal"/>
+        <Rectangle Fill="#FFF4F4F5" Name="Border" Height="138" Stroke="Black" Width="602" Visibility="Hidden" Canvas.Left="108" Canvas.Top="144" />
+        <Button Content="Resume" Name="Resume" Canvas.Left="183" Canvas.Top="195" Width="152" Height="46" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave"/>
+        <Button Content="Quit" Name="Quit" Canvas.Left="454" Canvas.Top="195" Width="152" Height="46" FontSize="30" Visibility="Hidden"  MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave"/>
 
-        <Rectangle Fill="#FFF4F4F5" Name="Border" Height="138" Canvas.Left="98" Stroke="Black" Canvas.Top="142" Width="602" Visibility="Hidden"/>
-        <Button Content="Resume" Name="Resume" Canvas.Left="183" Canvas.Top="195" Width="152" Height="46" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Resume_Click" />
-        <Button Content="Quit" Name="Quit" Canvas.Left="454" Canvas.Top="195" Width="152" Height="46" FontSize="30" Visibility="Hidden"  MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Quit_Click"/>
-        <Slider Name="SeekSlider" Canvas.Left="83" Canvas.Top="28" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
-        <Slider Name="VolumeSlider" Canvas.Left="440" Canvas.Top="285" Height="28" Width="260" Value="25" Minimum="0" Maximum="100" TickFrequency=".1"/>
-        <Slider Name="PitchSlider" Canvas.Left="440" Canvas.Top="372" Height="28" Width="260" Value="50" Minimum="0" Maximum="100" TickFrequency=".1"/>
-        <Slider Name="TempoSlider" Canvas.Left="440" Canvas.Top="450" Height="28" Width="260" Value="100" Minimum="10" Maximum="200" TickFrequency=".1"/>
-        <Border Name="TempoFocus" Visibility="Hidden" BorderBrush="Green" BorderThickness="3" Height="44" Canvas.Left="460" Canvas.Top="399" Width="94"/>
-        <Border Name="PitchFocus" Visibility="Hidden" BorderBrush="Green" BorderThickness="3" Height="44" Canvas.Left="460" Canvas.Top="321" Width="94"/>
-        <Border Name="VolumeFocus" Visibility="Hidden" BorderBrush="Green" BorderThickness="3" Height="44" Canvas.Left="463" Canvas.Top="230" Width="94"/>
-        <Label Canvas.Left="108" Canvas.Top="57" Name="Track" Content="Track Title" Height="72" Width="592" FontSize="20"  FontStyle="Normal"/>
-		<Image Canvas.Left="123" Canvas.Top="98" Height="50" Name="volumeAvatar" Stretch="Fill" Width="50" />
-		<Image Canvas.Left="294" Canvas.Top="98" Height="50" Name="pitchAvatar" Stretch="Fill" Width="50" />
-		<Image Canvas.Left="485" Canvas.Top="98" Height="50" Name="tempoAvatar" Stretch="Fill" Width="50" />
-		<Image Canvas.Left="650" Canvas.Top="98" Height="50" Name="seekAvatar" Stretch="Fill" Width="50" />
+        <Label Canvas.Top="98" Name="Seek" Content="SEEK BAR" Height="40" Width="94" FontSize="20" FontStyle="Normal" Canvas.Left="355"/>
+        <Slider Name="SeekSlider" Canvas.Left="98" Canvas.Top="127" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
+        <Slider Name="VolumeSlider" Canvas.Left="486" Canvas.Top="223" Height="28" Width="260" Value="25" Minimum="0" Maximum="100" TickFrequency=".1"/>
+        <Slider Name="PitchSlider" Canvas.Left="486" Canvas.Top="310" Height="28" Width="260" Value="50" Minimum="0" Maximum="100" TickFrequency=".1"/>
+        <Slider Name="TempoSlider" Canvas.Left="486" Canvas.Top="388" Height="28" Width="260" Value="100" Minimum="10" Maximum="200" TickFrequency=".1"/>
+        <Border Name="TempoFocus" Visibility="Hidden" BorderBrush="#E84AAF" BorderThickness="3" Height="51" Canvas.Left="506" Canvas.Top="337" Width="94"/>
+        <Border Name="PitchFocus" Visibility="Hidden" BorderBrush="#5CC6D2" BorderThickness="3" Height="48" Canvas.Left="506" Canvas.Top="256" Width="81"/>
+        <Border Name="VolumeFocus" Visibility="Hidden" BorderBrush="#CDE431" BorderThickness="3" Height="53" Canvas.Left="506" Canvas.Top="171" Width="117"/>
+        <Label Canvas.Left="98" Canvas.Top="171" Name="Track" Content="" Height="46" Width="351" FontSize="20"  FontStyle="Normal"/>
+		<Image Canvas.Left="92" Canvas.Top="12" Height="50" Name="volumeAvatar" Stretch="Fill" Width="50" />
+		<Image Canvas.Left="263" Canvas.Top="12" Height="50" Name="pitchAvatar" Stretch="Fill" Width="50" />
+		<Image Canvas.Left="454" Canvas.Top="12" Height="50" Name="tempoAvatar" Stretch="Fill" Width="50" />
+		<Image Canvas.Left="619" Canvas.Top="12" Height="50" Name="seekAvatar" Stretch="Fill" Width="50" />
+        <Image Source="/Resources/Images/tempo_monkey_logo2.png" Stretch="Fill" Canvas.Left="619" Canvas.Top="422" />
         <Ellipse Fill="Purple" Name="myCursor" Height="55" Width="55" Canvas.Left="10" Canvas.Top="10" Visibility="Hidden"/>
     </Canvas>
 </Page>

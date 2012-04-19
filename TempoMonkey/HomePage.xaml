@@ -7,12 +7,14 @@
       d:DesignHeight="600" d:DesignWidth="800"
 	  Title="HomePage">
     <!--xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers" Loaded="Page_Loaded" Unloaded="Page_Unloaded">-->
-    <Canvas Name="mainCanvas">
-        
-        <Label Content="TempoMonkey" Name="myTitle" FontSize="56" FontFamily="Sylfaen" FontWeight="Bold" Foreground="#FF7F64FC" Margin="158,69,224,444" />
-        <Image Height="177" Name="image1" Stretch="Fill" Width="183" Source="/tempoMonkey;component/images/Mb-logo.png" Margin="582,22,34,402" />
-        <Button Content="Learning Studio"  Name="learningStudioButton" Height="106" Width="447" Foreground="#FF604EB4" FontSize="48" FontFamily="Palatino Linotype" Margin="142,404,210,90" Click="learningStudioButton_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" />
-        <Button Content="Revamp a Song"  Name="browseMusic" Height="106" Width="447" Foreground="#FF604EB4" FontSize="48" FontFamily="Palatino Linotype" Margin="142,237,210,257" Click="browseMusic_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" />
-        <Ellipse Fill="Purple" Name="myCursor" Height="55" Width="55" Canvas.Left="10" Canvas.Top="10"/>
+
+    <Canvas Name="mainCanvas" Background="Black">
+        <Grid Background="Black">
+            <Image Source="/Resources/images/tempo_monkey_text.png" Name="Title" Margin="91,296,50,92" Stretch="UniformToFill" />
+            <Image Height="177" Name="image1" Stretch="Fill"  Width="183" Source="/Resources/images/tempo_monkey02_cartoonish.png" Margin="311,203,307,220" />
+            <Button Content="Learning Studio"  Name="learningStudioButton" Background="Black" Foreground="White" FontSize="25" FontFamily="Verdana" Margin="91,111,492,437" Click="learningStudioButton_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" />
+            <Button Content="Revamp a Song"  Name="browseMusic" Background="Black" Foreground="White" FontSize="25" FontFamily="Verdana" Margin="0,111,67,437" Click="browseMusic_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" HorizontalAlignment="Right" Width="226" />
+            <Ellipse Fill="Purple" Name="myCursor" Height="55" Width="55" Canvas.Left="10" Canvas.Top="10"/>
+        </Grid>
     </Canvas>
 </Page>
