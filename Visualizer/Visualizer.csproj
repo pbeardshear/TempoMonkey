@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BarHeightScalingStyles.cs" />
+    <Compile Include="FFTDataSize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sampler.cs" />
   </ItemGroup>
