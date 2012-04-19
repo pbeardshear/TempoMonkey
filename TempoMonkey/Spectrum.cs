@@ -29,15 +29,15 @@ namespace Visualizer
 		private float[] channelData = new float[2048];
 		private double bandWidth = 1.0;
 		private double barWidth = 1;
-		private int BarCount = 12;
+		private int BarCount = 18;
 		private double BarSpacing = 20.0;
 		private int maxBarHeight = 120;
 		private const int scaleFactorLinear = 15;
 		private Random rand = new Random();
 
-		private float currentTempo;
-		private float currentPitch;
-		private float currentVolume;
+		public float currentTempo;
+		public float currentPitch;
+		public float currentVolume;
 
 		public Spectrum(Canvas spectrumContainer)
 		{
