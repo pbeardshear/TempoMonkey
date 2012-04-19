@@ -27,11 +27,12 @@ namespace TempoMonkey
     public partial class FreeFormMode : Page, KinectPage, CursorPage
 	{
 		BrushConverter bc = new BrushConverter();
-		KinectGesturePlayer freePlayer;
+        KinectGesturePlayer freePlayer, freePlayer2;
 		bool isPaused = false;
         ArrayList _nameList = new ArrayList();
+        string _type;
 
-		public FreeFormMode(ArrayList addrList, ArrayList nameList)
+		public FreeFormMode(ArrayList addrList, ArrayList nameList, string type)
 		{
             
 			// Initialize the audio library
@@ -73,20 +74,55 @@ namespace TempoMonkey
 			freePlayer.registerCallBack(freePlayer.handSwingListener, seekTrackingHandler, seekChangeHandler);
 			freePlayer.registerCallBack(freePlayer.leanListener, tempoTrackingHandler, tempoChangeHandler);
 			freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
+
+            _type = type;
+            if (type == "Interactive")
+            {
+                freePlayer2.registerCallBack(freePlayer2.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
+                freePlayer2.registerCallBack(freePlayer2.handsAboveHeadListener, pitchTrackingHandler2, pitchChangeHandler);
+                freePlayer2.registerCallBack(freePlayer2.handSwingListener, seekTrackingHandler, seekChangeHandler);
+                freePlayer2.registerCallBack(freePlayer2.leanListener, tempoTrackingHandler2, tempoChangeHandler);
+                freePlayer2.registerCallBack(freePlayer2.handsWidenListener, volumeTrackingHandler2, volumeChangeHandler);
+            }
 		}
 
-		public void allFramesReady(object sender, AllFramesReadyEventArgs e)
-		{
-			if (!isPaused)
-			{
-				Skeleton skeleton = KinectGesturePlayer.getFristSkeleton(e);
+        public void allFramesReady(object sender, AllFramesReadyEventArgs e)
+        {
+            if (!isPaused)
+            {
+                if (_type == "FreeForm")
+                {
+                    Skeleton skeleton = KinectGesturePlayer.getFristSkeleton(e);
+                    if (skeleton != null)
+                    {
+                        freePlayer.skeletonReady(e, skeleton);
+                    }
+                }
+                else if (_type == "Interactive")
+                {
+                    Skeleton[] skeletons = KinectGesturePlayer.getFirstTwoSkeletons(e);
+                    Skeleton leftSkeleton;
+                    Skeleton rightSkeleton;
 
-				if (skeleton != null)
-				{
-					freePlayer.skeletonReady(e, skeleton);
-				}
-			}
-		}
+                    if (skeletons.Length == 0)
+                    {
+                        return;
+                    }
+                    else if (skeletons.Length == 1)
+                    {
+                        leftSkeleton = skeletons[0];
+                        freePlayer.skeletonReady(e, leftSkeleton);
+                    }
+                    else
+                    {
+                        leftSkeleton = skeletons[0];
+                        rightSkeleton = skeletons[1];
+                        freePlayer.skeletonReady(e, leftSkeleton);
+                        freePlayer2.skeletonReady(e, rightSkeleton);
+                    }
+                }
+            }
+        }
 
 		private Dictionary<Bitmap, BitmapImage> loadedImages = new Dictionary<Bitmap, BitmapImage>();
 		private BitmapImage InitializeResource(Bitmap source)
@@ -183,9 +219,22 @@ namespace TempoMonkey
 		void volumeTrackingHandler(bool exist)
 		{
 			Volume.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
+            VolumeFocus.BorderBrush = bc.ConvertFromString("Green") as System.Windows.Media.Brush;
 			VolumeFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+            //Throws a KeyError for some reason
 			//SetAvatarState(exist, volumeAvatar, exist ? loadedImages[Properties.Resources.volume_avatar] : loadedImages[Properties.Resources.volume_avatar_disabled]);
 		}
+
+
+        void volumeTrackingHandler2(bool exist)
+        {
+            Volume.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
+            if (exist)
+            {
+                VolumeFocus.BorderBrush = bc.ConvertFromString("Blue") as System.Windows.Media.Brush;
+                VolumeFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+            }
+        }
 
 		void tempoChangeHandler(double change)
 		{
@@ -197,9 +246,31 @@ namespace TempoMonkey
 		void tempoTrackingHandler(bool exist)
 		{
 			Tempo.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
+            TempoFocus.BorderBrush = bc.ConvertFromString("Green") as System.Windows.Media.Brush;
 			TempoFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
 			//SetAvatarState(exist, tempoAvatar, exist ? loadedImages[Properties.Resources.tempo_avatar] : loadedImages[Properties.Resources.tempo_avatar_disabled]);
 		}
+
+
+        void tempoTrackingHandler2(bool exist)
+        {
+            Tempo.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
+            if (exist)
+            {
+                TempoFocus.BorderBrush = bc.ConvertFromString("Blue") as System.Windows.Media.Brush;
+                TempoFocus.Visibility = System.Windows.Visibility.Visible;
+            }
+        }
+
+        void pitchTrackingHandler2(bool exist)
+        {
+            Pitch.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
+            if (exist)
+            {
+                PitchFocus.BorderBrush = bc.ConvertFromString("Blue") as System.Windows.Media.Brush;
+                PitchFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+            }
+        }
 
 		bool wasSeeking = false;
 		void seekChangeHandler(double change)
@@ -286,12 +357,12 @@ namespace TempoMonkey
 			MainWindow.Mouse_Leave(sender, e);
 		}
 
-		void Quit_Click(object sender, MouseEventArgs e)
+		void Quit_Click(object sender, RoutedEventArgs e)
 		{
 			throw new Exception();
 		}
 
-		void Resume_Click(object sender, MouseEventArgs e)
+        void Resume_Click(object sender, RoutedEventArgs e)
 		{
 			Resumee();
 		}

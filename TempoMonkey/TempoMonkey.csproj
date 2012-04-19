@@ -70,9 +70,6 @@
     <Compile Include="FreeFormMode.xaml.cs">
       <DependentUpon>FreeFormMode.xaml</DependentUpon>
     </Compile>
-    <Compile Include="InteractiveMode.xaml.cs">
-      <DependentUpon>InteractiveMode.xaml</DependentUpon>
-    </Compile>
     <Compile Include="KinectGesture.cs" />
     <Compile Include="TutorMode.xaml.cs">
       <DependentUpon>TutorMode.xaml</DependentUpon>
@@ -91,10 +88,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="HomePage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="InteractiveMode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

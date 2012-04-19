@@ -224,12 +224,12 @@ namespace TempoMonkey
 
             if (_type == "Interactive")
             {
-                MainWindow.currentPage = new InteractiveMode(musicAddrList, musicList);
+                MainWindow.currentPage = new FreeFormMode(musicAddrList, musicList, "Interactive");
                 MainWindow.isManipulating = true;
             }
             else if (_type == "Free")
             {
-                MainWindow.currentPage = new FreeFormMode(musicAddrList, musicList);
+                MainWindow.currentPage = new FreeFormMode(musicAddrList, musicList, "FreeForm");
                 MainWindow.isManipulating = true;
             }
             else

@@ -210,12 +210,12 @@ namespace TempoMonkey
             MainWindow.Mouse_Leave(sender, e);
         }
 
-        void Quit_Click(object sender, MouseEventArgs e)
+        void Quit_Click(object sender, RoutedEventArgs e)
         {
             throw new Exception();
         }
 
-        void Resume_Click(object sender, MouseEventArgs e)
+        void Resume_Click(object sender, RoutedEventArgs e)
         {
             Resumee();
         }

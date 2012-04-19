@@ -118,6 +118,9 @@ namespace TempoMonkey
                         if (timeOnCurrentButton >= 55/3)
                         {
                             currentlySelectedButton.PerformClick();
+                            //Resize the cursor
+                            currentlySelectedEllipse.Width = currentlySelectedEllipse.Height = 25;
+                            timeOnCurrentButton = 10;
                         }
                         else
                         {
