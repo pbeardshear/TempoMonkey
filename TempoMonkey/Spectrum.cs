@@ -28,15 +28,18 @@ namespace Visualizer
 		private float[] channelData = new float[2048];
 		private double bandWidth = 1.0;
 		private double barWidth = 1;
+		private int BarCount = 12;
+		private double BarSpacing = 20.0;
 		private int barIndex = 0;
-		private const int scaleFactorLinear = 9;
+		private const int scaleFactorLinear = 15;
+		private Random rand = new Random();
 
 		public Spectrum(Canvas spectrumContainer)
 		{
 			this.canv = spectrumContainer;
 			timer = new DispatcherTimer(DispatcherPriority.Background)
 			{
-				Interval = TimeSpan.FromMilliseconds(25),
+				Interval = TimeSpan.FromMilliseconds(40),
 			};
 			timer.Tick += timerTick;
 		}
@@ -47,14 +50,10 @@ namespace Visualizer
 			timer.Start();
 		}
 
-		private Random rand = new Random();
 		private void timerTick(object sender, EventArgs e)
 		{
-			// Load data
-			for (int i = 0; i < channelData.Length; i++)
-			{
-				channelData[i] = rand.Next(10, 20);
-			}
+			// Get the spectrum data from the sampler
+			Sampler.GetFFT(channelData);
 			Update();
 		}
 
@@ -63,8 +62,7 @@ namespace Visualizer
 			double barHeight = 0f;
 			double lastPeakHeight = 0f;
 			double peakYPos = 0f;
-			double PeakFallDelay = 10;
-			double BarSpacing = 15.0d;
+			double PeakFallDelay = 30;
 			int barIndex = 0;
 			double fftBucketHeight = 0f;
 			double height = canv.RenderSize.Height;
@@ -74,7 +72,7 @@ namespace Visualizer
 			{
 				fftBucketHeight = (channelData[i] * scaleFactorLinear) * barHeightScale;
 				if (barHeight < fftBucketHeight)
-					barHeight = fftBucketHeight / 500.0f;
+					barHeight = fftBucketHeight;
 				if (barHeight < 0f)
 					barHeight = 0f;
 
@@ -83,8 +81,8 @@ namespace Visualizer
 				{
 					if (barHeight > height)
 						barHeight = height;
-					//if (barIndex > 0)
-					//    barHeight = (lastPeakHeight + barHeight) / 2;
+					if (barIndex > 0)
+						barHeight = (lastPeakHeight + barHeight) / (rand.NextDouble() < 0.3 ? 1.2 : 1.8);
 					peakYPos = barHeight;
 					if (channelPeakData[barIndex] < peakYPos)
 						channelPeakData[barIndex] = (float)peakYPos;
@@ -95,11 +93,8 @@ namespace Visualizer
 					
 					barShapes[barIndex].Margin = new Thickness(xCoord, (height - 1) - barHeight, 0, 0);
 					barShapes[barIndex].Height = barHeight;
-					// peakShapes[barIndex].Margin = new Thickness(xCoord, (height - 1) - channelPeakData[barIndex] - peakDotHeight, 0, 0);
-					// peakShapes[barIndex].Height = peakDotHeight;
 					lastPeakHeight = barHeight;
 					barHeight = 0f;
-					// barIndex = (barIndex + 1) % barShapes.Count;
 					barIndex++;
 				}
 			}
@@ -117,8 +112,6 @@ namespace Visualizer
 		 */
 		private void UpdateBarLayout()
 		{
-			double BarSpacing = 15.0d;
-			int BarCount = 32;
 			double ActualBarWidth = 0.0d;
 			int MaximumFrequency = 20000;
 			int MinimumFrequency = 20;
@@ -156,7 +149,7 @@ namespace Visualizer
 			barHeights = new double[actualBarCount];
 			peakHeights = new double[actualBarCount];
 
-			canv.Children.Clear();
+			// canv.Children.Clear();
 			barShapes.Clear();
 			peakShapes.Clear();
 
@@ -165,21 +158,24 @@ namespace Visualizer
 			for (int i = 0; i < actualBarCount; i++)
 			{
 				double xCoord = BarSpacing + (barWidth * i) + (BarSpacing * i) + 1;
+
 				Rectangle barRectangle = new Rectangle()
 				{
 					Margin = new Thickness(xCoord, height, 0, 0),
-					Width = 10,
-					Height = 20,
-					Fill = Brushes.Black
+					Width = 15,
+					Fill = new LinearGradientBrush(Brushes.DarkSlateBlue.Color, Brushes.SlateBlue.Color, new Point(0.5, 0), new Point(0.5, 1)),
+					Stroke = Brushes.Black,
+					StrokeThickness = 3,
+					StrokeLineJoin = PenLineJoin.Round
 				};
 				barShapes.Add(barRectangle);
-				Rectangle peakRectangle = new Rectangle()
-				{
-					Margin = new Thickness(xCoord, height - peakDotHeight, 0, 0),
-					Width = barWidth,
-					Height = peakDotHeight,
-				};
-				peakShapes.Add(peakRectangle);
+				//Rectangle peakRectangle = new Rectangle()
+				//{
+				//    Margin = new Thickness(xCoord, height - peakDotHeight, 0, 0),
+				//    Width = barWidth,
+				//    Height = peakDotHeight,
+				//};
+				//peakShapes.Add(peakRectangle);
 			}
 
 			foreach (Shape shape in barShapes)

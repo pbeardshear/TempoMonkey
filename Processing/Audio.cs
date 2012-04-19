@@ -363,9 +363,13 @@ namespace Processing
             _soundTouchSharp.SetSetting(SoundTouchSharp.SoundTouchSettings.SETTING_USE_QUICKSEEK, 0);
             ApplyTimeStretchProfiles();
 
+			// Initialize the sampler
+			Sampler.Initialize((int)FFTDataSize.FFT2048);
+
             // Initialize the device
             _waveOutDevice.Init(_inputProvider);
             _waveOutDevice.Play();
+			
         }
 
 		static void _waveChannel_Sample(object sender, SampleEventArgs e)

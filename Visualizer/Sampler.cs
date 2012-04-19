@@ -66,12 +66,12 @@ namespace Visualizer
 
 		public static void StartSampling()
 		{
-
+			throw new NotImplementedException();
 		}
 
 		public static void StopSampling()
 		{
-
+			throw new NotImplementedException();
 		}
 	}
 }
