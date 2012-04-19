@@ -126,8 +126,8 @@ namespace TempoMonkey
             }
         }
 
-		private Dictionary<Bitmap, BitmapImage> loadedImages = new Dictionary<Bitmap, BitmapImage>();
-		private BitmapImage InitializeResource(Bitmap source)
+		private Dictionary<string, BitmapImage> loadedImages = new Dictionary<string, BitmapImage>();
+		private BitmapImage InitializeResource(Bitmap source, string name)
 		{
 			BitmapImage image = new BitmapImage();
 			MemoryStream stream = new MemoryStream();
@@ -135,23 +135,23 @@ namespace TempoMonkey
 			image.BeginInit();
 			image.StreamSource = new MemoryStream(stream.ToArray());
 			image.EndInit();
-			loadedImages.Add(source, image);
+			loadedImages.Add(name, image);
 			return image;
 		}
 
 		public void InitializeAvatars()
 		{
 			// Active images
-			InitializeResource(Properties.Resources.volume_avatar);
-			InitializeResource(Properties.Resources.seek_avatar);
-			InitializeResource(Properties.Resources.pitch_avatar);
-			InitializeResource(Properties.Resources.tempo_avatar);
+			InitializeResource(Properties.Resources.volume_avatar, "volumeAvatar");
+			InitializeResource(Properties.Resources.seek_avatar, "seekAvatar");
+			InitializeResource(Properties.Resources.pitch_avatar, "pitchAvatar");
+			InitializeResource(Properties.Resources.tempo_avatar, "tempoAvatar");
 
 			// Disabled images
-			volumeAvatar.Source = InitializeResource(Properties.Resources.volume_avatar_disabled);
-			seekAvatar.Source = InitializeResource(Properties.Resources.seek_avatar_disabled);
-			pitchAvatar.Source = InitializeResource(Properties.Resources.pitch_avatar_disabled);
-			tempoAvatar.Source = InitializeResource(Properties.Resources.tempo_avatar_disabled);
+			volumeAvatar.Source = InitializeResource(Properties.Resources.volume_avatar_disabled, "volumeAvatarDisabled");
+			seekAvatar.Source = InitializeResource(Properties.Resources.seek_avatar_disabled, "seekAvatarDisabled");
+			pitchAvatar.Source = InitializeResource(Properties.Resources.pitch_avatar_disabled, "pitchAvatarDisabled");
+			tempoAvatar.Source = InitializeResource(Properties.Resources.tempo_avatar_disabled, "tempoAvatarDisabled");
 		}
 
 		public void SetAvatarState(bool active, System.Windows.Controls.Image imageControl, BitmapImage image)
@@ -224,7 +224,7 @@ namespace TempoMonkey
             VolumeFocus.BorderBrush = bc.ConvertFromString("Green") as System.Windows.Media.Brush;
 			VolumeFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
             //Throws a KeyError for some reason
-			//SetAvatarState(exist, volumeAvatar, exist ? loadedImages[Properties.Resources.volume_avatar] : loadedImages[Properties.Resources.volume_avatar_disabled]);
+			SetAvatarState(exist, volumeAvatar, exist ? loadedImages["volumeAvatar"] : loadedImages["volumeAvatarDisabled"]);
 		}
 
 
@@ -250,7 +250,7 @@ namespace TempoMonkey
 			Tempo.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
             TempoFocus.BorderBrush = bc.ConvertFromString("Green") as System.Windows.Media.Brush;
 			TempoFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
-			//SetAvatarState(exist, tempoAvatar, exist ? loadedImages[Properties.Resources.tempo_avatar] : loadedImages[Properties.Resources.tempo_avatar_disabled]);
+			SetAvatarState(exist, tempoAvatar, exist ? loadedImages["tempoAvatar"] : loadedImages["tempoAvatarDisabled"]);
 		}
 
 
@@ -295,7 +295,7 @@ namespace TempoMonkey
 				wasSeeking = false;
 			}
 
-			//SetAvatarState(exist, seekAvatar, exist ? loadedImages[Properties.Resources.seek_avatar] : loadedImages[Properties.Resources.seek_avatar_disabled]);
+			SetAvatarState(exist, seekAvatar, exist ? loadedImages["seekAvatar"] : loadedImages["seekAvatarDisabled"]);
 		}
 
 		void pitchChangeHandler(double change)
@@ -309,7 +309,7 @@ namespace TempoMonkey
 		{
 			Pitch.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
 			PitchFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
-            //SetAvatarState(exist, pitchAvatar, exist ? loadedImages[Properties.Resources.pitch_avatar] : loadedImages[Properties.Resources.pitch_avatar_disabled]);
+            SetAvatarState(exist, pitchAvatar, exist ? loadedImages["pitchAvatar"] : loadedImages["pitchAvatarDisabled"]);
 		}
 
 		public void Resumee()
