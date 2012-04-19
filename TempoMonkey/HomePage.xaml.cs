@@ -19,11 +19,24 @@ namespace TempoMonkey
     /// <summary>
     /// Interaction logic for HomePage.xaml
     /// </summary>
-    public partial class HomePage : Page
+    public partial class HomePage : Page, CursorPage
     {
         public HomePage()
         {
             InitializeComponent();
+            MainWindow.changeFonts(mainCanvas);
+        }
+
+        public void setCursor(SkeletonPoint point)
+        {
+            FrameworkElement element = myCursor;
+            Canvas.SetLeft(element, point.X);// - element.Width / 2);
+            Canvas.SetTop(element, point.Y);// - element.Height / 2);
+        }
+
+        public Ellipse getCursor()
+        {
+            return myCursor;
         }
 
         #region Button Handlers
