@@ -39,7 +39,11 @@
     <Reference Include="Coding4Fun.Kinect.Wpf">
       <HintPath>.\Coding4Fun.Kinect.Wpf.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.JScript" />
     <Reference Include="Microsoft.Kinect, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="NAudio, Version=1.5.8.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\Processing\lib\NAudio.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -71,6 +75,7 @@
       <DependentUpon>FreeFormMode.xaml</DependentUpon>
     </Compile>
     <Compile Include="KinectGesture.cs" />
+    <Compile Include="Spectrum.cs" />
     <Compile Include="TutorMode.xaml.cs">
       <DependentUpon>TutorMode.xaml</DependentUpon>
     </Compile>
@@ -158,6 +163,10 @@
     <ProjectReference Include="..\slidingMenu\slidingMenu\slidingMenu.csproj">
       <Project>{983E3261-4510-43D5-97B8-A50E9E736E28}</Project>
       <Name>slidingMenu</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Visualizer\Visualizer.csproj">
+      <Project>{0B26333F-1ECD-4260-8DDC-C16C7B28A59B}</Project>
+      <Name>Visualizer</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

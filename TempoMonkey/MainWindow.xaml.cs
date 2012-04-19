@@ -20,6 +20,7 @@ using Processing;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Threading;
+using Visualizer;
 
 namespace System.Windows.Controls
 {
