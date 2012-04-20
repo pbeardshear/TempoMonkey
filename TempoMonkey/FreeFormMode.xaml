@@ -20,7 +20,7 @@
         <Slider Name="SeekSlider" Canvas.Left="98" Canvas.Top="127" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
         <Slider Name="VolumeSlider" Canvas.Left="486" Canvas.Top="223" Height="28" Width="260" Value="25" Minimum="0" Maximum="100" TickFrequency=".1"/>
         <Slider Name="PitchSlider" Canvas.Left="486" Canvas.Top="310" Height="28" Width="260" Value="50" Minimum="0" Maximum="100" TickFrequency=".1"/>
-        <Slider Name="TempoSlider" Canvas.Left="486" Canvas.Top="388" Height="28" Width="260" Value="100" Minimum="10" Maximum="200" TickFrequency=".1"/>
+        <Slider Name="TempoSlider" Canvas.Left="486" Canvas.Top="388" Height="28" Width="260" Value="100" Minimum="40" Maximum="200" TickFrequency=".1"/>
         <Border Name="TempoFocus" Visibility="Hidden" BorderBrush="#E84AAF" BorderThickness="3" Height="51" Canvas.Left="506" Canvas.Top="337" Width="94"/>
         <Border Name="PitchFocus" Visibility="Hidden" BorderBrush="#5CC6D2" BorderThickness="3" Height="48" Canvas.Left="506" Canvas.Top="256" Width="81"/>
         <Border Name="VolumeFocus" Visibility="Hidden" BorderBrush="#CDE431" BorderThickness="3" Height="53" Canvas.Left="506" Canvas.Top="171" Width="117"/>

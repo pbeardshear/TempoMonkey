@@ -70,10 +70,11 @@ namespace TempoMonkey
 			Spectrum spectrumVisualizer = new Spectrum(mainCanvas);
 			spectrumVisualizer.RegisterSoundPlayer();
             Track.Content = _nameList[currentTrackIndex];
-			freePlayer = new KinectGesturePlayer();
+            freePlayer = new KinectGesturePlayer();
+            freePlayer2 = new KinectGesturePlayer();
 			freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
 			freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
-			freePlayer.registerCallBack(freePlayer.handSwingListener, seekTrackingHandler, seekChangeHandler);
+			//freePlayer.registerCallBack(freePlayer.handSwingListener, seekTrackingHandler, seekChangeHandler);
 			freePlayer.registerCallBack(freePlayer.leanListener, tempoTrackingHandler, tempoChangeHandler);
 			freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
 
@@ -82,7 +83,7 @@ namespace TempoMonkey
             {
                 freePlayer2.registerCallBack(freePlayer2.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
                 freePlayer2.registerCallBack(freePlayer2.handsAboveHeadListener, pitchTrackingHandler2, pitchChangeHandler);
-                freePlayer2.registerCallBack(freePlayer2.handSwingListener, seekTrackingHandler, seekChangeHandler);
+                //freePlayer2.registerCallBack(freePlayer2.handSwingListener, seekTrackingHandler, seekChangeHandler);
                 freePlayer2.registerCallBack(freePlayer2.leanListener, tempoTrackingHandler2, tempoChangeHandler);
                 freePlayer2.registerCallBack(freePlayer2.handsWidenListener, volumeTrackingHandler2, volumeChangeHandler);
             }
@@ -105,7 +106,10 @@ namespace TempoMonkey
                     Skeleton[] skeletons = KinectGesturePlayer.getFirstTwoSkeletons(e);
                     Skeleton leftSkeleton;
                     Skeleton rightSkeleton;
-
+                    if (skeletons == null)
+                    {
+                        return;
+                    }
                     if (skeletons.Length == 0)
                     {
                         return;
@@ -234,7 +238,7 @@ namespace TempoMonkey
             if (exist)
             {
                 VolumeFocus.BorderBrush = bc.ConvertFromString("Blue") as System.Windows.Media.Brush;
-                VolumeFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+                VolumeFocus.Visibility = System.Windows.Visibility.Visible;
             }
         }
 
@@ -270,7 +274,7 @@ namespace TempoMonkey
             if (exist)
             {
                 PitchFocus.BorderBrush = bc.ConvertFromString("Blue") as System.Windows.Media.Brush;
-                PitchFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+                PitchFocus.Visibility = System.Windows.Visibility.Visible;
             }
         }
 

@@ -417,7 +417,7 @@ class KinectGesturePlayer
 
     /* Detches leaning right/left
      * */
-    public int LEANING_CONSTANT = 40;
+    public int LEANING_CONSTANT = 35;
     public int beenLeaning = 0;
     public void leanListener()
     {
