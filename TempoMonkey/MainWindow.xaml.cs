@@ -60,6 +60,9 @@ namespace TempoMonkey
         static public Page currentPage;
         public bool mouseOverride = false;
 
+		private int angle = 0;
+		private int tickAmount = 50;
+
         #region functions
         static public Button currentlySelectedButton;
         static public int timeOnCurrentButton;
@@ -114,36 +117,56 @@ namespace TempoMonkey
         {
             InitializeComponent();
             DispatcherTimer Timer = new DispatcherTimer();
-            Timer.Interval = TimeSpan.FromSeconds(.1);
+            Timer.Interval = TimeSpan.FromMilliseconds(tickAmount);
+			
+
+			Path path = new Path();
+			path.Stroke = System.Windows.Media.Brushes.White;
+			path.StrokeThickness = 10;
+			mainCanvas.Children.Add(path);
+
             Timer.Tick += (delegate(object s, EventArgs args)
             {
-                if(!isManipulating){
+                if (!isManipulating)
+				{
+					if (currentlySelectedButton != null)
+					{
+						if (angle >= 360)
+						{
+							currentlySelectedButton.PerformClick();
+							angle = 0;
+						}
+						else
+						{
+							path.Visibility = Visibility.Visible;
+							System.Windows.Point mousePos = Mouse.GetPosition(mainCanvas);
+							System.Windows.Point endPoint = new System.Windows.Point(mousePos.X + 40 * Math.Sin(angle / 180.0 * Math.PI), mousePos.Y - 40 * Math.Cos(angle / 180.0 * Math.PI));
 
-                    Ellipse currentlySelectedEllipse = ((CursorPage)currentPage).getCursor();
-                    if (currentlySelectedButton != null)
-                    {
-                        if (timeOnCurrentButton >= 55/3)
-                        {
-                            currentlySelectedButton.PerformClick();
-                            //Resize the cursor
-                            currentlySelectedEllipse.Width = currentlySelectedEllipse.Height = 25;
-                            timeOnCurrentButton = 10;
-                        }
-                        else
-                        {
-                            currentlySelectedEllipse.Width = 55 - timeOnCurrentButton*3;
-                            currentlySelectedEllipse.Height = 55 - timeOnCurrentButton*3;
-                            timeOnCurrentButton++;
-                        }
-                    }
-                    else
-                    {
-                        if (currentlySelectedEllipse.Width <= 55)
-                        {
-                            currentlySelectedEllipse.Width += 6;
-                            currentlySelectedEllipse.Height += 6;
-                        }
-                    }
+							PathFigure figure = new PathFigure();
+							figure.StartPoint = new System.Windows.Point(mousePos.X, mousePos.Y - 40);
+
+							figure.Segments.Add(new ArcSegment(
+								endPoint,
+								new System.Windows.Size(40, 40),
+								0,
+								angle >= 180,
+								SweepDirection.Clockwise,
+								true
+							));
+							
+							PathGeometry geometry = new PathGeometry();
+							geometry.Figures.Add(figure);
+
+							path.Data = geometry;
+							// Number of ticks in one second --> number of degrees
+							angle += (360 / (1000 / tickAmount));
+						}						
+					}
+					else
+					{
+						path.Visibility = Visibility.Hidden;
+						angle = 0;
+					}
                 }
             });
 
