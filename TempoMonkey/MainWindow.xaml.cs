@@ -42,13 +42,6 @@ namespace TempoMonkey
         void allFramesReady(object sender, AllFramesReadyEventArgs e);
     }
 
-    interface CursorPage
-    {
-        Ellipse getCursor();
-        void setCursor(SkeletonPoint skeletonPoint);
-    }
-
-    
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -176,8 +169,6 @@ namespace TempoMonkey
             Timer.Start();
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
             AddHandler(Keyboard.KeyUpEvent, (KeyEventHandler)HandleKeyUpEvent);
-            //System.Windows.Forms.Cursor.Hide();
-            //this.Cursor = new Cursor();
         }
 
         //hide the NavigationBar
@@ -274,7 +265,7 @@ namespace TempoMonkey
             curPos.X = (int)thePoint.X;
             curPos.Y = (int)thePoint.Y;
             System.Windows.Forms.Cursor.Position = curPos;
-            ((CursorPage)currentPage).setCursor(hand.Position);
+            //((CursorPage)currentPage).setCursor(hand.Position);
         }
 
         void stopKinect(KinectSensor theSensor)

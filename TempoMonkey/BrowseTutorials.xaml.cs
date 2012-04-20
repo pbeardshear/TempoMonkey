@@ -17,7 +17,7 @@ namespace TempoMonkey
     /// <summary>
     /// Interaction logic for BrowseTutorials.xaml
     /// </summary>
-    public partial class BrowseTutorials : Page, CursorPage
+    public partial class BrowseTutorials : Page
     {
 
         public BrowseTutorials()
@@ -30,18 +30,6 @@ namespace TempoMonkey
         {
             return "";
             //return slidingMenu.getAddress();
-        }
-
-        public void setCursor(Microsoft.Kinect.SkeletonPoint point)
-        {
-            FrameworkElement element = myCursor;
-            Canvas.SetLeft(element, point.X - element.Width / 2);
-            Canvas.SetTop(element, point.Y - element.Height / 2);
-        }
-
-        public Ellipse getCursor()
-        {
-            return myCursor;
         }
 
         #region Button Handlers

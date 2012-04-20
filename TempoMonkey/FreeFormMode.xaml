@@ -30,6 +30,5 @@
 		<Image Canvas.Left="454" Canvas.Top="12" Height="50" Name="tempoAvatar" Stretch="Fill" Width="50" />
 		<Image Canvas.Left="619" Canvas.Top="12" Height="50" Name="seekAvatar" Stretch="Fill" Width="50" />
         <Image Source="/Resources/Images/tempo_monkey_logo2.png" Stretch="Fill" Canvas.Left="619" Canvas.Top="422" />
-        <Ellipse Fill="Purple" Name="myCursor" Height="55" Width="55" Canvas.Left="10" Canvas.Top="10" Visibility="Hidden"/>
     </Canvas>
 </Page>

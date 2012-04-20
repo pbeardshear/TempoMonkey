@@ -13,6 +13,5 @@
         <Button Content="With a Tutor" Height="98" Width="249" HorizontalAlignment="Left" Name="TutorButton" VerticalAlignment="Top" Foreground="White" Background="Black" FontSize="35" FontFamily="Bold Art" FontWeight="Bold" Margin="56,396,0,0" Click="Tutor_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" />
         <Button Content="With a Friend" Height="98" Name="InteractiveModeButton" VerticalAlignment="Top" Foreground="White" Background="Black" FontSize="35" FontFamily="Bold Art" FontWeight="Bold" Margin="488,396,63,0" Click="InteractiveModeButton_Click" MouseLeave="Mouse_Leave" MouseEnter="Mouse_Enter" />
         <Button Content="Back" Height="69" HorizontalAlignment="Left" Margin="40,61,0,0" Name="Back" Background="Black" Foreground="Gray" FontFamily="Bold Art" FontSize="20" VerticalAlignment="Top" Width="83" Click="Back_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" />
-        <Ellipse Fill="Purple" Name="myCursor" Height="55" Width="55" Canvas.Left="10" Canvas.Top="10"/>
     </Canvas>
 </Page>

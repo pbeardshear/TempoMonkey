@@ -21,7 +21,7 @@ namespace TempoMonkey
     /// <summary>
     /// Interaction logic for TutorMode.xaml
     /// </summary>
-    public partial class TutorMode : Page, KinectPage, CursorPage
+    public partial class TutorMode : Page, KinectPage
     {
         BrushConverter bc = new BrushConverter();
         KinectGesturePlayer tutoree;

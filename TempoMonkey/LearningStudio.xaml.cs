@@ -18,7 +18,7 @@ namespace TempoMonkey
     /// <summary>
     /// Interaction logic for LearningStudio.xaml
     /// </summary>
-    public partial class LearningStudio : Page, CursorPage
+    public partial class LearningStudio : Page
     {
 
         public LearningStudio()
@@ -53,18 +53,6 @@ namespace TempoMonkey
         {
             MainWindow.currentPage = new HomePage();
             NavigationService.Navigate(MainWindow.currentPage);
-        }
-
-        public void setCursor(Microsoft.Kinect.SkeletonPoint point)
-        {
-            FrameworkElement element = myCursor;
-            Canvas.SetLeft(element, point.X);// - element.Width / 2);
-            Canvas.SetTop(element, point.Y);// - element.Height / 2);
-        }
-
-        public Ellipse getCursor()
-        {
-            return myCursor;
         }
     }
 }

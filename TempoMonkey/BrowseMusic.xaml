@@ -22,6 +22,5 @@
         <Button Content="Delete" Height="50" HorizontalAlignment="Left" Margin="321,535,0,0" Name="delete" VerticalAlignment="Top" Width="70" Foreground="#5CC6D2" Background="Black" FontFamily="Bold Art" FontSize="20" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Delete_Click" Canvas.Top="3" Canvas.Left="-173" />
         <Button Content="DONE" Height="66" Name="done" Width="101" Foreground="White" Background="Black" FontFamily="Bold Art" FontWeight="Bold" FontSize="20" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Done_Click" Canvas.Left="665" Canvas.Top="45" />
         <Border BorderBrush="#5CC6D2" BorderThickness="3" Height="3" Width="916" Canvas.Left="-42" Canvas.Top="463" />
-        <Ellipse Fill="Purple" Name="myCursor" Height="55" Width="55"/>
         </Canvas>
 </Page>

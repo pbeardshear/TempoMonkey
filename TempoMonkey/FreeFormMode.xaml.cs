@@ -25,7 +25,7 @@ namespace TempoMonkey
 	/// <summary>
 	/// Interaction logic for FreeFormMode.xaml
 	/// </summary>
-    public partial class FreeFormMode : Page, KinectPage, CursorPage
+    public partial class FreeFormMode : Page, KinectPage
 	{
 		BrushConverter bc = new BrushConverter();
         KinectGesturePlayer freePlayer, freePlayer2;
@@ -323,7 +323,7 @@ namespace TempoMonkey
 			Border.Visibility = System.Windows.Visibility.Hidden;
 			Resume.Visibility = System.Windows.Visibility.Hidden;
 			Quit.Visibility = System.Windows.Visibility.Hidden;
-            myCursor.Visibility = System.Windows.Visibility.Hidden;
+            //myCursor.Visibility = System.Windows.Visibility.Hidden;
 			MainWindow.isManipulating = true;
 		}
 
@@ -334,23 +334,11 @@ namespace TempoMonkey
 			Border.Visibility = System.Windows.Visibility.Visible;
 			Resume.Visibility = System.Windows.Visibility.Visible;
 			Quit.Visibility = System.Windows.Visibility.Visible;
-            myCursor.Visibility = System.Windows.Visibility.Visible;
+            //myCursor.Visibility = System.Windows.Visibility.Visible;
 			MainWindow.isManipulating = false;
 		}
 
 		#endregion
-
-        public void setCursor(SkeletonPoint point)
-        {
-            FrameworkElement element = myCursor;
-            Canvas.SetLeft(element, point.X);//- element.Width / 2);
-            Canvas.SetTop(element, point.Y);//- element.Height / 2);
-        }
-
-        public Ellipse getCursor()
-        {
-            return myCursor;
-        }
 
 		#region Navigation
 		void Mouse_Enter(object sender, MouseEventArgs e)

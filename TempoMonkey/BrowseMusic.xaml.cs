@@ -21,7 +21,7 @@ namespace TempoMonkey
     /// <summary>
     /// Interaction logic for BrowseMusic.xaml
     /// </summary>
-    public partial class BrowseMusic : Page, CursorPage
+    public partial class BrowseMusic : Page
     {
 
         private string _type;
@@ -83,18 +83,6 @@ namespace TempoMonkey
                 selectedMusicList.Children.Add(myButton);
                 mySelections.Add(Boxes[boxIndex]);
             }
-        }
-
-        public void setCursor(Microsoft.Kinect.SkeletonPoint point)
-        {
-            FrameworkElement element = myCursor;
-            Canvas.SetLeft(element, point.X);// - element.Width / 2);
-            Canvas.SetTop(element, point.Y);// - element.Height / 2);
-        }
-
-        public Ellipse getCursor()
-        {
-            return myCursor;
         }
 
         #region Mouse Events
