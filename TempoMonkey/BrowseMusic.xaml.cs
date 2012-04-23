@@ -73,9 +73,8 @@ namespace TempoMonkey
 
         private void addItemsToGrid()
         {
-            string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Music";
             int index = 0;
-            foreach (string filepath in Directory.GetFiles(path, "*.mp3"))
+            foreach (string filepath in Directory.GetFiles(@"..\..\Resources\Music", "*.mp3"))
             {
                 int colspot = index % gridRows;
                 int rowspot = index / gridRows;

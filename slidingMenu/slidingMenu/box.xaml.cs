@@ -53,7 +53,7 @@ namespace slidingMenu
         {
             try
             {
-                string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Music\\Images\\" + name + ".jpg";
+                string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\" + name + ".jpg";
                 this.Image.Source = new BitmapImage(new Uri(path));
                 //this.Image.Height = 3*size/4;
                 //this.Image.Width = 3*size/4;
