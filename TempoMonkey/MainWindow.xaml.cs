@@ -54,7 +54,10 @@ namespace TempoMonkey
         static public Page currentPage;
         public bool mouseOverride = false;
 
-		private int angle = 0;
+		private static int angle = 0;
+        private static int startAngle = 0;
+        private static int preSelectedSongTime = 0;
+
 		private int tickAmount = 50;
         public static int height;
         public static int width;
@@ -83,6 +86,8 @@ namespace TempoMonkey
             {
                 ((Button)sender).Foreground = lastForegroundColor;
             }
+            angle = startAngle;
+            preSelectedSongTime = 0;
             currentlySelectedObject = null;
         }
 
@@ -147,38 +152,48 @@ namespace TempoMonkey
                             {
                                 ((BrowseMusic)currentPage).Click();
                             }
-							angle = 0;
+                            angle = startAngle;
+                            preSelectedSongTime = 0;
 						}
-						else
-						{
-							path.Visibility = Visibility.Visible;
-							System.Windows.Point mousePos = Mouse.GetPosition(mainCanvas);
-							System.Windows.Point endPoint = new System.Windows.Point(mousePos.X + 40 * Math.Sin(angle / 180.0 * Math.PI), mousePos.Y - 40 * Math.Cos(angle / 180.0 * Math.PI));
+                        else
+                        {
+                            if (currentlySelectedObject is box && preSelectedSongTime <= 30)
+                            {
+                                // This is a song box, we want to wait for a while
+                                preSelectedSongTime += (360 / (1000 / tickAmount));
+                            }
+                            else
+                            {
+                                path.Visibility = Visibility.Visible;
+                                System.Windows.Point mousePos = Mouse.GetPosition(mainCanvas);
+                                System.Windows.Point endPoint = new System.Windows.Point(mousePos.X + 40 * Math.Sin(angle / 180.0 * Math.PI), mousePos.Y - 40 * Math.Cos(angle / 180.0 * Math.PI));
 
-							PathFigure figure = new PathFigure();
-							figure.StartPoint = new System.Windows.Point(mousePos.X, mousePos.Y - 40);
+                                PathFigure figure = new PathFigure();
+                                figure.StartPoint = new System.Windows.Point(mousePos.X, mousePos.Y - 40);
 
-							figure.Segments.Add(new ArcSegment(
-								endPoint,
-								new System.Windows.Size(40, 40),
-								0,
-								angle >= 180,
-								SweepDirection.Clockwise,
-								true
-							));
-							
-							PathGeometry geometry = new PathGeometry();
-							geometry.Figures.Add(figure);
+                                figure.Segments.Add(new ArcSegment(
+                                    endPoint,
+                                    new System.Windows.Size(40, 40),
+                                    0,
+                                    angle >= 180,
+                                    SweepDirection.Clockwise,
+                                    true
+                                ));
 
-							path.Data = geometry;
-							// Number of ticks in one second --> number of degrees
-							angle += (360 / (1000 / tickAmount));
-						}						
+                                PathGeometry geometry = new PathGeometry();
+                                geometry.Figures.Add(figure);
+
+                                path.Data = geometry;
+                                // Number of ticks in one second --> number of degrees
+                                angle += (360 / (1000 / tickAmount));
+                            }
+                        }
 					}
 					else
 					{
 						path.Visibility = Visibility.Hidden;
-						angle = 0;
+                        angle = startAngle;
+                        preSelectedSongTime = 0;
 					}
                 }
             });
