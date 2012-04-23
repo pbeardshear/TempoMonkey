@@ -145,13 +145,4 @@
   <data name="background" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\background.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="tempo_monkey02_cartoonish" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Images\tempo_monkey02_cartoonish.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="tempo_monkey_logo2" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Images\tempo_monkey_logo2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="tempo_monkey_text" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Images\tempo_monkey_text.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
 </root>
