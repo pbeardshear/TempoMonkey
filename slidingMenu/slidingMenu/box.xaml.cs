@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace slidingMenu
 {
     /// <summary>
@@ -19,14 +20,12 @@ namespace slidingMenu
     /// </summary>
     public partial class box : UserControl
     {
-        public box()
-        {
-            InitializeComponent();
-        }
+        Page myPage;
 
-        public box(int sizeOfBox)
+        public box(int sizeOfBox, Page page)
         {
             InitializeComponent();
+            myPage = page;          
             size = sizeOfBox;
             this.boxCanvas.Width = size;
             this.boxCanvas.Height = size;
@@ -65,7 +64,6 @@ namespace slidingMenu
             }
         }
 
-
         public void highlightBox()
         {
             Highlight.Visibility = Visibility.Visible;
@@ -75,5 +73,6 @@ namespace slidingMenu
         {
             Highlight.Visibility = Visibility.Collapsed;
         }
+
     }
 }

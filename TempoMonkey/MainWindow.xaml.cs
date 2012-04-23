@@ -20,6 +20,7 @@ using Processing;
 using System.Diagnostics;
 using System.Threading;
 using System.Windows.Threading;
+using slidingMenu;
 using Visualizer;
 
 namespace System.Windows.Controls
@@ -55,26 +56,32 @@ namespace TempoMonkey
 
 		private int angle = 0;
 		private int tickAmount = 50;
+        public static int height;
+        public static int width;
 
         #region functions
-        static public Button currentlySelectedButton;
-        static public int timeOnCurrentButton;
+        static public object currentlySelectedObject;
 
 		// Store the button's text color, so that when we reset it, we can put it back correctly
 		private static System.Windows.Media.Brush lastForegroundColor;
 
         static public void Mouse_Enter(object sender, MouseEventArgs e)
         {
-			lastForegroundColor = ((Button)sender).Foreground;
-			((Button)sender).Foreground = System.Windows.Media.Brushes.DarkSlateBlue;
-            currentlySelectedButton = ((Button)sender);
+            if (sender is Button)
+            {
+                lastForegroundColor = ((Button)sender).Foreground;
+                ((Button)sender).Foreground = System.Windows.Media.Brushes.DarkSlateBlue;
+            }
+            currentlySelectedObject = sender;
         }
 
         static public void Mouse_Leave(object sender, MouseEventArgs e)
         {
-			((Button)sender).Foreground = lastForegroundColor;
-            currentlySelectedButton = null;
-            timeOnCurrentButton = 0;
+            if (sender is Button)
+            {
+                ((Button)sender).Foreground = lastForegroundColor;
+            }
+            currentlySelectedObject = null;
         }
 
         private void HandleKeyDownEvent(object sender, KeyEventArgs e)
@@ -109,6 +116,10 @@ namespace TempoMonkey
         public MainWindow()
         {
             InitializeComponent();
+
+            MainWindow.height = (int)this.Height;
+            MainWindow.width = (int)this.Width;
+
             DispatcherTimer Timer = new DispatcherTimer();
             Timer.Interval = TimeSpan.FromMilliseconds(tickAmount);
 			
@@ -122,11 +133,18 @@ namespace TempoMonkey
             {
                 if (!isManipulating)
 				{
-					if (currentlySelectedButton != null)
+					if (currentlySelectedObject != null )
 					{
 						if (angle >= 360)
 						{
-							currentlySelectedButton.PerformClick();
+                            if (currentlySelectedObject is Button)
+                            {
+                                ((Button)currentlySelectedObject).PerformClick();
+                            }
+                            else
+                            {
+                                ((BrowseMusic)currentPage).Click();
+                            }
 							angle = 0;
 						}
 						else
