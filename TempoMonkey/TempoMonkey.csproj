@@ -180,6 +180,7 @@
     <None Include="Resources\Images\seek-avatar.png" />
     <None Include="Resources\Images\pitch-avatar.png" />
     <None Include="Resources\Images\tempo-avatar.png" />
+    <Resource Include="Resources\background.png" />
     <Content Include="Resources\Enough To Fly With You.mp3" />
     <None Include="Resources\Images\pitch-avatar-disabled.png" />
     <None Include="Resources\Images\seek-avatar-disabled.png" />

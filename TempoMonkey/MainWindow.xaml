@@ -4,9 +4,16 @@
         Title="MainWindow" Height="630" Width="810" 
         
         xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers"
-        Loaded="Window_Loaded" Closing="Window_Closing">
-    <Canvas Height="600" Width="800" Name="mainCanvas">
-        <my:KinectSensorChooser Height="203" Name="kinectSensorChooser1" Width="428" Canvas.Left="227" Canvas.Top="194" />
-        <Frame Canvas.Left="0" Canvas.Top="0" Height="600" Name="frame" Width="800" ContentRendered="myFrame_ContentRendered"/>
-    </Canvas>
+        Loaded="Window_Loaded" Closing="Window_Closing" WindowState="Maximized">
+    <Window.Resources>
+        <ImageBrush x:Key="BackgroundBrush" ImageSource="Resources/background.png" 
+                    TileMode="Tile" Stretch="None" AlignmentX="Left" AlignmentY="Top"
+                    Viewport="0,0,256,256" ViewportUnits="Absolute" />
+    </Window.Resources>
+    <Grid Background="{StaticResource BackgroundBrush}">
+        <Canvas Height="600" Width="800" Name="mainCanvas">
+            <my:KinectSensorChooser Height="203" Name="kinectSensorChooser1" Width="428" Canvas.Left="227" Canvas.Top="194" />
+            <Frame Canvas.Left="0" Canvas.Top="0" Height="600" Name="frame" Width="800" ContentRendered="myFrame_ContentRendered"/>
+        </Canvas>
+    </Grid>
 </Window>

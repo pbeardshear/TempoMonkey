@@ -56,6 +56,8 @@ namespace TempoMonkey
 		private int angle = 0;
 		private int tickAmount = 50;
 
+		public ImageBrush BackgroundBrush;
+
         #region functions
         static public Button currentlySelectedButton;
         static public int timeOnCurrentButton;
