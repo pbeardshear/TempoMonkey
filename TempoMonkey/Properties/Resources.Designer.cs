@@ -67,13 +67,6 @@ namespace TempoMonkey.Properties {
             }
         }
         
-        internal static byte[] Maid_with_the_Flaxen_Hair {
-            get {
-                object obj = ResourceManager.GetObject("Maid_with_the_Flaxen_Hair", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap pitch_avatar {
             get {
                 object obj = ResourceManager.GetObject("pitch_avatar", resourceCulture);
@@ -102,13 +95,6 @@ namespace TempoMonkey.Properties {
             }
         }
         
-        internal static byte[] Sleep_Away {
-            get {
-                object obj = ResourceManager.GetObject("Sleep_Away", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap tempo_avatar {
             get {
                 object obj = ResourceManager.GetObject("tempo_avatar", resourceCulture);
@@ -119,6 +105,27 @@ namespace TempoMonkey.Properties {
         internal static System.Drawing.Bitmap tempo_avatar_disabled {
             get {
                 object obj = ResourceManager.GetObject("tempo_avatar_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tempo_monkey_logo2 {
+            get {
+                object obj = ResourceManager.GetObject("tempo_monkey_logo2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tempo_monkey_text {
+            get {
+                object obj = ResourceManager.GetObject("tempo_monkey_text", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tempo_monkey02_cartoonish {
+            get {
+                object obj = ResourceManager.GetObject("tempo_monkey02_cartoonish", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

@@ -11,25 +11,108 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using slidingMenu;
+using System.IO;
+using System.Windows.Media.Animation;
+using System.Collections;
 
 namespace TempoMonkey
 {
     /// <summary>
     /// Interaction logic for BrowseTutorials.xaml
     /// </summary>
-    public partial class BrowseTutorials : Page
+    public partial class BrowseTutorials : Page, SelectionPage
     {
+        int sizeOfBox = 100;
+        List<box> Boxes = new List<box>();
+        string mySelection;
+        Grid myGrid;
+        int gridRows, gridCols;
 
         public BrowseTutorials()
         {
             InitializeComponent();
             //this.slidingMenu.initializeMenu("TutorialVideos");
+            MainWindow.changeFonts(mainCanvas);
+            addGrid((int)MainWindow.height, (int)MainWindow.width);
+            addItemsToGrid();
         }
 
         public string getAddr()
         {
             return "";
             //return slidingMenu.getAddress();
+        }
+
+        /* Creates a grid dyanmically with demensions equal to (height/100) by (width/100) */
+        private void addGrid(int height, int width)
+        {
+            myGrid = new Grid();
+
+            int sizeofCell = sizeOfBox + sizeOfBox / 5;
+            int heightOffSet = 120;
+            int widthOffSet = 70;
+            gridRows = (height - heightOffSet) / sizeofCell;
+            gridCols = (width - widthOffSet) / sizeofCell;
+
+            for (int i = 0; i < gridCols; i += 1)
+            {
+                ColumnDefinition row = new ColumnDefinition();
+                row.Width = new System.Windows.GridLength(sizeofCell + sizeofCell / 3);
+                myGrid.ColumnDefinitions.Add(row);
+            }
+
+            for (int j = 0; j < gridRows; j += 1)
+            {
+                RowDefinition row = new RowDefinition();
+                row.Height = new System.Windows.GridLength(sizeofCell + sizeofCell / 3);
+                myGrid.RowDefinitions.Add(row);
+            }
+
+            mainCanvas.Children.Add(myGrid);
+            Canvas.SetLeft(myGrid, widthOffSet);
+            Canvas.SetTop(myGrid, heightOffSet);
+        }
+
+        private void addItemsToGrid()
+        {
+            int index = 0;
+            foreach (string filepath in Directory.GetFiles(@"..\..\Resources\Music", "*.mp3"))
+            {
+                int colspot = index % gridRows;
+                int rowspot = index / gridRows;
+                string filename = System.IO.Path.GetFileNameWithoutExtension(filepath);
+
+                addToBox(filename, filepath, rowspot, colspot);
+                index += 1;
+            }
+            myGrid.UpdateLayout();
+        }
+
+        private void addToBox(string name, string address, int rowspot, int colspot) // instantiate a box instance
+        {
+            box littleBox = new box(sizeOfBox, this);
+
+            littleBox.MouseEnter += Mouse_Enter;
+            littleBox.MouseLeave += Mouse_Leave;
+
+            littleBox.boxName = name;
+            littleBox.address = address;
+            littleBox.name = name;
+            littleBox.setImage(name);
+
+            Grid.SetRow(littleBox, rowspot);
+            Grid.SetColumn(littleBox, colspot);
+            myGrid.Children.Add(littleBox);
+            Boxes.Add(littleBox);
+        }
+
+        public void Click()
+        {
+            box currentlySelectedBox = (box)MainWindow.currentlySelectedObject;
+            currentlySelectedBox.highlightBox();
+            mySelection=currentlySelectedBox.name;
+            Done();
         }
 
         #region Button Handlers
@@ -49,15 +132,13 @@ namespace TempoMonkey
             NavigationService.Navigate(MainWindow.currentPage);
         }
 
-        void Done_Click(object sender, MouseEventArgs e)
+        private void Done()
         {
-            throw new Exception();
+            MainWindow.currentPage = new TutorMode(mySelection);
+            MainWindow.isManipulating = true;
+            NavigationService.Navigate(MainWindow.currentPage);
         }
 
-        void Delete_Click(object sender, MouseEventArgs e)
-        {
-
-        }
         #endregion
 
     }

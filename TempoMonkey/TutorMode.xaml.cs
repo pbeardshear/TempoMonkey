@@ -27,9 +27,12 @@ namespace TempoMonkey
         KinectGesturePlayer tutoree;
         bool isPaused = false;
 
-        public TutorMode()
+        string mySelection;
+
+        public TutorMode(string selection)
         {
             InitializeComponent();
+            mySelection = selection;
             /*
             Processing.Audio.Initialize();
             Processing.Audio.LoadFile("C:\\Users\\Doboy\\Desktop\\Minh\\TempoMonkey\\bin\\Debug\\Music\\Enough To Fly With You.mp3");

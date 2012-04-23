@@ -7,7 +7,7 @@
       d:DesignHeight="600" d:DesignWidth="800"
 	Title="LearningStudio" xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers">
 
-    <Canvas Name="mainCanvas" Background="Black">
+    <Canvas Name="mainCanvas">
         <Image Source="/Resources/images/tempo_monkey02_cartoonish.png" Height="200" Canvas.Left="293" Canvas.Top="177" />
         <Label Content="LEARNING STUDIO" Height="86" HorizontalAlignment="Left" Margin="186,44,0,0" Name="Title" VerticalAlignment="Top" Width="415" FontSize="45" FontFamily="Bold Art" FontWeight="Bold" Foreground="White"/>
         <Button Content="With a Tutor" Height="98" Width="249" HorizontalAlignment="Left" Name="TutorButton" VerticalAlignment="Top" Foreground="White" Background="Black" FontSize="35" FontFamily="Bold Art" FontWeight="Bold" Margin="56,396,0,0" Click="Tutor_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" />

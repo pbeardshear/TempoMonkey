@@ -21,7 +21,7 @@ namespace TempoMonkey
     /// <summary>
     /// Interaction logic for BrowseMusic.xaml
     /// </summary>
-    public partial class BrowseMusic : Page
+    public partial class BrowseMusic : Page, SelectionPage
     {
 
         private string _type;

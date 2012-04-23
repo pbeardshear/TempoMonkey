@@ -7,7 +7,7 @@
       d:DesignHeight="600" d:DesignWidth="800"
 	  Title="TutorMode" xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers">
     <Canvas Name="mainCanvas" Margin="0,6,0,-6">
-        <Label Content="Work in Progress.. Come back later"/>
+        <Label Content="Work in Progress.. Come back later" Canvas.Left="98" Canvas.Top="90" Height="46" Width="557" />
         <Label Canvas.Left="470" Canvas.Top="232" Name="Volume" Content="Volume" Height="39" Width="87" FontSize="20" FontStyle="Normal"/>
         <Label Canvas.Left="470" Canvas.Top="318" Name="Pitch" Content="Pitch" Height="38" Width="98" FontSize="20"  FontStyle="Normal"/>
         <Label Canvas.Left="470" Canvas.Top="400" Name="Tempo" Content="Tempo" Height="39" Width="99" FontSize="20"  FontStyle="Normal"/>

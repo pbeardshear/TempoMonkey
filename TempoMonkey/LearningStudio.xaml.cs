@@ -39,7 +39,7 @@ namespace TempoMonkey
 
         private void Tutor_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.currentPage = new TutorMode();
+            MainWindow.currentPage = new BrowseTutorials();
             NavigationService.Navigate(MainWindow.currentPage);
         }
 
