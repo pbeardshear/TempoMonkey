@@ -69,7 +69,8 @@ namespace slidingMenu
 
         private void addToBox(string name, string address, double pos) // instantiate a box instance
         {
-            box littleBox = new box(sizeOfBox);
+            /*
+            box littleBox = new box(sizeOfBox, this);
             littleBox.boxName = name;
             littleBox.address = address;
             littleBox.name = name;
@@ -79,6 +80,7 @@ namespace slidingMenu
             littleBox.Image.Source = new BitmapImage(new Uri(path));
 
             this.MenuBar.Children.Add(littleBox);
+             */
         }
  
 

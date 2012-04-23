@@ -3,10 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             mc:Ignorable="d">
-    <Canvas x:Name="boxCanvas" RenderTransformOrigin="0.5,0.5" Canvas.ZIndex="0">
-        <Border BorderBrush="#F6B029" BorderThickness="5" Canvas.Left="0" Canvas.Top="0" Height="100" Name="Highlight" Width="100" />
-        <TextBox Canvas.Left="5" Canvas.Top="5" Height="90" Name="textBox" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Width="90" />
-        <Image Height="56" Canvas.Left="18" Canvas.Top="27" Width="60" Name="Image"></Image>
+             mc:Ignorable="d" Height="150.5" Width="149.5">
+    <Canvas x:Name="boxCanvas" RenderTransformOrigin="0.5,0.5" Canvas.ZIndex="0" Height="150" VerticalAlignment="Top">
+        <!--This label is required so that hoovering works-->
+        <Label Height="150" Width="150"></Label>
+        <Border BorderBrush="#F6B029" BorderThickness="5"  Height="150" Name="Highlight" Width="150" />
+        <Label Background="Black" Foreground="White" Canvas.Top="106"   Height="39" Name="textBox" Width="138" Canvas.Left="6"/>
+        <Image Height="91" Width="99" Name="Image"  Canvas.Left="27" Canvas.Top="10"/>
+        <Border BorderBrush="White" BorderThickness="2"  Height="150" x:Name="Highlight_Copy" Width="150" />
     </Canvas>
 </UserControl>

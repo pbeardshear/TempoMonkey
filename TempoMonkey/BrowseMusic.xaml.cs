@@ -25,63 +25,98 @@ namespace TempoMonkey
     {
 
         private string _type;
-        int span = 240;
-        int numberOfItems = 0;
-        int sizeOfBox = 240;
-        double position = 0;
+        int sizeOfBox = 100;
         List<box> Boxes = new List<box>();
         List<box> mySelections = new List<box>();
-        int boxIndex = 1;
+
+        Grid myGrid;
+        int gridRows, gridCols;
 
         public BrowseMusic(string type)
         {
             InitializeComponent();
             _type = type;
-            addItemsToMenu();
-            Boxes[boxIndex].highlightBox();
             MainWindow.changeFonts(mainCanvas);
+            addGrid((int)MainWindow.height, (int)MainWindow.width);
+            addItemsToGrid();
         }
 
-        private void addItemsToMenu()
+        /* Creates a grid dyanmically with demensions equal to (height/100) by (width/100) */
+        private void addGrid(int height, int width)
+        {
+            myGrid = new Grid();
+
+            int sizeofCell = sizeOfBox + sizeOfBox / 5;
+            int heightOffSet = 120;
+            int widthOffSet = 70;
+            gridRows = (height - heightOffSet) / sizeofCell;
+            gridCols = (width - widthOffSet) / sizeofCell;
+
+            for (int i = 0; i < gridCols; i += 1)
+            {
+                ColumnDefinition row = new ColumnDefinition();
+                row.Width = new System.Windows.GridLength(sizeofCell + sizeofCell / 3);
+                myGrid.ColumnDefinitions.Add(row);
+            }
+
+            for (int j = 0; j < gridRows; j += 1)
+            {
+                RowDefinition row = new RowDefinition();
+                row.Height = new System.Windows.GridLength(sizeofCell + sizeofCell / 3);
+                myGrid.RowDefinitions.Add(row);
+            }
+
+            mainCanvas.Children.Add(myGrid);
+            Canvas.SetLeft(myGrid, widthOffSet);
+            Canvas.SetTop(myGrid, heightOffSet);
+        }
+
+        private void addItemsToGrid()
         {
             string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Music";
-            double pos = 0.0;
+            int index = 0;
             foreach (string filepath in Directory.GetFiles(path, "*.mp3"))
             {
+                int colspot = index % gridRows;
+                int rowspot = index / gridRows;
                 string filename = System.IO.Path.GetFileNameWithoutExtension(filepath);
-                addToBox(filename, filepath, pos);
-                numberOfItems += 1;
-                pos -= span;
+
+                addToBox(filename, filepath, rowspot, colspot);
+                index += 1;
             }
+            myGrid.UpdateLayout();
         }
 
-        private void addToBox(string name, string address, double pos) // instantiate a box instance
+        private void addToBox(string name, string address, int rowspot, int colspot) // instantiate a box instance
         {
-            box littleBox = new box(sizeOfBox);
+            box littleBox = new box(sizeOfBox, this);
+
+            littleBox.MouseEnter += Mouse_Enter;
+            littleBox.MouseLeave += Mouse_Leave;
+
             littleBox.boxName = name;
             littleBox.address = address;
             littleBox.name = name;
             littleBox.setImage(name);
-            littleBox.position = pos;
+
+            Grid.SetRow(littleBox, rowspot);
+            Grid.SetColumn(littleBox, colspot);
+            myGrid.Children.Add(littleBox);
             Boxes.Add(littleBox);
-            MenuBar.Children.Add(littleBox);
         }
 
-        private void addCurrToSelection()
+        public void Click()
         {
-            if (!mySelections.Contains(Boxes[boxIndex]))
+            box currentlySelectedBox = (box)MainWindow.currentlySelectedObject;
+            if (!mySelections.Contains(currentlySelectedBox))
             {
-                Button myButton = new Button();
-                myButton.Content = Boxes[boxIndex].name;
-                myButton.IsEnabled = false;
-                myButton.Width = 214;
-                myButton.Height = 46;
-                myButton.FontSize = 30;
-                myButton.MouseEnter += Mouse_Enter;
-                myButton.MouseLeave += Mouse_Leave;
-                myButton.Click += Delete_Song;
-                selectedMusicList.Children.Add(myButton);
-                mySelections.Add(Boxes[boxIndex]);
+                currentlySelectedBox.highlightBox();
+                mySelections.Add(currentlySelectedBox);
+            }
+            else
+            {
+                currentlySelectedBox.unHighlightBox();
+                mySelections.Remove(currentlySelectedBox);
             }
         }
 
@@ -100,97 +135,6 @@ namespace TempoMonkey
         {
             MainWindow.currentPage = new HomePage();
             NavigationService.Navigate(MainWindow.currentPage);
-        }
-
-        private void Left_Click(object sender, RoutedEventArgs e)
-        {
-            if (boxIndex > 0)
-            {
-                ((box)Boxes[boxIndex]).unHighlightBox();
-                position += span;
-                moveMenu(position);
-                boxIndex--;
-                ((box)Boxes[boxIndex]).highlightBox();
-            }
-        }
-
-        private void Right_Click(object sender, RoutedEventArgs e)
-        {
-            if (boxIndex < Boxes.Count() - 1)
-            {
-                ((box)Boxes[boxIndex]).unHighlightBox();
-                position -= span;
-                moveMenu(position);
-                boxIndex++;
-                ((box)Boxes[boxIndex]).highlightBox();
-            }
-        }
-
-        bool deleting = false;
-        private void Delete_Click(object sender, RoutedEventArgs e)
-        {
-            if (!deleting)
-            {
-                deleting = true;
-                delete.Content = "Done Deleting";
-                foreach (var child in selectedMusicList.Children)
-                {
-                    BrushConverter converter = new BrushConverter();
-                    ((Button)child).IsEnabled = true;
-                    ((Button)child).BorderBrush = converter.ConvertFromString("#FFE81515") as Brush;
-                    ((Button)child).Background = converter.ConvertFromString("Yellow") as Brush;
-                    ((Button)child).FontSize = 25.0;
-                    ((Button)child).Foreground = converter.ConvertFromString("#FF9264DE") as Brush;
-                }
-            }
-            else
-            {
-                deleting = false;
-                delete.Content = "Delete";
-                foreach (var child in selectedMusicList.Children)
-                {
-                    BrushConverter converter = new BrushConverter();
-                    ((Button)child).IsEnabled = false;
-                    ((Button)child).BorderBrush = converter.ConvertFromString("Black") as Brush;
-                    ((Button)child).Background = converter.ConvertFromString("White") as Brush;
-                    ((Button)child).FontSize = 25.0;
-                    ((Button)child).Foreground = converter.ConvertFromString("Black") as Brush;
-                }
-            }
-        }
-
-        public void moveMenu(double position) // move the menu left or right
-        {
-            Canvas.SetLeft(MenuBar, position);
-        }
-
-        private void Choose_Click(object sender, RoutedEventArgs e)
-        {
-            addCurrToSelection();
-        }
-
-        private void Delete_Song(object sender, RoutedEventArgs e)
-        {
-            if (deleting)
-            {
-                int i = 0;
-                string theItemToDelete = (string)((Button)sender).Content;
-                if (selectedMusicList.Children.Count != 0)
-                {
-                    foreach (var child in selectedMusicList.Children)
-                    {
-
-                        if (((Button)child).Content.Equals(theItemToDelete))
-                        {
-                            selectedMusicList.Children.RemoveAt(i);
-                            mySelections.RemoveAt(i);
-                            MainWindow.timeOnCurrentButton = 0;
-                            return;
-                        }
-                        i++;
-                    }
-                }
-            }
         }
 
         private void Done_Click(object sender, RoutedEventArgs e)

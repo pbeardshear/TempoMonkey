@@ -10,17 +10,6 @@
     <Canvas Name="mainCanvas" Background="Black">
         <Label Content="SELECT SONGS" Height="107" HorizontalContentAlignment="Center" Margin="225,45,0,0" Name="Title" VerticalAlignment="Top" Width="362" FontSize="45" FontFamily="Bold Art" FontWeight="Bold" Foreground="White" Canvas.Left="0" Canvas.Top="-31" />
         <Button Content="BACK" Height="66" HorizontalAlignment="Left" Margin="12,45,0,0" Name="back" Background="Black" Foreground="White" FontFamily="Bold Art" FontWeight="Bold" FontSize="20" VerticalAlignment="Top" Width="86" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Back_Click" Canvas.Left="21" />
-
-        <StackPanel Name="MenuBar" Orientation="Horizontal" Height="300" Canvas.Left="25" Canvas.Top="126" Width="3023"></StackPanel>
-        <Button Canvas.Left="723" Canvas.Top="126" Content=">" Width="80" FontSize="50" FontWeight="Bold" Height="300" Foreground="#F6B029" Name="right" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Right_Click"/>
-        <Button Canvas.Top="126" Content="&lt;" Height="300" Name="left" Width="80" FontSize="50" FontWeight="Bold" Foreground="#F6B029" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Left_Click" />
-        <Button Content="SELECT" Canvas.Left="86" Canvas.Top="404" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Foreground="#F6B029" Click="Choose_Click" Height="45" Width="631" FontFamily="Bold Art" FontWeight="Bold" FontSize="20"/>
-
-        <Label Content="Selected" Height="48" HorizontalAlignment="Left" Name="label1" VerticalAlignment="Top" Width="123" FontWeight="Bold" FontStretch="Normal"  Foreground="#5CC6D2" FontFamily="Bold Art" FontSize="25" Canvas.Left="25" Canvas.Top="472"/>
-        <Label Content="Songs" Height="60" HorizontalAlignment="Left" Name="label2" VerticalAlignment="Top" Width="123" FontWeight="Bold" FontStretch="Normal" Foreground="#5CC6D2" FontFamily="Bold Art" FontSize="25" Canvas.Left="25" Canvas.Top="498"/>
-        <StackPanel Height="48" HorizontalAlignment="Left" Name="selectedMusicList" VerticalAlignment="Top" Width="643" Orientation="Horizontal" Canvas.Left="148" Canvas.Top="484"/>
-        <Button Content="Delete" Height="50" HorizontalAlignment="Left" Margin="321,535,0,0" Name="delete" VerticalAlignment="Top" Width="70" Foreground="#5CC6D2" Background="Black" FontFamily="Bold Art" FontSize="20" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Delete_Click" Canvas.Top="3" Canvas.Left="-173" />
         <Button Content="DONE" Height="66" Name="done" Width="101" Foreground="White" Background="Black" FontFamily="Bold Art" FontWeight="Bold" FontSize="20" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Done_Click" Canvas.Left="665" Canvas.Top="45" />
-        <Border BorderBrush="#5CC6D2" BorderThickness="3" Height="3" Width="916" Canvas.Left="-42" Canvas.Top="463" />
         </Canvas>
 </Page>

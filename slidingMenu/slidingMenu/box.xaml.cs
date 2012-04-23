@@ -12,6 +12,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+
 namespace slidingMenu
 {
     /// <summary>
@@ -19,21 +20,19 @@ namespace slidingMenu
     /// </summary>
     public partial class box : UserControl
     {
-        public box()
-        {
-            InitializeComponent();
-        }
+        Page myPage;
 
-        public box(int sizeOfBox)
+        public box(int sizeOfBox, Page page)
         {
             InitializeComponent();
+            myPage = page;          
             size = sizeOfBox;
-            this.boxCanvas.Width = size;
-            this.boxCanvas.Height = size;
-            this.Highlight.Width = size;
-            this.Highlight.Height = size;
-            this.textBox.Width = size - 10;
-            this.textBox.Height = size - 10;
+            //this.boxCanvas.Width = size;
+            //this.boxCanvas.Height = size;
+            //this.Highlight.Width = size;
+            //this.Highlight.Height = size;
+            //this.textBox.Width = size - 10;
+            //this.textBox.Height = size - 10;
             Highlight.Visibility = Visibility.Collapsed;
         }
 
@@ -43,7 +42,7 @@ namespace slidingMenu
         {
             set
             {
-                textBox.Text = value;
+                textBox.Content = value;
             }
         }
 
@@ -56,15 +55,14 @@ namespace slidingMenu
             {
                 string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Music\\Images\\" + name + ".jpg";
                 this.Image.Source = new BitmapImage(new Uri(path));
-                this.Image.Height = 3*size/4;
-                this.Image.Width = 3*size/4;
+                //this.Image.Height = 3*size/4;
+                //this.Image.Width = 3*size/4;
             }
             catch
             {
                 //Nothing
             }
         }
-
 
         public void highlightBox()
         {
@@ -75,5 +73,6 @@ namespace slidingMenu
         {
             Highlight.Visibility = Visibility.Collapsed;
         }
+
     }
 }
