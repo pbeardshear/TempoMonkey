@@ -47,8 +47,8 @@ namespace TempoMonkey
             myGrid = new Grid();
 
             int sizeofCell = sizeOfBox + sizeOfBox / 5;
-            int heightOffSet = 90;
-            int widthOffSet = 30;
+            int heightOffSet = 120;
+            int widthOffSet = 70;
             gridRows = (height - heightOffSet) / sizeofCell;
             gridCols = (width - widthOffSet) / sizeofCell;
 
