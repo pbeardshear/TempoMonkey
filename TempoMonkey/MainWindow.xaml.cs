@@ -59,6 +59,8 @@ namespace TempoMonkey
         public static int height;
         public static int width;
 
+		public ImageBrush BackgroundBrush;
+
         #region functions
         static public object currentlySelectedObject;
 

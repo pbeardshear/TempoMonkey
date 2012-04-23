@@ -60,6 +60,13 @@ namespace TempoMonkey.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap background {
+            get {
+                object obj = ResourceManager.GetObject("background", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static byte[] Maid_with_the_Flaxen_Hair {
             get {
                 object obj = ResourceManager.GetObject("Maid_with_the_Flaxen_Hair", resourceCulture);

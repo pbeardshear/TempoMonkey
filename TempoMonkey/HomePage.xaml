@@ -7,11 +7,20 @@
       d:DesignHeight="600" d:DesignWidth="800"
 	  Title="HomePage">
     <!--xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers" Loaded="Page_Loaded" Unloaded="Page_Unloaded">-->
-
-    <Canvas Name="mainCanvas" Background="Black">
-            <Image Source="/Resources/images/tempo_monkey_text.png" Name="Title" Stretch="UniformToFill" Canvas.Left="191" Canvas.Top="306" />
-            <Image Height="177" Name="image1" Stretch="Fill"  Width="183" Source="/Resources/images/tempo_monkey02_cartoonish.png" Margin="311,203,307,220" />
-            <Button Content="Learning Studio"  Name="learningStudioButton" Background="Black" Foreground="White" FontSize="25" FontFamily="Verdana" Click="learningStudioButton_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Canvas.Left="514" Canvas.Top="111" Height="51" />
-            <Button Content="Revamp a Song"  Name="browseMusic" Background="Black" Foreground="White" FontSize="25" FontFamily="Verdana" Click="browseMusic_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" HorizontalAlignment="Right" Width="226" Canvas.Left="44" Canvas.Top="111" Height="40" />
-    </Canvas>
+    <Page.Resources>
+        <LinearGradientBrush x:Key="ButtonGradient" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#555" Offset="0.0" />
+            <GradientStop Color="#222" Offset="0.5" />
+            <GradientStop Color="#000" Offset="0.5" />
+            <GradientStop Color="#000" Offset="1.0" />
+        </LinearGradientBrush>
+    </Page.Resources>
+    <Grid>
+        <Canvas Name="mainCanvas">
+            <Image Height="177" Name="image1" Stretch="Fill"  Width="183" Source="/Resources/images/tempo_monkey02_cartoonish.png" Margin="311,203,307,220" Canvas.Left="4" Canvas.Top="-187" />
+                <Button Content="With a Buddy"  Name="learningStudioButton" BorderBrush="Black" Background="{StaticResource ButtonGradient}" Opacity="0.8" Foreground="White" FontSize="25" FontFamily="Verdana" Click="learningStudioButton_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Canvas.Left="313" Canvas.Top="411" Padding="10,20,10,20" />
+                <Button Content="Solo Play"  Name="browseMusic" BorderBrush="Black" Background="{StaticResource ButtonGradient}" Opacity="0.8" Foreground="White" FontSize="25" FontFamily="Verdana" Click="browseMusic_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" HorizontalAlignment="Right" Padding="10,20,10,20" Canvas.Left="339" Canvas.Top="254" />
+        </Canvas>
+        <Image Source="/Resources/images/tempo_monkey_text.png" Name="Title" Stretch="UniformToFill" Margin="180,-106,172,514" />
+    </Grid>
 </Page>
