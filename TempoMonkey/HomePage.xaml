@@ -17,10 +17,9 @@
     </Page.Resources>
     <Grid>
         <Canvas Name="mainCanvas">
-            <Image Height="177" Name="image1" Stretch="Fill"  Width="183" Source="/Resources/images/tempo_monkey02_cartoonish.png" Margin="311,203,307,220" Canvas.Left="4" Canvas.Top="-187" />
+            <Image Name="image1" Stretch="Fill"  Source="/Resources/images/tempo-monkey-logo.png" Margin="311,203,307,220" Canvas.Left="-261" Canvas.Top="-197" />
                 <Button Content="With a Buddy"  Name="learningStudioButton" BorderBrush="Black" Background="{StaticResource ButtonGradient}" Opacity="0.8" Foreground="White" FontSize="25" FontFamily="Verdana" Click="learningStudioButton_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Canvas.Left="313" Canvas.Top="411" Padding="10,20,10,20" />
                 <Button Content="Solo Play"  Name="browseMusic" BorderBrush="Black" Background="{StaticResource ButtonGradient}" Opacity="0.8" Foreground="White" FontSize="25" FontFamily="Verdana" Click="browseMusic_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" HorizontalAlignment="Right" Padding="10,20,10,20" Canvas.Left="339" Canvas.Top="254" />
         </Canvas>
-        <Image Source="/Resources/images/tempo_monkey_text.png" Name="Title" Stretch="UniformToFill" Margin="180,-106,172,514" />
-    </Grid>
+	</Grid>
 </Page>

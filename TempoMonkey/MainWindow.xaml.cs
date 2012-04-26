@@ -132,7 +132,7 @@ namespace TempoMonkey
 			
 
 			Path path = new Path();
-			path.Stroke = System.Windows.Media.Brushes.White;
+			path.Stroke = System.Windows.Media.Brushes.RoyalBlue;
 			path.StrokeThickness = 10;
 			mainCanvas.Children.Add(path);
 
@@ -194,6 +194,9 @@ namespace TempoMonkey
             Timer.Start();
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
             AddHandler(Keyboard.KeyUpEvent, (KeyEventHandler)HandleKeyUpEvent);
+
+			// System.Windows.Resources.StreamResourceInfo info = Application.GetResourceStream(new Uri("/TempoMonkey;/Resources/hand.cur", UriKind.Relative));
+			this.Cursor = new Cursor(new System.IO.MemoryStream(Properties.Resources.hand));
         }
 
         //hide the NavigationBar

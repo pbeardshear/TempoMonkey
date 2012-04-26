@@ -183,6 +183,15 @@
     <Resource Include="Resources\Images\tempo_monkey02_cartoonish.png" />
     <Resource Include="Resources\Images\tempo_monkey_text.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\background.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\tempo-monkey-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\hand.cur" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
