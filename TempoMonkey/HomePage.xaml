@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="800"
+      d:DesignHeight="720" d:DesignWidth="1280"
 	  Title="HomePage">
     <!--xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers" Loaded="Page_Loaded" Unloaded="Page_Unloaded">-->
     <Page.Resources>
@@ -17,9 +17,11 @@
     </Page.Resources>
     <Grid>
         <Canvas Name="mainCanvas">
-            <Image Name="image1" Stretch="Fill"  Source="/Resources/images/tempo-monkey-logo.png" Margin="311,203,307,220" Canvas.Left="-261" Canvas.Top="-197" />
-                <Button Content="With a Buddy"  Name="learningStudioButton" BorderBrush="Black" Background="{StaticResource ButtonGradient}" Opacity="0.8" Foreground="White" FontSize="25" FontFamily="Verdana" Click="learningStudioButton_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Canvas.Left="313" Canvas.Top="411" Padding="10,20,10,20" />
-                <Button Content="Solo Play"  Name="browseMusic" BorderBrush="Black" Background="{StaticResource ButtonGradient}" Opacity="0.8" Foreground="White" FontSize="25" FontFamily="Verdana" Click="browseMusic_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" HorizontalAlignment="Right" Padding="10,20,10,20" Canvas.Left="339" Canvas.Top="254" />
-        </Canvas>
+			<Image Source="/Resources/Images/solo-button.png" Height="200 px" Width="200px" Canvas.Left="877" Canvas.Top="283" />
+			<Image Source="/Resources/Images/buddy-button.png" Height="200 px" Width="200px" Canvas.Left="187" Canvas.Top="283" />
+			<Button Content="With a Buddy"  Name="learningStudioButton" BorderBrush="Black" Opacity="0.8" Foreground="White" FontSize="25" FontFamily="Verdana" Click="learningStudioButton_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Canvas.Left="555" Canvas.Top="421" Padding="10,20,10,20" />
+			<Button Content="Solo Play"  Name="browseMusic" BorderBrush="Black" Background="{StaticResource ButtonGradient}" Opacity="0.8" Foreground="White" FontSize="25" FontFamily="Verdana" Click="browseMusic_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" HorizontalAlignment="Right" Padding="10,20,10,20" Canvas.Left="585" Canvas.Top="283" />
+			<Image Name="image1" Stretch="Fill" Source="/Resources/images/tempo-monkey-logo.png" Canvas.Left="290" Canvas.Top="15" />
+		</Canvas>
 	</Grid>
 </Page>

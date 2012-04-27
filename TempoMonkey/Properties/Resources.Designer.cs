@@ -60,20 +60,6 @@ namespace TempoMonkey.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap background {
-            get {
-                object obj = ResourceManager.GetObject("background", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        internal static System.Drawing.Bitmap background1 {
-            get {
-                object obj = ResourceManager.GetObject("background1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static byte[] hand {
             get {
                 object obj = ResourceManager.GetObject("hand", resourceCulture);
@@ -119,6 +105,13 @@ namespace TempoMonkey.Properties {
         internal static System.Drawing.Bitmap tempo_avatar_disabled {
             get {
                 object obj = ResourceManager.GetObject("tempo_avatar_disabled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap tile {
+            get {
+                object obj = ResourceManager.GetObject("tile", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

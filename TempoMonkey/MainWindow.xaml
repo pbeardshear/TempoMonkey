@@ -1,18 +1,20 @@
 ﻿<Window x:Class="TempoMonkey.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="630" Width="810" 
+        Title="MainWindow" Height="760" Width="1305" 
         
         xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers"
-        Loaded="Window_Loaded" Closing="Window_Closing" WindowState="Maximized">
+        Loaded="Window_Loaded" Closing="Window_Closing">
     <Window.Resources>
-        <ImageBrush x:Key="BackgroundBrush" ImageSource="Resources/background.jpg" 
-                    TileMode="None" AlignmentX="Left" AlignmentY="Top" />
+        <ImageBrush x:Key="BackgroundBrush" ImageSource="Resources/Tile.png" 
+                    TileMode="Tile" Viewport="0, 0, 10, 10" ViewportUnits="Absolute"  AlignmentX="Left" AlignmentY="Top" />
     </Window.Resources>
-    <Grid Background="{StaticResource BackgroundBrush}">
-        <Canvas Height="600" Width="800" Name="mainCanvas">
+    <Grid Background="#EEE">
+		<Grid Height="140" Background="{StaticResource BackgroundBrush}" Margin="0,0,0,582"></Grid>
+        <Canvas Height="720" Width="1280" Name="mainCanvas">
             <my:KinectSensorChooser Height="203" Name="kinectSensorChooser1" Width="428" Canvas.Left="227" Canvas.Top="194" />
-            <Frame Canvas.Left="0" Canvas.Top="0" Height="600" Name="frame" Width="800" ContentRendered="myFrame_ContentRendered"/>
-        </Canvas>
+            <Frame Canvas.Left="0" Canvas.Top="0" Height="720" Name="frame" Width="1280" ContentRendered="myFrame_ContentRendered"/>
+			<Rectangle Canvas.Left="-4" Canvas.Top="138" Height="8" Name="rectangle1" Width="1288" Fill="RoyalBlue" />
+		</Canvas>
     </Grid>
 </Window>
