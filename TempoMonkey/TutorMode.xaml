@@ -7,15 +7,20 @@
       d:DesignHeight="600" d:DesignWidth="800"
 	  Title="TutorMode" xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers">
     <Canvas Name="mainCanvas" Margin="0,6,0,-6">
-        <Label Content="Work in Progress.. Come back later" Canvas.Left="98" Canvas.Top="90" Height="46" Width="557" />
+        <!-- Media Element -->
+        <MediaElement Name="myMediaElement" 
+            Width="450" Height="250" LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Fill" Canvas.Left="-1" Canvas.Top="228"/>
+        <!-- End of Media Element-->
+
+        
+        <!-- Debugger -->
+        <Button Content="Task Finished(Debuggin Purposes Only)" Name="Debug" Canvas.Left="526" Canvas.Top="494" Width="204" Height="47" FontSize="30" Visibility="Visible" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Debug_Click"/>
+        <!-- End of Debugger -->
+        
+        <!-- Controls -->
         <Label Canvas.Left="470" Canvas.Top="232" Name="Volume" Content="Volume" Height="39" Width="87" FontSize="20" FontStyle="Normal"/>
         <Label Canvas.Left="470" Canvas.Top="318" Name="Pitch" Content="Pitch" Height="38" Width="98" FontSize="20"  FontStyle="Normal"/>
         <Label Canvas.Left="470" Canvas.Top="400" Name="Tempo" Content="Tempo" Height="39" Width="99" FontSize="20"  FontStyle="Normal"/>
-
-        <Rectangle Fill="#FFF4F4F5" Name="Border" Height="138" Canvas.Left="98" Stroke="Black" Canvas.Top="142" Width="602" Visibility="Hidden"/>
-        <Button Content="Resume" Name="Resume" Canvas.Left="183" Canvas.Top="195" Width="152" Height="46" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Resume_Click"/>
-        <Button Content="Quit" Name="Quit" Canvas.Left="454" Canvas.Top="195" Width="152" Height="46" FontSize="30" Visibility="Hidden"  MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Quit_Click"/>
-
         <Label Canvas.Top="10" Name="Seek" Content="Seek Bar" Height="40" Width="94" FontSize="20" FontStyle="Normal" Canvas.Left="294"/>
         <Slider Name="SeekSlider" Canvas.Left="98" Canvas.Top="55" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
         <Slider Name="VolumeSlider" Canvas.Left="440" Canvas.Top="285" Height="28" Width="260" Value="25" Minimum="0" Maximum="100" TickFrequency=".1"/>
@@ -24,6 +29,16 @@
         <Border Name="TempoFocus" Visibility="Hidden" BorderBrush="Green" BorderThickness="3" Height="44" Canvas.Left="460" Canvas.Top="399" Width="94"/>
         <Border Name="PitchFocus" Visibility="Hidden" BorderBrush="Green" BorderThickness="3" Height="44" Canvas.Left="460" Canvas.Top="321" Width="94"/>
         <Border Name="VolumeFocus" Visibility="Hidden" BorderBrush="Green" BorderThickness="3" Height="44" Canvas.Left="463" Canvas.Top="230" Width="94"/>
-        <Ellipse Fill="Purple" Name="myCursor" Height="55" Width="55" Canvas.Left="10" Canvas.Top="10" Visibility="Hidden"/>
+        
+        <Label Content="" Name="Instructions"></Label>
+        <!-- End of Controls-->
+
+        <!-- Pause Items -->
+        <Rectangle Fill="#FFF4F4F5" Name="Border" Height="314" Canvas.Left="93" Stroke="Black" Canvas.Top="175" Width="602" Visibility="Hidden"/>
+        <Button Content="Resume" Name="Resume" Canvas.Left="290" Canvas.Top="279" Width="174" Height="47" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Resume_Click"/>
+        <Button Content="Tutorial Selection" Name="Tutorials" Canvas.Left="397" Canvas.Top="365" Width="242" Height="46" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Tutorials_Click"/>
+        <Button Content="Main Menu" Name="Quit" Canvas.Left="161" Canvas.Top="365" Width="182" Height="46" FontSize="30" Visibility="Hidden"  MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Quit_Click" RenderTransformOrigin="-0.428,1.63"/>
+        <Button Content="Next Tutorial" Name="Next" Canvas.Left="294" Canvas.Top="279" Width="204" Height="47" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Next_Click"/>
+        <!-- End of Pause Items -->
     </Canvas>
 </Page>

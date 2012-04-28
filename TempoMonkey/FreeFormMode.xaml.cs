@@ -323,7 +323,6 @@ namespace TempoMonkey
 			Border.Visibility = System.Windows.Visibility.Hidden;
 			Resume.Visibility = System.Windows.Visibility.Hidden;
 			Quit.Visibility = System.Windows.Visibility.Hidden;
-            //myCursor.Visibility = System.Windows.Visibility.Hidden;
 			MainWindow.isManipulating = true;
 		}
 
@@ -334,7 +333,6 @@ namespace TempoMonkey
 			Border.Visibility = System.Windows.Visibility.Visible;
 			Resume.Visibility = System.Windows.Visibility.Visible;
 			Quit.Visibility = System.Windows.Visibility.Visible;
-            //myCursor.Visibility = System.Windows.Visibility.Visible;
 			MainWindow.isManipulating = false;
 		}
 

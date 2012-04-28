@@ -27,8 +27,6 @@ namespace TempoMonkey
         public HomePage()
         {
             InitializeComponent();
-            MainWindow.changeFonts(mainCanvas);
-
 			// Create some navigation buttons to wrap our images
 			soloButton = new NavigationButton(SoloButton, new BrowseMusic("Free"));
 			buddyButton = new NavigationButton(BuddyButton, new LearningStudio());

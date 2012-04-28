@@ -32,16 +32,8 @@ namespace TempoMonkey
         public BrowseTutorials()
         {
             InitializeComponent();
-            //this.slidingMenu.initializeMenu("TutorialVideos");
-            MainWindow.changeFonts(mainCanvas);
             addGrid((int)MainWindow.height, (int)MainWindow.width);
             addItemsToGrid();
-        }
-
-        public string getAddr()
-        {
-            return "";
-            //return slidingMenu.getAddress();
         }
 
         /* Creates a grid dyanmically with demensions equal to (height/100) by (width/100) */
@@ -77,12 +69,11 @@ namespace TempoMonkey
         private void addItemsToGrid()
         {
             int index = 0;
-            foreach (string filepath in Directory.GetFiles(@"..\..\Resources\Music", "*.mp3"))
+            foreach (string filepath in Directory.GetFiles(@"Tutorials", "*.m4v"))
             {
                 int colspot = index % gridRows;
                 int rowspot = index / gridRows;
                 string filename = System.IO.Path.GetFileNameWithoutExtension(filepath);
-
                 addToBox(filename, filepath, rowspot, colspot);
                 index += 1;
             }
@@ -99,7 +90,9 @@ namespace TempoMonkey
             littleBox.boxName = name;
             littleBox.address = address;
             littleBox.name = name;
-            littleBox.setImage(name);
+
+            string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Tutorial_Art\\" + name + ".jpg";
+            littleBox.setImage(path);
 
             Grid.SetRow(littleBox, rowspot);
             Grid.SetColumn(littleBox, colspot);
@@ -134,7 +127,7 @@ namespace TempoMonkey
 
         private void Done()
         {
-            MainWindow.currentPage = new TutorMode(mySelection);
+            MainWindow.currentPage = new TutorMode(0); //XXX FIXME
             MainWindow.isManipulating = true;
             NavigationService.Navigate(MainWindow.currentPage);
         }

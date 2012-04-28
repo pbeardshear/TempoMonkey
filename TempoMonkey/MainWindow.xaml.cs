@@ -112,17 +112,6 @@ namespace TempoMonkey
             }
         }
 
-        static public void changeFonts(Canvas currCanvas)
-        {
-            foreach (FrameworkElement c in currCanvas.Children)
-            {
-                if (c is Label)
-                {
-                    ((Label)c).FontFamily = new System.Windows.Media.FontFamily("Bold Art");
-                }
-            }
-        }
-
         #endregion
 
         public MainWindow()
@@ -158,6 +147,7 @@ namespace TempoMonkey
 								((NavigationButton)currentlySelectedObject).Click();
                                 // ((SelectionPage)currentPage).Click();
                             }
+                            path.Visibility = Visibility.Hidden;
 							angle = 0;
 						}
 						else

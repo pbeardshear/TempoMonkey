@@ -24,7 +24,6 @@ namespace TempoMonkey
         public LearningStudio()
         {
             InitializeComponent();
-            //changeFonts();
         }
 
         private void Mouse_Enter(object sender, MouseEventArgs e)

@@ -22,7 +22,7 @@
 			<Image Source="/Resources/Images/solo-background.png" Name="SoloBackground" Canvas.Left="380" Canvas.Top="256" Visibility="Hidden" />
 			<!-- Image buttons -->
 			<Border Canvas.Left="378" Canvas.Top="255" BorderThickness="2,1" BorderBrush="#CCC" Name="SoloButton"  MouseEnter="SoloButton_MouseEnter" MouseLeave="SoloButton_MouseLeave">
-				<Image Source="/Resources/Images/solo-v2.png"  />
+				<Image Source="/Resources/Images/solo-v2.png" />
 			</Border>
 			<Border Canvas.Left="378" Canvas.Top="475" BorderThickness="2,1" BorderBrush="#CCC" Name="BuddyButton"  MouseEnter="BuddyButton_MouseEnter" MouseLeave="BuddyButton_MouseLeave">
 				<Image Source="/Resources/Images/buddy-v2.png"  />

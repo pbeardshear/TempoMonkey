@@ -24,11 +24,9 @@ namespace TempoMonkey
     public partial class BrowseMusic : Page, SelectionPage
     {
 
-        private string _type;
+        string _type;
         int sizeOfBox = 100;
-        List<box> Boxes = new List<box>();
         List<box> mySelections = new List<box>();
-
         Grid myGrid;
         int gridRows, gridCols;
 
@@ -36,11 +34,11 @@ namespace TempoMonkey
         {
             InitializeComponent();
             _type = type;
-            MainWindow.changeFonts(mainCanvas);
             addGrid((int)MainWindow.height, (int)MainWindow.width);
             addItemsToGrid();
         }
 
+        #region Grid stuff
         /* Creates a grid dyanmically with demensions equal to (height/100) by (width/100) */
         private void addGrid(int height, int width)
         {
@@ -79,7 +77,6 @@ namespace TempoMonkey
                 int colspot = index % gridRows;
                 int rowspot = index / gridRows;
                 string filename = System.IO.Path.GetFileNameWithoutExtension(filepath);
-
                 addToBox(filename, filepath, rowspot, colspot);
                 index += 1;
             }
@@ -96,14 +93,16 @@ namespace TempoMonkey
             littleBox.boxName = name;
             littleBox.address = address;
             littleBox.name = name;
-            littleBox.setImage(name);
+            string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Album_Art\\" + name + ".jpg";
+            littleBox.setImage(path);
 
             Grid.SetRow(littleBox, rowspot);
             Grid.SetColumn(littleBox, colspot);
             myGrid.Children.Add(littleBox);
-            Boxes.Add(littleBox);
         }
+        #endregion
 
+        #region Mouse Events
         public void Click()
         {
             box currentlySelectedBox = (box)MainWindow.currentlySelectedObject;
@@ -119,7 +118,6 @@ namespace TempoMonkey
             }
         }
 
-        #region Mouse Events
         private void Mouse_Enter(object sender, MouseEventArgs e)
         {
             MainWindow.Mouse_Enter(sender, e);
