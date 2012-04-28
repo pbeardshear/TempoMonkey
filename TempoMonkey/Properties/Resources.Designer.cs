@@ -109,13 +109,6 @@ namespace TempoMonkey.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap tile {
-            get {
-                object obj = ResourceManager.GetObject("tile", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap volume_avatar {
             get {
                 object obj = ResourceManager.GetObject("volume_avatar", resourceCulture);

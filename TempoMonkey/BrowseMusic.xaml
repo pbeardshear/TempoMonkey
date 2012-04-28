@@ -4,12 +4,13 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="800"
+      d:DesignHeight="720" d:DesignWidth="1280"
 	Title="BrowseMusic">
 
     <Canvas Name="mainCanvas">
+		<Image Source="/Resources/Images/back-button.png" Canvas.Left="72" Canvas.Top="36" />
         <Label Content="SELECT SONGS" Height="107" HorizontalContentAlignment="Center" Margin="225,45,0,0" Name="Title" VerticalAlignment="Top" Width="362" FontSize="45" FontFamily="Bold Art" FontWeight="Bold" Foreground="White" Canvas.Left="0" Canvas.Top="-31" />
-        <Button Content="BACK" Height="66" HorizontalAlignment="Left" Margin="12,45,0,0" Name="back" Background="Black" Foreground="White" FontFamily="Bold Art" FontWeight="Bold" FontSize="20" VerticalAlignment="Top" Width="86" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Back_Click" Canvas.Left="21" />
-        <Button Content="DONE" Height="66" Name="done" Width="101" Foreground="White" Background="Black" FontFamily="Bold Art" FontWeight="Bold" FontSize="20" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Done_Click" Canvas.Left="665" Canvas.Top="45" />
-        </Canvas>
+        <Button Visibility="Hidden" Content="BACK" Height="66" HorizontalAlignment="Left" Margin="12,45,0,0" Name="back" Background="Black" Foreground="White" FontFamily="Bold Art" FontWeight="Bold" FontSize="20" VerticalAlignment="Top" Width="86" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Back_Click" Canvas.Left="21" />
+        <Button Content="DONE" Height="66" Name="done" Width="101" Foreground="White" Background="Black" FontFamily="Bold Art" FontWeight="Bold" FontSize="20" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Done_Click" Canvas.Left="1100" Canvas.Top="45" />
+    </Canvas>
 </Page>

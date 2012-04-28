@@ -6,15 +6,15 @@
         xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers"
         Loaded="Window_Loaded" Closing="Window_Closing">
     <Window.Resources>
-        <ImageBrush x:Key="BackgroundBrush" ImageSource="Resources/Tile.png" 
+        <ImageBrush x:Key="BackgroundBrush" ImageSource="Resources/Images/tile-green.png" 
                     TileMode="Tile" Viewport="0, 0, 10, 10" ViewportUnits="Absolute"  AlignmentX="Left" AlignmentY="Top" />
     </Window.Resources>
-    <Grid Background="#EEE">
-		<Grid Height="140" Background="{StaticResource BackgroundBrush}" Margin="0,0,0,582"></Grid>
+	<Grid Background="#FFF">
+		<Grid Height="140" Margin="0,0,0,582"></Grid>
         <Canvas Height="720" Width="1280" Name="mainCanvas">
-            <my:KinectSensorChooser Height="203" Name="kinectSensorChooser1" Width="428" Canvas.Left="227" Canvas.Top="194" />
+            <my:KinectSensorChooser Height="203" Name="kinectSensorChooser1" Width="428" Canvas.Left="427" Canvas.Top="194" Visibility="Hidden" />
             <Frame Canvas.Left="0" Canvas.Top="0" Height="720" Name="frame" Width="1280" ContentRendered="myFrame_ContentRendered"/>
-			<Rectangle Canvas.Left="-4" Canvas.Top="138" Height="8" Name="rectangle1" Width="1288" Fill="RoyalBlue" />
+			<Rectangle Canvas.Left="-4" Canvas.Top="138" Height="5" Name="rectangle1" Width="1288" Fill="#A60000" StrokeThickness="0" />
 		</Canvas>
     </Grid>
 </Window>

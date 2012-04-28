@@ -17,11 +17,21 @@
     </Page.Resources>
     <Grid>
         <Canvas Name="mainCanvas">
-			<Image Source="/Resources/Images/solo-button.png" Height="200 px" Width="200px" Canvas.Left="877" Canvas.Top="283" />
-			<Image Source="/Resources/Images/buddy-button.png" Height="200 px" Width="200px" Canvas.Left="187" Canvas.Top="283" />
-			<Button Content="With a Buddy"  Name="learningStudioButton" BorderBrush="Black" Opacity="0.8" Foreground="White" FontSize="25" FontFamily="Verdana" Click="learningStudioButton_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Canvas.Left="555" Canvas.Top="421" Padding="10,20,10,20" />
-			<Button Content="Solo Play"  Name="browseMusic" BorderBrush="Black" Background="{StaticResource ButtonGradient}" Opacity="0.8" Foreground="White" FontSize="25" FontFamily="Verdana" Click="browseMusic_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" HorizontalAlignment="Right" Padding="10,20,10,20" Canvas.Left="585" Canvas.Top="283" />
+			<!-- Background images -->
+			<Image Source="/Resources/Images/buddy-background.png" Name="BuddyBackground" Canvas.Left="380" Canvas.Top="476" Visibility="Hidden" />
+			<Image Source="/Resources/Images/solo-background.png" Name="SoloBackground" Canvas.Left="380" Canvas.Top="256" Visibility="Hidden" />
+			<!-- Image buttons -->
+			<Border Canvas.Left="378" Canvas.Top="255" BorderThickness="2,1" BorderBrush="#CCC" Name="SoloButton"  MouseEnter="SoloButton_MouseEnter" MouseLeave="SoloButton_MouseLeave">
+				<Image Source="/Resources/Images/solo-v2.png"  />
+			</Border>
+			<Border Canvas.Left="378" Canvas.Top="475" BorderThickness="2,1" BorderBrush="#CCC" Name="BuddyButton"  MouseEnter="BuddyButton_MouseEnter" MouseLeave="BuddyButton_MouseLeave">
+				<Image Source="/Resources/Images/buddy-v2.png"  />
+			</Border>
+			<Image Source="/Resources/Images/hand-image.png" Canvas.Left="308" Canvas.Top="154" Height="43" Width="50" />
+			<Button Visibility="Hidden" Content="With a Buddy" Name="learningStudioButton" BorderBrush="Black" Opacity="0.8" Foreground="White" FontSize="25" FontFamily="Verdana" Click="learningStudioButton_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Canvas.Left="555" Canvas.Top="421" Padding="10,20,10,20" />
+			<Button Visibility="Hidden" Content="Solo Play" Name="browseMusic" BorderBrush="Black" Background="{StaticResource ButtonGradient}" Opacity="0.8" Foreground="White" FontSize="25" FontFamily="Verdana" Click="browseMusic_Click" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" HorizontalAlignment="Right" Padding="10,20,10,20" Canvas.Left="585" Canvas.Top="283" />
 			<Image Name="image1" Stretch="Fill" Source="/Resources/images/tempo-monkey-logo.png" Canvas.Left="290" Canvas.Top="15" />
+			<TextBox Canvas.Left="360" Canvas.Top="161" Name="textBox1" Text="Move your hand to control the cursor.   Hover over buttons to select them." FontFamily="Impact" FontSize="20" Foreground="#FF4B4B4B" Background="#00000000" BorderBrush="#00000000" />
 		</Canvas>
 	</Grid>
 </Page>

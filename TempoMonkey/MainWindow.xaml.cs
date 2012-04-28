@@ -142,7 +142,7 @@ namespace TempoMonkey
 				{
 					if (currentlySelectedObject != null )
 					{
-						if (angle >= 360)
+						if (angle > 360)
 						{
                             if (currentlySelectedObject is Button)
                             {

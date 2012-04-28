@@ -189,13 +189,22 @@
     <None Include="Resources\hand.cur" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\tile.png" />
+    <Resource Include="Resources\Images\hand-image.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\solo-button.png" />
+    <Resource Include="Resources\Images\back-button.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\buddy-button.png" />
+    <Resource Include="Resources\Images\solo-v2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\solo-background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\buddy-v2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\buddy-background.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
