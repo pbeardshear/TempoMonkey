@@ -16,9 +16,11 @@ namespace TempoMonkey
 	public class NavigationButton
 	{
 		private UIElement Element { get; set; }
-		private Page Destination { get; set; }
+		private DestinationDelegate Destination { get; set; }
 
-		public NavigationButton(UIElement element, Page destination)
+		public delegate Page DestinationDelegate();
+
+		public NavigationButton(UIElement element, DestinationDelegate destination)
 		{
 			Element = element;
 			Destination = destination;
@@ -26,8 +28,8 @@ namespace TempoMonkey
 
 		public void Click()
 		{
-			MainWindow.currentPage = Destination;
-			NavigationService.GetNavigationService(Element).Navigate(Destination);
+			MainWindow.currentPage = Destination();
+			NavigationService.GetNavigationService(Element).Navigate(MainWindow.currentPage);
 		}
 	}
 }

@@ -32,6 +32,8 @@ namespace TempoMonkey
         Grid myGrid;
         int gridRows, gridCols;
 
+		NavigationButton backButton;
+
         public BrowseMusic(string type)
         {
             InitializeComponent();
@@ -39,6 +41,12 @@ namespace TempoMonkey
             MainWindow.changeFonts(mainCanvas);
             addGrid((int)MainWindow.height, (int)MainWindow.width);
             addItemsToGrid();
+
+			// Create navigation buttons
+			backButton = new NavigationButton(BackButton, delegate()
+			{
+				return MainWindow.homePage;
+			});
         }
 
         /* Creates a grid dyanmically with demensions equal to (height/100) by (width/100) */
@@ -120,6 +128,11 @@ namespace TempoMonkey
         }
 
         #region Mouse Events
+		private void Back_Enter(object sender, MouseEventArgs args)
+		{
+			MainWindow.MouseEnter(backButton);
+		}
+
         private void Mouse_Enter(object sender, MouseEventArgs e)
         {
             MainWindow.Mouse_Enter(sender, e);
