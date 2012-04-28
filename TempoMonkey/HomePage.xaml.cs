@@ -28,8 +28,19 @@ namespace TempoMonkey
         {
             InitializeComponent();
 			// Create some navigation buttons to wrap our images
-			soloButton = new NavigationButton(SoloButton, new BrowseMusic("Free"));
-			buddyButton = new NavigationButton(BuddyButton, new LearningStudio());
+			if (MainWindow.browseMusicPage != null)
+			{
+				MainWindow.browseMusicPage = new BrowseMusic("Free");
+			}
+			soloButton = new NavigationButton(SoloButton, delegate()
+			{
+				return MainWindow.browseMusicPage;
+			});
+			buddyButton = new NavigationButton(BuddyButton, delegate()
+			{
+				return null;
+			});
+
         }
 
         #region Button Handlers

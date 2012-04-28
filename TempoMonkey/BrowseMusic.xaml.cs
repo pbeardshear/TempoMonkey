@@ -30,12 +30,20 @@ namespace TempoMonkey
         Grid myGrid;
         int gridRows, gridCols;
 
+		NavigationButton backButton;
+
         public BrowseMusic(string type)
         {
             InitializeComponent();
             _type = type;
             addGrid((int)MainWindow.height, (int)MainWindow.width);
             addItemsToGrid();
+
+			// Create navigation buttons
+			// backButton = new NavigationButton(BackButton, delegate()
+			// {
+			//	return MainWindow.homePage;
+			// });
         }
 
         #region Grid stuff
@@ -102,7 +110,6 @@ namespace TempoMonkey
         }
         #endregion
 
-        #region Mouse Events
         public void Click()
         {
             box currentlySelectedBox = (box)MainWindow.currentlySelectedObject;
@@ -117,6 +124,12 @@ namespace TempoMonkey
                 mySelections.Remove(currentlySelectedBox);
             }
         }
+
+        #region Mouse Events
+		private void Back_Enter(object sender, MouseEventArgs args)
+		{
+			MainWindow.MouseEnter(backButton);
+		}
 
         private void Mouse_Enter(object sender, MouseEventArgs e)
         {

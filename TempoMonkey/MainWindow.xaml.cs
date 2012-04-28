@@ -113,6 +113,8 @@ namespace TempoMonkey
         }
 
         #endregion
+		public static Page homePage;
+		public static Page browseMusicPage;
 
         public MainWindow()
         {
@@ -184,9 +186,10 @@ namespace TempoMonkey
                 }
             });
 
-            Page homepage = new HomePage();
-            frame.Navigate(homepage);
-            currentPage = homepage;
+            homePage = new HomePage();
+			browseMusicPage = new BrowseMusic("Free");
+            frame.Navigate(homePage);
+            currentPage = homePage;
             Timer.Start();
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
             AddHandler(Keyboard.KeyUpEvent, (KeyEventHandler)HandleKeyUpEvent);
