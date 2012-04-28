@@ -72,6 +72,11 @@ namespace TempoMonkey
 		// Store the button's text color, so that when we reset it, we can put it back correctly
 		private static System.Windows.Media.Brush lastForegroundColor;
 
+		public static void MouseEnter(NavigationButton button)
+		{
+			currentlySelectedObject = button;
+		}
+
         static public void Mouse_Enter(object sender, MouseEventArgs e)
         {
             if (sender is Button)
@@ -148,9 +153,10 @@ namespace TempoMonkey
                             {
                                 ((Button)currentlySelectedObject).PerformClick();
                             }
-                            else
+                            else if (currentlySelectedObject is NavigationButton)
                             {
-                                ((SelectionPage)currentPage).Click();
+								((NavigationButton)currentlySelectedObject).Click();
+                                // ((SelectionPage)currentPage).Click();
                             }
 							angle = 0;
 						}

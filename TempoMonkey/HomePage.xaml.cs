@@ -21,10 +21,17 @@ namespace TempoMonkey
     /// </summary>
     public partial class HomePage : Page
     {
+		NavigationButton soloButton;
+		NavigationButton buddyButton;
+
         public HomePage()
         {
             InitializeComponent();
             MainWindow.changeFonts(mainCanvas);
+
+			// Create some navigation buttons to wrap our images
+			soloButton = new NavigationButton(SoloButton, new BrowseMusic("Free"));
+			buddyButton = new NavigationButton(BuddyButton, new LearningStudio());
         }
 
         #region Button Handlers
@@ -55,24 +62,28 @@ namespace TempoMonkey
 		{
 			SoloBackground.Visibility = Visibility.Visible;
 			SoloButton.Opacity = 0.0;
+			MainWindow.MouseEnter(soloButton);
 		}
 
 		private void SoloButton_MouseLeave(object sender, MouseEventArgs e)
 		{
 			SoloBackground.Visibility = Visibility.Hidden;
 			SoloButton.Opacity = 1.0;
+			MainWindow.Mouse_Leave(sender, e);
 		}
 
 		private void BuddyButton_MouseEnter(object sender, MouseEventArgs e)
 		{
 			BuddyBackground.Visibility = Visibility.Visible;
 			BuddyButton.Opacity = 0.0;
+			MainWindow.MouseEnter(buddyButton);
 		}
 
 		private void BuddyButton_MouseLeave(object sender, MouseEventArgs e)
 		{
 			BuddyBackground.Visibility = Visibility.Hidden;
 			BuddyButton.Opacity = 1.0;
+			MainWindow.Mouse_Leave(sender, e);
 		}
     }
 }
