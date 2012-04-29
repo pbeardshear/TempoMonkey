@@ -28,8 +28,12 @@ namespace TempoMonkey
 
 		public void Click()
 		{
-			MainWindow.currentPage = Destination();
-			NavigationService.GetNavigationService(Element).Navigate(MainWindow.currentPage);
+            Page nextPage = Destination();
+            if (nextPage != null)
+            {
+                MainWindow.currentPage = nextPage;
+                NavigationService.GetNavigationService(Element).Navigate(MainWindow.currentPage);
+            }
 		}
 	}
 }

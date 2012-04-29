@@ -30,7 +30,7 @@ namespace TempoMonkey
         Grid myGrid;
         int gridRows, gridCols;
 
-		NavigationButton backButton;
+		NavigationButton backButton, doneButton;
 
         public void initBrowseMusic(string type)
         {
@@ -43,10 +43,48 @@ namespace TempoMonkey
             addGrid((int)MainWindow.height, (int)MainWindow.width);
             addItemsToGrid();
 			// Create navigation buttons
-			 backButton = new NavigationButton(BackButton, delegate()
-			 {
-				return MainWindow.homePage;
-			 });
+			backButton = new NavigationButton(BackButton, delegate()
+			{
+			    return MainWindow.homePage;
+			});
+            
+            doneButton = new NavigationButton(DoneButton, delegate(){
+                if (mySelections.Count == 0)
+                {
+                        return null;
+                } else 
+                {
+                    ArrayList musicAddrList = new ArrayList();
+                    ArrayList musicList = new ArrayList();
+
+                    foreach (box selection in mySelections)
+                    {
+                        musicAddrList.Add(selection.address);
+                        musicList.Add(selection.name);
+                    }
+
+                    if (_type == "Buddy")
+                    {
+                        ((FreeFormMode)MainWindow.freeFormPage).initBuddyForm( 
+                            ((string)musicAddrList[0]), 
+                            ((string)musicList[0]));
+                        MainWindow.isManipulating = true;
+                    }
+
+                    else if (_type == "Solo")
+                    {
+                        ((FreeFormMode)MainWindow.freeFormPage).initSoloForm(musicAddrList, musicList);
+                        MainWindow.isManipulating = true;
+                    }
+
+                    else
+                    {
+                        throw new Exception();
+                    }
+                    return MainWindow.freeFormPage;
+                }
+            });
+
         }
 
         #region Grid stuff
@@ -113,18 +151,37 @@ namespace TempoMonkey
         }
         #endregion
 
+        public void unSelectBox(box Box)
+        {
+            Box.unHighlightBox();
+            mySelections.Remove(Box);
+        }
+
+        public void SelectBox(box Box)
+        {
+            Box.highlightBox();
+            bool tooMuch = (_type == "Solo" && mySelections.Count >= 3) || (_type == "Buddy" && mySelections.Count >= 1);
+            if (tooMuch)
+            {
+                unSelectBox(mySelections[0]);
+                mySelections.Add(Box);
+            }
+            else
+            {
+                mySelections.Add(Box);
+            }
+        }
+
         public void Click()
         {
             box currentlySelectedBox = (box)MainWindow.currentlySelectedObject;
             if (!mySelections.Contains(currentlySelectedBox))
             {
-                currentlySelectedBox.highlightBox();
-                mySelections.Add(currentlySelectedBox);
+                SelectBox(currentlySelectedBox);
             }
             else
             {
-                currentlySelectedBox.unHighlightBox();
-                mySelections.Remove(currentlySelectedBox);
+                unSelectBox(currentlySelectedBox);
             }
         }
 
@@ -144,50 +201,17 @@ namespace TempoMonkey
             MainWindow.Mouse_Leave(sender, e);
         }
 
-        private void Back_Click(object sender, RoutedEventArgs e)
+        private void Done_Leave(object sender, MouseEventArgs e)
         {
-            MainWindow.currentPage = new HomePage();
-            NavigationService.Navigate(MainWindow.currentPage);
+            MainWindow.Mouse_Leave(sender, e);
         }
 
-        private void Done_Click(object sender, RoutedEventArgs e)
+        private void Done_Enter(object sender, MouseEventArgs e)
         {
-            if (mySelections.Count == 0)
-            {
-                // Maybe give feedback about this?
-                return;
-            }
-
-            ArrayList musicAddrList = new ArrayList();
-            ArrayList musicList = new ArrayList();
-
-            foreach (box selection in mySelections)
-            {
-                musicAddrList.Add(selection.address);
-                musicList.Add(selection.name);
-            }
-
-            if (_type == "Buddy")
-            {
-                MainWindow.currentPage = MainWindow.freeFormPage;
-                ((FreeFormMode)MainWindow.freeFormPage).initBuddyForm( 
-                    ((string)musicAddrList[0]), 
-                    ((string)musicList[0]));
-                MainWindow.isManipulating = true;
-            }
-            else if (_type == "Solo")
-            {
-                MainWindow.currentPage = MainWindow.freeFormPage;
-                ((FreeFormMode)MainWindow.freeFormPage).initSoloForm(musicAddrList, musicList);
-                MainWindow.isManipulating = true;
-            }
-            else
-            {
-                throw new Exception();
-            }
-            NavigationService.Navigate(MainWindow.currentPage);
+            MainWindow.MouseEnter(doneButton);
         }
 
         #endregion
+
     }
 }

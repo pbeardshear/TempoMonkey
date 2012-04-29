@@ -38,6 +38,11 @@ namespace TempoMonkey
             _type = "Buddy";
             Processing.Audio.LoadFile(address);
             _nameList.Add(name);
+            currentTrackIndex = 0;
+
+            Spectrum spectrumVisualizer = new Spectrum(mainCanvas);
+            spectrumVisualizer.RegisterSoundPlayer();
+            Track.Content = _nameList[currentTrackIndex];
 
             freePlayer = new KinectGesturePlayer();
             freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
@@ -75,9 +80,7 @@ namespace TempoMonkey
             }
 
 			Processing.Audio.Play();
-
 			System.Windows.Forms.Cursor.Hide();
-
 			// Initialize the visualizer
 			Spectrum spectrumVisualizer = new Spectrum(mainCanvas);
 			spectrumVisualizer.RegisterSoundPlayer();
