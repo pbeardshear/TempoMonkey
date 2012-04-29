@@ -98,6 +98,15 @@ namespace TempoMonkey
 
         private void HandleKeyDownEvent(object sender, KeyEventArgs e)
         {
+            if (System.Windows.Input.Key.A == e.Key)
+            {
+                Processing.Audio.Resume();
+            }
+            if (System.Windows.Input.Key.S == e.Key)
+            {
+                Processing.Audio.Pause();
+            }
+
             if (System.Windows.Input.Key.LeftShift == e.Key)
             {
                 mouseOverride = true;
