@@ -246,7 +246,23 @@ namespace Processing
             if (_waveOutDevice.PlaybackState == PlaybackState.Playing)
             {
                 // Stop seems to work better than _device.Pause() here..., and doesn't reset the track
+                _waveOutDevice.Pause();
+            }
+        }
+
+        public static void Stop()
+        {
+            if (_waveOutDevice.PlaybackState == PlaybackState.Playing)
+            {
                 _waveOutDevice.Stop();
+            }
+        }
+
+        public static void Resume()
+        {
+            if (_waveOutDevice.PlaybackState == PlaybackState.Paused)
+            {
+                _waveOutDevice.Resume();
             }
         }
 

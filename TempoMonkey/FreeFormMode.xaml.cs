@@ -41,9 +41,9 @@ namespace TempoMonkey
             currentTrackIndex = 0;
             System.Windows.Forms.Cursor.Hide();
             Processing.Audio.Play();
-
             Spectrum spectrumVisualizer = new Spectrum(mainCanvas);
             spectrumVisualizer.RegisterSoundPlayer();
+
             Track.Content = _nameList[currentTrackIndex];
 
             freePlayer = new KinectGesturePlayer();
@@ -255,7 +255,6 @@ namespace TempoMonkey
 			Volume.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
             VolumeFocus.BorderBrush = bc.ConvertFromString("Green") as System.Windows.Media.Brush;
 			VolumeFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
-            //Throws a KeyError for some reason
 			SetAvatarState(exist, volumeAvatar, exist ? loadedImages["volumeAvatar"] : loadedImages["volumeAvatarDisabled"]);
 		}
 
@@ -352,6 +351,7 @@ namespace TempoMonkey
 			ResumeButton.Visibility = System.Windows.Visibility.Hidden;
 			QuitButton.Visibility = System.Windows.Visibility.Hidden;
 			MainWindow.isManipulating = true;
+            System.Windows.Forms.Cursor.Hide();
 		}
 
 		public void Pause()
@@ -362,6 +362,7 @@ namespace TempoMonkey
 			ResumeButton.Visibility = System.Windows.Visibility.Visible;
 			QuitButton.Visibility = System.Windows.Visibility.Visible;
 			MainWindow.isManipulating = false;
+            System.Windows.Forms.Cursor.Show();
 		}
 
 		#endregion
@@ -377,10 +378,10 @@ namespace TempoMonkey
 			MainWindow.Mouse_Leave(sender, e);
 		}
 
-        void Resume_Click(object sender, RoutedEventArgs e)
-		{
-			Resume();
-		}
+        private void ResumeButton_Click(object sender, RoutedEventArgs e)
+        {
+            Resume();
+        }
 
 		#endregion
 
