@@ -414,6 +414,7 @@ namespace TempoMonkey
             isPaused = false;
             Processing.Audio.Play();
             Border.Visibility = System.Windows.Visibility.Hidden;
+            mainCanvas.Background = new SolidColorBrush(Colors.White);
             Resume.Visibility = System.Windows.Visibility.Hidden;
             Quit.Visibility = System.Windows.Visibility.Hidden;
             MainWindow.isManipulating = true;
@@ -424,6 +425,7 @@ namespace TempoMonkey
             isPaused = true;
             Processing.Audio.Play();
             Border.Visibility = System.Windows.Visibility.Visible;
+            mainCanvas.Background = new SolidColorBrush(Colors.Gray);
             Resume.Visibility = System.Windows.Visibility.Visible;
             Quit.Visibility = System.Windows.Visibility.Visible;
             MainWindow.isManipulating = false;
@@ -458,6 +460,7 @@ namespace TempoMonkey
         {
             MainWindow.isManipulating = false;
             MainWindow.currentPage = new BrowseTutorials();
+            mainCanvas.Background = new SolidColorBrush(Colors.White);
             NavigationService.Navigate(MainWindow.currentPage);
         }
 
@@ -465,6 +468,7 @@ namespace TempoMonkey
         {
             Next.Visibility = Tutorials.Visibility = Quit.Visibility = Border.Visibility = System.Windows.Visibility.Hidden;
             MainWindow.isManipulating = true;
+            mainCanvas.Background = new SolidColorBrush(Colors.White);
             startTutorial(Tutorial.getCurrentTutorial());
         }
 
@@ -472,6 +476,7 @@ namespace TempoMonkey
         private void Debug_Click(object sender, RoutedEventArgs e)
         {
             doNext = true;
+            mainCanvas.Background = new SolidColorBrush(Colors.Gray);
         }
         #endregion
 
