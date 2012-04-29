@@ -9,7 +9,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections;
 using System.IO;
@@ -45,6 +44,7 @@ namespace TempoMonkey
 			// Create navigation buttons
 			backButton = new NavigationButton(BackButton, delegate()
 			{
+                mySelections = new List<box>();
 			    return MainWindow.homePage;
 			});
             
@@ -81,10 +81,10 @@ namespace TempoMonkey
                     {
                         throw new Exception();
                     }
+                    mySelections = new List<box>();
                     return MainWindow.freeFormPage;
                 }
             });
-
         }
 
         #region Grid stuff

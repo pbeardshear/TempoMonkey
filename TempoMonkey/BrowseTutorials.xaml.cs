@@ -8,8 +8,8 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using slidingMenu;
 using System.IO;
@@ -39,6 +39,8 @@ namespace TempoMonkey
             backButton = new NavigationButton(BackButton, delegate(){
                 return MainWindow.soloPage;
             });
+
+
         }
 
         /* Creates a grid dyanmically with demensions equal to (height/100) by (width/100) */
@@ -89,6 +91,7 @@ namespace TempoMonkey
         {
             box littleBox = new box(sizeOfBox, this);
 
+            littleBox.index = index;
             littleBox.MouseEnter += Mouse_Enter;
             littleBox.MouseLeave += Mouse_Leave;
 
@@ -99,8 +102,6 @@ namespace TempoMonkey
             string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Tutorial_Art\\" + name + ".jpg";
             littleBox.setImage(path);
 
-            // new NavigationButton(littleBox, delegate() { return new TutorMode(index); });
-
             Grid.SetRow(littleBox, rowspot);
             Grid.SetColumn(littleBox, colspot);
             myGrid.Children.Add(littleBox);
@@ -110,9 +111,9 @@ namespace TempoMonkey
         public void Click()
         {
             box currentlySelectedBox = (box)MainWindow.currentlySelectedObject;
-            currentlySelectedBox.highlightBox();
-            mySelection=currentlySelectedBox.name;
-            Done();
+            (MainWindow.tutorPage as TutorMode).initTutorials(currentlySelectedBox.index);
+            MainWindow.currentPage = MainWindow.tutorPage;
+            NavigationService.Navigate(MainWindow.currentPage);
         }
 
         #region Button Handlers
@@ -129,17 +130,6 @@ namespace TempoMonkey
         private void Back_Enter(object sender, MouseEventArgs e)
         {
             MainWindow.MouseEnter(backButton);
-        }
-
-        private void Done()
-        {
-            MainWindow.currentPage = MainWindow.tutorPage;
-            //TODO?
-//            MainWindow.tutorPage;
-                
-  //              new TutorMode(); //XXX FIXME
-            MainWindow.isManipulating = true;
-            NavigationService.Navigate(MainWindow.currentPage);
         }
 
         #endregion

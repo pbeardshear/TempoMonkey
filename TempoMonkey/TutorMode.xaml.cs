@@ -10,7 +10,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Kinect;
 using Coding4Fun.Kinect.Wpf;
@@ -112,8 +111,11 @@ namespace TempoMonkey
             myMediaElement.Play();
         }
 
-
+        DispatcherTimer Timer;
         public void initTutorials(int index){
+
+            Seek.Content = index;
+
             Tutorial pause, volume, tempo, pitch, switch_tracks, seek;
             Tutorial._tutorialIndex = 0;
             string tutorials_base = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Tutorials\\";
@@ -139,7 +141,7 @@ namespace TempoMonkey
             Tutorial.addTutorial(seek);
 
             startTutorial(Tutorial.getCurrentTutorial());
-            DispatcherTimer Timer = new DispatcherTimer();
+            Timer = new DispatcherTimer();
             Timer.Interval = TimeSpan.FromSeconds(2);
             Timer.Tick += (delegate(object s, EventArgs args){
                 //Checks if the user has finished the task, and queues up the next task
@@ -209,18 +211,24 @@ namespace TempoMonkey
         }
         #endregion
 
+        public void initTutor(int index)
+        {
+            Processing.Audio.LoadFile(@"..\..\Resources\Music\Chasing Pavements.mp3");
+            Processing.Audio.LoadFile(@"..\..\Resources\Music\Enough To Fly With You.mp3");
+            Processing.Audio.Play();
+            initTutorials(index);
+        }
 
+        public void tearDown()
+        {
+            Timer.Stop();
+            // TODO: TEARDOWN MUSIC... unload all files and whatever else that needs to be done
+            // so that a user can navigate between pages that uses music
+        }
 
-        public TutorMode()//int tutorialIndex)
+        public TutorMode()
         {
             InitializeComponent();
-            
-            /*
-            Processing.Audio.Initialize();
-            Processing.Audio.LoadFile("C:\\Users\\Doboy\\Desktop\\Minh\\TempoMonkey\\bin\\Debug\\Music\\Enough To Fly With You.mp3");
-            Processing.Audio.LoadFile("C:\\Users\\Doboy\\Desktop\\Minh\\TempoMonkey\\bin\\Debug\\Music\\Chasing Pavements.mp3");
-            Processing.Audio.Play();
-            * */
 
             tutoree = new KinectGesturePlayer();
             tutoree.registerCallBack(tutoree.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);

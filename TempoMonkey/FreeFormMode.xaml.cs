@@ -9,7 +9,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Collections;
 using Microsoft.Kinect;
@@ -32,6 +31,7 @@ namespace TempoMonkey
 		bool isPaused = false;
         ArrayList _nameList = new ArrayList();
         string _type;
+        Spectrum spectrumVisualizer;
 
         public void initBuddyForm(string address, string name)
         {
@@ -39,6 +39,8 @@ namespace TempoMonkey
             Processing.Audio.LoadFile(address);
             _nameList.Add(name);
             currentTrackIndex = 0;
+            System.Windows.Forms.Cursor.Hide();
+            Processing.Audio.Play();
 
             Spectrum spectrumVisualizer = new Spectrum(mainCanvas);
             spectrumVisualizer.RegisterSoundPlayer();
@@ -82,7 +84,7 @@ namespace TempoMonkey
 			Processing.Audio.Play();
 			System.Windows.Forms.Cursor.Hide();
 			// Initialize the visualizer
-			Spectrum spectrumVisualizer = new Spectrum(mainCanvas);
+			spectrumVisualizer = new Spectrum(mainCanvas);
 			spectrumVisualizer.RegisterSoundPlayer();
             Track.Content = _nameList[currentTrackIndex];
             freePlayer = new KinectGesturePlayer();
@@ -92,11 +94,27 @@ namespace TempoMonkey
 			freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
         }
 
+        public void tearDown()
+        {
+            spectrumVisualizer = null;
+            freePlayer = null;
+            freePlayer2 = null;
+            // TODO: TEARDOWN MUSIC... unload all files and whatever else that needs to be done
+            // so that a user can navigate between pages that uses music
+        }
 
+
+        NavigationButton quitButton;
 		public FreeFormMode()
 		{		
 			InitializeComponent();
             InitializeAvatars();
+
+            quitButton = new NavigationButton(QuitButton, delegate()
+            {
+                tearDown();
+                return MainWindow.homePage;
+            });
 		}
 
         public void allFramesReady(object sender, AllFramesReadyEventArgs e)
@@ -326,13 +344,13 @@ namespace TempoMonkey
             SetAvatarState(exist, pitchAvatar, exist ? loadedImages["pitchAvatar"] : loadedImages["pitchAvatarDisabled"]);
 		}
 
-		public void Resumee()
+		public void Resume()
 		{
 			isPaused = false;
 			Processing.Audio.Play();
 			Border.Visibility = System.Windows.Visibility.Hidden;
-			Resume.Visibility = System.Windows.Visibility.Hidden;
-			Quit.Visibility = System.Windows.Visibility.Hidden;
+			ResumeButton.Visibility = System.Windows.Visibility.Hidden;
+			QuitButton.Visibility = System.Windows.Visibility.Hidden;
 			MainWindow.isManipulating = true;
 		}
 
@@ -341,8 +359,8 @@ namespace TempoMonkey
 			isPaused = true;
             Processing.Audio.Pause();
 			Border.Visibility = System.Windows.Visibility.Visible;
-			Resume.Visibility = System.Windows.Visibility.Visible;
-			Quit.Visibility = System.Windows.Visibility.Visible;
+			ResumeButton.Visibility = System.Windows.Visibility.Visible;
+			QuitButton.Visibility = System.Windows.Visibility.Visible;
 			MainWindow.isManipulating = false;
 		}
 
@@ -359,15 +377,9 @@ namespace TempoMonkey
 			MainWindow.Mouse_Leave(sender, e);
 		}
 
-		void Quit_Click(object sender, RoutedEventArgs e)
-		{
-            MainWindow.currentPage = new HomePage();
-            NavigationService.Navigate(MainWindow.currentPage);
-		}
-
         void Resume_Click(object sender, RoutedEventArgs e)
 		{
-			Resumee();
+			Resume();
 		}
 
 		#endregion

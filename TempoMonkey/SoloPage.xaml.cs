@@ -10,7 +10,6 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Microsoft.Kinect;
 using Coding4Fun.Kinect.Wpf;
@@ -32,7 +31,6 @@ namespace TempoMonkey
             InitializeComponent();
             freeButton = new NavigationButton(FreeButton, delegate()
             {
-                //(BrowseMusic(MainWindow.browseMusicPage)).init
                 ((BrowseMusic)MainWindow.browseMusicPage).initBrowseMusic("Solo");
                 return MainWindow.browseMusicPage;
             });
