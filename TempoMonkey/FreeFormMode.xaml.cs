@@ -345,7 +345,7 @@ namespace TempoMonkey
 		{
 			isPaused = false;
 			Processing.Audio.Play();
-			Border.Visibility = System.Windows.Visibility.Hidden;
+            mainCanvas.Background = new SolidColorBrush(Colors.White);
 			ResumeButton.Visibility = System.Windows.Visibility.Hidden;
 			QuitButton.Visibility = System.Windows.Visibility.Hidden;
 			MainWindow.isManipulating = true;
@@ -356,6 +356,7 @@ namespace TempoMonkey
 		{
 			isPaused = true;
             Processing.Audio.Pause();
+            mainCanvas.Background = new SolidColorBrush(Colors.Gray);
 			Border.Visibility = System.Windows.Visibility.Visible;
 			ResumeButton.Visibility = System.Windows.Visibility.Visible;
 			QuitButton.Visibility = System.Windows.Visibility.Visible;
