@@ -113,32 +113,9 @@ namespace TempoMonkey
 
         DispatcherTimer Timer;
         public void initTutorials(int index){
-
             Seek.Content = index;
+            System.Windows.Forms.Cursor.Hide();
 
-            Tutorial pause, volume, tempo, pitch, switch_tracks, seek;
-            Tutorial._tutorialIndex = 0;
-            string tutorials_base = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Tutorials\\";
-
-            pause = new Tutorial("Pause", "To pause move your left arm to a 35 degree angle with your body",
-                new Uri(tutorials_base + "pause.m4v"), pauseChecker);
-            tempo = new Tutorial("Changing the Tempo", "To increase the tempo lean towards the right, to decrease the tempo lean towards the left",
-                new Uri(tutorials_base + "tempo.m4v"), tempoChecker);
-            pitch = new Tutorial("Changing the Pitch", "To increase/decrease the pitch put your arms above your head and move your body up/down",
-                new Uri(tutorials_base + "pitch.m4v"), pitchChecker);
-            switch_tracks = new Tutorial("Switching Tracks", "To switch between your tracks jump to the left/right",
-                new Uri(tutorials_base + "switch_tracks.m4v"), switchTrackChecker);
-            volume = new Tutorial("Changing the Volume", "To change the volume put both your arms in the midsection of your body and expand/intract your hands",
-                new Uri(tutorials_base + "volume.m4v"), volumeChecker);
-            seek = new Tutorial("Changing the Position of the track", "To seek around the track put your right hand up and hover it left and right",
-                new Uri(tutorials_base + "seek.m4v"), seekChecker);
-
-            Tutorial.addTutorial(pause);
-            Tutorial.addTutorial(tempo);
-            Tutorial.addTutorial(pitch);
-            Tutorial.addTutorial(switch_tracks);
-            Tutorial.addTutorial(volume);
-            Tutorial.addTutorial(seek);
 
             startTutorial(Tutorial.getCurrentTutorial());
             Timer = new DispatcherTimer();
@@ -229,6 +206,32 @@ namespace TempoMonkey
         public TutorMode()
         {
             InitializeComponent();
+
+
+
+            Tutorial pause, volume, tempo, pitch, switch_tracks, seek;
+            Tutorial._tutorialIndex = 0;
+            string tutorials_base = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Tutorials\\";
+
+            pause = new Tutorial("Pause", "To pause move your left arm to a 35 degree angle with your body",
+                new Uri(tutorials_base + "pause.m4v"), pauseChecker);
+            tempo = new Tutorial("Changing the Tempo", "To increase the tempo lean towards the right, to decrease the tempo lean towards the left",
+                new Uri(tutorials_base + "tempo.m4v"), tempoChecker);
+            pitch = new Tutorial("Changing the Pitch", "To increase/decrease the pitch put your arms above your head and move your body up/down",
+                new Uri(tutorials_base + "pitch.m4v"), pitchChecker);
+            switch_tracks = new Tutorial("Switching Tracks", "To switch between your tracks jump to the left/right",
+                new Uri(tutorials_base + "switch_tracks.m4v"), switchTrackChecker);
+            volume = new Tutorial("Changing the Volume", "To change the volume put both your arms in the midsection of your body and expand/intract your hands",
+                new Uri(tutorials_base + "volume.m4v"), volumeChecker);
+            seek = new Tutorial("Changing the Position of the track", "To seek around the track put your right hand up and hover it left and right",
+                new Uri(tutorials_base + "seek.m4v"), seekChecker);
+
+            Tutorial.addTutorial(pause);
+            Tutorial.addTutorial(tempo);
+            Tutorial.addTutorial(pitch);
+            Tutorial.addTutorial(switch_tracks);
+            Tutorial.addTutorial(volume);
+            Tutorial.addTutorial(seek);
 
             tutoree = new KinectGesturePlayer();
             tutoree.registerCallBack(tutoree.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);

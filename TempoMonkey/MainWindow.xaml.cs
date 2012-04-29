@@ -69,7 +69,7 @@ namespace TempoMonkey
         static public object currentlySelectedObject;
 
 		// Store the button's text color, so that when we reset it, we can put it back correctly
-		private static System.Windows.Media.Brush lastForegroundColor;
+
 
 		public static void MouseEnter(NavigationButton button)
 		{
@@ -78,20 +78,12 @@ namespace TempoMonkey
 
         static public void Mouse_Enter(object sender, MouseEventArgs e)
         {
-            if (sender is Button)
-            {
-                lastForegroundColor = ((Button)sender).Foreground;
-                ((Button)sender).Foreground = System.Windows.Media.Brushes.DarkSlateBlue;
-            }
+            // THIS WILL BE DEPERICATED!!
             currentlySelectedObject = sender;
         }
 
         static public void Mouse_Leave(object sender, MouseEventArgs e)
         {
-            if (sender is Button)
-            {
-                ((Button)sender).Foreground = lastForegroundColor;
-            }
             currentlySelectedObject = null;
 			angle = 0;
         }

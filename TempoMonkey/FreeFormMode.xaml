@@ -14,7 +14,7 @@
         <Label Canvas.Left="516" Canvas.Top="338" Name="Tempo" Content="TEMPO" Height="50" Width="99" FontSize="20" FontFamily="Bold Art" FontStyle="Normal"/>
         <Rectangle Fill="#FFF4F4F5" Name="Border" Height="138" Stroke="Black" Width="602" Visibility="Hidden" Canvas.Left="108" Canvas.Top="144" />
         <Button Content="Resume" Name="ResumeButton" Canvas.Left="183" Canvas.Top="195" Width="152" Height="46" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="ResumeButton_Click"/>
-        <Button Content="Quit" Name="QuitButton" Canvas.Left="454" Canvas.Top="195" Width="152" Height="46" FontSize="30" Visibility="Hidden"  MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave"/>
+        <Button Content="Quit" Name="QuitButton" Canvas.Left="454" Canvas.Top="195" Width="152" Height="46" FontSize="30" Visibility="Hidden"  MouseEnter="QuitButton_Enter" MouseLeave="QuitButton_Leave"/>
 
         <Label Canvas.Top="98" Name="Seek" Content="SEEK BAR" Height="40" Width="94" FontSize="20" FontStyle="Normal" Canvas.Left="355"/>
         <Slider Name="SeekSlider" Canvas.Left="98" Canvas.Top="127" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>

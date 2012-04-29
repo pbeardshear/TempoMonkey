@@ -51,7 +51,8 @@ namespace TempoMonkey
             doneButton = new NavigationButton(DoneButton, delegate(){
                 if (mySelections.Count == 0)
                 {
-                        return null;
+                    Message.Content = "You have to pick at least one song!";
+                    return null;
                 } else 
                 {
                     ArrayList musicAddrList = new ArrayList();
@@ -80,6 +81,11 @@ namespace TempoMonkey
                     else
                     {
                         throw new Exception();
+                    }
+
+                    foreach (box selection in mySelections)
+                    {
+                        selection.unHighlightBox();
                     }
                     mySelections = new List<box>();
                     return MainWindow.freeFormPage;
@@ -197,11 +203,6 @@ namespace TempoMonkey
         }
 
         private void Mouse_Leave(object sender, MouseEventArgs e)
-        {
-            MainWindow.Mouse_Leave(sender, e);
-        }
-
-        private void Done_Leave(object sender, MouseEventArgs e)
         {
             MainWindow.Mouse_Leave(sender, e);
         }
