@@ -49,6 +49,7 @@ namespace slidingMenu
         public string address;
         public string name;
         public double position;
+        public int index;
         public void setImage(string path)
         {
             try

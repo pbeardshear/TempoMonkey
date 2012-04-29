@@ -102,6 +102,10 @@ namespace TempoMonkey
             {
                 mouseOverride = true;
             }
+            else if (System.Windows.Input.Key.RightShift == e.Key)
+            {
+
+            }
         }
 
         private void HandleKeyUpEvent(object sender, KeyEventArgs e)
