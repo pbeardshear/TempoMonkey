@@ -104,7 +104,10 @@ namespace TempoMonkey
             }
             else if (System.Windows.Input.Key.RightShift == e.Key)
             {
-
+                if (currentPage is FreeFormMode)
+                {
+                    (currentPage as FreeFormMode).Pause();
+                }
             }
         }
 
