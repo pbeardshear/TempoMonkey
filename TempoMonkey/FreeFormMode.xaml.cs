@@ -385,15 +385,5 @@ namespace TempoMonkey
 
 		#endregion
 
-        private void QuitButton_Enter(object sender, MouseEventArgs e)
-        {
-            MainWindow.MouseEnter(quitButton);
-        }
-
-        private void QuitButton_Leave(object sender, MouseEventArgs e)
-        {
-            MainWindow.Mouse_Leave(sender, e);
-        }
-
 	}
 }

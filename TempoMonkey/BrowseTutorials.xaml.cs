@@ -111,7 +111,7 @@ namespace TempoMonkey
         public void Click()
         {
             box currentlySelectedBox = (box)MainWindow.currentlySelectedObject;
-            (MainWindow.tutorPage as TutorMode).initTutorials(currentlySelectedBox.index);
+            (MainWindow.tutorPage as TutorMode).initTutor(currentlySelectedBox.index);
             MainWindow.currentPage = MainWindow.tutorPage;
             NavigationService.Navigate(MainWindow.currentPage);
         }

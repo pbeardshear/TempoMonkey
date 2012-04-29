@@ -8,8 +8,8 @@
         <!--This label is required so that hoovering works-->
         <Label Height="150" Width="150"></Label>
         <Border BorderBrush="#F6B029" BorderThickness="5"  Height="150" Name="Highlight" Width="150" />
-        <Label Foreground="White" Canvas.Top="108"   Height="39" Name="textBox" Width="138" Canvas.Left="6"/>
+        <Label Foreground="Black" Canvas.Top="108"   Height="39" Name="textBox" Width="138" Canvas.Left="6"/>
         <Image Height="104" Width="126" Name="Image"  Canvas.Left="12" Canvas.Top="4" Stretch="Fill" />
-        <Border BorderBrush="White" BorderThickness="2"  Height="150" x:Name="Highlight_Copy" Width="150" />
+        <Border BorderBrush="Black" BorderThickness="2"  Height="150" x:Name="Highlight_Copy" Width="150" />
     </Canvas>
 </UserControl>

@@ -45,7 +45,7 @@ namespace TempoMonkey
 			backButton = new NavigationButton(BackButton, delegate()
 			{
                 mySelections = new List<box>();
-			    return MainWindow.homePage;
+			    return MainWindow.soloPage;
 			});
             
             doneButton = new NavigationButton(DoneButton, delegate(){

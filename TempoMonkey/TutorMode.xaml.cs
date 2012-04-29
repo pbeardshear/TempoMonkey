@@ -15,6 +15,7 @@ using Microsoft.Kinect;
 using Coding4Fun.Kinect.Wpf;
 using System.Windows.Media.Animation;
 using System.Threading;
+using Visualizer;
 using System.Windows.Threading;
 
 namespace TempoMonkey
@@ -47,7 +48,7 @@ namespace TempoMonkey
                 _instructions = instructions;
                 _source = source;
                 _checker = checker;
-                _tutorials.Add(this);
+                //_tutorials.Add(this);
             }
 
             public Uri getSource()
@@ -68,11 +69,6 @@ namespace TempoMonkey
             public static Tutorial getCurrentTutorial()
             {
                 return _tutorials[_tutorialIndex];
-            }
-
-            public static string getCurrentTutorialName()
-            {
-                return _tutorials[_tutorialIndex].getName();
             }
 
             public static void addTutorial(Tutorial tutorial)
@@ -104,7 +100,7 @@ namespace TempoMonkey
             }
         }
 
-        public void startTutorial(Tutorial tutorial)
+        public void playTutorial(Tutorial tutorial)
         {
             myMediaElement.Source = tutorial.getSource();
             Instructions.Content = tutorial.getInstructions();
@@ -112,33 +108,6 @@ namespace TempoMonkey
         }
 
         DispatcherTimer Timer;
-        public void initTutorials(int index){
-            Seek.Content = index;
-            System.Windows.Forms.Cursor.Hide();
-
-
-            startTutorial(Tutorial.getCurrentTutorial());
-            Timer = new DispatcherTimer();
-            Timer.Interval = TimeSpan.FromSeconds(2);
-            Timer.Tick += (delegate(object s, EventArgs args){
-                //Checks if the user has finished the task, and queues up the next task
-                if (Tutorial.checkTask())
-                {
-                    Tutorial next = Tutorial.nextTutorial();
-                    if (next != null)
-                    {
-                        showTutorialChooser(next);
-                    }
-                    else
-                    {
-                        showTutorialsFinished();
-                        Timer.Stop();
-                    }
-                }
-            });
-            Timer.Start();
-        }
-
 
         public void showTutorialsFinished()
         {
@@ -148,7 +117,8 @@ namespace TempoMonkey
         public void showTutorialChooser(Tutorial tutorial)
         {
             MainWindow.isManipulating = false;
-            Next.Visibility = Tutorials.Visibility = Quit.Visibility = Border.Visibility = System.Windows.Visibility.Visible;
+            Next.Visibility = TutorialsButton.Visibility = QuitButton.Visibility = Border.Visibility = System.Windows.Visibility.Visible;
+            System.Windows.Forms.Cursor.Show();
         }
 
         bool donePause = false;
@@ -188,50 +158,15 @@ namespace TempoMonkey
         }
         #endregion
 
+        Spectrum spectrumVisualizer;
+
         public void initTutor(int index)
         {
+
+            MainWindow.isManipulating = true;
             Processing.Audio.LoadFile(@"..\..\Resources\Music\Chasing Pavements.mp3");
             Processing.Audio.LoadFile(@"..\..\Resources\Music\Enough To Fly With You.mp3");
             Processing.Audio.Play();
-            initTutorials(index);
-        }
-
-        public void tearDown()
-        {
-            Timer.Stop();
-            // TODO: TEARDOWN MUSIC... unload all files and whatever else that needs to be done
-            // so that a user can navigate between pages that uses music
-        }
-
-        public TutorMode()
-        {
-            InitializeComponent();
-
-
-
-            Tutorial pause, volume, tempo, pitch, switch_tracks, seek;
-            Tutorial._tutorialIndex = 0;
-            string tutorials_base = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Tutorials\\";
-
-            pause = new Tutorial("Pause", "To pause move your left arm to a 35 degree angle with your body",
-                new Uri(tutorials_base + "pause.m4v"), pauseChecker);
-            tempo = new Tutorial("Changing the Tempo", "To increase the tempo lean towards the right, to decrease the tempo lean towards the left",
-                new Uri(tutorials_base + "tempo.m4v"), tempoChecker);
-            pitch = new Tutorial("Changing the Pitch", "To increase/decrease the pitch put your arms above your head and move your body up/down",
-                new Uri(tutorials_base + "pitch.m4v"), pitchChecker);
-            switch_tracks = new Tutorial("Switching Tracks", "To switch between your tracks jump to the left/right",
-                new Uri(tutorials_base + "switch_tracks.m4v"), switchTrackChecker);
-            volume = new Tutorial("Changing the Volume", "To change the volume put both your arms in the midsection of your body and expand/intract your hands",
-                new Uri(tutorials_base + "volume.m4v"), volumeChecker);
-            seek = new Tutorial("Changing the Position of the track", "To seek around the track put your right hand up and hover it left and right",
-                new Uri(tutorials_base + "seek.m4v"), seekChecker);
-
-            Tutorial.addTutorial(pause);
-            Tutorial.addTutorial(tempo);
-            Tutorial.addTutorial(pitch);
-            Tutorial.addTutorial(switch_tracks);
-            Tutorial.addTutorial(volume);
-            Tutorial.addTutorial(seek);
 
             tutoree = new KinectGesturePlayer();
             tutoree.registerCallBack(tutoree.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
@@ -239,7 +174,87 @@ namespace TempoMonkey
             tutoree.registerCallBack(tutoree.handSwingListener, seekTrackingHandler, seekChangeHandler);
             tutoree.registerCallBack(tutoree.leanListener, tempoTrackingHandler, tempoChangeHandler);
             tutoree.registerCallBack(tutoree.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
+
+            spectrumVisualizer = new Spectrum(mainCanvas);
+            spectrumVisualizer.RegisterSoundPlayer();
+
+            Seek.Content = index;
+            System.Windows.Forms.Cursor.Hide();
+
+
+            playTutorial(Tutorial.getCurrentTutorial());
+            Timer = new DispatcherTimer();
+            Timer.Interval = TimeSpan.FromSeconds(2);
+            Timer.Tick += (delegate(object s, EventArgs args)
+            {
+                //Checks if the user has finished the task, and queues up the next task
+                if (Tutorial.checkTask())
+                {
+                    Tutorial next = Tutorial.nextTutorial();
+                    if (next != null)
+                    {
+                        showTutorialChooser(next);
+                    }
+                    else
+                    {
+                        showTutorialsFinished();
+                        Timer.Stop();
+                    }
+                }
+            });
+            Timer.Start();
         }
+
+        public void tearDown()
+        {
+            tutoree = null;
+            Timer.Stop();
+            MainWindow.isManipulating = false;
+            // TODO: TEARDOWN MUSIC... unload all files and whatever else that needs to be done
+            // so that a user can navigate between pages that uses music
+        }
+
+        Tutorial pause, volume, tempo, pitch, switch_tracks, seek;
+        public TutorMode()
+        {
+            InitializeComponent();
+            Tutorial._tutorialIndex = 0;
+            string tutorials_base = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Tutorials\\";
+
+            pause = new Tutorial("Pause", "To pause move your left arm to a 35 degree angle with your body",
+                new Uri(tutorials_base + "pause.m4v"), pauseChecker);
+            tempo = new Tutorial("Changing the Tempo", "To increase the tempo lean towards the right, to decrease the tempo lean towards the left",
+                new Uri(tutorials_base + "01tempo.m4v"), tempoChecker);
+            pitch = new Tutorial("Changing the Pitch", "To increase/decrease the pitch put your arms above your head and move your body up/down",
+                new Uri(tutorials_base + "02pitch.m4v"), pitchChecker);
+            switch_tracks = new Tutorial("Switching Tracks", "To switch between your tracks jump to the left/right",
+                new Uri(tutorials_base + "03switchtracks.m4v"), switchTrackChecker);
+            volume = new Tutorial("Changing the Volume", "To change the volume put both your arms in the midsection of your body and expand/intract your hands",
+                new Uri(tutorials_base + "04volume.m4v"), volumeChecker);
+            seek = new Tutorial("Changing the Position of the track", "To seek around the track put your right hand up and hover it left and right",
+                new Uri(tutorials_base + "05seek.m4v"), seekChecker);
+
+            //Tutorial.addTutorial(pause);
+            Tutorial.addTutorial(tempo);
+            Tutorial.addTutorial(pitch);
+            Tutorial.addTutorial(switch_tracks);
+            Tutorial.addTutorial(volume);
+            Tutorial.addTutorial(seek);
+
+            quitButton = new NavigationButton(QuitButton, delegate()
+            {
+                tearDown();
+                return MainWindow.homePage;
+            });
+
+            tutorialsButton = new NavigationButton(TutorialsButton, delegate()
+            {
+                tearDown();
+                return MainWindow.browseTutorialsPage;
+            });
+        }
+
+        NavigationButton quitButton, tutorialsButton;
 
         public void allFramesReady(object sender, AllFramesReadyEventArgs e)
         {
@@ -264,7 +279,7 @@ namespace TempoMonkey
 
             if (exist)
             {
-                if (Tutorial.getCurrentTutorialName() == "Pause")
+                if (Tutorial.getCurrentTutorial() == pause)
                 {
                     donePause = true;
                 }
@@ -299,7 +314,7 @@ namespace TempoMonkey
                 return;
             }
 
-            if (Tutorial.getCurrentTutorialName() == "Pitch")
+            if (Tutorial.getCurrentTutorial() == pitch)
             {
                 totalTrackChange++;
                 if (totalTrackChange >= 2){
@@ -319,7 +334,7 @@ namespace TempoMonkey
         {
             VolumeSlider.Value -= change;
             Processing.Audio.ChangeVolume(VolumeSlider.Value);
-            if (Tutorial.getCurrentTutorialName() == "Volume")
+            if (Tutorial.getCurrentTutorial() == volume)
             {
                 totalVolumeChange += Math.Abs(change);
                 if (totalVolumeChange > 10)
@@ -340,9 +355,10 @@ namespace TempoMonkey
         {
             TempoSlider.Value += change / 2;
             Processing.Audio.ChangeTempo(TempoSlider.Value);
-            if (Tutorial.getCurrentTutorialName() == "Tempo")
+            if (Tutorial.getCurrentTutorial() == tempo)
             {
                 totalTempoChange += Math.Abs(change);
+                Seek.Content = totalTempoChange;
                 if (totalTempoChange > 10)
                 {
                     doneTempo = true;
@@ -361,7 +377,7 @@ namespace TempoMonkey
         void seekChangeHandler(double change)
         {
             SeekSlider.Value += change;
-            if (Tutorial.getCurrentTutorialName() == "Seek")
+            if (Tutorial.getCurrentTutorial() == seek)
             {
                 totalSeekingChange += Math.Abs(change);
             }
@@ -393,7 +409,7 @@ namespace TempoMonkey
         {
             PitchSlider.Value -= change * 3;
             Processing.Audio.ChangePitch(PitchSlider.Value);
-            if (Tutorial.getCurrentTutorialName() == "Pitch")
+            if (Tutorial.getCurrentTutorial() == pitch)
             {
                 totalPitchChange += Math.Abs(change);
                 if (totalPitchChange > 10)
@@ -409,25 +425,25 @@ namespace TempoMonkey
             PitchFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
         }
 
-        public void Resumee()
+        public void Resume()
         {
             isPaused = false;
-            Processing.Audio.Play();
+            Processing.Audio.Resume();
             Border.Visibility = System.Windows.Visibility.Hidden;
             mainCanvas.Background = new SolidColorBrush(Colors.White);
-            Resume.Visibility = System.Windows.Visibility.Hidden;
-            Quit.Visibility = System.Windows.Visibility.Hidden;
+            ResumeButton.Visibility = System.Windows.Visibility.Hidden;
+            QuitButton.Visibility = System.Windows.Visibility.Hidden;
             MainWindow.isManipulating = true;
         }
 
         public void Pause()
         {
             isPaused = true;
-            Processing.Audio.Play();
+            Processing.Audio.Pause();
             Border.Visibility = System.Windows.Visibility.Visible;
             mainCanvas.Background = new SolidColorBrush(Colors.Gray);
-            Resume.Visibility = System.Windows.Visibility.Visible;
-            Quit.Visibility = System.Windows.Visibility.Visible;
+            ResumeButton.Visibility = System.Windows.Visibility.Visible;
+            QuitButton.Visibility = System.Windows.Visibility.Visible;
             MainWindow.isManipulating = false;
         }
 
@@ -453,7 +469,7 @@ namespace TempoMonkey
 
         void Resume_Click(object sender, RoutedEventArgs e)
         {
-            Resumee();
+            Resume();
         }
 
         void Tutorials_Click(object sender, RoutedEventArgs e)
@@ -466,10 +482,11 @@ namespace TempoMonkey
 
         void Next_Click(object sender, RoutedEventArgs e)
         {
-            Next.Visibility = Tutorials.Visibility = Quit.Visibility = Border.Visibility = System.Windows.Visibility.Hidden;
+            Next.Visibility = TutorialsButton.Visibility = QuitButton.Visibility = Border.Visibility = System.Windows.Visibility.Hidden;
             MainWindow.isManipulating = true;
             mainCanvas.Background = new SolidColorBrush(Colors.White);
-            startTutorial(Tutorial.getCurrentTutorial());
+            System.Windows.Forms.Cursor.Hide();
+            playTutorial(Tutorial.getCurrentTutorial());
         }
 
         static bool doNext = false;
@@ -479,6 +496,12 @@ namespace TempoMonkey
             mainCanvas.Background = new SolidColorBrush(Colors.Gray);
         }
         #endregion
+
+        private void Media_Ended(object sender, RoutedEventArgs e)
+        {
+            myMediaElement.Position = TimeSpan.Zero;
+            myMediaElement.LoadedBehavior = MediaState.Play;
+        }
 
     }
 }

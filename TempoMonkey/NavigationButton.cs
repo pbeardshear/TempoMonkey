@@ -20,11 +20,27 @@ namespace TempoMonkey
 
 		public delegate Page DestinationDelegate();
 
-		public NavigationButton(UIElement element, DestinationDelegate destination)
-		{
-			Element = element;
-			Destination = destination;
-		}
+        public NavigationButton(UIElement element, DestinationDelegate destination)
+        {
+            element.MouseEnter += Mouse_Enter;
+            // element.MouseLeave += element_MouseLeave;
+            Element = element;
+            Destination = destination;
+        }
+
+        /*
+        void element_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+*/
+
+        void Mouse_Enter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            MainWindow.MouseEnter(this);
+        }
+
+        
 
 		public void Click()
 		{

@@ -27,12 +27,6 @@ namespace slidingMenu
             InitializeComponent();
             myPage = page;          
             size = sizeOfBox;
-            //this.boxCanvas.Width = size;
-            //this.boxCanvas.Height = size;
-            //this.Highlight.Width = size;
-            //this.Highlight.Height = size;
-            //this.textBox.Width = size - 10;
-            //this.textBox.Height = size - 10;
             Highlight.Visibility = Visibility.Collapsed;
         }
 

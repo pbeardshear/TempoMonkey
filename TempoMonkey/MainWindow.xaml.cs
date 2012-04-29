@@ -265,7 +265,7 @@ namespace TempoMonkey
         public static bool isManipulating = false;
         void allFramesReady(object sender, AllFramesReadyEventArgs e)
         {
-            if (isManipulating)
+            if (currentPage is KinectPage && isManipulating)
             {
                 ((KinectPage)currentPage).allFramesReady(sender, e);
             }
