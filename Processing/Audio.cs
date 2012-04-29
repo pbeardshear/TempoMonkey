@@ -71,6 +71,7 @@ namespace Processing
 
         private static TimeSpan DefaultEndMarker = TimeSpan.Zero;
         private static volatile bool stopWorker = false;
+		private static bool Stopping = false;
 
         // Threads
         private static Thread audioProcessingThread;
@@ -99,6 +100,9 @@ namespace Processing
             _currentPitch = 0.0f;
             _currentTempo = 1.0f;
             _currentVolume = 0.25f;
+
+			// Initialize the sampler
+			Sampler.Initialize((int)FFTDataSize.FFT2048);
 
             IsInitialized = true;
         }
@@ -171,40 +175,75 @@ namespace Processing
         #endregion
 
         #region Cleanup Methods
+
+		/// <summary>
+		/// Close down all audio processing and unload all files
+		/// </summary>
+		public static void End()
+		{
+			// Tell the processing thread to shut down
+			Stopping = true;
+			IsPlaying = false;
+
+			// Unload all files
+			//foreach (string fileName in _audioStreams.Keys)
+			//{
+			//    UnloadFile(fileName);
+			//}
+
+			// Set the stream containers to empty state
+			_audioStreams = new Dictionary<string, AudioStream>();
+			_audioStreamList = new List<AudioStream>();
+		}
+
         public static void Cleanup()
         {
-            if (_inputProvider != null)
-            {
-                if (_inputProvider is IDisposable)
-                {
-                    (_inputProvider as IDisposable).Dispose();
-                }
-                _inputProvider = null;
-            }
+			try
+			{
+				if (_inputProvider != null)
+				{
+					if (_inputProvider is IDisposable)
+					{
+						(_inputProvider as IDisposable).Dispose();
+					}
+					_inputProvider = null;
+				}
 
-            if (_currentWaveChannel != null)
-            {
-                _currentWaveChannel.Dispose();
-                _currentWaveChannel = null;
-            }
+				if (_currentWaveChannel != null)
+				{
+					_currentWaveChannel.Dispose();
+					_currentWaveChannel = null;
+				}
 
-            if (_blockAlignStream != null)
-            {
-                _blockAlignStream.Dispose();
-                _blockAlignStream = null;
-            }
+				if (_blockAlignStream != null)
+				{
+					_blockAlignStream.Dispose();
+					_blockAlignStream = null;
+				}
 
-            if (_waveReader != null)
-            {
-                _waveReader.Dispose();
-                _waveReader = null;
-            }
+				if (_waveReader != null)
+				{
+					_waveReader.Dispose();
+					_waveReader = null;
+				}
 
-            if (_waveOutDevice != null)
-            {
-                _waveOutDevice.Dispose();
-                _waveOutDevice = null;
-            }
+				if (_waveOutDevice != null)
+				{
+					_waveOutDevice.Dispose();
+					_waveOutDevice = null;
+				}
+			}
+			catch (System.NullReferenceException exception)
+			{
+				// We probably tried to dispose of an object that didn't exist
+				// Write some debug output so we can check this later
+				Console.WriteLine(exception.Message);
+			}
+			catch (System.Exception exception)
+			{
+				// Something weird happened
+				Console.WriteLine(exception.Message);
+			}
         }
         #endregion
 
@@ -384,8 +423,7 @@ namespace Processing
             _soundTouchSharp.SetSetting(SoundTouchSharp.SoundTouchSettings.SETTING_USE_QUICKSEEK, 0);
             ApplyTimeStretchProfiles();
 
-			// Initialize the sampler
-			Sampler.Initialize((int)FFTDataSize.FFT2048);
+			
 
             // Initialize the device
             _waveOutDevice.Init(_inputProvider);
@@ -441,7 +479,7 @@ namespace Processing
             bool loop = false;
 
             _currentWaveChannel.Volume = _currentVolume;
-            while (_currentWaveChannel.Position < _currentWaveChannel.Length)
+            while (_currentWaveChannel.Position < _currentWaveChannel.Length && !Stopping)
             {
                 if (Started)
                 {

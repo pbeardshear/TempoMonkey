@@ -96,7 +96,7 @@ namespace TempoMonkey
             }
             if (System.Windows.Input.Key.S == e.Key)
             {
-                Processing.Audio.Pause();
+				Processing.Audio.Pause();
             }
 
             if (System.Windows.Input.Key.LeftShift == e.Key)

@@ -101,6 +101,7 @@ namespace TempoMonkey
             freePlayer2 = null;
             // TODO: TEARDOWN MUSIC... unload all files and whatever else that needs to be done
             // so that a user can navigate between pages that uses music
+			Processing.Audio.End();
         }
 
         NavigationButton quitButton;
