@@ -25,6 +25,7 @@ namespace TempoMonkey
     /// </summary>
     public partial class TutorMode : Page, KinectPage
     {
+
         BrushConverter bc = new BrushConverter();
         KinectGesturePlayer tutoree;
         bool isPaused = false;
@@ -208,10 +209,11 @@ namespace TempoMonkey
         }
         #endregion
 
-        public TutorMode(int tutorialIndex)
+
+
+        public TutorMode()//int tutorialIndex)
         {
             InitializeComponent();
-            initTutorials(tutorialIndex);
             
             /*
             Processing.Audio.Initialize();

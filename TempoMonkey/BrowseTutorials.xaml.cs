@@ -28,12 +28,17 @@ namespace TempoMonkey
         string mySelection;
         Grid myGrid;
         int gridRows, gridCols;
+        NavigationButton backButton;
 
         public BrowseTutorials()
         {
             InitializeComponent();
             addGrid((int)MainWindow.height, (int)MainWindow.width);
             addItemsToGrid();
+
+            backButton = new NavigationButton(BackButton, delegate(){
+                return MainWindow.soloPage;
+            });
         }
 
         /* Creates a grid dyanmically with demensions equal to (height/100) by (width/100) */
@@ -74,13 +79,13 @@ namespace TempoMonkey
                 int colspot = index % gridRows;
                 int rowspot = index / gridRows;
                 string filename = System.IO.Path.GetFileNameWithoutExtension(filepath);
-                addToBox(filename, filepath, rowspot, colspot);
+                addToBox(filename, filepath, rowspot, colspot, index);
                 index += 1;
             }
             myGrid.UpdateLayout();
         }
 
-        private void addToBox(string name, string address, int rowspot, int colspot) // instantiate a box instance
+        private void addToBox(string name, string address, int rowspot, int colspot, int index) // instantiate a box instance
         {
             box littleBox = new box(sizeOfBox, this);
 
@@ -93,6 +98,8 @@ namespace TempoMonkey
 
             string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Tutorial_Art\\" + name + ".jpg";
             littleBox.setImage(path);
+
+            // new NavigationButton(littleBox, delegate() { return new TutorMode(index); });
 
             Grid.SetRow(littleBox, rowspot);
             Grid.SetColumn(littleBox, colspot);
@@ -119,20 +126,25 @@ namespace TempoMonkey
             MainWindow.Mouse_Leave(sender, e);
         }
 
-        void Back_Click(object sender, MouseEventArgs e)
+        private void Back_Enter(object sender, MouseEventArgs e)
         {
-            MainWindow.currentPage = new HomePage();
-            NavigationService.Navigate(MainWindow.currentPage);
+            MainWindow.MouseEnter(backButton);
         }
 
         private void Done()
         {
-            MainWindow.currentPage = new TutorMode(0); //XXX FIXME
+            MainWindow.currentPage = MainWindow.tutorPage;
+            //TODO?
+//            MainWindow.tutorPage;
+                
+  //              new TutorMode(); //XXX FIXME
             MainWindow.isManipulating = true;
             NavigationService.Navigate(MainWindow.currentPage);
         }
 
         #endregion
+
+
 
     }
 }

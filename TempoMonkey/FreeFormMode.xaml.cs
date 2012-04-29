@@ -33,14 +33,28 @@ namespace TempoMonkey
         ArrayList _nameList = new ArrayList();
         string _type;
 
-		public FreeFormMode(ArrayList addrList, ArrayList nameList, string type)
-		{
-            
-			// Initialize the audio library
-			// This should only be done in one place
-			Processing.Audio.Initialize();
+        public void initBuddyForm(string address, string name)
+        {
+            _type = "Buddy";
+            Processing.Audio.LoadFile(address);
+            _nameList.Add(name);
 
+            freePlayer = new KinectGesturePlayer();
+            freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
+            freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
+            freePlayer.registerCallBack(freePlayer.leanListener, tempoTrackingHandler, tempoChangeHandler);
+            freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
+
+            freePlayer2 = new KinectGesturePlayer();
+            freePlayer2.registerCallBack(freePlayer2.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
+            freePlayer2.registerCallBack(freePlayer2.handsAboveHeadListener, pitchTrackingHandler2, pitchChangeHandler);
+            freePlayer2.registerCallBack(freePlayer2.leanListener, tempoTrackingHandler2, tempoChangeHandler);
+            freePlayer2.registerCallBack(freePlayer2.handsWidenListener, volumeTrackingHandler2, volumeChangeHandler);
+        }
+
+        public void initSoloForm(ArrayList addrList, ArrayList nameList){
 			// Load the audio files
+            _type = "Solo";
 			foreach (string uri in addrList)
 			{
 				Processing.Audio.LoadFile(uri);
@@ -63,37 +77,30 @@ namespace TempoMonkey
 			Processing.Audio.Play();
 
 			System.Windows.Forms.Cursor.Hide();
-			InitializeComponent();
-            InitializeAvatars();
 
 			// Initialize the visualizer
 			Spectrum spectrumVisualizer = new Spectrum(mainCanvas);
 			spectrumVisualizer.RegisterSoundPlayer();
             Track.Content = _nameList[currentTrackIndex];
             freePlayer = new KinectGesturePlayer();
-            freePlayer2 = new KinectGesturePlayer();
 			freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
 			freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
-			//freePlayer.registerCallBack(freePlayer.handSwingListener, seekTrackingHandler, seekChangeHandler);
 			freePlayer.registerCallBack(freePlayer.leanListener, tempoTrackingHandler, tempoChangeHandler);
 			freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
+        }
 
-            _type = type;
-            if (type == "Interactive")
-            {
-                freePlayer2.registerCallBack(freePlayer2.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
-                freePlayer2.registerCallBack(freePlayer2.handsAboveHeadListener, pitchTrackingHandler2, pitchChangeHandler);
-                //freePlayer2.registerCallBack(freePlayer2.handSwingListener, seekTrackingHandler, seekChangeHandler);
-                freePlayer2.registerCallBack(freePlayer2.leanListener, tempoTrackingHandler2, tempoChangeHandler);
-                freePlayer2.registerCallBack(freePlayer2.handsWidenListener, volumeTrackingHandler2, volumeChangeHandler);
-            }
+
+		public FreeFormMode()
+		{		
+			InitializeComponent();
+            InitializeAvatars();
 		}
 
         public void allFramesReady(object sender, AllFramesReadyEventArgs e)
         {
             if (!isPaused)
             {
-                if (_type == "FreeForm")
+                if (_type == "Solo")
                 {
                     Skeleton skeleton = KinectGesturePlayer.getFristSkeleton(e);
                     if (skeleton != null)
@@ -101,7 +108,7 @@ namespace TempoMonkey
                         freePlayer.skeletonReady(e, skeleton);
                     }
                 }
-                else if (_type == "Interactive")
+                else if (_type == "Buddy")
                 {
                     Skeleton[] skeletons = KinectGesturePlayer.getFirstTwoSkeletons(e);
                     Skeleton leftSkeleton;

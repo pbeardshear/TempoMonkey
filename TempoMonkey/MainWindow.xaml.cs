@@ -114,11 +114,13 @@ namespace TempoMonkey
         }
 
         #endregion
-		public static Page homePage;
-		public static Page browseMusicPage;
+        public static Page homePage, browseMusicPage, freeFormPage, tutorPage, browseTutorialsPage, soloPage;
 
         public MainWindow()
         {
+            // This should only be done once, 
+            // so it is being done here.
+            Processing.Audio.Initialize();
             InitializeComponent();
 
             MainWindow.height = (int)this.Height;
@@ -191,7 +193,12 @@ namespace TempoMonkey
             });
 
             homePage = new HomePage();
-			browseMusicPage = new BrowseMusic("Free");
+			browseMusicPage = new BrowseMusic();
+            browseTutorialsPage = new BrowseTutorials(); 
+            freeFormPage = new FreeFormMode();
+            tutorPage = new TutorMode();
+            soloPage = new SoloPage();
+
             frame.Navigate(homePage);
             currentPage = homePage;
             Timer.Start();

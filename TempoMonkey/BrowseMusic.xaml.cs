@@ -32,18 +32,21 @@ namespace TempoMonkey
 
 		NavigationButton backButton;
 
-        public BrowseMusic(string type)
+        public void initBrowseMusic(string type)
+        {
+            _type = type;
+        }
+
+        public BrowseMusic()
         {
             InitializeComponent();
-            _type = type;
             addGrid((int)MainWindow.height, (int)MainWindow.width);
             addItemsToGrid();
-
 			// Create navigation buttons
-			// backButton = new NavigationButton(BackButton, delegate()
-			// {
-			//	return MainWindow.homePage;
-			// });
+			 backButton = new NavigationButton(BackButton, delegate()
+			 {
+				return MainWindow.homePage;
+			 });
         }
 
         #region Grid stuff
@@ -164,14 +167,18 @@ namespace TempoMonkey
                 musicList.Add(selection.name);
             }
 
-            if (_type == "Interactive")
+            if (_type == "Buddy")
             {
-                MainWindow.currentPage = new FreeFormMode(musicAddrList, musicList, "Interactive");
+                MainWindow.currentPage = MainWindow.freeFormPage;
+                ((FreeFormMode)MainWindow.freeFormPage).initBuddyForm( 
+                    ((string)musicAddrList[0]), 
+                    ((string)musicList[0]));
                 MainWindow.isManipulating = true;
             }
-            else if (_type == "Free")
+            else if (_type == "Solo")
             {
-                MainWindow.currentPage = new FreeFormMode(musicAddrList, musicList, "FreeForm");
+                MainWindow.currentPage = MainWindow.freeFormPage;
+                ((FreeFormMode)MainWindow.freeFormPage).initSoloForm(musicAddrList, musicList);
                 MainWindow.isManipulating = true;
             }
             else

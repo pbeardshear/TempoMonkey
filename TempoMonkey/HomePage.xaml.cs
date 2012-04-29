@@ -28,19 +28,15 @@ namespace TempoMonkey
         {
             InitializeComponent();
 			// Create some navigation buttons to wrap our images
-			if (MainWindow.browseMusicPage != null)
-			{
-				MainWindow.browseMusicPage = new BrowseMusic("Free");
-			}
 			soloButton = new NavigationButton(SoloButton, delegate()
 			{
-				return MainWindow.browseMusicPage;
+                return MainWindow.soloPage;
 			});
 			buddyButton = new NavigationButton(BuddyButton, delegate()
 			{
-				return null;
-			});
-
+                ((BrowseMusic)MainWindow.browseMusicPage).initBrowseMusic("Buddy");
+                return MainWindow.browseMusicPage;
+  			});
         }
 
         #region Button Handlers
@@ -54,19 +50,7 @@ namespace TempoMonkey
             MainWindow.Mouse_Leave(sender, e);
         }
 
-        private void learningStudioButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.currentPage = new LearningStudio();
-            NavigationService.Navigate(MainWindow.currentPage);
-        }
-
-        private void browseMusic_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.currentPage = new BrowseMusic("Free");
-            NavigationService.Navigate(MainWindow.currentPage);
         #endregion
-        }
-
 		private void SoloButton_MouseEnter(object sender, MouseEventArgs e)
 		{
 			SoloBackground.Visibility = Visibility.Visible;
