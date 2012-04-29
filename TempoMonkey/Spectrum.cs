@@ -57,9 +57,13 @@ namespace Visualizer
 
 		private void timerTick(object sender, EventArgs e)
 		{
-			// Get the spectrum data from the sampler
-			Sampler.GetFFT(channelData);
-			Update();
+			// Check if the sound is playing, if not stop sampling
+			if (Audio.IsPlaying)
+			{
+				// Get the spectrum data from the sampler
+				Sampler.GetFFT(channelData);
+				Update();
+			}
 		}
 
 		private void Update()

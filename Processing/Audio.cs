@@ -20,6 +20,7 @@ namespace Processing
         public static string CurrentTrack;
         public static int CurrentTrackIndex;
         public static bool IsInitialized = false;
+		public static bool IsPlaying = false;
         #endregion
 
         #region Private variables
@@ -220,6 +221,7 @@ namespace Processing
                 {
                     try
                     {
+						IsPlaying = true;
                         ProcessAudio();
                     }
                     finally
@@ -247,6 +249,7 @@ namespace Processing
             {
                 // Stop seems to work better than _device.Pause() here..., and doesn't reset the track
                 _waveOutDevice.Pause();
+				IsPlaying = false;
             }
         }
 
@@ -263,6 +266,7 @@ namespace Processing
             if (_waveOutDevice.PlaybackState == PlaybackState.Paused)
             {
                 _waveOutDevice.Resume();
+				IsPlaying = true;
             }
         }
 

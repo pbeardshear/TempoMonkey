@@ -24,7 +24,7 @@ namespace TempoMonkey
     /// </summary>
     public partial class SoloPage : Page
     {
-        NavigationButton freeButton, tutorButton;
+        NavigationButton freeButton, tutorButton, backButton;
 
         public SoloPage()
         {
@@ -39,6 +39,11 @@ namespace TempoMonkey
             {
                 return MainWindow.browseTutorialsPage;
             });
+
+            backButton = new NavigationButton(BackButton, delegate()
+            {
+                return MainWindow.homePage;
+            });
         }
 
         private void FreeButton_MouseEnter(object sender, MouseEventArgs e)
@@ -46,21 +51,20 @@ namespace TempoMonkey
             MainWindow.MouseEnter(freeButton);
         }
 
-        private void FreeButton_MouseLeave(object sender, MouseEventArgs e)
-        {
-            MainWindow.Mouse_Leave(sender, e);
-        }
-
         private void TutorButton_MouseEnter(object sender, MouseEventArgs e)
         {
             MainWindow.MouseEnter(tutorButton);
         }
 
-        private void TutorButton_MouseLeave(object sender, MouseEventArgs e)
+        private void Mouse_Leave(object sender, MouseEventArgs e)
         {
             MainWindow.Mouse_Leave(sender, e);
         }
 
+        private void Back_Enter(object sender, MouseEventArgs args)
+        {
+            MainWindow.MouseEnter(backButton);
+        }
 
     }
 }

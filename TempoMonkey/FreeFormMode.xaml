@@ -12,6 +12,7 @@
         <Label Canvas.Left="516" Canvas.Top="171" Name="Volume" Content="VOLUME" Height="46" Width="87" FontSize="20" FontFamily="Bold Art" FontStyle="Normal"/>
         <Label Canvas.Left="516" Canvas.Top="256" Name="Pitch" Content="PITCH" Height="48" Width="98" FontSize="20" FontFamily="Bold Art" FontStyle="Normal"/>
         <Label Canvas.Left="516" Canvas.Top="338" Name="Tempo" Content="TEMPO" Height="50" Width="99" FontSize="20" FontFamily="Bold Art" FontStyle="Normal"/>
+
         <Label Canvas.Top="98" Name="Seek" Content="SEEK BAR" Height="40" Width="94" FontSize="20" FontStyle="Normal" Canvas.Left="355"/>
         <Slider Name="SeekSlider" Canvas.Left="98" Canvas.Top="127" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
         <Slider Name="VolumeSlider" Canvas.Left="486" Canvas.Top="223" Height="28" Width="260" Value="25" Minimum="0" Maximum="100" TickFrequency=".1"/>

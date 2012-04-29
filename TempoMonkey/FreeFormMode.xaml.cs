@@ -103,7 +103,6 @@ namespace TempoMonkey
             // so that a user can navigate between pages that uses music
         }
 
-
         NavigationButton quitButton;
 		public FreeFormMode()
 		{		
@@ -258,7 +257,6 @@ namespace TempoMonkey
 			SetAvatarState(exist, volumeAvatar, exist ? loadedImages["volumeAvatar"] : loadedImages["volumeAvatarDisabled"]);
 		}
 
-
         void volumeTrackingHandler2(bool exist)
         {
             Volume.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
@@ -385,6 +383,16 @@ namespace TempoMonkey
         }
 
 		#endregion
+
+        private void QuitButton_Enter(object sender, MouseEventArgs e)
+        {
+            MainWindow.MouseEnter(quitButton);
+        }
+
+        private void QuitButton_Leave(object sender, MouseEventArgs e)
+        {
+            MainWindow.Mouse_Leave(sender, e);
+        }
 
 	}
 }
