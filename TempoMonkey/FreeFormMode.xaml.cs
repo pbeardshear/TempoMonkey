@@ -17,6 +17,7 @@ using System.Windows.Media.Animation;
 using System.IO;
 using System.Drawing;
 using System.Windows.Threading;
+using slidingMenu;
 using Visualizer;
 
 namespace TempoMonkey
@@ -32,7 +33,8 @@ namespace TempoMonkey
         ArrayList _nameList = new ArrayList();
         string _type;
         Spectrum spectrumVisualizer;
-
+        box leftBox, midBox, rightBox;
+        
         public void initBuddyForm(string address, string name)
         {
             _type = "Buddy";
@@ -72,6 +74,7 @@ namespace TempoMonkey
                 _nameList.Add(song);
             }
 
+
             if (_nameList.Count > 1)
             {
                 currentTrackIndex = 1;
@@ -92,6 +95,56 @@ namespace TempoMonkey
 			freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
 			freePlayer.registerCallBack(freePlayer.leanListener, tempoTrackingHandler, tempoChangeHandler);
 			freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
+
+
+            string path;
+            int top = 400;
+            if (currentTrackIndex > 0)
+            {
+                leftBox = new box(150);
+                mainCanvas.Children.Add(leftBox);
+                path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Album_Art\\" + _nameList[currentTrackIndex - 1] + ".jpg";
+                leftBox.setImage(path);
+                Canvas.SetLeft(leftBox, 400 - 75 - 300);
+                Canvas.SetTop(leftBox, top);
+            }
+            if (currentTrackIndex <= _nameList.Count - 2)
+            {
+                rightBox = new box(150);
+                mainCanvas.Children.Add(rightBox);
+                path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Album_Art\\" + _nameList[currentTrackIndex + 1] + ".jpg";
+                rightBox.setImage(path);
+                Canvas.SetLeft(rightBox, 400 - 75);
+                Canvas.SetTop(rightBox, top);
+            }
+            midBox = new box(150);
+            mainCanvas.Children.Add(midBox);
+            path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Album_Art\\" + _nameList[currentTrackIndex] + ".jpg";
+            midBox.setImage(path);
+            Canvas.SetLeft(midBox, 400 - 75 + 300);
+            Canvas.SetTop(midBox, top);
+
+            updateSongs(0);
+        }
+
+        int offSet = 300;
+        int offSetMid = 300;
+        int pageWidth = 800;
+
+        public void updateSongs(double value)
+        {
+            if (leftBox != null)
+            {
+                Canvas.SetLeft(leftBox, value + pageWidth / 2 + 300 - leftBox.Width / 2);
+            }
+            if (midBox != null)
+            {
+                Canvas.SetLeft(midBox, value + pageWidth / 2 - midBox.Width / 2);
+            }
+            if (rightBox != null)
+            {
+                Canvas.SetLeft(rightBox, value + pageWidth / 2 - 300 - rightBox.Width / 2);
+            }
         }
 
         public void tearDown()
@@ -211,24 +264,38 @@ namespace TempoMonkey
 
 
 		int currentTrackIndex;
+
+        int midPoint = 325;
+        int span = 190;
 		void changeTrackHandler(double value)
 		{
+            Seek.Content = value;
+            updateSongs(value);
 			if (!wasSeeking)
 			{
 				SeekSlider.Value += .05;
 			}
 
-			if (value < 250 && currentTrackIndex != 1 && _nameList.Count > 1)
-			{
-				currentTrackIndex = 1;
-			}
-			else if (value > 450 && currentTrackIndex != 2 && _nameList.Count > 2)
-			{
-				currentTrackIndex = 2;
-			}
-			else if (value >= 250 && value <= 450 && currentTrackIndex != 0)
+			if (value < midPoint - span && currentTrackIndex != 0 && _nameList.Count > 1)
 			{
 				currentTrackIndex = 0;
+                rightBox.unHighlightBox();
+                midBox.unHighlightBox();
+                leftBox.highlightBox();
+			}
+			else if (value > midPoint + span && currentTrackIndex != 2 && _nameList.Count > 2)
+			{
+				currentTrackIndex = 2;
+                leftBox.unHighlightBox();
+                midBox.unHighlightBox(); 
+                rightBox.highlightBox();
+			}
+			else if (value >= midPoint - span && value <= midPoint + span && currentTrackIndex != 1)
+			{
+				currentTrackIndex = 1;
+                leftBox.unHighlightBox();
+                rightBox.unHighlightBox();
+                midBox.highlightBox();
 			}
 			else
 			{

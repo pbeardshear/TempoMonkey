@@ -140,7 +140,7 @@ namespace TempoMonkey
 
         private void addToBox(string name, string address, int rowspot, int colspot) // instantiate a box instance
         {
-            box littleBox = new box(sizeOfBox, this);
+            box littleBox = new box(sizeOfBox);
 
             littleBox.MouseEnter += Mouse_Enter;
             littleBox.MouseLeave += Mouse_Leave;
