@@ -59,7 +59,7 @@ namespace TempoMonkey
         static public Page currentPage;
         public bool mouseOverride = false;
 
-		private int angle = 0;
+		private static int angle = 0;
 		private int tickAmount = 50;
         public static int height;
         public static int width;
@@ -94,6 +94,7 @@ namespace TempoMonkey
                 ((Button)sender).Foreground = lastForegroundColor;
             }
             currentlySelectedObject = null;
+			angle = 0;
         }
 
         private void HandleKeyDownEvent(object sender, KeyEventArgs e)
@@ -155,11 +156,14 @@ namespace TempoMonkey
                             {
                                 ((Button)currentlySelectedObject).PerformClick();
                             }
-                            else if (currentlySelectedObject is NavigationButton)
-                            {
+							else if (currentlySelectedObject is NavigationButton)
+							{
 								((NavigationButton)currentlySelectedObject).Click();
-                                // ((SelectionPage)currentPage).Click();
-                            }
+							}
+							else
+							{
+								((SelectionPage)currentPage).Click();
+							}
 							angle = 0;
 						}
 						else
