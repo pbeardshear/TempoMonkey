@@ -26,9 +26,9 @@
 		<Image Canvas.Left="454" Canvas.Top="12" Height="50" Name="tempoAvatar" Stretch="Fill" Width="50" />
 		<Image Canvas.Left="619" Canvas.Top="12" Height="50" Name="seekAvatar" Stretch="Fill" Width="50" />
         <Image Source="/Resources/Images/tempo_monkey_logo2.png" Stretch="Fill" Canvas.Left="619" Canvas.Top="422" />
-        <Rectangle Fill="#FFF4F4F5" Canvas.ZIndex="1" Name="Border" Height="138" Stroke="Black" Width="602" Visibility="Hidden" Canvas.Left="140" Canvas.Top="190" Opacity="1" />
-        <Button Content="Resume" Name="ResumeButton" Canvas.ZIndex="2" Canvas.Left="200" Canvas.Top="235" Width="152" Height="46" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave"/>
-        <Button Content="Quit" Name="QuitButton" Canvas.ZIndex="2" Canvas.Left="520" Canvas.Top="235" Width="152" Height="46" FontSize="30" Visibility="Hidden"  MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave"/>
+        <Rectangle Fill="#FFF4F4F5" Canvas.ZIndex="1" Name="Border" Height="138" Stroke="Black" Width="602" Visibility="Hidden" Canvas.Left="98" Canvas.Top="193" Opacity="1" />
+        <Button Content="Resume" Name="ResumeButton" Canvas.ZIndex="2" Canvas.Left="161" Canvas.Top="235" Width="152" Height="46" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave"/>
+        <Button Content="Quit" Name="QuitButton" Canvas.ZIndex="2" Canvas.Left="462" Canvas.Top="235" Width="152" Height="46" FontSize="30" Visibility="Hidden"  MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave"/>
 
     </Canvas>
 </Page>
