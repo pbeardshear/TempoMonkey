@@ -144,7 +144,7 @@ namespace TempoMonkey
 
             Timer.Tick += (delegate(object s, EventArgs args)
             {
-                if (!isManipulating)
+                if (!_isManipulating)
 				{
 					if (currentlySelectedObject != null )
 					{
@@ -262,10 +262,25 @@ namespace TempoMonkey
             }
         }
 
-        public static bool isManipulating = false;
+        private static bool _isManipulating = false;
+
+        public static void setManipulating(bool value)
+        {
+            if (value)
+            {
+                System.Windows.Forms.Cursor.Hide();
+                _isManipulating = true;
+            }
+            else
+            {
+                System.Windows.Forms.Cursor.Show();
+                _isManipulating = false;
+            }
+        }
+
         void allFramesReady(object sender, AllFramesReadyEventArgs e)
         {
-            if (currentPage is KinectPage && isManipulating)
+            if (currentPage is KinectPage && _isManipulating)
             {
                 ((KinectPage)currentPage).allFramesReady(sender, e);
             }

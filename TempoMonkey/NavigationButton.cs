@@ -23,17 +23,15 @@ namespace TempoMonkey
         public NavigationButton(UIElement element, DestinationDelegate destination)
         {
             element.MouseEnter += Mouse_Enter;
-            // element.MouseLeave += element_MouseLeave;
+            element.MouseLeave += Mouse_Leave;
             Element = element;
             Destination = destination;
         }
 
-        /*
-        void element_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        void Mouse_Leave(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            throw new NotImplementedException();
+            MainWindow.Mouse_Leave(sender, e);
         }
-*/
 
         void Mouse_Enter(object sender, System.Windows.Input.MouseEventArgs e)
         {

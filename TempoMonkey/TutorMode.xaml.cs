@@ -61,6 +61,11 @@ namespace TempoMonkey
                 return _instructions;
             }
 
+            public static void setIndex(int index)
+            {
+                _tutorialIndex = index;
+            }
+
             public string getName()
             {
                 return _name;
@@ -111,12 +116,15 @@ namespace TempoMonkey
 
         public void showTutorialsFinished()
         {
-            throw new Exception();
+            Border.Visibility = QuitButton.Visibility = Finished.Visibility = System.Windows.Visibility.Visible;
+            MainWindow.setManipulating(false);
+            System.Windows.Forms.Cursor.Show();
+            Timer.Stop();
         }
 
         public void showTutorialChooser(Tutorial tutorial)
         {
-            MainWindow.isManipulating = false;
+            MainWindow.setManipulating(false);
             Next.Visibility = TutorialsButton.Visibility = QuitButton.Visibility = Border.Visibility = System.Windows.Visibility.Visible;
             System.Windows.Forms.Cursor.Show();
         }
@@ -162,8 +170,7 @@ namespace TempoMonkey
 
         public void initTutor(int index)
         {
-
-            MainWindow.isManipulating = true;
+            MainWindow.setManipulating(true);
             Processing.Audio.LoadFile(@"..\..\Resources\Music\Chasing Pavements.mp3");
             Processing.Audio.LoadFile(@"..\..\Resources\Music\Enough To Fly With You.mp3");
             Processing.Audio.Play();
@@ -179,6 +186,7 @@ namespace TempoMonkey
             spectrumVisualizer.RegisterSoundPlayer();
 
             Seek.Content = index;
+            Tutorial.setIndex(index);
             System.Windows.Forms.Cursor.Hide();
 
 
@@ -209,7 +217,8 @@ namespace TempoMonkey
         {
             tutoree = null;
             Timer.Stop();
-            MainWindow.isManipulating = false;
+            MainWindow.setManipulating(false);
+            Border.Visibility = ResumeButton.Visibility = QuitButton.Visibility = System.Windows.Visibility.Hidden;
             // TODO: TEARDOWN MUSIC... unload all files and whatever else that needs to be done
             // so that a user can navigate between pages that uses music
         }
@@ -314,10 +323,10 @@ namespace TempoMonkey
                 return;
             }
 
-            if (Tutorial.getCurrentTutorial() == pitch)
+            if (Tutorial.getCurrentTutorial() == switch_tracks)
             {
                 totalTrackChange++;
-                if (totalTrackChange >= 2){
+                if (totalTrackChange >= 3){
                     doneSwitchTrack = true;
                 }
             }
@@ -337,7 +346,7 @@ namespace TempoMonkey
             if (Tutorial.getCurrentTutorial() == volume)
             {
                 totalVolumeChange += Math.Abs(change);
-                if (totalVolumeChange > 10)
+                if (totalVolumeChange > 100)
                 {
                     doneVolume = true;
                 }
@@ -359,7 +368,7 @@ namespace TempoMonkey
             {
                 totalTempoChange += Math.Abs(change);
                 Seek.Content = totalTempoChange;
-                if (totalTempoChange > 10)
+                if (totalTempoChange > 150)
                 {
                     doneTempo = true;
                 }
@@ -395,7 +404,7 @@ namespace TempoMonkey
                 if (wasSeeking)
                 {
                     Processing.Audio.Seek(SeekSlider.Value);
-                    if (totalSeekingChange >= 10)
+                    if (totalSeekingChange >= 100)
                     {
                         doneSeeking = true;
                     }
@@ -412,7 +421,8 @@ namespace TempoMonkey
             if (Tutorial.getCurrentTutorial() == pitch)
             {
                 totalPitchChange += Math.Abs(change);
-                if (totalPitchChange > 10)
+                Seek.Content = totalPitchChange;
+                if (totalPitchChange > 50)
                 {
                     donePitch = true;
                 }
@@ -429,11 +439,9 @@ namespace TempoMonkey
         {
             isPaused = false;
             Processing.Audio.Resume();
-            Border.Visibility = System.Windows.Visibility.Hidden;
+            Border.Visibility = ResumeButton.Visibility = QuitButton.Visibility = System.Windows.Visibility.Hidden;
             mainCanvas.Background = new SolidColorBrush(Colors.White);
-            ResumeButton.Visibility = System.Windows.Visibility.Hidden;
-            QuitButton.Visibility = System.Windows.Visibility.Hidden;
-            MainWindow.isManipulating = true;
+            MainWindow.setManipulating(true);
         }
 
         public void Pause()
@@ -444,7 +452,7 @@ namespace TempoMonkey
             mainCanvas.Background = new SolidColorBrush(Colors.Gray);
             ResumeButton.Visibility = System.Windows.Visibility.Visible;
             QuitButton.Visibility = System.Windows.Visibility.Visible;
-            MainWindow.isManipulating = false;
+            MainWindow.setManipulating(false);       
         }
 
         #endregion
@@ -460,12 +468,6 @@ namespace TempoMonkey
             MainWindow.Mouse_Leave(sender, e);
         }
 
-        void Quit_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.isManipulating = false;
-            MainWindow.currentPage = new HomePage();
-            NavigationService.Navigate(MainWindow.currentPage);
-        }
 
         void Resume_Click(object sender, RoutedEventArgs e)
         {
@@ -474,7 +476,7 @@ namespace TempoMonkey
 
         void Tutorials_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.isManipulating = false;
+            MainWindow.setManipulating(false);
             MainWindow.currentPage = new BrowseTutorials();
             mainCanvas.Background = new SolidColorBrush(Colors.White);
             NavigationService.Navigate(MainWindow.currentPage);
@@ -483,9 +485,8 @@ namespace TempoMonkey
         void Next_Click(object sender, RoutedEventArgs e)
         {
             Next.Visibility = TutorialsButton.Visibility = QuitButton.Visibility = Border.Visibility = System.Windows.Visibility.Hidden;
-            MainWindow.isManipulating = true;
+            MainWindow.setManipulating(true);
             mainCanvas.Background = new SolidColorBrush(Colors.White);
-            System.Windows.Forms.Cursor.Hide();
             playTutorial(Tutorial.getCurrentTutorial());
         }
 

@@ -349,8 +349,7 @@ namespace TempoMonkey
             mainCanvas.Background = new SolidColorBrush(Colors.White);
 			ResumeButton.Visibility = System.Windows.Visibility.Hidden;
 			QuitButton.Visibility = System.Windows.Visibility.Hidden;
-			MainWindow.isManipulating = true;
-            System.Windows.Forms.Cursor.Hide();
+            MainWindow.setManipulating(true);
 		}
 
 		public void Pause()
@@ -361,22 +360,12 @@ namespace TempoMonkey
 			Border.Visibility = System.Windows.Visibility.Visible;
 			ResumeButton.Visibility = System.Windows.Visibility.Visible;
 			QuitButton.Visibility = System.Windows.Visibility.Visible;
-			MainWindow.isManipulating = false;
-            System.Windows.Forms.Cursor.Show();
+            MainWindow.setManipulating(false);;
 		}
 
 		#endregion
 
 		#region Navigation
-		void Mouse_Enter(object sender, MouseEventArgs e)
-		{
-			MainWindow.Mouse_Enter(sender, e);
-		}
-
-		void Mouse_Leave(object sender, MouseEventArgs e)
-		{
-			MainWindow.Mouse_Leave(sender, e);
-		}
 
         private void ResumeButton_Click(object sender, RoutedEventArgs e)
         {

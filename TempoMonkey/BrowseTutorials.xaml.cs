@@ -127,11 +127,6 @@ namespace TempoMonkey
             MainWindow.Mouse_Leave(sender, e);
         }
 
-        private void Back_Enter(object sender, MouseEventArgs e)
-        {
-            MainWindow.MouseEnter(backButton);
-        }
-
         #endregion
 
 

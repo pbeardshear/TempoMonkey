@@ -9,7 +9,7 @@
     <Canvas Name="mainCanvas" Margin="0,6,0,-6">
         <!-- Media Element -->
         <MediaElement Name="myMediaElement" 
-            Width="450" Height="250" LoadedBehavior="Manual" UnloadedBehavior="Stop" MediaEnded="Media_Ended"  Stretch="Fill" Canvas.Left="-1" Canvas.Top="228"/>
+            Width="450" Height="250" LoadedBehavior="Manual" UnloadedBehavior="Manual" MediaEnded="Media_Ended"  Stretch="Fill" Canvas.Left="-1" Canvas.Top="228"/>
         <!-- End of Media Element-->
 
         
@@ -37,8 +37,9 @@
         <Rectangle Fill="#FFF4F4F5" Name="Border" Height="314" Canvas.Left="93" Stroke="Black" Canvas.Top="175" Width="602" Visibility="Hidden"/>
         <Button Content="Resume" Name="ResumeButton" Canvas.Left="290" Canvas.Top="279" Width="174" Height="47" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Resume_Click"/>
         <Button Content="Tutorial Selection" Name="TutorialsButton" Canvas.Left="397" Canvas.Top="365" Width="242" Height="46" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Tutorials_Click"/>
-        <Button Content="Main Menu" Name="QuitButton" Canvas.Left="161" Canvas.Top="365" Width="182" Height="46" FontSize="30" Visibility="Hidden"  MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Quit_Click" RenderTransformOrigin="-0.428,1.63"/>
+        <Button Content="Main Menu" Name="QuitButton" Canvas.Left="161" Canvas.Top="365" Width="182" Height="46" FontSize="30" Visibility="Hidden"  MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" RenderTransformOrigin="-0.428,1.63"/>
         <Button Content="Next Tutorial" Name="Next" Canvas.Left="294" Canvas.Top="279" Width="204" Height="47" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Next_Click"/>
+        <Label Content="Congrats! You have finished the tutorial!" Name="Finished" FontSize="25" Canvas.Left="165" Canvas.Top="227" Height="68" Width="565" Visibility="Hidden"></Label>
         <!-- End of Pause Items -->
     </Canvas>
 </Page>

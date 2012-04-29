@@ -39,43 +39,30 @@ namespace TempoMonkey
         }
 
         #region Button Handlers
-        private void Mouse_Enter(object sender, MouseEventArgs e)
-        {
-            MainWindow.Mouse_Enter(sender, e);
-        }
-
-        private void Mouse_Leave(object sender, MouseEventArgs e)
-        {
-            MainWindow.Mouse_Leave(sender, e);
-        }
 
         #endregion
 		private void SoloButton_MouseEnter(object sender, MouseEventArgs e)
 		{
 			SoloBackground.Visibility = Visibility.Visible;
 			SoloButton.Opacity = 0.0;
-			MainWindow.MouseEnter(soloButton);
 		}
 
 		private void SoloButton_MouseLeave(object sender, MouseEventArgs e)
 		{
 			SoloBackground.Visibility = Visibility.Hidden;
 			SoloButton.Opacity = 1.0;
-			MainWindow.Mouse_Leave(sender, e);
 		}
 
 		private void BuddyButton_MouseEnter(object sender, MouseEventArgs e)
 		{
 			BuddyBackground.Visibility = Visibility.Visible;
 			BuddyButton.Opacity = 0.0;
-			MainWindow.MouseEnter(buddyButton);
 		}
 
 		private void BuddyButton_MouseLeave(object sender, MouseEventArgs e)
 		{
 			BuddyBackground.Visibility = Visibility.Hidden;
 			BuddyButton.Opacity = 1.0;
-			MainWindow.Mouse_Leave(sender, e);
 		}
     }
 }
