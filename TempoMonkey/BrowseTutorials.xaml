@@ -9,6 +9,6 @@
 
     <Canvas Name="mainCanvas">
         <Label Content="Choose a Lesson" Height="86" HorizontalAlignment="Left" Margin="187,45,0,0" Name="Title" VerticalAlignment="Top" Width="424" HorizontalContentAlignment="Center" FontSize="45" FontFamily="Bold Art" FontWeight="Bold" Foreground="White" />
-        <Image Source="/Resources/Images/back-button.png" Canvas.Left="72" Canvas.Top="36" Name="BackButton" MouseEnter="Back_Enter" MouseLeave="Mouse_Leave" />
+        <Image Source="/Resources/Images/back-button.png" Canvas.Left="72" Canvas.Top="36" Name="BackButton"/>
     </Canvas>
 </Page>

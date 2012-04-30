@@ -20,13 +20,12 @@ namespace slidingMenu
     /// </summary>
     public partial class box : UserControl
     {
-        Page myPage;
 
-        public box(int sizeOfBox, Page page)
+        public box(int sizeOfBox)
         {
             InitializeComponent();
-            myPage = page;          
             size = sizeOfBox;
+            this.Width = this.Height = sizeOfBox;
             Highlight.Visibility = Visibility.Collapsed;
         }
 

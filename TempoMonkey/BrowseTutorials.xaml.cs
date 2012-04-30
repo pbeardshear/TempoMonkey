@@ -89,7 +89,7 @@ namespace TempoMonkey
 
         private void addToBox(string name, string address, int rowspot, int colspot, int index) // instantiate a box instance
         {
-            box littleBox = new box(sizeOfBox, this);
+            box littleBox = new box(sizeOfBox);
 
             littleBox.index = index;
             littleBox.MouseEnter += Mouse_Enter;
@@ -125,11 +125,6 @@ namespace TempoMonkey
         void Mouse_Leave(object sender, MouseEventArgs e)
         {
             MainWindow.Mouse_Leave(sender, e);
-        }
-
-        private void Back_Enter(object sender, MouseEventArgs e)
-        {
-            MainWindow.MouseEnter(backButton);
         }
 
         #endregion
