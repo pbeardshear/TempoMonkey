@@ -6,7 +6,7 @@
              Height="50" Width="250">
     <Canvas Name="rectCanvas">
         <Rectangle Height="50" Width="249" Fill="LightSlateGray"  Stroke="Gray" StrokeThickness="8"></Rectangle>
-        <Rectangle Name="Bar" Height="85" Width="20" Fill="Black" Canvas.Left="28" Canvas.Top="-17"></Rectangle>
+        <Rectangle Name="Bar" Height="50" Width="21" Fill="Black"/>
         <Rectangle Visibility="Hidden" Name="Border" Stroke="Green" StrokeThickness="2" Height="32" Width="85" Canvas.Left="169" Canvas.Top="55"></Rectangle>
         <Label Content="Test Content" Name="SliderName" Canvas.Left="169" Canvas.Top="55" Height="28" Width="80"></Label>
     </Canvas>

@@ -38,12 +38,9 @@ namespace slidingMenu
         {
             set
             {
-                _value = value;
-                double percent = (_value / (_stop - _start));
-                if (percent >= 0.0 && percent <= 1.0)
-                {
-                    Canvas.SetLeft(Bar, percent * this.Width );
-                }
+                _value = Math.Min(_stop, Math.Max(_start, value));
+                double percent = ((_value-_start) / (_stop - _start));
+                Bar.Width = percent * this.Width;
             }
             get
             {

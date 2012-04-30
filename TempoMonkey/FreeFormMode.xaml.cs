@@ -33,7 +33,7 @@ namespace TempoMonkey
         string _type;
         Spectrum spectrumVisualizer;
         box leftBox, midBox, rightBox;
-        mySlider VolumeSlider, PitchSlider, TempoSlider;
+        public mySlider VolumeSlider, PitchSlider, TempoSlider;
 
         /*
         <Slider Name="VolumeSlider" Canvas.Left="486" Canvas.Top="223" Height="28" Width="260" Value="25" Minimum="0" Maximum="100" TickFrequency=".1"/>
@@ -58,7 +58,6 @@ namespace TempoMonkey
             mainCanvas.Children.Add(VolumeSlider);
             mainCanvas.Children.Add(PitchSlider);
             mainCanvas.Children.Add(TempoSlider);
-
         }
 
         public void initBuddyForm(string address, string name)
@@ -450,5 +449,7 @@ namespace TempoMonkey
 
 		#endregion
 
-	}
+
+
+    }
 }
