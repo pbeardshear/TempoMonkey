@@ -9,18 +9,9 @@
 
     <Canvas Name="mainCanvas" Margin="0,6,0,-6">
 
-        <Label Canvas.Left="516" Canvas.Top="171" Name="Volume" Content="VOLUME" Height="46" Width="87" FontSize="20" FontFamily="Bold Art" FontStyle="Normal"/>
-        <Label Canvas.Left="516" Canvas.Top="256" Name="Pitch" Content="PITCH" Height="48" Width="98" FontSize="20" FontFamily="Bold Art" FontStyle="Normal"/>
-        <Label Canvas.Left="516" Canvas.Top="338" Name="Tempo" Content="TEMPO" Height="50" Width="99" FontSize="20" FontFamily="Bold Art" FontStyle="Normal"/>
-
+        
         <Label Canvas.Top="98" Name="Seek" Content="SEEK BAR" Height="40" Width="94" FontSize="20" FontStyle="Normal" Canvas.Left="355"/>
         <Slider Name="SeekSlider" Canvas.Left="98" Canvas.Top="127" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
-        <Slider Name="VolumeSlider" Canvas.Left="486" Canvas.Top="223" Height="28" Width="260" Value="25" Minimum="0" Maximum="100" TickFrequency=".1"/>
-        <Slider Name="PitchSlider" Canvas.Left="486" Canvas.Top="310" Height="28" Width="260" Value="50" Minimum="0" Maximum="100" TickFrequency=".1"/>
-        <Slider Name="TempoSlider" Canvas.Left="486" Canvas.Top="388" Height="28" Width="260" Value="100" Minimum="40" Maximum="200" TickFrequency=".1"/>
-        <Border Name="TempoFocus" Visibility="Hidden" BorderBrush="#E84AAF" BorderThickness="3" Height="51" Canvas.Left="506" Canvas.Top="337" Width="94"/>
-        <Border Name="PitchFocus" Visibility="Hidden" BorderBrush="#5CC6D2" BorderThickness="3" Height="48" Canvas.Left="506" Canvas.Top="256" Width="81"/>
-        <Border Name="VolumeFocus" Visibility="Hidden" BorderBrush="#CDE431" BorderThickness="3" Height="53" Canvas.Left="506" Canvas.Top="171" Width="117"/>
         <Label Canvas.Left="98" Canvas.Top="171" Name="Track" Content="" Height="46" Width="351" FontSize="20"  FontStyle="Normal"/>
 		<Image Canvas.Left="92" Canvas.Top="12" Height="50" Name="volumeAvatar" Stretch="Fill" Width="50" />
 		<Image Canvas.Left="263" Canvas.Top="12" Height="50" Name="pitchAvatar" Stretch="Fill" Width="50" />

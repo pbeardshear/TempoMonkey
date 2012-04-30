@@ -8,9 +8,9 @@
 	  Title="TutorMode" xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers">
 
         <Canvas Name="mainCanvas">
-            <Image Source="/Resources/Images/back-button.png" Canvas.Left="72" Canvas.Top="36" Name="BackButton" MouseEnter="Back_Enter" MouseLeave="Mouse_Leave" />
-            <Button Content="Free" Name="FreeButton" Canvas.Left="518" Canvas.Top="413" Width="109" Height="45"  MouseEnter="FreeButton_MouseEnter" MouseLeave="Mouse_Leave"/>
-            <Button Content="Tutor" Name="TutorButton" Canvas.Left="286" Canvas.Top="413" Width="108" Height="45"  MouseEnter="TutorButton_MouseEnter" MouseLeave="Mouse_Leave"/>
+            <Image Source="/Resources/Images/back-button.png" Canvas.Left="72" Canvas.Top="36" Name="BackButton" />
+            <Button Content="Free" Name="FreeButton" Canvas.Left="518" Canvas.Top="413" Width="109" Height="45"  />
+            <Button Content="Tutor" Name="TutorButton" Canvas.Left="286" Canvas.Top="413" Width="108" Height="45"  />
         </Canvas>
 
 </Page>

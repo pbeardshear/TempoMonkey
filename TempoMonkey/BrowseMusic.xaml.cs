@@ -44,8 +44,8 @@ namespace TempoMonkey
 			// Create navigation buttons
 			backButton = new NavigationButton(BackButton, delegate()
 			{
-                mySelections = new List<box>();
-			    return MainWindow.soloPage;
+                tearDown();
+                return MainWindow.soloPage;
 			});
             
             doneButton = new NavigationButton(DoneButton, delegate(){
@@ -82,15 +82,19 @@ namespace TempoMonkey
                     {
                         throw new Exception();
                     }
-
-                    foreach (box selection in mySelections)
-                    {
-                        selection.unHighlightBox();
-                    }
-                    mySelections = new List<box>();
+                    tearDown();
                     return MainWindow.freeFormPage;
                 }
             });
+        }
+
+        public void tearDown()
+        {
+            foreach (box selection in mySelections)
+            {
+                selection.unHighlightBox();
+            }
+            mySelections = new List<box>();
         }
 
         #region Grid stuff
@@ -192,10 +196,6 @@ namespace TempoMonkey
         }
 
         #region Mouse Events
-		private void Back_Enter(object sender, MouseEventArgs args)
-		{
-			MainWindow.MouseEnter(backButton);
-		}
 
         private void Mouse_Enter(object sender, MouseEventArgs e)
         {
@@ -205,11 +205,6 @@ namespace TempoMonkey
         private void Mouse_Leave(object sender, MouseEventArgs e)
         {
             MainWindow.Mouse_Leave(sender, e);
-        }
-
-        private void Done_Enter(object sender, MouseEventArgs e)
-        {
-            MainWindow.MouseEnter(doneButton);
         }
 
         #endregion

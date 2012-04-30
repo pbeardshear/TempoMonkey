@@ -27,23 +27,50 @@ namespace TempoMonkey
 	/// </summary>
     public partial class FreeFormMode : Page, KinectPage
 	{
-		BrushConverter bc = new BrushConverter();
         KinectGesturePlayer freePlayer, freePlayer2;
 		bool isPaused = false;
         ArrayList _nameList = new ArrayList();
         string _type;
         Spectrum spectrumVisualizer;
         box leftBox, midBox, rightBox;
-        
+        mySlider VolumeSlider, PitchSlider, TempoSlider;
+
+        /*
+        <Slider Name="VolumeSlider" Canvas.Left="486" Canvas.Top="223" Height="28" Width="260" Value="25" Minimum="0" Maximum="100" TickFrequency=".1"/>
+        <Slider Name="PitchSlider" Canvas.Left="486" Canvas.Top="310" Height="28" Width="260" Value="50" Minimum="0" Maximum="100" TickFrequency=".1"/>
+        <Slider Name="TempoSlider" Canvas.Left="486" Canvas.Top="388" Height="28" Width="260" Value="100" Minimum="40" Maximum="200" TickFrequency=".1"/>
+         * */
+
+        public void initSliders()
+        {
+            VolumeSlider = new mySlider("Volume", 10, 100, 25, 250);
+            PitchSlider = new mySlider("Pitch", 0, 100, 50, 250);
+            TempoSlider = new mySlider("Tempo", 40, 200, 100, 250);
+
+            Canvas.SetLeft(VolumeSlider, 450);
+            Canvas.SetLeft(PitchSlider, 450);
+            Canvas.SetLeft(TempoSlider, 450);
+
+            Canvas.SetTop(VolumeSlider, 200);
+            Canvas.SetTop(PitchSlider, 300);
+            Canvas.SetTop(TempoSlider, 400);
+
+            mainCanvas.Children.Add(VolumeSlider);
+            mainCanvas.Children.Add(PitchSlider);
+            mainCanvas.Children.Add(TempoSlider);
+
+        }
+
         public void initBuddyForm(string address, string name)
         {
+            initSliders();
             _type = "Buddy";
             Processing.Audio.LoadFile(address);
             _nameList.Add(name);
             currentTrackIndex = 0;
             System.Windows.Forms.Cursor.Hide();
             Processing.Audio.Play();
-            Spectrum spectrumVisualizer = new Spectrum(mainCanvas);
+            spectrumVisualizer = new Spectrum(mainCanvas);
             spectrumVisualizer.RegisterSoundPlayer();
 
             Track.Content = _nameList[currentTrackIndex];
@@ -62,6 +89,7 @@ namespace TempoMonkey
         }
 
         public void initSoloForm(ArrayList addrList, ArrayList nameList){
+            initSliders();
 			// Load the audio files
             _type = "Solo";
 			foreach (string uri in addrList)
@@ -102,7 +130,7 @@ namespace TempoMonkey
             if (currentTrackIndex > 0)
             {
                 leftBox = new box(150);
-                mainCanvas.Children.Add(leftBox);
+                //mainCanvas.Children.Add(leftBox);
                 path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Album_Art\\" + _nameList[currentTrackIndex - 1] + ".jpg";
                 leftBox.setImage(path);
                 Canvas.SetLeft(leftBox, 400 - 75 - 300);
@@ -111,14 +139,14 @@ namespace TempoMonkey
             if (currentTrackIndex <= _nameList.Count - 2)
             {
                 rightBox = new box(150);
-                mainCanvas.Children.Add(rightBox);
+                //mainCanvas.Children.Add(rightBox);
                 path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Album_Art\\" + _nameList[currentTrackIndex + 1] + ".jpg";
                 rightBox.setImage(path);
                 Canvas.SetLeft(rightBox, 400 - 75);
                 Canvas.SetTop(rightBox, top);
             }
             midBox = new box(150);
-            mainCanvas.Children.Add(midBox);
+            //mainCanvas.Children.Add(midBox);
             path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Album_Art\\" + _nameList[currentTrackIndex] + ".jpg";
             midBox.setImage(path);
             Canvas.SetLeft(midBox, 400 - 75 + 300);
@@ -152,6 +180,9 @@ namespace TempoMonkey
             spectrumVisualizer = null;
             freePlayer = null;
             freePlayer2 = null;
+            VolumeSlider = null;
+            PitchSlider = null;
+            TempoSlider = null;
             // TODO: TEARDOWN MUSIC... unload all files and whatever else that needs to be done
             // so that a user can navigate between pages that uses music
 			Processing.Audio.End();
@@ -316,23 +347,15 @@ namespace TempoMonkey
 			Processing.Audio.ChangeVolume(VolumeSlider.Value);
 		}
 
-
 		void volumeTrackingHandler(bool exist)
 		{
-			Volume.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
-            VolumeFocus.BorderBrush = bc.ConvertFromString("Green") as System.Windows.Media.Brush;
-			VolumeFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+            VolumeSlider.player1Exists = exist;
 			SetAvatarState(exist, volumeAvatar, exist ? loadedImages["volumeAvatar"] : loadedImages["volumeAvatarDisabled"]);
 		}
 
         void volumeTrackingHandler2(bool exist)
         {
-            Volume.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
-            if (exist)
-            {
-                VolumeFocus.BorderBrush = bc.ConvertFromString("Blue") as System.Windows.Media.Brush;
-                VolumeFocus.Visibility = System.Windows.Visibility.Visible;
-            }
+            VolumeSlider.player2Exists = exist;
         }
 
 		void tempoChangeHandler(double change)
@@ -344,31 +367,25 @@ namespace TempoMonkey
 
 		void tempoTrackingHandler(bool exist)
 		{
-			Tempo.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
-            TempoFocus.BorderBrush = bc.ConvertFromString("Green") as System.Windows.Media.Brush;
-			TempoFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+            TempoSlider.player1Exists = exist;
 			SetAvatarState(exist, tempoAvatar, exist ? loadedImages["tempoAvatar"] : loadedImages["tempoAvatarDisabled"]);
 		}
 
 
         void tempoTrackingHandler2(bool exist)
         {
-            Tempo.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
-            if (exist)
-            {
-                TempoFocus.BorderBrush = bc.ConvertFromString("Blue") as System.Windows.Media.Brush;
-                TempoFocus.Visibility = System.Windows.Visibility.Visible;
-            }
+            TempoSlider.player2Exists = exist;
+        }
+
+        void pitchTrackingHandler(bool exist)
+        {
+            PitchSlider.player1Exists = exist; 
+            SetAvatarState(exist, pitchAvatar, exist ? loadedImages["pitchAvatar"] : loadedImages["pitchAvatarDisabled"]);
         }
 
         void pitchTrackingHandler2(bool exist)
         {
-            Pitch.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
-            if (exist)
-            {
-                PitchFocus.BorderBrush = bc.ConvertFromString("Blue") as System.Windows.Media.Brush;
-                PitchFocus.Visibility = System.Windows.Visibility.Visible;
-            }
+            PitchSlider.player2Exists = exist; 
         }
 
 		bool wasSeeking = false;
@@ -399,14 +416,6 @@ namespace TempoMonkey
 		{
 			PitchSlider.Value -= change * 3;
 			Processing.Audio.ChangePitch(PitchSlider.Value);
-
-		}
-
-		void pitchTrackingHandler(bool exist)
-		{
-			Pitch.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
-			PitchFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
-            SetAvatarState(exist, pitchAvatar, exist ? loadedImages["pitchAvatar"] : loadedImages["pitchAvatarDisabled"]);
 		}
 
 		public void Resume()

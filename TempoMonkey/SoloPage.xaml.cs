@@ -46,6 +46,7 @@ namespace TempoMonkey
             });
         }
 
+        /*
         private void FreeButton_MouseEnter(object sender, MouseEventArgs e)
         {
             MainWindow.MouseEnter(freeButton);
@@ -65,6 +66,7 @@ namespace TempoMonkey
         {
             MainWindow.MouseEnter(backButton);
         }
+        */
 
     }
 }

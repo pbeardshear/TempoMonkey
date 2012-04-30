@@ -8,9 +8,9 @@
 	Title="BrowseMusic">
 
     <Canvas Name="mainCanvas">
-		<Image Source="/Resources/Images/back-button.png" Canvas.Left="72" Canvas.Top="36" Name="BackButton" MouseEnter="Back_Enter" MouseLeave="Mouse_Leave" />
+		<Image Source="/Resources/Images/back-button.png" Canvas.Left="72" Canvas.Top="36" Name="BackButton"/>
         <Label Content="SELECT SONGS" Height="107" HorizontalContentAlignment="Center" Margin="225,45,0,0" Name="Title" VerticalAlignment="Top" Width="362" FontSize="45" FontFamily="Bold Art" FontWeight="Bold" Foreground="White" Canvas.Left="0" Canvas.Top="-31" />
-        <Button Content="DONE" Height="66" Name="DoneButton" Width="101" Foreground="White" Background="Black" FontFamily="Bold Art" FontWeight="Bold" FontSize="20" MouseEnter="Done_Enter" MouseLeave="Mouse_Leave" Canvas.Left="1100" Canvas.Top="36" />
+        <Button Content="DONE" Height="66" Name="DoneButton" Width="101" Foreground="White" Background="Black" FontFamily="Bold Art" FontWeight="Bold" FontSize="20" Canvas.Left="1100" Canvas.Top="36" />
         <Label Content="" Height="107" HorizontalContentAlignment="Center" Name="Message" VerticalAlignment="Top" Width="362" FontSize="45" FontFamily="Bold Art" FontWeight="Bold" Canvas.Left="310" Canvas.Top="46" />
 
     </Canvas>
