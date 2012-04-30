@@ -23,8 +23,6 @@ using slidingMenu;
 using Visualizer;
 using Visualizer.Timeline;
 using System.ComponentModel;
-using NAudio;
-using NAudio.Wave;
 
 namespace System.Windows.Controls
 {
