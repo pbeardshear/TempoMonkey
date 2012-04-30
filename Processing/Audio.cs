@@ -7,7 +7,6 @@ using NAudio.Wave;
 using System.IO;
 using System.Diagnostics;
 using System.Threading;
-using Visualizer;
 
 namespace Processing
 {

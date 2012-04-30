@@ -11,6 +11,6 @@
             <my:KinectSensorChooser Height="203" Name="kinectSensorChooser1" Width="428" Canvas.Left="427" Canvas.Top="194" Visibility="Hidden" />
             <Frame Canvas.Left="0" Canvas.Top="0" Height="720" Name="frame" Width="1280" ContentRendered="myFrame_ContentRendered"/>
 			<Rectangle Canvas.Left="-4" Canvas.Top="138" Height="5" Name="rectangle1" Width="1288" Fill="#A60000" StrokeThickness="0" />
-		</Canvas>
+        </Canvas>
     </Grid>
 </Window>

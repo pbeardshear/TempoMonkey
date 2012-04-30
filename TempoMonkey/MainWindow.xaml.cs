@@ -21,6 +21,10 @@ using System.Threading;
 using System.Windows.Threading;
 using slidingMenu;
 using Visualizer;
+using Visualizer.Timeline;
+using System.ComponentModel;
+using NAudio;
+using NAudio.Wave;
 
 namespace System.Windows.Controls
 {
@@ -211,8 +215,8 @@ namespace TempoMonkey
             Timer.Start();
             AddHandler(Keyboard.KeyDownEvent, (KeyEventHandler)HandleKeyDownEvent);
             AddHandler(Keyboard.KeyUpEvent, (KeyEventHandler)HandleKeyUpEvent);
-
-			// System.Windows.Resources.StreamResourceInfo info = Application.GetResourceStream(new Uri("/TempoMonkey;/Resources/hand.cur", UriKind.Relative));
+			
+			// Set the cursor to a hand image
 			this.Cursor = new Cursor(new System.IO.MemoryStream(Properties.Resources.hand));
         }
 
