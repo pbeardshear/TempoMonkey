@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using NAudio.Dsp;
 
-namespace Visualizer
+namespace Processing
 {
 	public class Sampler
 	{
@@ -13,6 +13,13 @@ namespace Visualizer
 		private static int channelPosition;
 		private static int binaryExponentiation;
 		private static int bufferSize;
+		#endregion
+
+		#region Public Accessors
+		public static float LeftMax = float.MinValue;
+		public static float LeftMin = float.MaxValue;
+		public static float RightMax = float.MinValue;
+		public static float RightMin = float.MaxValue;
 		#endregion
 
 		#region Initialization
@@ -29,7 +36,6 @@ namespace Visualizer
 		}
 		#endregion
 
-
 		/// <summary>
 		/// Add a sample to be processed
 		/// </summary>
@@ -37,9 +43,22 @@ namespace Visualizer
 		/// <param name="rightValue"></param>
 		public static void Add(float leftValue, float rightValue)
 		{
+			if (channelPosition == 0)
+			{
+				LeftMax = float.MinValue;
+				RightMax = float.MinValue;
+				LeftMin = float.MaxValue;
+				RightMin = float.MaxValue;
+			}
+
 			channelData[channelPosition].X = (leftValue + rightValue) / 2.0f;	// Real
 			channelData[channelPosition].Y = 0.0f;	// Imaginary
 			channelPosition++;
+
+			LeftMax = Math.Max(LeftMax, leftValue);
+			LeftMin = Math.Min(LeftMin, leftValue);
+			RightMax = Math.Max(RightMax, rightValue);
+			RightMin = Math.Min(RightMin, rightValue);
 
 			// Reset the channel position if we are over the length
 			// Alternatively, we could just stop sampling and not repeat

@@ -1,5 +1,5 @@
 ﻿// Util class
-namespace Visualizer
+namespace Processing
 {
 	/// <summary>
 	/// The various FFT dataset sizes that can be used for processing. Note that
