@@ -152,19 +152,20 @@ namespace Visualizer.Timeline
 		{
 			// Draw the path object into the container
 			PathFigure figure = new PathFigure();
-			figure.StartPoint = new System.Windows.Point(40, 400);
+			double yOffset = Container.Height / 2;
+			figure.StartPoint = new System.Windows.Point(0, yOffset);
 			double thickness = 1000.0 / WaveformData.Length;
 			double x = 0;
 
 			PolyLineSegment leftSegment = new PolyLineSegment();
 			PolyLineSegment rightSegment = new PolyLineSegment();
-			leftSegment.Points.Add(new System.Windows.Point(40, 400));
-			rightSegment.Points.Add(new System.Windows.Point(40, 400));
+			leftSegment.Points.Add(new System.Windows.Point(0, yOffset));
+			rightSegment.Points.Add(new System.Windows.Point(0, yOffset));
 			for (int i = 0; i < WaveformData.Length; i += 2)
 			{
 				x = (i / 2) * thickness;
-				leftSegment.Points.Add(new System.Windows.Point(40 + x, 400 + (WaveformData[i] * 25)));
-				rightSegment.Points.Add(new System.Windows.Point(40 + x, 400 - (WaveformData[i] * 25)));
+				leftSegment.Points.Add(new System.Windows.Point(x, yOffset + (WaveformData[i] * 25)));
+				rightSegment.Points.Add(new System.Windows.Point(x, yOffset - (WaveformData[i] * 25)));
 			}
 			figure.Segments.Add(leftSegment);
 			figure.Segments.Add(rightSegment);
