@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="800"
+      d:DesignHeight="720" d:DesignWidth="1280"
 	  Title="TutorMode" xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers">
     <Canvas Name="mainCanvas" Margin="0,6,0,-6">
         <!-- Media Element -->
@@ -14,7 +14,7 @@
 
         
         <!-- Debugger -->
-        <Button Content="Task Finished(Debuggin Purposes Only)" Name="Debug" Canvas.Left="526" Canvas.Top="494" Width="204" Height="47" FontSize="30" Visibility="Visible" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Debug_Click"/>
+        <Button Content="Task Finished(Debuggin Purposes Only)" Name="Debug" Canvas.Left="926" Canvas.Top="494" Width="204" Height="47" FontSize="30" Visibility="Visible" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Debug_Click"/>
         <!-- End of Debugger -->
         
         <!-- Controls -->
@@ -22,7 +22,7 @@
         <Label Canvas.Left="470" Canvas.Top="318" Name="Pitch" Content="Pitch" Height="38" Width="98" FontSize="20"  FontStyle="Normal"/>
         <Label Canvas.Left="470" Canvas.Top="400" Name="Tempo" Content="Tempo" Height="39" Width="99" FontSize="20"  FontStyle="Normal"/>
         <Label Canvas.Top="10" Name="Seek" Content="Seek Bar" Height="40" Width="94" FontSize="20" FontStyle="Normal" Canvas.Left="294"/>
-        <Slider Name="SeekSlider" Canvas.Left="98" Canvas.Top="55" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
+        <Slider Name="SeekSlider" Canvas.Left="268" Canvas.Top="56" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
         <Slider Name="VolumeSlider" Canvas.Left="440" Canvas.Top="285" Height="28" Width="260" Value="25" Minimum="0" Maximum="100" TickFrequency=".1"/>
         <Slider Name="PitchSlider" Canvas.Left="440" Canvas.Top="372" Height="28" Width="260" Value="50" Minimum="0" Maximum="100" TickFrequency=".1"/>
         <Slider Name="TempoSlider" Canvas.Left="440" Canvas.Top="450" Height="28" Width="260" Value="100" Minimum="10" Maximum="200" TickFrequency=".1"/>
@@ -32,14 +32,17 @@
         
         <Label Content="" Name="Instructions"></Label>
         <!-- End of Controls-->
-
+        
         <!-- Pause Items -->
-        <Rectangle Fill="#FFF4F4F5" Name="Border" Height="314" Canvas.Left="93" Stroke="Black" Canvas.Top="175" Width="602" Visibility="Hidden"/>
-        <Button Content="Resume" Name="ResumeButton" Canvas.Left="290" Canvas.Top="279" Width="174" Height="47" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Resume_Click"/>
-        <Button Content="Tutorial Selection" Name="TutorialsButton" Canvas.Left="397" Canvas.Top="365" Width="242" Height="46" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Tutorials_Click"/>
-        <Button Content="Main Menu" Name="QuitButton" Canvas.Left="161" Canvas.Top="365" Width="182" Height="46" FontSize="30" Visibility="Hidden"  MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" RenderTransformOrigin="-0.428,1.63"/>
-        <Button Content="Next Tutorial" Name="Next" Canvas.Left="294" Canvas.Top="279" Width="204" Height="47" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Next_Click"/>
-        <Label Content="Congrats! You have finished the tutorial!" Name="Finished" FontSize="25" Canvas.Left="165" Canvas.Top="227" Height="68" Width="565" Visibility="Hidden"></Label>
+
+        <Rectangle Fill="#FFF4F4F5" Name="Border" Height="314" Canvas.Left="280" Stroke="Black" Canvas.Top="200" Width="602" Visibility="Hidden"/>
+        <Button Content="Resume" Name="ResumeButton" Canvas.Left="500" Canvas.Top="279" Width="174" Height="47" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Resume_Click"/>
+        <Button Content="Tutorial Selection" Name="TutorialsButton" Canvas.Left="597" Canvas.Top="365" Width="242" Height="46" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Tutorials_Click"/>
+        <Button Content="Main Menu" Name="QuitButton" Canvas.Left="361" Canvas.Top="365" Width="182" Height="46" FontSize="30" Visibility="Hidden"  MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" RenderTransformOrigin="-0.428,1.63"/>
+        <Button Content="Next Tutorial" Name="Next" Canvas.Left="504" Canvas.Top="279" Width="204" Height="47" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Next_Click"/>
+        <Label Content="Congrats! You have finished the tutorial!" Name="Finished" FontSize="25" Canvas.Left="365" Canvas.Top="227" Height="47" Width="474" Visibility="Hidden"></Label>
+
         <!-- End of Pause Items -->
+        
     </Canvas>
 </Page>
