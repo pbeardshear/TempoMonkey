@@ -199,7 +199,7 @@ namespace TempoMonkey
 
 							path.Data = geometry;
 							// Number of ticks in one second --> number of degrees
-							angle += (360 / (1000 / tickAmount));
+							angle += (360 / (1000 / tickAmount)); // <<<< CHANGE THIS BACK!!
 						}						
 					}
 					else
@@ -358,6 +358,5 @@ namespace TempoMonkey
         {
             stopKinect(kinectSensorChooser1.Kinect);
         }
-
     }
 }
