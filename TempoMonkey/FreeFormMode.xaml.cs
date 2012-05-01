@@ -217,12 +217,13 @@ namespace TempoMonkey
             VolumeSlider = null;
             PitchSlider = null;
             TempoSlider = null;
+            MainWindow.setManipulating(false);
             // TODO: TEARDOWN MUSIC... unload all files and whatever else that needs to be done
             // so that a user can navigate between pages that uses music
 			Processing.Audio.End();
         }
 
-        NavigationButton quitButton;
+        NavigationButton quitButton, resumeButton;
 		public FreeFormMode()
 		{		
 			InitializeComponent();
@@ -232,6 +233,12 @@ namespace TempoMonkey
             {
                 tearDown();
                 return MainWindow.homePage;
+            });
+
+            resumeButton = new NavigationButton(ResumeButton, delegate()
+            {
+                Resume();
+                return null;
             });
 		}
 
@@ -459,6 +466,7 @@ namespace TempoMonkey
             mainCanvas.Background = new SolidColorBrush(Colors.White);
 			ResumeButton.Visibility = System.Windows.Visibility.Hidden;
 			QuitButton.Visibility = System.Windows.Visibility.Hidden;
+            Border.Visibility = System.Windows.Visibility.Hidden;
             MainWindow.setManipulating(true);
 		}
 
@@ -470,20 +478,10 @@ namespace TempoMonkey
 			Border.Visibility = System.Windows.Visibility.Visible;
 			ResumeButton.Visibility = System.Windows.Visibility.Visible;
 			QuitButton.Visibility = System.Windows.Visibility.Visible;
-            MainWindow.setManipulating(false);;
+            MainWindow.setManipulating(false);
 		}
 
 		#endregion
-
-		#region Navigation
-
-        private void ResumeButton_Click(object sender, RoutedEventArgs e)
-        {
-            Resume();
-        }
-
-		#endregion
-
 
 
     }
