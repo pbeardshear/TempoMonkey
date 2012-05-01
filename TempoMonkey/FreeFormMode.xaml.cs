@@ -35,11 +35,45 @@ namespace TempoMonkey
         box leftBox, midBox, rightBox;
         public mySlider VolumeSlider, PitchSlider, TempoSlider;
 
-        /*
-        <Slider Name="VolumeSlider" Canvas.Left="486" Canvas.Top="223" Height="28" Width="260" Value="25" Minimum="0" Maximum="100" TickFrequency=".1"/>
-        <Slider Name="PitchSlider" Canvas.Left="486" Canvas.Top="310" Height="28" Width="260" Value="50" Minimum="0" Maximum="100" TickFrequency=".1"/>
-        <Slider Name="TempoSlider" Canvas.Left="486" Canvas.Top="388" Height="28" Width="260" Value="100" Minimum="40" Maximum="200" TickFrequency=".1"/>
-         * */
+        public Bar[] bars = new Bar[11];
+        public void InitBars()
+        {
+            Bar.canvas = mainCanvas;
+            for (int i = 0, position = -300; i < 5; i++, position += 60)
+            {
+                bars[i] = new Bar(position);
+            }
+
+            for (int i = 0, position = 300; i < 5; i++, position -= 60)
+            {
+                bars[i + 6] = new Bar(position);
+            }
+
+            bars[5] = new Bar(0);
+        }
+
+        public void changeBars()
+        {
+            // This is only for testing purposes only...
+            // To see how changes affect things
+            DispatcherTimer Timer = new DispatcherTimer();
+            Timer.Interval = TimeSpan.FromSeconds(1);
+            Timer.Tick += (delegate(object s, EventArgs e)
+            {
+                for (int i = 0; i < 11; i++)
+                {
+                    bars[i].Height = (bars[i].Height + i * 20) % 188;
+                }
+            });
+            Timer.Start();
+        }
+
+        public void initCommon()
+        {
+            initSliders();
+            InitBars();
+            changeBars();
+        }
 
         public void initSliders()
         {
@@ -62,15 +96,15 @@ namespace TempoMonkey
 
         public void initBuddyForm(string address, string name)
         {
-            initSliders();
+            initCommon();
             _type = "Buddy";
             Processing.Audio.LoadFile(address);
             _nameList.Add(name);
             currentTrackIndex = 0;
             System.Windows.Forms.Cursor.Hide();
             Processing.Audio.Play();
-            spectrumVisualizer = new Spectrum(mainCanvas);
-            spectrumVisualizer.RegisterSoundPlayer();
+            //spectrumVisualizer = new Spectrum(mainCanvas);
+            //spectrumVisualizer.RegisterSoundPlayer();
 
             Track.Content = _nameList[currentTrackIndex];
 
@@ -88,7 +122,7 @@ namespace TempoMonkey
         }
 
         public void initSoloForm(ArrayList addrList, ArrayList nameList){
-            initSliders();
+            initCommon();
 			// Load the audio files
             _type = "Solo";
 			foreach (string uri in addrList)
@@ -114,8 +148,8 @@ namespace TempoMonkey
 			Processing.Audio.Play();
 			System.Windows.Forms.Cursor.Hide();
 			// Initialize the visualizer
-			spectrumVisualizer = new Spectrum(mainCanvas);
-			spectrumVisualizer.RegisterSoundPlayer();
+			//spectrumVisualizer = new Spectrum(mainCanvas);
+			//spectrumVisualizer.RegisterSoundPlayer();
             Track.Content = _nameList[currentTrackIndex];
             freePlayer = new KinectGesturePlayer();
 			freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
