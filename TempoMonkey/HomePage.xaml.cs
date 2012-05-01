@@ -27,11 +27,11 @@ namespace TempoMonkey
         {
             InitializeComponent();
 			// Create some navigation buttons to wrap our images
-			soloButton = new NavigationButton(SoloButton, delegate()
+			soloButton = new NavigationButton(SoloBackground, delegate()
 			{
                 return MainWindow.soloPage;
 			});
-			buddyButton = new NavigationButton(BuddyButton, delegate()
+			buddyButton = new NavigationButton(BuddyBackground, delegate()
 			{
                 ((BrowseMusic)MainWindow.browseMusicPage).initBrowseMusic("Buddy");
                 return MainWindow.browseMusicPage;

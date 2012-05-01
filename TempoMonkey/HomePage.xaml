@@ -17,7 +17,9 @@
     </Page.Resources>
     <Grid>
         <Canvas Name="mainCanvas">
-			<!-- Logo -->
+            <!-- Bars image-->
+            <Image Source="/Resources/Images/bars.png" Canvas.Left="118" Canvas.Top="334" />
+            <!-- Logo -->
 			<Image Source="/Resources/Images/logo.png" Canvas.Left="30" Canvas.Top="30" />
 			<!-- Buttons -->
 			<Image Source="/Resources/Images/solo-button.png" Canvas.Left="150" Canvas.Top="270" Name="SoloButton" MouseEnter="SoloButton_MouseEnter"  />
@@ -25,8 +27,6 @@
 			<!-- Selected button images -->
 			<Image Source="/Resources/Images/solo-button-selected.png" Canvas.Left="150" Canvas.Top="270" Name="SoloBackground" Visibility="Hidden" MouseLeave="SoloButton_MouseLeave" />
 			<Image Source="/Resources/Images/buddy-button-selected.png" Canvas.Right="150" Canvas.Top="270" Name="BuddyBackground" Visibility="Hidden" MouseLeave="BuddyButton_MouseLeave" />
-			<!-- Bars image-->
-			<Image Source="/Resources/Images/bars.png" Canvas.Left="118" Canvas.Top="334" />
 			<Image Source="/Resources/Images/hand-image.png" Canvas.Left="773" Canvas.Top="44" Height="43" Width="50" />
 			<Label Canvas.Right="30" Canvas.Top="36" Name="textBox1" Content="Move your hand to control the cursor." FontFamily="Arial Black" FontSize="20" Foreground="#FF4B4B4B" Background="#00000000" BorderBrush="#00000000" FontWeight="Bold" />
 			<Label Content="Hover over buttons to select them." FontFamily="Arial Black" Canvas.Left="829" Canvas.Top="62" Foreground="#FF4B4B4B" FontSize="20" />

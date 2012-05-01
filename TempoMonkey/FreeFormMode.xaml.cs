@@ -31,7 +31,7 @@ namespace TempoMonkey
 		bool isPaused = false;
         ArrayList _nameList = new ArrayList();
         string _type;
-        Spectrum spectrumVisualizer;
+        //Spectrum spectrumVisualizer;
         box leftBox, midBox, rightBox;
         public mySlider VolumeSlider, PitchSlider, TempoSlider;
 
@@ -69,6 +69,9 @@ namespace TempoMonkey
             Timer.Start();
         }
 
+
+        Visualizer.Timeline.WaveformTimeline wave;
+
         public void initCommon()
         {
             initSliders();
@@ -95,6 +98,32 @@ namespace TempoMonkey
             mainCanvas.Children.Add(TempoSlider);
         }
 
+        BrushConverter bc = new BrushConverter();
+        Label[] SongTitles = new Label[3];
+        Grid[] waveFormContainers = new Grid[3];
+        int[] positions = { 236, 525, 850 };
+        public int currentTrackIndex
+        {
+            set
+            {
+                waveFormContainers[_currentTrackIndex].Visibility = System.Windows.Visibility.Hidden;
+                SongTitles[_currentTrackIndex].Foreground = ((System.Windows.Media.Brush)bc.ConvertFrom("#666"));
+                _currentTrackIndex = value;
+                waveFormContainers[_currentTrackIndex].Visibility = System.Windows.Visibility.Visible;
+                SongTitles[_currentTrackIndex].Foreground = ((System.Windows.Media.Brush)bc.ConvertFrom("#FFF"));
+                Canvas.SetLeft(BlueDot, positions[_currentTrackIndex]);
+                Processing.Audio.SwapTrack(_currentTrackIndex);
+                Processing.Audio.Seek(SeekSlider.Value);
+                Processing.Audio.ChangeVolume(VolumeSlider.Value);
+                Processing.Audio.ChangeTempo(TempoSlider.Value);
+                Processing.Audio.ChangePitch(PitchSlider.Value);
+            }
+            get
+            {
+                return _currentTrackIndex;
+            }
+        }
+
         public void initBuddyForm(string address, string name)
         {
             initCommon();
@@ -106,8 +135,6 @@ namespace TempoMonkey
             Processing.Audio.Play();
             //spectrumVisualizer = new Spectrum(mainCanvas);
             //spectrumVisualizer.RegisterSoundPlayer();
-
-            Track.Content = _nameList[currentTrackIndex];
 
             freePlayer = new KinectGesturePlayer();
             freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
@@ -122,13 +149,27 @@ namespace TempoMonkey
             freePlayer2.registerCallBack(freePlayer2.handsWidenListener, volumeTrackingHandler2, volumeChangeHandler);
         }
 
+
         public void initSoloForm(ArrayList addrList, ArrayList nameList){
             initCommon();
 			// Load the audio files
             _type = "Solo";
-			foreach (string uri in addrList)
+            waveFormContainers[0] = SongContainer0;
+            waveFormContainers[1] = SongContainer1;
+            waveFormContainers[2] = SongContainer2;
+
+            SongTitles[0] = SongTitle0;
+            SongTitles[1] = SongTitle1;
+            SongTitles[2] = SongTitle2;
+            for( int i=0; i < addrList.Count; i++)
 			{
-				Processing.Audio.LoadFile(uri);
+                string uri = addrList[i] as String;
+                Grid waveFormContainer = waveFormContainers[i];
+                waveFormContainer.Visibility = Visibility.Hidden;
+                SongTitles[i].Content = nameList[i];
+                Processing.Audio.LoadFile(uri);
+                wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainer, uri);
+                wave.Draw();
 			}
 
             foreach (string song in nameList)
@@ -148,70 +189,16 @@ namespace TempoMonkey
 
 			Processing.Audio.Play();
 			System.Windows.Forms.Cursor.Hide();
-			// Initialize the visualizer
-			//spectrumVisualizer = new Spectrum(mainCanvas);
-			//spectrumVisualizer.RegisterSoundPlayer();
-            Track.Content = _nameList[currentTrackIndex];
+            
             freePlayer = new KinectGesturePlayer();
 			freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
 			freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
 			freePlayer.registerCallBack(freePlayer.leanListener, tempoTrackingHandler, tempoChangeHandler);
 			freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
-
-
-            string path;
-            int top = 400;
-            if (currentTrackIndex > 0)
-            {
-                leftBox = new box(150);
-                //mainCanvas.Children.Add(leftBox);
-                path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Album_Art\\" + _nameList[currentTrackIndex - 1] + ".jpg";
-                leftBox.setImage(path);
-                Canvas.SetLeft(leftBox, 400 - 75 - 300);
-                Canvas.SetTop(leftBox, top);
-            }
-            if (currentTrackIndex <= _nameList.Count - 2)
-            {
-                rightBox = new box(150);
-                //mainCanvas.Children.Add(rightBox);
-                path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Album_Art\\" + _nameList[currentTrackIndex + 1] + ".jpg";
-                rightBox.setImage(path);
-                Canvas.SetLeft(rightBox, 400 - 75);
-                Canvas.SetTop(rightBox, top);
-            }
-            midBox = new box(150);
-            //mainCanvas.Children.Add(midBox);
-            path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Album_Art\\" + _nameList[currentTrackIndex] + ".jpg";
-            midBox.setImage(path);
-            Canvas.SetLeft(midBox, 400 - 75 + 300);
-            Canvas.SetTop(midBox, top);
-
-            updateSongs(0);
-        }
-
-        int offSet = 300;
-        int offSetMid = 300;
-        int pageWidth = 800;
-
-        public void updateSongs(double value)
-        {
-            if (leftBox != null)
-            {
-                Canvas.SetLeft(leftBox, value + pageWidth / 2 + 300 - leftBox.Width / 2);
-            }
-            if (midBox != null)
-            {
-                Canvas.SetLeft(midBox, value + pageWidth / 2 - midBox.Width / 2);
-            }
-            if (rightBox != null)
-            {
-                Canvas.SetLeft(rightBox, value + pageWidth / 2 - 300 - rightBox.Width / 2);
-            }
         }
 
         public void tearDown()
         {
-            spectrumVisualizer = null;
             freePlayer = null;
             freePlayer2 = null;
             VolumeSlider = null;
@@ -335,51 +322,36 @@ namespace TempoMonkey
 		}
 
 
-		int currentTrackIndex;
+		int _currentTrackIndex;
 
         int midPoint = 325;
         int span = 190;
 		void changeTrackHandler(double value)
 		{
-            Seek.Content = value;
-            updateSongs(value);
-			if (!wasSeeking)
+            if (!wasSeeking)
 			{
 				SeekSlider.Value += .05;
 			}
 
 			if (value < midPoint - span && currentTrackIndex != 0 && _nameList.Count > 1)
 			{
+                waveFormContainers[currentTrackIndex].Visibility = System.Windows.Visibility.Hidden;
 				currentTrackIndex = 0;
-                rightBox.unHighlightBox();
-                midBox.unHighlightBox();
-                leftBox.highlightBox();
 			}
 			else if (value > midPoint + span && currentTrackIndex != 2 && _nameList.Count > 2)
 			{
-				currentTrackIndex = 2;
-                leftBox.unHighlightBox();
-                midBox.unHighlightBox(); 
-                rightBox.highlightBox();
+                waveFormContainers[currentTrackIndex].Visibility = System.Windows.Visibility.Hidden; 
+                currentTrackIndex = 2;
 			}
 			else if (value >= midPoint - span && value <= midPoint + span && currentTrackIndex != 1)
 			{
-				currentTrackIndex = 1;
-                leftBox.unHighlightBox();
-                rightBox.unHighlightBox();
-                midBox.highlightBox();
+                waveFormContainers[currentTrackIndex].Visibility = System.Windows.Visibility.Hidden; 
+                currentTrackIndex = 1;
 			}
 			else
 			{
 				return;
 			}
-
-            Track.Content = _nameList[currentTrackIndex];
-			Processing.Audio.SwapTrack(currentTrackIndex);
-			Processing.Audio.Seek(SeekSlider.Value);
-			Processing.Audio.ChangeVolume(VolumeSlider.Value);
-			Processing.Audio.ChangeTempo(TempoSlider.Value);
-			Processing.Audio.ChangePitch(PitchSlider.Value);
 		}
 
 		void volumeChangeHandler(double change)
@@ -466,7 +438,7 @@ namespace TempoMonkey
             mainCanvas.Background = new SolidColorBrush(Colors.White);
 			ResumeButton.Visibility = System.Windows.Visibility.Hidden;
 			QuitButton.Visibility = System.Windows.Visibility.Hidden;
-            Border.Visibility = System.Windows.Visibility.Hidden;
+            //Border.Visibility = System.Windows.Visibility.Hidden;
             MainWindow.setManipulating(true);
 		}
 
@@ -475,7 +447,7 @@ namespace TempoMonkey
 			isPaused = true;
             Processing.Audio.Pause();
             mainCanvas.Background = new SolidColorBrush(Colors.Gray);
-			Border.Visibility = System.Windows.Visibility.Visible;
+			//Border.Visibility = System.Windows.Visibility.Visible;
 			ResumeButton.Visibility = System.Windows.Visibility.Visible;
 			QuitButton.Visibility = System.Windows.Visibility.Visible;
             MainWindow.setManipulating(false);
