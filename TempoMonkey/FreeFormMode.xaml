@@ -4,25 +4,37 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="800"
+      d:DesignHeight="720" d:DesignWidth="1280"
 	Title="FreeFormMode">
 
-    <Canvas Name="mainCanvas" Margin="0,6,0,-6">
-
+    <Canvas Name="mainCanvas" Margin="0,6,0,-6" Background="Black">
+		<!-- Song titles -->
+		<Label Name="SongTitle0" Content="Test Song" Canvas.Left="278" Canvas.Top="58" FontSize="24" Foreground="#666" />
+		<Label Name="SongTitle1" Content="Second Test Song" Canvas.Left="550" Canvas.Top="58" FontSize="24" Foreground="#FFF" />
+		<Label Name="SongTitle2" Content="Third Test Song" Canvas.Left="864" Canvas.Top="58" FontSize="24" Foreground="#666" />
+		
+		<!-- Selector square for denoting selected song -->
+		<Rectangle Fill="Cyan" Height="9" Width="9" Canvas.Left="525" Canvas.Top="77" />
+		<!-- Container objects for song waveforms -->
+		<Grid Background="White" Name="SongContainer0" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Grid>
+		<Grid Background="White" Name="SongContainer1" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Grid>
+		<Grid Background="White" Name="SongContainer2" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Grid>
         
-        <Label Canvas.Top="98" Name="Seek" Content="SEEK BAR" Height="40" Width="94" FontSize="20" FontStyle="Normal" Canvas.Left="355"/>
-        <Slider Name="SeekSlider" Canvas.Left="98" Canvas.Top="127" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
-        <Label Canvas.Left="98" Canvas.Top="171" Name="Track" Content="" Height="46" Width="351" FontSize="20"  FontStyle="Normal"/>
-		<Image Canvas.Left="92" Canvas.Top="12" Height="50" Name="volumeAvatar" Stretch="Fill" Width="50" />
-		<Image Canvas.Left="263" Canvas.Top="12" Height="50" Name="pitchAvatar" Stretch="Fill" Width="50" />
-		<Image Canvas.Left="454" Canvas.Top="12" Height="50" Name="tempoAvatar" Stretch="Fill" Width="50" />
-		<Image Canvas.Left="619" Canvas.Top="12" Height="50" Name="seekAvatar" Stretch="Fill" Width="50" />
- 
-        
-        <Image Source="/Resources/Images/tempo_monkey_logo2.png" Stretch="Fill" Canvas.Left="619" Canvas.Top="422" />
-        <Rectangle Fill="#FFF4F4F5" Canvas.ZIndex="1" Name="Border" Height="138" Stroke="Black" Width="602" Visibility="Hidden" Canvas.Left="140" Canvas.Top="190" Opacity="1" />
-        <Button Content="Resume" Name="ResumeButton" Canvas.ZIndex="2" Canvas.Left="200" Canvas.Top="235" Width="152" Height="46" FontSize="30" Visibility="Hidden" />
-        <Button Content="Quit" Name="QuitButton" Canvas.ZIndex="2" Canvas.Left="520" Canvas.Top="235" Width="152" Height="46" FontSize="30" Visibility="Hidden"/>
+		<!-- Slider -->
+        <Label Visibility="Hidden" Canvas.Top="307" Name="Seek" Content="SEEK BAR" Height="40" Width="94" FontSize="20" FontStyle="Normal" Canvas.Left="263"/>
+        <Slider Visibility="Hidden" Name="SeekSlider" Canvas.Left="12" Canvas.Top="353" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
+		<!-- End Slider -->
+        <Label Canvas.Left="6" Canvas.Top="289" Name="Track" Content="" Height="46" Width="351" FontSize="20"  FontStyle="Normal"/>
+		<Image Canvas.Left="278" Canvas.Top="223" Height="50" Name="volumeAvatar" Stretch="Fill" Width="50" />
+		<Image Canvas.Left="493" Canvas.Top="223" Height="50" Name="pitchAvatar" Stretch="Fill" Width="50" />
+		<Image Canvas.Left="725" Canvas.Top="223" Height="50" Name="tempoAvatar" Stretch="Fill" Width="50" />
+		<Image Canvas.Left="947" Canvas.Top="223" Height="50" Name="seekAvatar" Stretch="Fill" Width="50" />
+		<!-- Pause overlay -->
+		<Grid Name="PauseOverlay" Height="140" Width="600" Visibility="Hidden" Background="#CCC" Opacity="0.8" Canvas.Left="363" Canvas.Top="289">
+			<Button Content="Resume" Name="ResumeButton" Width="152" Height="46" FontSize="30" Margin="77,47,371,47" />
+			<Button Content="Quit" Name="QuitButton" Width="152" Height="46" FontSize="30" Margin="352,47,96,47" />
+		</Grid>
+		<!-- End overlay -->
 
 
     </Canvas>
