@@ -207,6 +207,17 @@
   <ItemGroup>
     <Resource Include="Resources\Images\logo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\bars.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\buddy-button-selected.png" />
+    <Resource Include="Resources\Images\buddy-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\solo-button-selected.png" />
+    <Resource Include="Resources\Images\solo-button.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
