@@ -61,7 +61,7 @@ namespace Visualizer
 			if (Audio.IsPlaying)
 			{
 				// Get the spectrum data from the sampler
-				Sampler.GetFFT(channelData);
+				Processing.Audio.InputSampler.GetFFT(channelData);
 				Update();
 			}
 		}

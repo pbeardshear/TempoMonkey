@@ -20,6 +20,8 @@ namespace Processing
         public static int CurrentTrackIndex;
         public static bool IsInitialized = false;
 		public static bool IsPlaying = false;
+
+		public static Sampler InputSampler;
         #endregion
 
         #region Private variables
@@ -101,7 +103,8 @@ namespace Processing
             _currentVolume = 0.25f;
 
 			// Initialize the sampler
-			Sampler.Initialize((int)FFTDataSize.FFT2048);
+			// Create a new sampler object
+			InputSampler = new Sampler((int)FFTDataSize.FFT2048);
 
             IsInitialized = true;
         }
@@ -432,7 +435,7 @@ namespace Processing
 
 		static void _waveChannel_Sample(object sender, SampleEventArgs e)
 		{
-			Sampler.Add(e.Left, e.Right);
+			InputSampler.Add(e.Left, e.Right);
 		}
 
         private static void ApplyTimeStretchProfiles(bool useDefault = true)

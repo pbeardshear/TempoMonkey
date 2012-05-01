@@ -9,17 +9,17 @@ namespace Processing
 	public class Sampler
 	{
 		#region Private Variables
-		private static Complex[] channelData;
-		private static int channelPosition;
-		private static int binaryExponentiation;
-		private static int bufferSize;
+		private Complex[] channelData;
+		private int channelPosition;
+		private int binaryExponentiation;
+		private int bufferSize;
 		#endregion
 
 		#region Public Accessors
-		public static float LeftMax = float.MinValue;
-		public static float LeftMin = float.MaxValue;
-		public static float RightMax = float.MinValue;
-		public static float RightMin = float.MaxValue;
+		public float LeftMax = float.MinValue;
+		public float LeftMin = float.MaxValue;
+		public float RightMax = float.MinValue;
+		public float RightMin = float.MaxValue;
 		#endregion
 
 		#region Initialization
@@ -27,7 +27,7 @@ namespace Processing
 		/// <summary>
 		/// Initialize the Sampler.  Call before beginning to add any samples.
 		/// </summary>
-		public static void Initialize(int _bufferSize)
+		public Sampler(int _bufferSize)
 		{
 			bufferSize = _bufferSize;
 			channelPosition = 0;
@@ -41,7 +41,7 @@ namespace Processing
 		/// </summary>
 		/// <param name="leftValue"></param>
 		/// <param name="rightValue"></param>
-		public static void Add(float leftValue, float rightValue)
+		public void Add(float leftValue, float rightValue)
 		{
 			if (channelPosition == 0)
 			{
@@ -72,7 +72,7 @@ namespace Processing
 		/// Fills the provided buffer with FFT data taken from current channel data
 		/// </summary>
 		/// <param name="buffer"></param>
-		public static void GetFFT(float[] buffer)
+		public void GetFFT(float[] buffer)
 		{
 			Complex[] channelClone = new Complex[bufferSize];
 			channelData.CopyTo(channelClone, 0);
@@ -83,12 +83,12 @@ namespace Processing
 			}
 		}
 
-		public static void StartSampling()
+		public void StartSampling()
 		{
 			throw new NotImplementedException();
 		}
 
-		public static void StopSampling()
+		public void StopSampling()
 		{
 			throw new NotImplementedException();
 		}

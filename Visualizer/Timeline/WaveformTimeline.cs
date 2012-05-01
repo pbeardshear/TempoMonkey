@@ -18,6 +18,7 @@ namespace Visualizer.Timeline
 		private Brush WaveformFill = Brushes.RoyalBlue;
 		private BackgroundWorker worker = new BackgroundWorker();
 		private CompletionCallback OnCompletion;
+		private Sampler InputSampler;
 
 		private string FileName;
 		private float[] WaveformData;
@@ -46,6 +47,9 @@ namespace Visualizer.Timeline
 
 		public void Draw()
 		{
+			// Create the sampler that we will use to pull data
+			InputSampler = new Sampler((int)FFTDataSize.FFT2048);
+
 			worker.DoWork += new DoWorkEventHandler(worker_DoWork);
 			worker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(worker_RunWorkerCompleted);
 			worker.WorkerSupportsCancellation = true;
@@ -89,13 +93,13 @@ namespace Visualizer.Timeline
 			{
 				channel.Read(readBuffer, 0, readBuffer.Length);
 
-				waveformData.Add(Sampler.LeftMax);
-				waveformData.Add(Sampler.RightMax);
+				waveformData.Add(InputSampler.LeftMax);
+				waveformData.Add(InputSampler.RightMax);
 
-				if (Sampler.LeftMax > maxLeftPointLevel)
-					maxLeftPointLevel = Sampler.LeftMax;
-				if (Sampler.RightMax > maxRightPointLevel)
-					maxRightPointLevel = Sampler.RightMax;
+				if (InputSampler.LeftMax > maxLeftPointLevel)
+					maxLeftPointLevel = InputSampler.LeftMax;
+				if (InputSampler.RightMax > maxRightPointLevel)
+					maxRightPointLevel = InputSampler.RightMax;
 
 				if (readCount > waveMaxPointIndexes[currentPointIndex])
 				{
@@ -132,7 +136,7 @@ namespace Visualizer.Timeline
 
 		private void channel_Sample(object sender, SampleEventArgs e)
 		{
-			Sampler.Add(e.Left, e.Right);
+			InputSampler.Add(e.Left, e.Right);
 		}
 
 		private void worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
