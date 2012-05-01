@@ -92,6 +92,15 @@ namespace TempoMonkey
 
         private void HandleKeyDownEvent(object sender, KeyEventArgs e)
         {
+            if (System.Windows.Input.Key.Q == e.Key)
+            {
+                (currentPage as FreeFormMode).VolumeSlider.Value -= 5;
+            }
+            if (System.Windows.Input.Key.W == e.Key)
+            {
+                (currentPage as FreeFormMode).VolumeSlider.Value += 5;
+            }
+
             if (System.Windows.Input.Key.A == e.Key)
             {
                 Processing.Audio.Resume();

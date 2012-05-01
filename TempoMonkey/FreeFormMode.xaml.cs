@@ -33,13 +33,48 @@ namespace TempoMonkey
         string _type;
         Spectrum spectrumVisualizer;
         box leftBox, midBox, rightBox;
-        mySlider VolumeSlider, PitchSlider, TempoSlider;
+        public mySlider VolumeSlider, PitchSlider, TempoSlider;
 
-        /*
-        <Slider Name="VolumeSlider" Canvas.Left="486" Canvas.Top="223" Height="28" Width="260" Value="25" Minimum="0" Maximum="100" TickFrequency=".1"/>
-        <Slider Name="PitchSlider" Canvas.Left="486" Canvas.Top="310" Height="28" Width="260" Value="50" Minimum="0" Maximum="100" TickFrequency=".1"/>
-        <Slider Name="TempoSlider" Canvas.Left="486" Canvas.Top="388" Height="28" Width="260" Value="100" Minimum="40" Maximum="200" TickFrequency=".1"/>
-         * */
+        // Number of bars, this should be an odd number
+        public const int BarCount = 11;
+        public Bar[] bars = new Bar[BarCount];
+        // Distance between bars
+        public const int BarDist = 60;
+
+        public void InitBars()
+        {
+            Bar.canvas = mainCanvas;
+            for (int i = 0, position = -(BarCount/2) * BarDist; i < BarCount/2; i++, position += BarDist)
+            {
+                bars[i] = new Bar(position);
+                bars[BarCount - 1 - i] = new Bar(-position);
+            }
+
+            bars[ BarCount / 2] = new Bar(0);
+        }
+
+        public void changeBars()
+        {
+            // This is only for testing purposes only...
+            // To see how changes affect things
+            DispatcherTimer Timer = new DispatcherTimer();
+            Timer.Interval = TimeSpan.FromSeconds(1);
+            Timer.Tick += (delegate(object s, EventArgs e)
+            {
+                for (int i = 0; i < 11; i++)
+                {
+                    bars[i].Height = (bars[i].Height + i * 20) % 188;
+                }
+            });
+            Timer.Start();
+        }
+
+        public void initCommon()
+        {
+            initSliders();
+            InitBars();
+            changeBars();
+        }
 
         public void initSliders()
         {
@@ -58,20 +93,19 @@ namespace TempoMonkey
             mainCanvas.Children.Add(VolumeSlider);
             mainCanvas.Children.Add(PitchSlider);
             mainCanvas.Children.Add(TempoSlider);
-
         }
 
         public void initBuddyForm(string address, string name)
         {
-            initSliders();
+            initCommon();
             _type = "Buddy";
             Processing.Audio.LoadFile(address);
             _nameList.Add(name);
             currentTrackIndex = 0;
             System.Windows.Forms.Cursor.Hide();
             Processing.Audio.Play();
-            spectrumVisualizer = new Spectrum(mainCanvas);
-            spectrumVisualizer.RegisterSoundPlayer();
+            //spectrumVisualizer = new Spectrum(mainCanvas);
+            //spectrumVisualizer.RegisterSoundPlayer();
 
             Track.Content = _nameList[currentTrackIndex];
 
@@ -89,7 +123,7 @@ namespace TempoMonkey
         }
 
         public void initSoloForm(ArrayList addrList, ArrayList nameList){
-            initSliders();
+            initCommon();
 			// Load the audio files
             _type = "Solo";
 			foreach (string uri in addrList)
@@ -115,8 +149,8 @@ namespace TempoMonkey
 			Processing.Audio.Play();
 			System.Windows.Forms.Cursor.Hide();
 			// Initialize the visualizer
-			spectrumVisualizer = new Spectrum(mainCanvas);
-			spectrumVisualizer.RegisterSoundPlayer();
+			//spectrumVisualizer = new Spectrum(mainCanvas);
+			//spectrumVisualizer.RegisterSoundPlayer();
             Track.Content = _nameList[currentTrackIndex];
             freePlayer = new KinectGesturePlayer();
 			freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
@@ -183,12 +217,13 @@ namespace TempoMonkey
             VolumeSlider = null;
             PitchSlider = null;
             TempoSlider = null;
+            MainWindow.setManipulating(false);
             // TODO: TEARDOWN MUSIC... unload all files and whatever else that needs to be done
             // so that a user can navigate between pages that uses music
 			Processing.Audio.End();
         }
 
-        NavigationButton quitButton;
+        NavigationButton quitButton, resumeButton;
 		public FreeFormMode()
 		{		
 			InitializeComponent();
@@ -198,6 +233,12 @@ namespace TempoMonkey
             {
                 tearDown();
                 return MainWindow.homePage;
+            });
+
+            resumeButton = new NavigationButton(ResumeButton, delegate()
+            {
+                Resume();
+                return null;
             });
 		}
 
@@ -425,6 +466,7 @@ namespace TempoMonkey
             mainCanvas.Background = new SolidColorBrush(Colors.White);
 			ResumeButton.Visibility = System.Windows.Visibility.Hidden;
 			QuitButton.Visibility = System.Windows.Visibility.Hidden;
+            Border.Visibility = System.Windows.Visibility.Hidden;
             MainWindow.setManipulating(true);
 		}
 
@@ -436,19 +478,11 @@ namespace TempoMonkey
 			Border.Visibility = System.Windows.Visibility.Visible;
 			ResumeButton.Visibility = System.Windows.Visibility.Visible;
 			QuitButton.Visibility = System.Windows.Visibility.Visible;
-            MainWindow.setManipulating(false);;
+            MainWindow.setManipulating(false);
 		}
 
 		#endregion
 
-		#region Navigation
 
-        private void ResumeButton_Click(object sender, RoutedEventArgs e)
-        {
-            Resume();
-        }
-
-		#endregion
-
-	}
+    }
 }
