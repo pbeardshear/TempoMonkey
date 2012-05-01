@@ -16,6 +16,9 @@ namespace Visualizer.Timeline
 		#region Private variables
 		private Panel Container;
 		private Brush WaveformFill = Brushes.RoyalBlue;
+		private float TopOffset = 0;
+		private float LeftOffset = 0;
+
 		private BackgroundWorker worker = new BackgroundWorker();
 		private CompletionCallback OnCompletion;
 		private Sampler InputSampler;
@@ -43,6 +46,12 @@ namespace Visualizer.Timeline
 		public void SetFill(Brush fill)
 		{
 			WaveformFill = fill;
+		}
+
+		public void SetOffset(float offsetTop, float offsetLeft)
+		{
+			TopOffset = offsetTop;
+			LeftOffset = offsetLeft;
 		}
 
 		public void Draw()
@@ -168,6 +177,16 @@ namespace Visualizer.Timeline
 			path.Data = geometry;
 
 			Container.Children.Add(path);
+			if (Container is Canvas)
+			{
+				Canvas.SetLeft(path, LeftOffset);
+				Canvas.SetTop(path, TopOffset);
+			}
+			else
+			{
+				// Default to margin
+				path.Margin = new System.Windows.Thickness(LeftOffset, TopOffset, 0, 0);
+			}
 
 			// Alert any callbacks that were registered
 			if (OnCompletion != null)
