@@ -28,11 +28,9 @@ namespace TempoMonkey
     public partial class FreeFormMode : Page, KinectPage
 	{
         KinectGesturePlayer freePlayer, freePlayer2;
-		bool isPaused = false;
+		bool _isPaused = false;
         ArrayList _nameList = new ArrayList();
         string _type;
-        //Spectrum spectrumVisualizer;
-        box leftBox, midBox, rightBox;
         public mySlider VolumeSlider, PitchSlider, TempoSlider;
 
         // Number of bars, this should be an odd number
@@ -68,9 +66,6 @@ namespace TempoMonkey
             });
             Timer.Start();
         }
-
-
-        Visualizer.Timeline.WaveformTimeline wave;
 
         public void initCommon()
         {
@@ -126,15 +121,22 @@ namespace TempoMonkey
 
         public void initBuddyForm(string address, string name)
         {
+            _type = "Buddy"; 
             initCommon();
-            _type = "Buddy";
+
+            string uri = address as String;
+            Grid waveFormContainer = waveFormContainers[0];
+            waveFormContainer.Visibility = Visibility.Hidden;
+            SongTitles[0].Content = name;
+            Processing.Audio.LoadFile(uri);
+            Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainer, uri);
+            wave.Draw();
+
             Processing.Audio.LoadFile(address);
             _nameList.Add(name);
             currentTrackIndex = 0;
             System.Windows.Forms.Cursor.Hide();
             Processing.Audio.Play();
-            //spectrumVisualizer = new Spectrum(mainCanvas);
-            //spectrumVisualizer.RegisterSoundPlayer();
 
             freePlayer = new KinectGesturePlayer();
             freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
@@ -151,13 +153,12 @@ namespace TempoMonkey
 
 
         public void initSoloForm(ArrayList addrList, ArrayList nameList){
+            _type = "Solo"; 
             initCommon();
 			// Load the audio files
-            _type = "Solo";
             waveFormContainers[0] = SongContainer0;
             waveFormContainers[1] = SongContainer1;
             waveFormContainers[2] = SongContainer2;
-
             SongTitles[0] = SongTitle0;
             SongTitles[1] = SongTitle1;
             SongTitles[2] = SongTitle2;
@@ -168,7 +169,7 @@ namespace TempoMonkey
                 waveFormContainer.Visibility = Visibility.Hidden;
                 SongTitles[i].Content = nameList[i];
                 Processing.Audio.LoadFile(uri);
-                wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainer, uri);
+                Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainer, uri);
                 wave.Draw();
 			}
 
@@ -205,8 +206,6 @@ namespace TempoMonkey
             PitchSlider = null;
             TempoSlider = null;
             MainWindow.setManipulating(false);
-            // TODO: TEARDOWN MUSIC... unload all files and whatever else that needs to be done
-            // so that a user can navigate between pages that uses music
 			Processing.Audio.End();
         }
 
@@ -335,17 +334,14 @@ namespace TempoMonkey
 
 			if (value < midPoint - span && currentTrackIndex != 0 && _nameList.Count > 1)
 			{
-                waveFormContainers[currentTrackIndex].Visibility = System.Windows.Visibility.Hidden;
 				currentTrackIndex = 0;
 			}
 			else if (value > midPoint + span && currentTrackIndex != 2 && _nameList.Count > 2)
 			{
-                waveFormContainers[currentTrackIndex].Visibility = System.Windows.Visibility.Hidden; 
                 currentTrackIndex = 2;
 			}
 			else if (value >= midPoint - span && value <= midPoint + span && currentTrackIndex != 1)
 			{
-                waveFormContainers[currentTrackIndex].Visibility = System.Windows.Visibility.Hidden; 
                 currentTrackIndex = 1;
 			}
 			else
@@ -434,24 +430,43 @@ namespace TempoMonkey
 		public void Resume()
 		{
 			isPaused = false;
-			Processing.Audio.Play();
-            mainCanvas.Background = new SolidColorBrush(Colors.White);
-			ResumeButton.Visibility = System.Windows.Visibility.Hidden;
-			QuitButton.Visibility = System.Windows.Visibility.Hidden;
-            //Border.Visibility = System.Windows.Visibility.Hidden;
-            MainWindow.setManipulating(true);
 		}
 
-		public void Pause()
-		{
-			isPaused = true;
-            Processing.Audio.Pause();
-            mainCanvas.Background = new SolidColorBrush(Colors.Gray);
-			//Border.Visibility = System.Windows.Visibility.Visible;
-			ResumeButton.Visibility = System.Windows.Visibility.Visible;
-			QuitButton.Visibility = System.Windows.Visibility.Visible;
-            MainWindow.setManipulating(false);
-		}
+        public void Pause()
+        {
+            isPaused = true;
+        }
+
+
+        public bool isPaused
+        {
+            set
+            {
+                _isPaused = value;
+                if (value)
+                {
+                    Processing.Audio.Play();
+                    mainCanvas.Background = new SolidColorBrush(Colors.White);
+                    ResumeButton.Visibility = System.Windows.Visibility.Hidden;
+                    QuitButton.Visibility = System.Windows.Visibility.Hidden;
+                    PauseOverlay.Visibility = System.Windows.Visibility.Hidden;
+                    MainWindow.setManipulating(true);
+                }
+                else
+                {
+                    Processing.Audio.Pause();
+                    mainCanvas.Background = new SolidColorBrush(Colors.Gray);
+                    PauseOverlay.Visibility = System.Windows.Visibility.Visible;
+                    ResumeButton.Visibility = System.Windows.Visibility.Visible;
+                    QuitButton.Visibility = System.Windows.Visibility.Visible;
+                    MainWindow.setManipulating(false);
+                }
+            }
+            get
+            {
+                return _isPaused;
+            }
+        }
 
 		#endregion
 
