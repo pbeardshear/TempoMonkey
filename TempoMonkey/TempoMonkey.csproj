@@ -203,6 +203,9 @@
   <ItemGroup>
     <Resource Include="Resources\Images\buddy-background.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\logo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
