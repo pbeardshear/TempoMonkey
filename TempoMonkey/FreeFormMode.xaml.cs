@@ -35,21 +35,22 @@ namespace TempoMonkey
         box leftBox, midBox, rightBox;
         public mySlider VolumeSlider, PitchSlider, TempoSlider;
 
-        public Bar[] bars = new Bar[11];
+        // Number of bars, this should be an odd number
+        public const int BarCount = 11;
+        public Bar[] bars = new Bar[BarCount];
+        // Distance between bars
+        public const int BarDist = 60;
+
         public void InitBars()
         {
             Bar.canvas = mainCanvas;
-            for (int i = 0, position = -300; i < 5; i++, position += 60)
+            for (int i = 0, position = -(BarCount/2) * BarDist; i < BarCount/2; i++, position += BarDist)
             {
                 bars[i] = new Bar(position);
+                bars[BarCount - 1 - i] = new Bar(-position);
             }
 
-            for (int i = 0, position = 300; i < 5; i++, position -= 60)
-            {
-                bars[i + 6] = new Bar(position);
-            }
-
-            bars[5] = new Bar(0);
+            bars[ BarCount / 2] = new Bar(0);
         }
 
         public void changeBars()

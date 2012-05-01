@@ -41,6 +41,7 @@ namespace TempoMonkey
             k = d * i * Math.Cos(Math.Atan(vanishingPointz / x));
             double h = -50;
 
+
             Point p1, p2, p3, p4;
             if (x > 0)
             {
@@ -92,17 +93,33 @@ namespace TempoMonkey
                     side.Points[2] = new Point(CANVAS_CENTERX + x - WIDTH / 2 - k, h - h * i);
                     side.Points[3] = new Point(CANVAS_CENTERX + x - WIDTH / 2, h);
                 }
-                else
+                else if (x < 0)
                 {
                     side.Points[2] = new Point(CANVAS_CENTERX + x + WIDTH / 2 + k, h - h * i);
                     side.Points[3] = new Point(CANVAS_CENTERX + x + WIDTH / 2, h);
                 }
-
             }
             get
             {
                 return bar.Height;
             }
         }
+
+        public System.Windows.Media.Brush BarFill
+        {
+            set
+            {
+                bar.Fill = value;
+            }
+        }
+
+        public System.Windows.Media.Brush sideFill
+        {
+            set
+            {
+                side.Fill = value;
+            }
+        }
+
     }
 }
