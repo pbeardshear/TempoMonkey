@@ -29,13 +29,13 @@ namespace TempoMonkey
         public SoloPage()
         {
             InitializeComponent();
-            freeButton = new NavigationButton(FreeButton, delegate()
+            freeButton = new NavigationButton(solo_remixBackground, delegate()
             {
                 ((BrowseMusic)MainWindow.browseMusicPage).initBrowseMusic("Solo");
                 return MainWindow.browseMusicPage;
             });
 
-            tutorButton = new NavigationButton(TutorButton, delegate()
+            tutorButton = new NavigationButton(solo_learningBackground, delegate()
             {
                 return MainWindow.browseTutorialsPage;
             });
@@ -44,6 +44,25 @@ namespace TempoMonkey
             {
                 return MainWindow.homePage;
             });
+        }
+        private void TutorButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            solo_learningBackground.Visibility = Visibility.Visible;
+        }
+
+        private void TutorButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            solo_learningBackground.Visibility = Visibility.Hidden;
+        }
+
+        private void FreeButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            solo_remixBackground.Visibility = Visibility.Visible;
+        }
+
+        private void FreeButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            solo_remixBackground.Visibility = Visibility.Hidden;
         }
     }
 }
