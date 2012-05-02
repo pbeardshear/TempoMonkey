@@ -13,7 +13,7 @@
         
         <!--Buttons-->
         <Image Source="/Resources/Images/back-button.png" Canvas.Left="50" Canvas.Top="40" Name="BackButton" Stretch="Uniform"/>
-        <Image Source="/Resources/Images/done-button.png" Canvas.Left="1052" Canvas.Top="542" Height="135" Width="174" />
+        <Image  Name="DoneButton" Source="/Resources/Images/done-button.png" Canvas.Left="1052" Canvas.Top="542" Height="135" Width="174" />
         <!--Selected Buttons-->
         <Image Source="/Resources/Images/done-button-selected.png" Canvas.Left="1052" Canvas.Top="542" Visibility="Hidden" Height="135" Width="174" />
 	</Canvas>

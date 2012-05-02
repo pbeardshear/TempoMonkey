@@ -24,9 +24,8 @@ namespace TempoMonkey
     {
 
         string _type;
-        int sizeOfBox = 100;
+        int sizeOfBox = 150;
         List<box> mySelections = new List<box>();
-        Grid myGrid;
         int gridRows, gridCols;
 
 		NavigationButton backButton, doneButton;
@@ -39,7 +38,7 @@ namespace TempoMonkey
         public BrowseMusic()
         {
             InitializeComponent();
-            addGrid((int)MainWindow.height, (int)MainWindow.width);
+            addGrid();
             addItemsToGrid();
 			// Create navigation buttons
 			backButton = new NavigationButton(BackButton, delegate()
@@ -98,49 +97,35 @@ namespace TempoMonkey
                 selection.unHighlightBox();
             }
             mySelections = new List<box>();
+
+            // Remove all the selections, row defintions and col defitions
+            selectionGallary.Children.RemoveRange(0, selectionGallary.Children.Count);
+            selectionGallary.RowDefinitions.RemoveRange(0, selectionGallary.RowDefinitions.Count);
+            selectionGallary.ColumnDefinitions.RemoveRange(0, selectionGallary.ColumnDefinitions.Count);
+
         }
 
         #region Grid stuff
         /* Creates a grid dyanmically with demensions equal to (height/100) by (width/100) */
-        private void addGrid(int height, int width)
+        private void addGrid()
         {
-            myGrid = new Grid();
-
-            int sizeofCell = sizeOfBox + sizeOfBox / 5;
-            int heightOffSet = 120;
-            int widthOffSet = 70;
-            gridRows = (height - heightOffSet) / sizeofCell;
-            gridCols = (width - widthOffSet) / sizeofCell;
-
-            /*editing
-             * */
-            myGrid.Width = 850;
-            myGrid.Height = 375;
-            BrushConverter bc = new BrushConverter();
-
-            myGrid.Background = ((System.Windows.Media.Brush)bc.ConvertFrom("#FFD8D8D8"));
-
-            Canvas.SetLeft(myGrid, 300); //editing
-
-            //=====
+            int sizeOfCell = sizeOfBox + sizeOfBox * 1 / 5;
+            gridRows = (int)selectionGallary.Height / sizeOfCell;
+            gridCols = (int)selectionGallary.Width / sizeOfCell;
 
             for (int i = 0; i < gridCols; i += 1)
             {
                 ColumnDefinition row = new ColumnDefinition();
-                row.Width = new System.Windows.GridLength(sizeofCell + sizeofCell / 3);
-                myGrid.ColumnDefinitions.Add(row);
+                row.Width = new System.Windows.GridLength(sizeOfCell);
+                selectionGallary.ColumnDefinitions.Add(row);
             }
 
             for (int j = 0; j < gridRows; j += 1)
             {
                 RowDefinition row = new RowDefinition();
-                row.Height = new System.Windows.GridLength(sizeofCell + sizeofCell / 3);
-                myGrid.RowDefinitions.Add(row);
+                row.Height = new System.Windows.GridLength(sizeOfCell);
+                selectionGallary.RowDefinitions.Add(row);
             }
-
-            mainCanvas.Children.Add(myGrid);
-            Canvas.SetLeft(myGrid, widthOffSet);
-            Canvas.SetTop(myGrid, heightOffSet);
         }
 
         private void addItemsToGrid()
@@ -148,13 +133,13 @@ namespace TempoMonkey
             int index = 0;
             foreach (string filepath in Directory.GetFiles(@"..\..\Resources\Music", "*.mp3"))
             {
-                int colspot = index % gridRows;
-                int rowspot = index / gridRows;
+                int colspot = index % gridCols;
+                int rowspot = index / gridCols;
                 string filename = System.IO.Path.GetFileNameWithoutExtension(filepath);
                 addToBox(filename, filepath, rowspot, colspot);
                 index += 1;
             }
-            myGrid.UpdateLayout();
+            selectionGallary.UpdateLayout();
         }
 
         private void addToBox(string name, string address, int rowspot, int colspot) // instantiate a box instance
@@ -172,7 +157,7 @@ namespace TempoMonkey
 
             Grid.SetRow(littleBox, rowspot);
             Grid.SetColumn(littleBox, colspot);
-            myGrid.Children.Add(littleBox);
+            selectionGallary.Children.Add(littleBox);
         }
         #endregion
 
@@ -222,17 +207,16 @@ namespace TempoMonkey
             MainWindow.Mouse_Leave(sender, e);
         }
 
-        private void DoneButton_MouseEnter(object sender, MouseEventArgs e)
-        {
-            DoneBackground.Visibility = Visibility.Visible;
-            MainWindow.Mouse_Enter(sender, e);
-        }
-
         private void DoneButton_MouseLeave(object sender, MouseEventArgs e)
         {
-            DoneBackground.Visibility = Visibility.Hidden;
-            MainWindow.Mouse_Leave(sender, e);
+            DoneButtonBackground.Visibility = System.Windows.Visibility.Hidden;
         }
+
+        private void DoneButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            DoneButtonBackground.Visibility = System.Windows.Visibility.Visible;
+        }
+
         #endregion
 
     }

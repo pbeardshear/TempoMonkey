@@ -35,7 +35,7 @@ namespace slidingMenu
         {
             set
             {
-                textBox.Content = value;
+                textBox.Text = value;
             }
         }
 
