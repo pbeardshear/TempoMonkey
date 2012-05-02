@@ -45,7 +45,10 @@ namespace TempoMonkey
 			backButton = new NavigationButton(BackButton, delegate()
 			{
                 tearDown();
-                return MainWindow.soloPage;
+                if (_type == "Buddy")
+                    return MainWindow.homePage;
+                else//if (_type == "Solo")
+                    return MainWindow.soloPage;
 			});
             
             doneButton = new NavigationButton(DoneButton, delegate(){
