@@ -147,7 +147,7 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="images\Mb-logo.png" />
+    <Resource Include="Images\Mb-logo.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\KinectWpfViewers\Microsoft.Samples.Kinect.WpfViewers.csproj">
@@ -217,6 +217,37 @@
   <ItemGroup>
     <Resource Include="Resources\Images\solo-button-selected.png" />
     <Resource Include="Resources\Images\solo-button.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\done_button_selected.png" />
+    <Resource Include="Resources\Images\done_button_unselected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Tutorial_Art\02pitch_tutorial.png" />
+    <Resource Include="Images\Tutorial_Art\05seek_tutorial.png" />
+    <Resource Include="Images\Tutorial_Art\01tempo_tuturial.png" />
+    <Resource Include="Images\Tutorial_Art\03volume_tutorial.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\menu_arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\menu_panel.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\logo_beveled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\solo_remix_selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\solo_learning_unselected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\solo_learning_selected.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\solo_remix_unselected.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

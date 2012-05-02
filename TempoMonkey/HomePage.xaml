@@ -9,8 +9,8 @@
     <!--xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers" Loaded="Page_Loaded" Unloaded="Page_Unloaded">-->
     <Page.Resources>
         <LinearGradientBrush x:Key="ButtonGradient" StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="#555" Offset="0.0" />
-            <GradientStop Color="#222" Offset="0.5" />
+            <GradientStop Color="#8F00BF" Offset="0.0" />
+            <GradientStop Color="#21002C" Offset="0.5" />
             <GradientStop Color="#000" Offset="0.5" />
             <GradientStop Color="#000" Offset="1.0" />
         </LinearGradientBrush>
@@ -18,9 +18,9 @@
     <Grid>
         <Canvas Name="mainCanvas">
             <!-- Bars image-->
-            <Image Source="/Resources/Images/bars.png" Canvas.Left="118" Canvas.Top="334" />
+            <Image Source="/Resources/Images/bars.png" Canvas.Left="118" Canvas.Top="425" />
             <!-- Logo -->
-			<Image Source="/Resources/Images/logo.png" Canvas.Left="30" Canvas.Top="30" />
+			<Image Source="/Resources/Images/logo_beveled.png" Canvas.Left="0" Canvas.Top="0"  Stretch="UniformToFill" Height="148" Width="361" />
 			<!-- Buttons -->
 			<Image Source="/Resources/Images/solo-button.png" Canvas.Left="150" Canvas.Top="270" Name="SoloButton" MouseEnter="SoloButton_MouseEnter"  />
 			<Image Source="/Resources/Images/buddy-button.png" Canvas.Left="730" Canvas.Top="270" Name="BuddyButton" MouseEnter="BuddyButton_MouseEnter" />

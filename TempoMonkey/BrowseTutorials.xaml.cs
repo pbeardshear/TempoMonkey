@@ -99,8 +99,10 @@ namespace TempoMonkey
             littleBox.address = address;
             littleBox.name = name;
 
-            string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Tutorial_Art\\" + name + ".jpg";
+            string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Tutorial_Art\\" + name + "_tutorial.png";
             littleBox.setImage(path);
+            
+            
 
             Grid.SetRow(littleBox, rowspot);
             Grid.SetColumn(littleBox, colspot);

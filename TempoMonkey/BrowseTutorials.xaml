@@ -9,6 +9,13 @@
 
     <Canvas Name="mainCanvas">
         <Label Content="Choose a Lesson" Height="86" HorizontalAlignment="Left" Margin="187,45,0,0" Name="Title" VerticalAlignment="Top" Width="424" HorizontalContentAlignment="Center" FontSize="45" FontFamily="Bold Art" FontWeight="Bold" Foreground="White" />
-        <Image Source="/Resources/Images/back-button.png" Canvas.Left="72" Canvas.Top="36" Name="BackButton"/>
+        
+        
+        <!--Buttons-->
+        <Image Source="/Resources/Images/back-button.png" Canvas.Left="72" Canvas.Top="36" Name="BackButton" Height="105" Width="116" Stretch="Uniform"/>
+        <Image Source="/Resources/Images/done_button_unselected.png" Canvas.Left="626" Canvas.Top="489" Height="135" Width="174" />
+        <!--Selected Buttons-->
+        <Image Source="/Resources/Images/done_button_selected.png" Canvas.Left="626" Canvas.Top="489" Visibility="Hidden" Height="135" Width="174" />
+        <Label Content="Done" FontFamily="Aharoni" FontWeight="Black" FontSize="40" Canvas.Left="658" Canvas.Top="537" />
     </Canvas>
 </Page>
