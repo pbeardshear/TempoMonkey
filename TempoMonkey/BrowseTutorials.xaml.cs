@@ -23,66 +23,57 @@ namespace TempoMonkey
     /// </summary>
     public partial class BrowseTutorials : Page, SelectionPage
     {
-        int sizeOfBox = 100;
+        int sizeOfBox = 150;
         List<box> Boxes = new List<box>();
-        string mySelection;
-        Grid myGrid;
         int gridRows, gridCols;
         NavigationButton backButton;
 
         public BrowseTutorials()
         {
             InitializeComponent();
-            addGrid((int)MainWindow.height, (int)MainWindow.width);
-            addItemsToGrid();
+            addGrid();
+            addItemsToGrid(@"Tutorials", "*.m4v");
 
             backButton = new NavigationButton(BackButton, delegate(){
                 return MainWindow.soloPage;
             });
         }
 
+        #region Grid stuff
         /* Creates a grid dyanmically with demensions equal to (height/100) by (width/100) */
-        private void addGrid(int height, int width)
+        private void addGrid()
         {
-            myGrid = new Grid();
-
-            int sizeofCell = sizeOfBox + sizeOfBox / 5;
-            int heightOffSet = 120;
-            int widthOffSet = 70;
-            gridRows = (height - heightOffSet) / sizeofCell;
-            gridCols = (width - widthOffSet) / sizeofCell;
+            int sizeOfCell = sizeOfBox + sizeOfBox * 1 / 5;
+            gridRows = (int)selectionGallary.Height / sizeOfCell;
+            gridCols = (int)selectionGallary.Width / sizeOfCell;
 
             for (int i = 0; i < gridCols; i += 1)
             {
                 ColumnDefinition row = new ColumnDefinition();
-                row.Width = new System.Windows.GridLength(sizeofCell + sizeofCell / 3);
-                myGrid.ColumnDefinitions.Add(row);
+                row.Width = new System.Windows.GridLength(sizeOfCell);
+                selectionGallary.ColumnDefinitions.Add(row);
             }
 
             for (int j = 0; j < gridRows; j += 1)
             {
                 RowDefinition row = new RowDefinition();
-                row.Height = new System.Windows.GridLength(sizeofCell + sizeofCell / 3);
-                myGrid.RowDefinitions.Add(row);
+                row.Height = new System.Windows.GridLength(sizeOfCell);
+                selectionGallary.RowDefinitions.Add(row);
             }
-
-            mainCanvas.Children.Add(myGrid);
-            Canvas.SetLeft(myGrid, widthOffSet);
-            Canvas.SetTop(myGrid, heightOffSet);
         }
 
-        private void addItemsToGrid()
+        private void addItemsToGrid(string path, string extenstion)
         {
             int index = 0;
-            foreach (string filepath in Directory.GetFiles(@"Tutorials", "*.m4v"))
+            foreach (string filepath in Directory.GetFiles(path, extenstion))
             {
-                int colspot = index % gridRows;
-                int rowspot = index / gridRows;
+                int colspot = index % gridCols;
+                int rowspot = index / gridCols;
                 string filename = System.IO.Path.GetFileNameWithoutExtension(filepath);
                 addToBox(filename, filepath, rowspot, colspot, index);
                 index += 1;
             }
-            myGrid.UpdateLayout();
+            selectionGallary.UpdateLayout();
         }
 
         private void addToBox(string name, string address, int rowspot, int colspot, int index) // instantiate a box instance
@@ -96,17 +87,14 @@ namespace TempoMonkey
             littleBox.boxName = name;
             littleBox.address = address;
             littleBox.name = name;
-
             string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Tutorial_Art\\" + name + "_tutorial.png";
             littleBox.setImage(path);
-            
-            
 
             Grid.SetRow(littleBox, rowspot);
             Grid.SetColumn(littleBox, colspot);
-            myGrid.Children.Add(littleBox);
-            Boxes.Add(littleBox);
+            selectionGallary.Children.Add(littleBox);
         }
+        #endregion
 
         public void Click()
         {

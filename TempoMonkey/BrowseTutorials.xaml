@@ -9,8 +9,11 @@
 
     <Canvas Name="mainCanvas">
 		<Label Content="Choose a Lesson" HorizontalAlignment="Left" Name="Title" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontSize="70" FontFamily="Aharoni Bold" Foreground="#8F00BF" Canvas.Left="352" Canvas.Top="42" />
-        
-        
+
+        <!-- Grid stuff-->
+        <Rectangle Height="390" Width="1000" Canvas.Left="146" Canvas.Top="170" Stroke="Gray" Fill="LightGray"></Rectangle>
+        <Grid Name="selectionGallary" Height="390" Width="1000" Canvas.Left="146" Canvas.Top="170"></Grid>
+
         <!--Buttons-->
         <Image Source="/Resources/Images/back-button.png" Canvas.Left="50" Canvas.Top="40" Name="BackButton" Stretch="Uniform"/>
         <Image  Name="DoneButton" Source="/Resources/Images/done-button.png" Canvas.Left="1052" Canvas.Top="542" Height="135" Width="174" />

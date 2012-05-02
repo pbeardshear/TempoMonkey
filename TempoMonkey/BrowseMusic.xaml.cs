@@ -39,7 +39,7 @@ namespace TempoMonkey
         {
             InitializeComponent();
             addGrid();
-            addItemsToGrid();
+            addItemsToGrid(@"..\..\Resources\Music", "*.mp3");
 			// Create navigation buttons
 			backButton = new NavigationButton(BackButton, delegate()
 			{
@@ -106,7 +106,6 @@ namespace TempoMonkey
         }
 
         #region Grid stuff
-        /* Creates a grid dyanmically with demensions equal to (height/100) by (width/100) */
         private void addGrid()
         {
             int sizeOfCell = sizeOfBox + sizeOfBox * 1 / 5;
@@ -128,10 +127,10 @@ namespace TempoMonkey
             }
         }
 
-        private void addItemsToGrid()
+        private void addItemsToGrid(string path, string extenstion)
         {
             int index = 0;
-            foreach (string filepath in Directory.GetFiles(@"..\..\Resources\Music", "*.mp3"))
+            foreach (string filepath in Directory.GetFiles(path, extenstion))
             {
                 int colspot = index % gridCols;
                 int rowspot = index / gridCols;
