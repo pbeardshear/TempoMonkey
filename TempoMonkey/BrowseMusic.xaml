@@ -9,9 +9,17 @@
 
     <Canvas Name="mainCanvas">
 		<Image Source="/Resources/Images/back-button.png" Canvas.Left="72" Canvas.Top="36" Name="BackButton"/>
-        <Label Content="SELECT SONGS" Height="107" HorizontalContentAlignment="Center" Margin="225,45,0,0" Name="Title" VerticalAlignment="Top" Width="362" FontSize="45" FontFamily="Bold Art" FontWeight="Bold" Foreground="White" Canvas.Left="0" Canvas.Top="-31" />
-        <Button Content="DONE" Height="66" Name="DoneButton" Width="101" Foreground="White" Background="Black" FontFamily="Bold Art" FontWeight="Bold" FontSize="20" Canvas.Left="1100" Canvas.Top="36" />
-        <Label Content="" Height="107" HorizontalContentAlignment="Center" Name="Message" VerticalAlignment="Top" Width="782" FontSize="48" FontFamily="Bold Art" FontWeight="Bold" Canvas.Left="245" Canvas.Top="46" Foreground="#FFFF5521" />
+        <Label Content="SELECT SONGS" Height="75" HorizontalContentAlignment="Center" Name="Title" VerticalAlignment="Top" Width="522" FontSize="70" FontWeight="Bold" Foreground="#8F00BF" Canvas.Left="429" Canvas.Top="36" 
+               FontFamily="Aharoni Bold"/>
 
+        <Rectangle Height="390" Width="1000" Canvas.Left="146" Canvas.Top="170" Stroke="Gray" Fill="LightGray">
+            
+        </Rectangle>
+        <Grid Name="selectionGallary" Height="390" Width="1000" Canvas.Left="146" Canvas.Top="170">
+            
+        </Grid>
+        <Label Content="" Height="62" HorizontalContentAlignment="Center" Name="Message" VerticalAlignment="Top" Width="681" FontSize="48" FontFamily="Bold Art" FontWeight="Bold" Canvas.Left="29" Canvas.Top="600" Foreground="#FFFF5521" />
+        <Image Canvas.Left="930" Canvas.Top="600" Height="62" Name="DoneButton" Stretch="Fill" Width="198" Source="/TempoMonkey;component/Resources/Images/done_button_unselected.png" MouseEnter="DoneButton_MouseEnter" />
+        <Image Canvas.Left="930" Canvas.Top="600" Height="62" Name="DoneButtonBackground" Stretch="Fill" Width="198" Source="/TempoMonkey;component/Resources/Images/done_button_selected.png"  MouseLeave="DoneButton_MouseLeave" Visibility="Hidden"/>
     </Canvas>
 </Page>

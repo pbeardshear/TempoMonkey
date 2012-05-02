@@ -35,7 +35,7 @@ namespace slidingMenu
         {
             set
             {
-                textBox.Content = value;
+                textBox.Text = value;
             }
         }
 
@@ -64,6 +64,11 @@ namespace slidingMenu
         {
             Highlight.Visibility = Visibility.Collapsed;
         }
+
+		public void setBackground(Brush backgroundColor)
+		{
+			boxCanvas.Background = backgroundColor;
+		}
 
     }
 }

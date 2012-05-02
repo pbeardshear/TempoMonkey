@@ -39,8 +39,6 @@ namespace TempoMonkey
             backButton = new NavigationButton(BackButton, delegate(){
                 return MainWindow.soloPage;
             });
-
-
         }
 
         /* Creates a grid dyanmically with demensions equal to (height/100) by (width/100) */

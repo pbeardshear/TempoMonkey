@@ -7,9 +7,13 @@
     <Canvas x:Name="boxCanvas" RenderTransformOrigin="0.5,0.5" Canvas.ZIndex="0" Height="150" VerticalAlignment="Top">
         <!--This label is required so that hoovering works-->
         <Label Height="150" Width="150"></Label>
-        <Border BorderBrush="#F6B029" BorderThickness="5"  Height="150" Name="Highlight" Width="150" />
-        <Label Foreground="Black" Canvas.Top="108"   Height="39" Name="textBox" Width="138" Canvas.Left="6"/>
-        <Image Height="104" Width="126" Name="Image"  Canvas.Left="12" Canvas.Top="4" Stretch="Fill" />
-        <Border BorderBrush="Black" BorderThickness="2"  Height="150" x:Name="Highlight_Copy" Width="150" />
+        <Border Name="Highlight" BorderBrush="#F6B029" CornerRadius="5" BorderThickness="10"  Height="150" Width="150" />
+        <Border Height="32" Width="130" Canvas.Top="108" Canvas.Left="10" VerticalAlignment="Center">
+            <TextBlock Foreground="Black" Text="Sample Song Title its long longer" FontWeight="Bold"  Name="textBox" 
+               FontFamily="Arial Black" FontSize="12" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" TextAlignment="Center" Background="#CCC"/>
+        </Border>
+        <Image Height="104" Width="136" Name="Image"  Canvas.Left="7" Canvas.Top="5" Stretch="Fill" />
+            
+        <Border Name="Border" BorderBrush="#FF908585" CornerRadius="5" BorderThickness="8"  Height="150" Width="150" />
     </Canvas>
 </UserControl>

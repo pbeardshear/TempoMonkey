@@ -254,6 +254,13 @@
     <Resource Include="Resources\Images\tutorial-button-selected.png" />
     <Resource Include="Resources\Images\tutorial-button.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\done-button.png" />
+    <Resource Include="Resources\Images\highlight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\done-button-selected.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
