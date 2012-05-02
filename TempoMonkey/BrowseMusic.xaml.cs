@@ -109,6 +109,18 @@ namespace TempoMonkey
             gridRows = (height - heightOffSet) / sizeofCell;
             gridCols = (width - widthOffSet) / sizeofCell;
 
+            /*editing
+             * */
+            myGrid.Width = 850;
+            myGrid.Height = 375;
+            BrushConverter bc = new BrushConverter();
+
+            myGrid.Background = ((System.Windows.Media.Brush)bc.ConvertFrom("#FFD8D8D8"));
+
+            Canvas.SetLeft(myGrid, 300); //editing
+
+            //=====
+
             for (int i = 0; i < gridCols; i += 1)
             {
                 ColumnDefinition row = new ColumnDefinition();
@@ -207,6 +219,17 @@ namespace TempoMonkey
             MainWindow.Mouse_Leave(sender, e);
         }
 
+        private void DoneButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            DoneBackground.Visibility = Visibility.Visible;
+            MainWindow.Mouse_Enter(sender, e);
+        }
+
+        private void DoneButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            DoneBackground.Visibility = Visibility.Hidden;
+            MainWindow.Mouse_Leave(sender, e);
+        }
         #endregion
 
     }
