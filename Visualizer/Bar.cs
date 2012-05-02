@@ -13,10 +13,6 @@ namespace Visualizer
 
     public class Bar
     {
-        // The Width of every Bar
-        public static double WIDTH = 50;
-        // The base Y position of every Bar
-        public static double BASE = 30;
         private static double i = .10;
         private static double vanishingPointz = 500;
         public static double CANVAS_CENTERX = 1305 / 2;
@@ -27,15 +23,17 @@ namespace Visualizer
         private Polygon side;
 
         //Position relative to the center;
-        public Bar(double xPosition, double Width = 50, double Base = 30, Brush mainFill = null, Brush sideFill = null)
+        public Bar(double xPosition, Brush mainFill, Brush sideFill, double Width = 50, double Base = 30)
         {
             x = xPosition;
             bar = new Rectangle();
             bar.Width = Width;
-            bar.Fill = mainFill ?? System.Windows.Media.Brushes.Green;
+			bar.Fill = mainFill;
+			bar.Opacity = 0.6;
 
             side = new Polygon();
-            side.Fill = sideFill ?? System.Windows.Media.Brushes.LightGreen;
+			side.Fill = sideFill;
+			side.Opacity = 0.7;
 
             d = Math.Sqrt(vanishingPointz * vanishingPointz + x * x);
             k = d * i * Math.Cos(Math.Atan(vanishingPointz / x));
