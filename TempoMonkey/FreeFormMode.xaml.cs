@@ -69,6 +69,12 @@ namespace TempoMonkey
 
         public void initCommon()
         {
+            waveFormContainers[0] = SongContainer0;
+            waveFormContainers[1] = SongContainer1;
+            waveFormContainers[2] = SongContainer2;
+            SongTitles[0] = SongTitle0;
+            SongTitles[1] = SongTitle1;
+            SongTitles[2] = SongTitle2;
             initSliders();
             InitBars();
             changeBars();
@@ -123,16 +129,14 @@ namespace TempoMonkey
         {
             _type = "Buddy"; 
             initCommon();
-
             string uri = address as String;
+
             Panel waveFormContainer = waveFormContainers[0];
-            waveFormContainer.Visibility = Visibility.Hidden;
+
             SongTitles[0].Content = name;
             Processing.Audio.LoadFile(uri);
             Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainer, uri);
             wave.Draw();
-
-            Processing.Audio.LoadFile(address);
             _nameList.Add(name);
             currentTrackIndex = 0;
             System.Windows.Forms.Cursor.Hide();
@@ -156,12 +160,6 @@ namespace TempoMonkey
             _type = "Solo"; 
             initCommon();
 			// Load the audio files
-            waveFormContainers[0] = SongContainer0;
-            waveFormContainers[1] = SongContainer1;
-            waveFormContainers[2] = SongContainer2;
-            SongTitles[0] = SongTitle0;
-            SongTitles[1] = SongTitle1;
-            SongTitles[2] = SongTitle2;
             for( int i=0; i < addrList.Count; i++)
 			{
                 string uri = addrList[i] as String;
