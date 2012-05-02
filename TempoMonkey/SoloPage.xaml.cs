@@ -44,29 +44,8 @@ namespace TempoMonkey
             {
                 return MainWindow.homePage;
             });
-        }
 
-        /*
-        private void FreeButton_MouseEnter(object sender, MouseEventArgs e)
-        {
-            MainWindow.MouseEnter(freeButton);
-        }
 
-        private void TutorButton_MouseEnter(object sender, MouseEventArgs e)
-        {
-            MainWindow.MouseEnter(tutorButton);
         }
-
-        private void Mouse_Leave(object sender, MouseEventArgs e)
-        {
-            MainWindow.Mouse_Leave(sender, e);
-        }
-
-        private void Back_Enter(object sender, MouseEventArgs args)
-        {
-            MainWindow.MouseEnter(backButton);
-        }
-        */
-
     }
 }

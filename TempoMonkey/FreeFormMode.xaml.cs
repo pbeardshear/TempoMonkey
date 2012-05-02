@@ -95,7 +95,7 @@ namespace TempoMonkey
 
         BrushConverter bc = new BrushConverter();
         Label[] SongTitles = new Label[3];
-        Grid[] waveFormContainers = new Grid[3];
+        Panel[] waveFormContainers = new Panel[3];
         int[] positions = { 236, 525, 850 };
         public int currentTrackIndex
         {
@@ -125,7 +125,7 @@ namespace TempoMonkey
             initCommon();
 
             string uri = address as String;
-            Grid waveFormContainer = waveFormContainers[0];
+            Panel waveFormContainer = waveFormContainers[0];
             waveFormContainer.Visibility = Visibility.Hidden;
             SongTitles[0].Content = name;
             Processing.Audio.LoadFile(uri);
@@ -165,12 +165,13 @@ namespace TempoMonkey
             for( int i=0; i < addrList.Count; i++)
 			{
                 string uri = addrList[i] as String;
-                Grid waveFormContainer = waveFormContainers[i];
+                Panel waveFormContainer = waveFormContainers[i];
                 waveFormContainer.Visibility = Visibility.Hidden;
                 SongTitles[i].Content = nameList[i];
                 Processing.Audio.LoadFile(uri);
                 Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainer, uri);
                 wave.Draw();
+//                wave.SetOffset(10, 10);
 			}
 
             foreach (string song in nameList)
