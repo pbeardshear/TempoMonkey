@@ -65,5 +65,10 @@ namespace slidingMenu
             Highlight.Visibility = Visibility.Collapsed;
         }
 
+		public void setBackground(Brush backgroundColor)
+		{
+			boxCanvas.Background = backgroundColor;
+		}
+
     }
 }
