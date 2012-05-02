@@ -16,6 +16,7 @@ using Coding4Fun.Kinect.Wpf;
 using System.Windows.Media.Animation;
 using System.Threading;
 using Visualizer;
+using slidingMenu;
 using System.Windows.Threading;
 
 namespace TempoMonkey
@@ -25,11 +26,13 @@ namespace TempoMonkey
     /// </summary>
     public partial class TutorMode : Page, KinectPage
     {
-
+        public mySlider VolumeSlider, PitchSlider, TempoSlider;
         BrushConverter bc = new BrushConverter();
         KinectGesturePlayer tutoree;
+        ArrayList _nameList = new ArrayList();
         bool isPaused = false;
         public delegate bool check();
+        public Spectrum Visualizer;
         private Dictionary<Tutorial, check> _checkers = new Dictionary<Tutorial, check>();
 
 
@@ -48,7 +51,6 @@ namespace TempoMonkey
                 _instructions = instructions;
                 _source = source;
                 _checker = checker;
-                //_tutorials.Add(this);
             }
 
             public Uri getSource()
@@ -116,7 +118,8 @@ namespace TempoMonkey
 
         public void showTutorialsFinished()
         {
-            Border.Visibility = QuitButton.Visibility = Finished.Visibility = System.Windows.Visibility.Visible;
+            // Border.Visibility = QuitButton.Visibility = Finished.Visibility = System.Windows.Visibility.Visible;
+            // FIX ME!!
             MainWindow.setManipulating(false);
             System.Windows.Forms.Cursor.Show();
             Timer.Stop();
@@ -125,7 +128,9 @@ namespace TempoMonkey
         public void showTutorialChooser(Tutorial tutorial)
         {
             MainWindow.setManipulating(false);
-            Next.Visibility = TutorialsButton.Visibility = QuitButton.Visibility = Border.Visibility = System.Windows.Visibility.Visible;
+            // FIX ME
+            //Border.Visibility = 
+            Next.Visibility = TutorialsButton.Visibility = QuitButton.Visibility = System.Windows.Visibility.Visible;
             System.Windows.Forms.Cursor.Show();
         }
 
@@ -168,13 +173,57 @@ namespace TempoMonkey
 
         Spectrum spectrumVisualizer;
 
+        Label[] SongTitles = new Label[3];
+        Panel[] waveFormContainers = new Panel[3];
+        int[] positions = { 260, 525, 850 };
+        public void initCommon()
+        {
+            waveFormContainers[0] = SongContainer0;
+            waveFormContainers[1] = SongContainer1;
+            waveFormContainers[2] = SongContainer2;
+            waveFormContainers[0].Visibility = System.Windows.Visibility.Hidden;
+            waveFormContainers[1].Visibility = System.Windows.Visibility.Hidden;
+            waveFormContainers[2].Visibility = System.Windows.Visibility.Hidden;
+            SongTitles[0] = SongTitle0;
+            SongTitles[1] = SongTitle1;
+            SongTitles[2] = SongTitle2;
+            SongTitles[0].Content = null;
+            SongTitles[1].Content = null;
+            SongTitles[2].Content = null;
+
+            Visualizer = new Spectrum(mainCanvas);
+            Visualizer.RegisterSoundPlayer();
+            System.Windows.Forms.Cursor.Hide();
+        }
+
+        public void initWaveForm(Panel waveFormContainer, string uri)
+        {
+            Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainer, uri);
+            wave.Draw();
+        }
+
         public void initTutor(int index)
         {
-            MainWindow.setManipulating(true);
-            Processing.Audio.LoadFile(@"..\..\Resources\Music\Chasing Pavements.mp3");
-            Processing.Audio.LoadFile(@"..\..\Resources\Music\Enough To Fly With You.mp3");
-            Processing.Audio.Play();
+            List<string> nameList = new List<string>{ "Chasing Pavements", "Enough To Fly With You" };
+            List<string> addrList = new List<string>{ @"..\..\Resources\Music\Chasing Pavements.mp3", @"..\..\Resources\Music\Enough To Fly With You.mp3" };
+            initCommon();
 
+            // Load and set the song titles
+            for (int i = 0; i < addrList.Count; i++)
+            {
+                string address = addrList[i] as String;
+                string name = nameList[i] as String;
+                initWaveForm(waveFormContainers[i], address);
+                _nameList.Add(name);
+                SongTitles[i].Content = name;
+                Processing.Audio.LoadFile(address);
+            }
+
+            // Set the current track & also plays it
+            Processing.Audio.Play();
+            currentTrackIndex = _nameList.Count > 1 ? 1 : 0;
+
+            // connected to gestures
             tutoree = new KinectGesturePlayer();
             tutoree.registerCallBack(tutoree.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
             tutoree.registerCallBack(tutoree.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
@@ -182,13 +231,7 @@ namespace TempoMonkey
             tutoree.registerCallBack(tutoree.leanListener, tempoTrackingHandler, tempoChangeHandler);
             tutoree.registerCallBack(tutoree.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
 
-            spectrumVisualizer = new Spectrum(mainCanvas);
-            spectrumVisualizer.RegisterSoundPlayer();
-
-            Seek.Content = index;
             Tutorial.setIndex(index);
-            System.Windows.Forms.Cursor.Hide();
-
 
             playTutorial(Tutorial.getCurrentTutorial());
             Timer = new DispatcherTimer();
@@ -218,15 +261,60 @@ namespace TempoMonkey
             tutoree = null;
             Timer.Stop();
             MainWindow.setManipulating(false);
-            Border.Visibility = ResumeButton.Visibility = QuitButton.Visibility = System.Windows.Visibility.Hidden;
+            // Border.Visibility = ResumeButton.Visibility = QuitButton.Visibility = System.Windows.Visibility.Hidden;
+            // FIX ME!!
             // TODO: TEARDOWN MUSIC... unload all files and whatever else that needs to be done
             // so that a user can navigate between pages that uses music
         }
+
+        public void initSliders()
+        {
+            VolumeSlider = new mySlider("Volume", 10, 100, 25, 250);
+            PitchSlider = new mySlider("Pitch", 0, 100, 50, 250);
+            TempoSlider = new mySlider("Tempo", 40, 200, 100, 250);
+
+            Canvas.SetLeft(VolumeSlider, 450);
+            Canvas.SetLeft(PitchSlider, 450);
+            Canvas.SetLeft(TempoSlider, 450);
+
+            Canvas.SetTop(VolumeSlider, 200);
+            Canvas.SetTop(PitchSlider, 300);
+            Canvas.SetTop(TempoSlider, 400);
+
+            mainCanvas.Children.Add(VolumeSlider);
+            mainCanvas.Children.Add(PitchSlider);
+            mainCanvas.Children.Add(TempoSlider);
+        }
+
+        public int currentTrackIndex
+        {
+            set
+            {
+                waveFormContainers[_currentTrackIndex].Visibility = System.Windows.Visibility.Hidden;
+                SongTitles[_currentTrackIndex].Foreground = ((System.Windows.Media.Brush)bc.ConvertFrom("#666"));
+                _currentTrackIndex = value;
+                waveFormContainers[_currentTrackIndex].Visibility = System.Windows.Visibility.Visible;
+                SongTitles[_currentTrackIndex].Foreground = ((System.Windows.Media.Brush)bc.ConvertFrom("#FFF"));
+                Canvas.SetLeft(BlueDot, positions[_currentTrackIndex]);
+                Processing.Audio.SwapTrack(_currentTrackIndex);
+                Processing.Audio.Seek(SeekSlider.Value);
+                Processing.Audio.ChangeVolume(VolumeSlider.Value);
+                Processing.Audio.ChangeTempo(TempoSlider.Value);
+                Processing.Audio.ChangePitch(PitchSlider.Value);
+            }
+            get
+            {
+                return _currentTrackIndex;
+            }
+        }
+
+        int _currentTrackIndex;
 
         Tutorial pause, volume, tempo, pitch, switch_tracks, seek;
         public TutorMode()
         {
             InitializeComponent();
+            initSliders();
             Tutorial._tutorialIndex = 0;
             string tutorials_base = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Tutorials\\";
 
@@ -264,7 +352,6 @@ namespace TempoMonkey
         }
 
         NavigationButton quitButton, tutorialsButton;
-
         public void allFramesReady(object sender, AllFramesReadyEventArgs e)
         {
             if (!isPaused)
@@ -296,27 +383,27 @@ namespace TempoMonkey
             }
         }
 
-
-        int previousTrack = 1;
         int totalTrackChange = 0;
+        int midPoint = 325;
+        int span = 190;		
         void changeTrackHandler(double value)
         {
             if (!wasSeeking)
             {
-                SeekSlider.Value += .05; // THIS IS NOT REALLY TRUE
+                SeekSlider.Value += .05;
             }
 
-            if (value < 250 && previousTrack != 1)
+            if (value < midPoint - span && currentTrackIndex != 0 && _nameList.Count > 1)
             {
-                previousTrack = 1;
+                currentTrackIndex = 0;
             }
-            else if (value > 450 && previousTrack != 2)
+            else if (value > midPoint + span && currentTrackIndex != 2 && _nameList.Count > 2)
             {
-                previousTrack = 2;
+                currentTrackIndex = 2;
             }
-            else if (value >= 250 && value <= 450 && previousTrack != 0)
+            else if (value >= midPoint - span && value <= midPoint + span && currentTrackIndex != 1)
             {
-                previousTrack = 0;
+                currentTrackIndex = 1;
             }
             else
             {
@@ -330,12 +417,6 @@ namespace TempoMonkey
                     doneSwitchTrack = true;
                 }
             }
-        
-            Processing.Audio.SwapTrack(previousTrack);
-            Processing.Audio.Seek(SeekSlider.Value);
-            Processing.Audio.ChangeVolume(VolumeSlider.Value);
-            Processing.Audio.ChangeTempo(TempoSlider.Value);
-            Processing.Audio.ChangePitch(PitchSlider.Value);
         }
 
         double totalVolumeChange = 0;
@@ -355,8 +436,8 @@ namespace TempoMonkey
 
         void volumeTrackingHandler(bool exist)
         {
-            Volume.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
-            VolumeFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+            VolumeSlider.player1Exists = exist;
+            // SetAvatarState(exist, volumeAvatar, exist ? loadedImages["volumeAvatar"] : loadedImages["volumeAvatarDisabled"]);
         }
 
         double totalTempoChange = 0;
@@ -377,8 +458,8 @@ namespace TempoMonkey
 
         void tempoTrackingHandler(bool exist)
         {
-            Tempo.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
-            TempoFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+            TempoSlider.player1Exists = exist;
+            // SetAvatarState(exist, tempoAvatar, exist ? loadedImages["tempoAvatar"] : loadedImages["tempoAvatarDisabled"]);
         }
 
         bool wasSeeking = false;
@@ -431,15 +512,16 @@ namespace TempoMonkey
 
         void pitchTrackingHandler(bool exist)
         {
-            Pitch.FontStyle = exist ? FontStyles.Oblique : FontStyles.Normal;
-            PitchFocus.Visibility = exist ? System.Windows.Visibility.Visible : System.Windows.Visibility.Hidden;
+            PitchSlider.player1Exists = exist;
+            // SetAvatarState(exist, pitchAvatar, exist ? loadedImages["pitchAvatar"] : loadedImages["pitchAvatarDisabled"]);
         }
 
         public void Resume()
         {
             isPaused = false;
             Processing.Audio.Resume();
-            Border.Visibility = ResumeButton.Visibility = QuitButton.Visibility = System.Windows.Visibility.Hidden;
+            // Border.Visibility = ResumeButton.Visibility = QuitButton.Visibility = System.Windows.Visibility.Hidden;
+            // FIX ME!!
             mainCanvas.Background = new SolidColorBrush(Colors.White);
             MainWindow.setManipulating(true);
         }
@@ -448,13 +530,13 @@ namespace TempoMonkey
         {
             isPaused = true;
             Processing.Audio.Pause();
-            Border.Visibility = System.Windows.Visibility.Visible;
+            // Border.Visibility = System.Windows.Visibility.Visible;
+            // FIX ME!!
             mainCanvas.Background = new SolidColorBrush(Colors.Gray);
             ResumeButton.Visibility = System.Windows.Visibility.Visible;
             QuitButton.Visibility = System.Windows.Visibility.Visible;
             MainWindow.setManipulating(false);       
         }
-
         #endregion
 
         #region Navigation
@@ -484,7 +566,9 @@ namespace TempoMonkey
 
         void Next_Click(object sender, RoutedEventArgs e)
         {
-            Next.Visibility = TutorialsButton.Visibility = QuitButton.Visibility = Border.Visibility = System.Windows.Visibility.Hidden;
+            // FIX ME!!
+            // Border.Visibility = 
+            Next.Visibility = TutorialsButton.Visibility = QuitButton.Visibility = System.Windows.Visibility.Hidden;
             MainWindow.setManipulating(true);
             mainCanvas.Background = new SolidColorBrush(Colors.White);
             playTutorial(Tutorial.getCurrentTutorial());

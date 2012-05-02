@@ -114,10 +114,7 @@ namespace TempoMonkey
         {
             MainWindow.Mouse_Leave(sender, e);
         }
-
         #endregion
-
-
 
     }
 }
