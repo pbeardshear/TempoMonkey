@@ -248,6 +248,12 @@
   <ItemGroup>
     <Resource Include="Resources\Images\solo_remix_unselected.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\free-play-button-selected.png" />
+    <Resource Include="Resources\Images\free-play-button.png" />
+    <Resource Include="Resources\Images\tutorial-button-selected.png" />
+    <Resource Include="Resources\Images\tutorial-button.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

@@ -18,12 +18,12 @@
     <Grid>
         <Canvas Name="mainCanvas">
             <!-- Bars image-->
-            <Image Source="/Resources/Images/bars.png" Canvas.Left="118" Canvas.Top="425" />
+            <Image Source="/Resources/Images/bars.png" Canvas.Left="115" Canvas.Top="395" />
             <!-- Logo -->
 			<Image Source="/Resources/Images/logo.png" Canvas.Left="25" Canvas.Top="25" />
 			<!-- Buttons -->
 			<Image Source="/Resources/Images/solo-button.png" Canvas.Left="150" Canvas.Top="270" Name="SoloButton" MouseEnter="SoloButton_MouseEnter"  />
-			<Image Source="/Resources/Images/buddy-button.png" Canvas.Left="730" Canvas.Top="270" Name="BuddyButton" MouseEnter="BuddyButton_MouseEnter" />
+			<Image Source="/Resources/Images/buddy-button.png" Canvas.Right="150" Canvas.Top="270" Name="BuddyButton" MouseEnter="BuddyButton_MouseEnter" />
 			<!-- Selected button images -->
 			<Image Source="/Resources/Images/solo-button-selected.png" Canvas.Left="150" Canvas.Top="270" Name="SoloBackground" Visibility="Hidden" MouseLeave="SoloButton_MouseLeave" />
 			<Image Source="/Resources/Images/buddy-button-selected.png" Canvas.Right="150" Canvas.Top="270" Name="BuddyBackground" Visibility="Hidden" MouseLeave="BuddyButton_MouseLeave" />
