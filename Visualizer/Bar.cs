@@ -13,29 +13,27 @@ namespace Visualizer
 
     public class Bar
     {
-        // The Width of every Bar
-        public static double WIDTH = 50;
-        // The base Y position of every Bar
-        public static double BASE = 30;
         private static double i = .10;
         private static double vanishingPointz = 500;
         public static double CANVAS_CENTERX = 1305 / 2;
         public static Canvas myCanvas;
         private double x, d , k;
 
-        Rectangle bar;
-        Polygon side;
+        private Rectangle bar;
+        private Polygon side;
 
         //Position relative to the center;
-        public Bar(double xposition)
+        public Bar(double xPosition, Brush mainFill, Brush sideFill, double Width = 50, double Base = 30)
         {
-            x = xposition;
+            x = xPosition;
             bar = new Rectangle();
-            bar.Width = WIDTH;
-            bar.Fill = System.Windows.Media.Brushes.Green;
+            bar.Width = Width;
+			bar.Fill = mainFill;
+			bar.Opacity = 0.6;
 
             side = new Polygon();
-            side.Fill = System.Windows.Media.Brushes.LightGreen;
+			side.Fill = sideFill;
+			side.Opacity = 0.7;
 
             d = Math.Sqrt(vanishingPointz * vanishingPointz + x * x);
             k = d * i * Math.Cos(Math.Atan(vanishingPointz / x));
@@ -45,17 +43,17 @@ namespace Visualizer
             Point p1, p2, p3, p4;
             if (x > 0)
             {
-                p1 = new Point(CANVAS_CENTERX + x - WIDTH / 2, 0);
-                p2 = new Point(CANVAS_CENTERX + x - WIDTH / 2 - k, 0);
-                p3 = new Point(CANVAS_CENTERX + x - WIDTH / 2 - k, h - h * i);
-                p4 = new Point(CANVAS_CENTERX + x - WIDTH / 2, h);
+                p1 = new Point(CANVAS_CENTERX + x - Width / 2, 0);
+				p2 = new Point(CANVAS_CENTERX + x - Width / 2 - k, 0);
+				p3 = new Point(CANVAS_CENTERX + x - Width / 2 - k, h - h * i);
+				p4 = new Point(CANVAS_CENTERX + x - Width / 2, h);
             }
             else
             {
-                p1 = new Point(CANVAS_CENTERX + x + WIDTH / 2, 0);
-                p2 = new Point(CANVAS_CENTERX + x + WIDTH / 2 + k, 0);
-                p3 = new Point(CANVAS_CENTERX + x + WIDTH / 2 + k, h - h * i);
-                p4 = new Point(CANVAS_CENTERX + x + WIDTH / 2, h);
+				p1 = new Point(CANVAS_CENTERX + x + Width / 2, 0);
+				p2 = new Point(CANVAS_CENTERX + x + Width / 2 + k, 0);
+				p3 = new Point(CANVAS_CENTERX + x + Width / 2 + k, h - h * i);
+				p4 = new Point(CANVAS_CENTERX + x + Width / 2, h);
             }
 
             PointCollection myCollection = new PointCollection();
@@ -69,13 +67,11 @@ namespace Visualizer
             myCanvas.Children.Add(side);
             myCanvas.Children.Add(bar);
 
-            Canvas.SetLeft(bar, CANVAS_CENTERX - bar.Width / 2 + xposition);
-            Canvas.SetBottom(bar, BASE);
-            Canvas.SetBottom(side, BASE);
+            Canvas.SetLeft(bar, CANVAS_CENTERX - bar.Width / 2 + xPosition);
+            Canvas.SetBottom(bar, Base);
+            Canvas.SetBottom(side, Base);
         }
 
-		// TODO: Think about making this an instance variable that is set, or can somehow be updated
-		// If we were to change modes, the bars would not move over into the new page
         public static Canvas canvas
         {
             set
@@ -92,13 +88,13 @@ namespace Visualizer
                 double h = -value;
                 if (x > 0)
                 {
-                    side.Points[2] = new Point(CANVAS_CENTERX + x - WIDTH / 2 - k, h - h * i);
-                    side.Points[3] = new Point(CANVAS_CENTERX + x - WIDTH / 2, h);
+					side.Points[2] = new Point(CANVAS_CENTERX + x - bar.Width / 2 - k, h - h * i);
+					side.Points[3] = new Point(CANVAS_CENTERX + x - bar.Width / 2, h);
                 }
                 else if (x < 0)
                 {
-                    side.Points[2] = new Point(CANVAS_CENTERX + x + WIDTH / 2 + k, h - h * i);
-                    side.Points[3] = new Point(CANVAS_CENTERX + x + WIDTH / 2, h);
+					side.Points[2] = new Point(CANVAS_CENTERX + x + bar.Width / 2 + k, h - h * i);
+					side.Points[3] = new Point(CANVAS_CENTERX + x + bar.Width / 2, h);
                 }
             }
             get
