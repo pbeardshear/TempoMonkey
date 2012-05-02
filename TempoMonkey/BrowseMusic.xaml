@@ -19,7 +19,7 @@
             
         </Grid>
         <Label Content="" Height="62" HorizontalContentAlignment="Center" Name="Message" VerticalAlignment="Top" Width="681" FontSize="48" FontFamily="Bold Art" FontWeight="Bold" Canvas.Left="29" Canvas.Top="600" Foreground="#FFFF5521" />
-        <Image Canvas.Left="930" Canvas.Top="600" Height="62" Name="DoneButton" Stretch="Fill" Width="198" Source="/TempoMonkey;component/Resources/Images/done_button_unselected.png" MouseEnter="DoneButton_MouseEnter" />
-        <Image Canvas.Left="930" Canvas.Top="600" Height="62" Name="DoneButtonBackground" Stretch="Fill" Width="198" Source="/TempoMonkey;component/Resources/Images/done_button_selected.png"  MouseLeave="DoneButton_MouseLeave" Visibility="Hidden"/>
+        <Image Canvas.Left="930" Canvas.Top="600" Height="62" Name="DoneButton" Stretch="Fill" Width="198" Source="/Resources/Images/done-button.png" MouseEnter="DoneButton_MouseEnter" />
+        <Image Canvas.Left="930" Canvas.Top="600" Height="62" Name="DoneButtonBackground" Stretch="Fill" Width="198" Source="/Resources/Images/done-button-selected.png"  MouseLeave="DoneButton_MouseLeave" Visibility="Hidden"/>
     </Canvas>
 </Page>

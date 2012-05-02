@@ -50,7 +50,7 @@ namespace TempoMonkey
                     return MainWindow.soloPage;
 			});
             
-            doneButton = new NavigationButton(DoneButton, delegate(){
+            doneButton = new NavigationButton(DoneButtonBackground, delegate(){
                 if (mySelections.Count == 0)
                 {
                     Message.Content = "You have to pick at least one song!";
