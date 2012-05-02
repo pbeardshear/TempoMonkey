@@ -44,8 +44,6 @@ namespace TempoMonkey
             {
                 return MainWindow.homePage;
             });
-
-
         }
     }
 }

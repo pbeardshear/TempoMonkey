@@ -16,9 +16,9 @@
 		<!-- Selector square for denoting selected song -->
 		<Rectangle Name="BlueDot" Fill="Cyan" Height="9" Width="9" Canvas.Left="525" Canvas.Top="77" />
 		<!-- Container objects for song waveforms -->
-		<Grid Background="White" Name="SongContainer0" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Grid>
-		<Grid Background="White" Name="SongContainer1" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Grid>
-		<Grid Background="White" Name="SongContainer2" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Grid>
+        <Canvas Background="White" Name="SongContainer0" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
+        <Canvas Background="White" Name="SongContainer1" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
+                <Canvas Background="White" Name="SongContainer2" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
 
 		<!-- Slider -->
         <Slider Visibility="Hidden" Name="SeekSlider" Canvas.Left="12" Canvas.Top="353" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>

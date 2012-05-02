@@ -82,6 +82,7 @@ namespace TempoMonkey
 			Visualizer.RegisterSoundPlayer();
 			//InitBars();
 			//changeBars();
+            System.Windows.Forms.Cursor.Hide();
         }
 
         public void initSliders()
@@ -106,7 +107,7 @@ namespace TempoMonkey
         BrushConverter bc = new BrushConverter();
         Label[] SongTitles = new Label[3];
         Panel[] waveFormContainers = new Panel[3];
-        int[] positions = { 236, 525, 850 };
+        int[] positions = { 260, 525, 850 };
         public int currentTrackIndex
         {
             set
@@ -129,23 +130,31 @@ namespace TempoMonkey
             }
         }
 
+        public void initWaveForm(Panel waveFormContainer, string uri)
+        {
+            Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainer, uri);
+            wave.Draw();
+        }
+
+
         public void initBuddyForm(string address, string name)
         {
             _type = "Buddy"; 
             initCommon();
-            string uri = address as String;
 
-            Panel waveFormContainer = waveFormContainers[0];
-
+            // Load and set the song titles
             SongTitles[0].Content = name;
-            Processing.Audio.LoadFile(uri);
-            Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainer, uri);
-            wave.Draw();
-            _nameList.Add(name);
+            Processing.Audio.LoadFile(address);
+
+            // Initlaize the wave form
+            initWaveForm(waveFormContainers[0], address);
+            _nameList.Add(address);
+            
+            // Sets the current track & also plays it
             currentTrackIndex = 0;
-            System.Windows.Forms.Cursor.Hide();
             Processing.Audio.Play();
 
+            // connected to gestures
             freePlayer = new KinectGesturePlayer();
             freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
             freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
@@ -163,37 +172,23 @@ namespace TempoMonkey
         public void initSoloForm(ArrayList addrList, ArrayList nameList){
             _type = "Solo"; 
             initCommon();
-			// Load the audio files
+
+            // Load and set the song titles
             for( int i=0; i < addrList.Count; i++)
 			{
-                string uri = addrList[i] as String;
-                Panel waveFormContainer = waveFormContainers[i];
-                waveFormContainer.Visibility = Visibility.Hidden;
-                SongTitles[i].Content = nameList[i];
-                Processing.Audio.LoadFile(uri);
-                Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainer, uri);
-                wave.Draw();
-//                wave.SetOffset(10, 10);
+                string address = addrList[i] as String;
+                string name = nameList[i] as String;
+                initWaveForm(waveFormContainers[i], address);
+                _nameList.Add(name);
+                SongTitles[i].Content = name;
+                Processing.Audio.LoadFile(address);
 			}
 
-            foreach (string song in nameList)
-            {
-                _nameList.Add(song);
-            }
+            // Sets the current track & also plays it
+            Processing.Audio.Play();
+            currentTrackIndex = _nameList.Count > 1 ? 1 : 0;
 
-
-            if (_nameList.Count > 1)
-            {
-                currentTrackIndex = 1;
-            }
-            else
-            {
-                currentTrackIndex = 0;
-            }
-
-			Processing.Audio.Play();
-			System.Windows.Forms.Cursor.Hide();
-            
+            // connected to gestures
             freePlayer = new KinectGesturePlayer();
 			freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
 			freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);

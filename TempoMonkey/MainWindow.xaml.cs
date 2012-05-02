@@ -92,6 +92,18 @@ namespace TempoMonkey
 
         private void HandleKeyDownEvent(object sender, KeyEventArgs e)
         {
+            if (System.Windows.Input.Key.T == e.Key)
+            {
+                (currentPage as FreeFormMode).currentTrackIndex = 0;
+            }
+            if (System.Windows.Input.Key.Y == e.Key)
+            {
+                (currentPage as FreeFormMode).currentTrackIndex = 1;
+            }
+            if (System.Windows.Input.Key.U == e.Key)
+            {
+                (currentPage as FreeFormMode).currentTrackIndex = 2;
+            }
             if (System.Windows.Input.Key.Q == e.Key)
             {
                 (currentPage as FreeFormMode).VolumeSlider.Value -= 5;
