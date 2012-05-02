@@ -73,6 +73,9 @@ namespace TempoMonkey
             waveFormContainers[0] = SongContainer0;
             waveFormContainers[1] = SongContainer1;
             waveFormContainers[2] = SongContainer2;
+            waveFormContainers[0].Visibility = System.Windows.Visibility.Hidden;
+            waveFormContainers[1].Visibility = System.Windows.Visibility.Hidden;
+            waveFormContainers[2].Visibility = System.Windows.Visibility.Hidden;
             SongTitles[0] = SongTitle0;
             SongTitles[1] = SongTitle1;
             SongTitles[2] = SongTitle2;
@@ -150,7 +153,7 @@ namespace TempoMonkey
             Processing.Audio.LoadFile(address);
 
             // Initlaize the wave form
-            initWaveForm(waveFormContainers[0], address);
+            initWaveForm(waveFormContainers[1], address);
             _nameList.Add(address);
             
             // Sets the current track & also plays it
