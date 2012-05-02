@@ -26,7 +26,7 @@ namespace slidingMenu
             InitializeComponent();
             size = sizeOfBox;
             this.Width = this.Height = sizeOfBox;
-            Highlight.Visibility = Visibility.Collapsed;
+            Highlight.Visibility = Visibility.Hidden;
         }
 
         public int size;
@@ -62,7 +62,7 @@ namespace slidingMenu
 
         public void unHighlightBox()
         {
-            Highlight.Visibility = Visibility.Collapsed;
+            Highlight.Visibility = Visibility.Hidden;
         }
 
 		public void setBackground(Brush backgroundColor)
