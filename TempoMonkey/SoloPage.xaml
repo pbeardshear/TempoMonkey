@@ -8,14 +8,14 @@
 	  Title="TutorMode" xmlns:my="clr-namespace:Microsoft.Samples.Kinect.WpfViewers;assembly=Microsoft.Samples.Kinect.WpfViewers">
 
         <Canvas Name="mainCanvas">
-            <Image Source="/Resources/Images/bars.png" Canvas.Left="118" Canvas.Top="425" Opacity=".6" />
-            <Image Source="/Resources/Images/back-button.png" Canvas.Left="72" Canvas.Top="36" Name="BackButton" Height="105" Width="116" Stretch="Uniform"/>
+            <Image Source="/Resources/Images/bars.png" Canvas.Left="115" Canvas.Top="402" Opacity="0.3" />
+            <Image Source="/Resources/Images/back-button.png" Canvas.Left="50" Canvas.Top="40" Name="BackButton" Stretch="Uniform"/>
 
-        <Image Source="/Resources/Images/solo_learning_unselected.png" Name="TutorButton" Canvas.Left="72" Canvas.Top="235" MouseEnter="TutorButton_MouseEnter" />
-        <Image Source="/Resources/Images/solo_remix_unselected.png" Name="FreeButton" Canvas.Left="668" Canvas.Top="235" MouseEnter="FreeButton_MouseEnter" />
+        <Image Source="/Resources/Images/tutorial-button.png" Name="TutorButton" Canvas.Left="150" Canvas.Top="270" MouseEnter="TutorButton_MouseEnter" />
+        <Image Source="/Resources/Images/free-play-button.png" Name="FreeButton" Canvas.Right="150" Canvas.Top="270" MouseEnter="FreeButton_MouseEnter" />
         <!-- Selected button images -->
-        <Image Source="/Resources/Images/solo_learning_selected.png" Canvas.Left="72" Canvas.Top="235" Name="solo_learningBackground" Visibility="Hidden" Height="133" Width="533" MouseLeave="TutorButton_MouseLeave" />
-        <Image Source="/Resources/Images/solo_remix_selected.png" Canvas.Right="79" Canvas.Top="235" Name="solo_remixBackground" Visibility="Hidden" MouseLeave="FreeButton_MouseLeave" />
+        <Image Source="/Resources/Images/tutorial-button-selected.png" Canvas.Left="150" Canvas.Top="270" Name="solo_learningBackground" Visibility="Hidden" MouseLeave="TutorButton_MouseLeave" />
+        <Image Source="/Resources/Images/free-play-button-selected.png" Canvas.Right="150" Canvas.Top="270" Name="solo_remixBackground" Visibility="Hidden" MouseLeave="FreeButton_MouseLeave" />
 
     </Canvas>
 

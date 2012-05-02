@@ -76,6 +76,9 @@ namespace TempoMonkey
             SongTitles[0] = SongTitle0;
             SongTitles[1] = SongTitle1;
             SongTitles[2] = SongTitle2;
+            SongTitles[0].Content = null;
+            SongTitles[1].Content = null;
+            SongTitles[2].Content = null;
             initSliders();
 
 			Visualizer = new Spectrum(mainCanvas);
@@ -143,7 +146,7 @@ namespace TempoMonkey
             initCommon();
 
             // Load and set the song titles
-            SongTitles[0].Content = name;
+            SongTitles[1].Content = name;
             Processing.Audio.LoadFile(address);
 
             // Initlaize the wave form
@@ -151,7 +154,7 @@ namespace TempoMonkey
             _nameList.Add(address);
             
             // Sets the current track & also plays it
-            currentTrackIndex = 0;
+            currentTrackIndex = 1;
             Processing.Audio.Play();
 
             // connected to gestures

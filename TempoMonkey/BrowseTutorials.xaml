@@ -4,18 +4,17 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       mc:Ignorable="d" 
-      d:DesignHeight="600" d:DesignWidth="800"
+      d:DesignHeight="720" d:DesignWidth="1280"
 	Title="BrowseTutorials" xmlns:my="clr-namespace:slidingMenu;assembly=slidingMenu">
 
     <Canvas Name="mainCanvas">
-        <Label Content="Choose a Lesson" Height="86" HorizontalAlignment="Left" Margin="187,45,0,0" Name="Title" VerticalAlignment="Top" Width="424" HorizontalContentAlignment="Center" FontSize="45" FontFamily="Bold Art" FontWeight="Bold" Foreground="White" />
+		<Label Content="Choose a Lesson" HorizontalAlignment="Left" Name="Title" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontSize="70" FontFamily="Aharoni Bold" Foreground="#8F00BF" Canvas.Left="352" Canvas.Top="42" />
         
         
         <!--Buttons-->
-        <Image Source="/Resources/Images/back-button.png" Canvas.Left="72" Canvas.Top="36" Name="BackButton" Height="105" Width="116" Stretch="Uniform"/>
-        <Image Source="/Resources/Images/done_button_unselected.png" Canvas.Left="626" Canvas.Top="489" Height="135" Width="174" />
+        <Image Source="/Resources/Images/back-button.png" Canvas.Left="50" Canvas.Top="40" Name="BackButton" Stretch="Uniform"/>
+        <Image Source="/Resources/Images/done-button.png" Canvas.Left="1052" Canvas.Top="542" Height="135" Width="174" />
         <!--Selected Buttons-->
-        <Image Source="/Resources/Images/done_button_selected.png" Canvas.Left="626" Canvas.Top="489" Visibility="Hidden" Height="135" Width="174" />
-        <Label Content="Done" FontFamily="Aharoni" FontWeight="Black" FontSize="40" Canvas.Left="658" Canvas.Top="537" />
-    </Canvas>
+        <Image Source="/Resources/Images/done-button-selected.png" Canvas.Left="1052" Canvas.Top="542" Visibility="Hidden" Height="135" Width="174" />
+	</Canvas>
 </Page>
