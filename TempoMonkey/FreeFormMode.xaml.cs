@@ -33,39 +33,40 @@ namespace TempoMonkey
         string _type;
         public mySlider VolumeSlider, PitchSlider, TempoSlider;
 
+		public Spectrum Visualizer;
         // Number of bars, this should be an odd number
         public const int BarCount = 11;
         public Bar[] bars = new Bar[BarCount];
         // Distance between bars
         public const int BarDist = 60;
 
-        public void InitBars()
-        {
-            Bar.canvas = mainCanvas;
-            for (int i = 0, position = -(BarCount/2) * BarDist; i < BarCount/2; i++, position += BarDist)
-            {
-                bars[i] = new Bar(position);
-                bars[BarCount - 1 - i] = new Bar(-position);
-            }
+		//public void InitBars()
+		//{
+		//    Bar.canvas = mainCanvas;
+		//    for (int i = 0, position = -(BarCount/2) * BarDist; i < BarCount/2; i++, position += BarDist)
+		//    {
+		//        bars[i] = new Bar(position);
+		//        bars[BarCount - 1 - i] = new Bar(-position);
+		//    }
 
-            bars[ BarCount / 2] = new Bar(0);
-        }
+		//    bars[ BarCount / 2] = new Bar(0);
+		//}
 
-        public void changeBars()
-        {
-            // This is only for testing purposes only...
-            // To see how changes affect things
-            DispatcherTimer Timer = new DispatcherTimer();
-            Timer.Interval = TimeSpan.FromSeconds(1);
-            Timer.Tick += (delegate(object s, EventArgs e)
-            {
-                for (int i = 0; i < 11; i++)
-                {
-                    bars[i].Height = (bars[i].Height + i * 20) % 188;
-                }
-            });
-            Timer.Start();
-        }
+		//public void changeBars()
+		//{
+		//    // This is only for testing purposes only...
+		//    // To see how changes affect things
+		//    DispatcherTimer Timer = new DispatcherTimer();
+		//    Timer.Interval = TimeSpan.FromSeconds(1);
+		//    Timer.Tick += (delegate(object s, EventArgs e)
+		//    {
+		//        for (int i = 0; i < 11; i++)
+		//        {
+		//            bars[i].Height = (bars[i].Height + i * 20) % 188;
+		//        }
+		//    });
+		//    Timer.Start();
+		//}
 
         public void initCommon()
         {
@@ -76,8 +77,11 @@ namespace TempoMonkey
             SongTitles[1] = SongTitle1;
             SongTitles[2] = SongTitle2;
             initSliders();
-            InitBars();
-            changeBars();
+
+			Visualizer = new Spectrum(mainCanvas);
+			Visualizer.RegisterSoundPlayer();
+			//InitBars();
+			//changeBars();
         }
 
         public void initSliders()
