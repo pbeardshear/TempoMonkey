@@ -103,7 +103,7 @@ namespace TempoMonkey
         BrushConverter bc = new BrushConverter();
         Label[] SongTitles = new Label[3];
         Panel[] waveFormContainers = new Panel[3];
-        int[] positions = { 236, 525, 850 };
+        int[] positions = { 260, 525, 850 };
         public int currentTrackIndex
         {
             set
@@ -176,7 +176,7 @@ namespace TempoMonkey
                 string name = nameList[i] as String;
                 initWaveForm(waveFormContainers[i], address);
                 _nameList.Add(name);
-                SongTitles[0].Content = name;
+                SongTitles[i].Content = name;
                 Processing.Audio.LoadFile(address);
 			}
 
