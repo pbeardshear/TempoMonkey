@@ -10,8 +10,10 @@
     <Canvas Name="mainCanvas">
 		<Image Source="/Resources/Images/back-button.png" Canvas.Left="72" Canvas.Top="36" Name="BackButton"/>
         <Label Content="SELECT SONGS" Height="107" HorizontalContentAlignment="Center" Margin="225,45,0,0" Name="Title" VerticalAlignment="Top" Width="362" FontSize="45" FontFamily="Bold Art" FontWeight="Bold" Foreground="White" Canvas.Left="0" Canvas.Top="-31" />
-        <Button Content="DONE" Height="66" Name="DoneButton" Width="101" Foreground="White" Background="Black" FontFamily="Bold Art" FontWeight="Bold" FontSize="20" Canvas.Left="1100" Canvas.Top="36" />
+        <!--<Button Content="DONE" Height="66" Name="DoneButton" Width="101" Foreground="White" Background="Black" FontFamily="Bold Art" FontWeight="Bold" FontSize="20" Canvas.Left="1041" Canvas.Top="524" BorderBrush="#FFD8D8D8" />-->
+        
         <Label Content="" Height="107" HorizontalContentAlignment="Center" Name="Message" VerticalAlignment="Top" Width="782" FontSize="48" FontFamily="Bold Art" FontWeight="Bold" Canvas.Left="245" Canvas.Top="46" Foreground="#FFFF5521" />
-
+        <Image Canvas.Left="715" Canvas.Top="600" Height="62" Name="DoneBackground" Stretch="Fill" Width="198" Source="/TempoMonkey;component/Resources/Images/done_button_unselected.png" MouseEnter="DoneButton_MouseEnter"/>
+        <Image Canvas.Left="715" Canvas.Top="600" Height="62" Name="DoneBackgroundSelect" Stretch="Fill" Width="198" Source="/TempoMonkey;component/Resources/Images/done_button_selected.png"  MouseLeave="DoneButton_MouseLeave"/>
     </Canvas>
 </Page>
