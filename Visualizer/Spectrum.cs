@@ -17,8 +17,8 @@ namespace Visualizer
 	{
 		private DispatcherTimer timer;
 		private Canvas canv;
-		private readonly List<Shape> barShapes = new List<Shape>();
-		private readonly List<Shape> peakShapes = new List<Shape>();
+		private readonly List<Bar> barShapes = new List<Bar>();
+		private readonly List<Bar> peakShapes = new List<Bar>();
 		private int min;
 		private int max = 2047;
 		private int[] barIndexMax;
@@ -112,7 +112,7 @@ namespace Visualizer
 
 					double xCoord = BarSpacing + (barWidth * barIndex) + (BarSpacing * barIndex) + 1;
 					
-					barShapes[barIndex].Margin = new Thickness(xCoord, (height - 1) - Math.Min(barHeight, maxBarHeight), 0, 0);
+					// barShapes[barIndex].Margin = new Thickness(xCoord, (height - 1) - Math.Min(barHeight, maxBarHeight), 0, 0);
 					barShapes[barIndex].Height = Math.Min(barHeight, maxBarHeight);
 					lastPeakHeight = barHeight;
 					barHeight = 0f;
@@ -173,23 +173,23 @@ namespace Visualizer
 			for (int i = 0; i < actualBarCount; i++)
 			{
 				double xCoord = BarSpacing + (barWidth * i) + (BarSpacing * i) + 1;
-
-				Rectangle barRectangle = new Rectangle()
-				{
-					Margin = new Thickness(xCoord, height, 0, 0),
-					Width = 15,
-					Fill = new LinearGradientBrush(Brushes.DarkSlateBlue.Color, Brushes.SlateBlue.Color, new Point(0.5, 0), new Point(0.5, 1)),
-					Stroke = Brushes.Black,
-					StrokeThickness = 3,
-					StrokeLineJoin = PenLineJoin.Round
-				};
+				Bar barRectangle = new Bar(xCoord);
+				//Rectangle barRectangle = new Rectangle()
+				//{
+				//    Margin = new Thickness(xCoord, height, 0, 0),
+				//    Width = 15,
+				//    Fill = new LinearGradientBrush(Brushes.DarkSlateBlue.Color, Brushes.SlateBlue.Color, new Point(0.5, 0), new Point(0.5, 1)),
+				//    Stroke = Brushes.Black,
+				//    StrokeThickness = 3,
+				//    StrokeLineJoin = PenLineJoin.Round
+				//};
 				barShapes.Add(barRectangle);
 			}
 
-			foreach (Shape shape in barShapes)
-				canv.Children.Add(shape);
-			foreach (Shape shape in peakShapes)
-				canv.Children.Add(shape);
+			foreach (Bar shape in barShapes)
+				Bar.canvas = canv;
+			foreach (Bar shape in peakShapes)
+				Bar.canvas = canv;
 
 			ActualBarWidth = barWidth;
 		}
@@ -206,7 +206,7 @@ namespace Visualizer
 			// We want maxPitch -> red, and minPitch -> blue/purple
 			for (int i = 0; i < barShapes.Count; i++)
 			{
-				barShapes[i].Fill = new LinearGradientBrush(Color.FromRgb((byte)(currentPitch * 2.5), 50, (byte)(130 - currentPitch)),
+				barShapes[i].BarFill = new LinearGradientBrush(Color.FromRgb((byte)(currentPitch * 2.5), 50, (byte)(130 - currentPitch)),
 										Color.FromRgb((byte)(currentPitch * 1.3), 50, (byte)(100 - currentPitch)),
 										new Point(0.5, 0),
 										new Point(0.5, 1));

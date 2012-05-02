@@ -74,6 +74,8 @@ namespace Visualizer
             Canvas.SetBottom(side, BASE);
         }
 
+		// TODO: Think about making this an instance variable that is set, or can somehow be updated
+		// If we were to change modes, the bars would not move over into the new page
         public static Canvas canvas
         {
             set
