@@ -195,15 +195,6 @@ namespace TempoMonkey
             MainWindow.Mouse_Leave(sender, e);
         }
 
-        private void DoneButton_MouseLeave(object sender, MouseEventArgs e)
-        {
-            DoneButtonBackground.Visibility = System.Windows.Visibility.Hidden;
-        }
-
-        private void DoneButton_MouseEnter(object sender, MouseEventArgs e)
-        {
-            DoneButtonBackground.Visibility = System.Windows.Visibility.Visible;
-        }
         #endregion
 
 		private void DoneButton_MouseLeave(object sender, MouseEventArgs e)
