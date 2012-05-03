@@ -147,9 +147,9 @@ namespace TempoMonkey
 
         public void initTutor(int index)
         {
+            initCommon();
             List<string> nameList = new List<string>{ "Chasing Pavements", "Enough To Fly With You" };
             ArrayList addrList = new ArrayList{ @"..\..\Resources\Music\Chasing Pavements.mp3", @"..\..\Resources\Music\Enough To Fly With You.mp3" };
-            initCommon();
 
             // Load and set the song titles
             for (int i = 0; i < addrList.Count; i++)
@@ -161,14 +161,37 @@ namespace TempoMonkey
                 Processing.Audio.LoadFile(address);
             }
 
-
             initWaveFormRecur(0, waveFormContainers, addrList, delegate()
             {
-                MainWindow.loadingPage.NavigationService.Navigate(MainWindow.freeFormPage);
+                MainWindow.loadingPage.NavigationService.Navigate(MainWindow.tutorPage);
 
                 // Sets the current track & also plays it
                 Processing.Audio.Play();
                 currentTrackIndex = _nameList.Count > 1 ? 1 : 0;
+
+
+                Tutorial.TutorialIndex = index;
+                playTutorial(Tutorial.getCurrentTutorial());
+                Timer = new DispatcherTimer();
+                Timer.Interval = TimeSpan.FromSeconds(2);
+                Timer.Tick += (delegate(object s, EventArgs args)
+                {
+                    //Checks if the user has finished the task, and queues up the next task
+                    if (Tutorial.checkTask())
+                    {
+                        Tutorial next = Tutorial.nextTutorial();
+                        if (next != null)
+                        {
+                            showTutorialChooser(next);
+                        }
+                        else
+                        {
+                            showTutorialsFinished();
+                            Timer.Stop();
+                        }
+                    }
+                });
+                Timer.Start();
             });
 
             // connected to gestures
@@ -178,29 +201,6 @@ namespace TempoMonkey
             tutoree.registerCallBack(tutoree.handSwingListener, seekTrackingHandler, seekChangeHandler);
             tutoree.registerCallBack(tutoree.leanListener, tempoTrackingHandler, tempoChangeHandler);
             tutoree.registerCallBack(tutoree.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
-
-            Tutorial.setIndex(index);
-            playTutorial(Tutorial.getCurrentTutorial());
-            Timer = new DispatcherTimer();
-            Timer.Interval = TimeSpan.FromSeconds(2);
-            Timer.Tick += (delegate(object s, EventArgs args)
-            {
-                //Checks if the user has finished the task, and queues up the next task
-                if (Tutorial.checkTask())
-                {
-                    Tutorial next = Tutorial.nextTutorial();
-                    if (next != null)
-                    {
-                        showTutorialChooser(next);
-                    }
-                    else
-                    {
-                        showTutorialsFinished();
-                        Timer.Stop();
-                    }
-                }
-            });
-            Timer.Start();
         }
 
         public void tearDown()
