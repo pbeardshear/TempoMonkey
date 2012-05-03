@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections;
+using System.Windows.Navigation;
 using Microsoft.Kinect;
 using Coding4Fun.Kinect.Wpf;
 using System.Windows.Media.Animation;
@@ -68,9 +69,11 @@ namespace TempoMonkey
             Canvas.SetTop(PitchSlider, 300);
             Canvas.SetTop(TempoSlider, 400);
 
+            /*
             mainCanvas.Children.Add(VolumeSlider);
             mainCanvas.Children.Add(PitchSlider);
             mainCanvas.Children.Add(TempoSlider);
+             * */
         }
 
         BrushConverter bc = new BrushConverter();
@@ -98,11 +101,32 @@ namespace TempoMonkey
                 return _currentTrackIndex;
             }
         }
-
-        public void initWaveForm(Panel waveFormContainer, string uri)
+        
+        public void initWaveForm(Panel waveFormContainer, string uri,
+            Visualizer.Timeline.WaveformTimeline.CompletionCallback callback = null)
         {
-            Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainer, uri);
+            Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainer, uri, callback);
             wave.Draw();
+        }
+
+        // This is slow because it is serial, Peter can you create a function that takes in multiple waveForms 
+        // and calls a single callback. when it is all done? Thanks.
+        public void initWaveFormRecur(int index, Panel[] waveFormContainers, ArrayList uris,
+            Visualizer.Timeline.WaveformTimeline.CompletionCallback callback = null)
+        {
+            if (index >= uris.Count - 1)
+            {
+                Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainers[index], uris[index] as string, callback);
+                wave.Draw();
+            }
+            else
+            {
+                Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainers[index], uris[index] as string, delegate()
+                {
+                    initWaveFormRecur(index + 1, waveFormContainers, uris, callback);
+                });
+                wave.Draw();
+            }
         }
 
 
@@ -115,13 +139,18 @@ namespace TempoMonkey
             SongTitles[1].Content = name;
             Processing.Audio.LoadFile(address);
 
+            // NavigationService.Navigate(MainWindow.freeFormPage);
             // Initlaize the wave form
-            initWaveForm(waveFormContainers[1], address);
+            initWaveForm(waveFormContainers[1], address, delegate()
+            {
+                MainWindow.loadingPage.NavigationService.Navigate(MainWindow.freeFormPage);
+
+                // Sets the current track & also plays it
+                currentTrackIndex = 1;
+                Processing.Audio.Play();
+            });
             _nameList.Add(address);
             
-            // Sets the current track & also plays it
-            currentTrackIndex = 1;
-            Processing.Audio.Play();
 
             // connected to gestures
             freePlayer = new KinectGesturePlayer();
@@ -137,7 +166,6 @@ namespace TempoMonkey
             freePlayer2.registerCallBack(freePlayer2.handsWidenListener, volumeTrackingHandler2, volumeChangeHandler);
         }
 
-
         public void initSoloForm(ArrayList addrList, ArrayList nameList){
             _type = "Solo"; 
             initCommon();
@@ -145,17 +173,23 @@ namespace TempoMonkey
             // Load and set the song titles
             for( int i=0; i < addrList.Count; i++)
 			{
+               
                 string address = addrList[i] as String;
                 string name = nameList[i] as String;
-                initWaveForm(waveFormContainers[i], address);
                 _nameList.Add(name);
                 SongTitles[i].Content = name;
                 Processing.Audio.LoadFile(address);
 			}
 
-            // Sets the current track & also plays it
-            Processing.Audio.Play();
-            currentTrackIndex = _nameList.Count > 1 ? 1 : 0;
+            initWaveFormRecur(0, waveFormContainers, addrList, delegate()
+            { 
+                MainWindow.loadingPage.NavigationService.Navigate(MainWindow.freeFormPage);
+
+                // Sets the current track & also plays it
+                Processing.Audio.Play();
+                currentTrackIndex = _nameList.Count > 1 ? 1 : 0;
+            });
+
 
             // connected to gestures
             freePlayer = new KinectGesturePlayer();

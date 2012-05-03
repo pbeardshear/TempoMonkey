@@ -127,6 +127,8 @@ namespace TempoMonkey
 
         public void initTutor(int index)
         {
+            // TODO PUT A WAITING SCREEN HERE
+
             List<string> nameList = new List<string>{ "Chasing Pavements", "Enough To Fly With You" };
             List<string> addrList = new List<string>{ @"..\..\Resources\Music\Chasing Pavements.mp3", @"..\..\Resources\Music\Enough To Fly With You.mp3" };
             initCommon();

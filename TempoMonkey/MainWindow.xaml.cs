@@ -185,7 +185,7 @@ namespace TempoMonkey
         }
 
         #endregion
-        public static Page homePage, browseMusicPage, freeFormPage, tutorPage, browseTutorialsPage, soloPage;
+        public static Page homePage, browseMusicPage, freeFormPage, tutorPage, browseTutorialsPage, soloPage, loadingPage;
 
         public MainWindow()
         {
@@ -269,6 +269,7 @@ namespace TempoMonkey
             freeFormPage = new FreeFormMode();
             tutorPage = new TutorMode();
             soloPage = new SoloPage();
+            loadingPage = new LoadingPage();
 
             frame.Navigate(homePage);
             currentPage = homePage;

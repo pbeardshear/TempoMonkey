@@ -91,7 +91,8 @@ namespace TempoMonkey
                         throw new Exception();
                     }
                     tearDown();
-                    return MainWindow.freeFormPage;
+                    //return MainWindow.freeFormPage;
+                    return MainWindow.loadingPage;
                 }
             });
         }

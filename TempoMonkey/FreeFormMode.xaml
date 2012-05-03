@@ -19,7 +19,7 @@
         <Canvas Background="Black" Name="SongContainer0" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
         <Canvas Background="Black" Name="SongContainer1" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
         <Canvas Background="Black" Name="SongContainer2" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
-        <Rectangle Stroke="Red" Width="800" Height="100" StrokeThickness="2" Canvas.Left="240" Canvas.Top="100"/>
+        <!--Rectangle Stroke="Red" Width="800" Height="100" StrokeThickness="2" Canvas.Left="240" Canvas.Top="100"/-->
         <!-- Slider -->
         <Slider Visibility="Hidden" Name="SeekSlider" Canvas.Left="12" Canvas.Top="353" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
 		<!-- End Slider -->
