@@ -49,6 +49,7 @@ namespace TempoMonkey
                     selection.unHighlightBox();
                 }
                 mySelections = new List<box>();
+                Message.Content = "";
                 if (_type == "Buddy")
                     return MainWindow.homePage;
                 else//if (_type == "Solo")
