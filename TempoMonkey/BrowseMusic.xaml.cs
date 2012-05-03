@@ -24,7 +24,8 @@ namespace TempoMonkey
     {
 
         string _type;
-        int sizeOfBox = 150;
+        int sizeOfBox = 160;
+		int numBoxes = 5;
         List<box> mySelections = new List<box>();
         int gridRows, gridCols;
 
@@ -108,14 +109,15 @@ namespace TempoMonkey
         #region Grid stuff
         private void addGrid()
         {
-            int sizeOfCell = sizeOfBox + sizeOfBox * 1 / 5;
+
+			int sizeOfCell = (int)selectionGallary.Width / numBoxes;
             gridRows = (int)selectionGallary.Height / sizeOfCell;
             gridCols = (int)selectionGallary.Width / sizeOfCell;
 
             for (int i = 0; i < gridCols; i += 1)
             {
                 ColumnDefinition row = new ColumnDefinition();
-                row.Width = new System.Windows.GridLength(sizeOfCell);
+                row.Width = new System.Windows.GridLength(200);
                 selectionGallary.ColumnDefinitions.Add(row);
             }
 
