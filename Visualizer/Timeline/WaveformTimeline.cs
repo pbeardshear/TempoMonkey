@@ -177,6 +177,9 @@ namespace Visualizer.Timeline
 			path.Fill = WaveformFill;
 			path.Data = geometry;
 
+            //Strech it out, to fit the container
+            path.Data.Transform = new ScaleTransform(Container.Width / x, 1);
+
 			Container.Children.Add(path);
 			if (Container is Canvas)
 			{
