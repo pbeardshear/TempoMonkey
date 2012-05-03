@@ -24,10 +24,6 @@
             Width="450" Height="250" LoadedBehavior="Manual" UnloadedBehavior="Manual" MediaEnded="Media_Ended"  Stretch="Fill" Canvas.Left="-1" Canvas.Top="228"/>
         <!-- End of Media Element-->
         
-        <!-- Debugger -->
-        <Button Content="Task Finished(Debuggin Purposes Only)" Name="Debug" Canvas.Left="926" Canvas.Top="494" Width="204" Height="47" FontSize="30" Visibility="Visible" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Debug_Click"/>
-        <!-- End of Debugger -->
-        
         <!-- Controls -->
         <Label Canvas.Top="10" Name="Seek" Content="Seek Bar" Height="40" Width="94" FontSize="20" FontStyle="Normal" Canvas.Left="294"/>
         <Slider Visibility="Hidden" Name="SeekSlider" Canvas.Left="268" Canvas.Top="56" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
@@ -36,13 +32,31 @@
         <!-- End of Controls-->
         
         <!-- Pause overlay -->
-        <Grid Name="PauseOverlay" Height="140" Width="600" Visibility="Hidden" Background="#CCC" Opacity="0.8" Canvas.Left="363" Canvas.Top="289">
-            <Button Content="Resume" Name="ResumeButton" Canvas.Left="500" Canvas.Top="279" Width="174" Height="47" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Resume_Click"/>
-            <Button Content="Tutorial Selection" Name="TutorialsButton" Canvas.Left="597" Canvas.Top="365" Width="242" Height="46" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Tutorials_Click"/>
-            <Button Content="Main Menu" Name="QuitButton" Canvas.Left="361" Canvas.Top="365" Width="182" Height="46" FontSize="30" Visibility="Hidden"  MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" RenderTransformOrigin="-0.428,1.63"/>
-            <Button Content="Next Tutorial" Name="Next" Canvas.Left="504" Canvas.Top="279" Width="204" Height="47" FontSize="30" Visibility="Hidden" MouseEnter="Mouse_Enter" MouseLeave="Mouse_Leave" Click="Next_Click"/>
-            <Label Content="Congrats! You have finished the tutorial!" Name="Finished" FontSize="25" Canvas.Left="365" Canvas.Top="227" Height="47" Width="474" Visibility="Hidden"></Label>
+        <Grid Visibility="Hidden" Name="PauseOverlay" Height="140" Canvas.ZIndex="2" Width="600" Background="#CCC" Opacity="0.8" Canvas.Left="363" Canvas.Top="289">
+            <Grid.RowDefinitions>
+                <RowDefinition  />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button Grid.Row="0" Grid.Column="0" Content="Resume" Name="ResumeButton" Width="174" Height="60" FontSize="30"/>
+            <Button Grid.Row="0" Grid.Column="1" Content="Quit" Name="QuitButton" Width="152" Height="60" FontSize="30"/>
         </Grid>
-        <!-- End overlay -->
+        
+        <!-- Next overlay -->
+        <Grid Visibility="Hidden" Name="NextOverLay" Height="140" Canvas.ZIndex="2" Width="600" Background="#CCC" Opacity="0.8" Canvas.Left="363" Canvas.Top="289">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button Name="TutorialsButton" Grid.Row="0" Grid.Column="0" Content="Back to Tutorials"  Width="250" Height="47" FontSize="30"/>
+            <Button Name="NextTutorial" Grid.Row="0" Grid.Column="1" Content="Next Tutorial" Width="200" Height="47" FontSize="30"/>
+        </Grid>
     </Canvas>
 </Page>

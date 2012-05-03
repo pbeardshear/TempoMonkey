@@ -92,6 +92,27 @@ namespace TempoMonkey
 
         private void HandleKeyDownEvent(object sender, KeyEventArgs e)
         {
+            if (System.Windows.Input.Key.A == e.Key)
+            {
+                (currentPage as TutorMode).Pause();
+            }
+            if (System.Windows.Input.Key.S == e.Key)
+            {
+                (currentPage as TutorMode).Resume();
+            }
+            if (System.Windows.Input.Key.D == e.Key)
+            {
+                (currentPage as TutorMode).debugDoNext();
+            }
+            if (System.Windows.Input.Key.F == e.Key)
+            {
+                (currentPage as TutorMode).currentTrackIndex = 1;
+            }
+            if (System.Windows.Input.Key.G == e.Key)
+            {
+                (currentPage as TutorMode).currentTrackIndex = 2;
+            }
+            /*
             if (System.Windows.Input.Key.D == e.Key)
             {
                 (currentPage as FreeFormMode).currentTrackIndex = 0;
@@ -103,28 +124,29 @@ namespace TempoMonkey
             if (System.Windows.Input.Key.G == e.Key)
             {
                 (currentPage as FreeFormMode).currentTrackIndex = 2;
-            }
+            }*/
 
+            /*
             if (System.Windows.Input.Key.H == e.Key)
             {
-                (currentPage as FreeFormMode).currentTrackIndex = 0;
+                (currentPage as KinectPage).currentTrackIndex = 0;
             }
 
             if (System.Windows.Input.Key.Y == e.Key)
             {
-                (currentPage as FreeFormMode).currentTrackIndex = 1;
+                (currentPage as KinectPage).currentTrackIndex = 1;
             }
             if (System.Windows.Input.Key.U == e.Key)
             {
-                (currentPage as FreeFormMode).currentTrackIndex = 2;
+                (currentPage as KinectPage).currentTrackIndex = 2;
             }
             if (System.Windows.Input.Key.Q == e.Key)
             {
-                (currentPage as FreeFormMode).VolumeSlider.Value -= 5;
+                (currentPage as KinectPage).VolumeSlider.Value -= 5;
             }
             if (System.Windows.Input.Key.W == e.Key)
             {
-                (currentPage as FreeFormMode).VolumeSlider.Value += 5;
+                (currentPage as KinectPage).VolumeSlider.Value += 5;
             }
 
             if (System.Windows.Input.Key.A == e.Key)
@@ -157,7 +179,7 @@ namespace TempoMonkey
                 {
                     (currentPage as FreeFormMode).Pause();
                 }
-            }
+            } */
         }
 
         private void HandleKeyUpEvent(object sender, KeyEventArgs e)

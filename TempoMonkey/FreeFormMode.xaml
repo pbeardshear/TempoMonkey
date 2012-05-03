@@ -41,7 +41,5 @@
             <Button Grid.Row="0" Grid.Column="1" Content="Quit" Name="QuitButton" Canvas.ZIndex="2" Canvas.Left="704" Canvas.Top="251" Width="152" Height="46" FontSize="30"/>
          </Grid>
 		<!-- End overlay -->
-
-
     </Canvas>
 </Page>
