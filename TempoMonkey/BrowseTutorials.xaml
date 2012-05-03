@@ -13,11 +13,12 @@
         <!-- Grid stuff-->
         <Rectangle Height="390" Width="1000" Canvas.Left="146" Canvas.Top="170" Stroke="Gray" Fill="LightGray"></Rectangle>
         <Grid Name="selectionGallary" Height="390" Width="1000" Canvas.Left="146" Canvas.Top="170"></Grid>
-
+        <Label Content="" Height="62" HorizontalContentAlignment="Center" Name="Message" VerticalAlignment="Top" Width="681" FontSize="36" FontFamily="Bold Art" FontWeight="Bold" Canvas.Left="29" Canvas.Top="600" Foreground="#FFFF5521" />
+        
         <!--Buttons-->
         <Image Source="/Resources/Images/back-button.png" Canvas.Left="50" Canvas.Top="40" Name="BackButton" Stretch="Uniform"/>
-        <Image  Name="DoneButton" Source="/Resources/Images/done-button.png" Canvas.Left="1052" Canvas.Top="542" Height="135" Width="174" />
+        <Image  Name="DoneButton" Source="/Resources/Images/done-button.png" Canvas.Left="1052" Canvas.Top="542" Height="135" Width="174" MouseEnter="DoneButton_MouseEnter" />
         <!--Selected Buttons-->
-        <Image Source="/Resources/Images/done-button-selected.png" Canvas.Left="1052" Canvas.Top="542" Visibility="Hidden" Height="135" Width="174" />
+        <Image Name="DoneButtonBackground" Source="/Resources/Images/done-button-selected.png" Canvas.Left="1052" Canvas.Top="542" Visibility="Hidden" Height="135" Width="174" MouseLeave="DoneButton_MouseLeave" />
 	</Canvas>
 </Page>

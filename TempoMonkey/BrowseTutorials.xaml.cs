@@ -26,7 +26,8 @@ namespace TempoMonkey
         int sizeOfBox = 150;
         List<box> Boxes = new List<box>();
         int gridRows, gridCols;
-        NavigationButton backButton;
+        NavigationButton backButton, doneButton;
+        int tutorialIndex;
 
         public BrowseTutorials()
         {
@@ -37,6 +38,49 @@ namespace TempoMonkey
             backButton = new NavigationButton(BackButton, delegate(){
                 return MainWindow.soloPage;
             });
+
+            doneButton = new NavigationButton(DoneButtonBackground, delegate()
+            {
+                if (Boxes.Count == 0)
+                {
+                    Message.Content = "You have to pick at least one tutorial!";
+                    return null;
+                }
+                else
+                {
+                    ArrayList tutorAddrList = new ArrayList();
+                    ArrayList tutorList = new ArrayList();
+
+                    foreach (box selection in Boxes)
+                    {
+                        tutorAddrList.Add(selection.address);
+                        tutorList.Add(selection.name);
+                    }
+                    
+                    tearDown();
+                    
+                    //box currentlySelectedBox = (box)MainWindow.currentlySelectedObject;
+                    (MainWindow.tutorPage as TutorMode).initTutor(tutorialIndex);
+                    return MainWindow.tutorPage;
+                    //MainWindow.currentPage = MainWindow.tutorPage;
+                    //NavigationService.Navigate(MainWindow.currentPage); 
+                }
+            });
+        }
+
+        public void tearDown()
+        {
+            foreach (box selection in Boxes)
+            {
+                selection.unHighlightBox();
+            }
+            Boxes = new List<box>();
+
+            // Remove all the selections, row defintions and col defitions
+            selectionGallary.Children.RemoveRange(0, selectionGallary.Children.Count);
+            selectionGallary.RowDefinitions.RemoveRange(0, selectionGallary.RowDefinitions.Count);
+            selectionGallary.ColumnDefinitions.RemoveRange(0, selectionGallary.ColumnDefinitions.Count);
+
         }
 
         #region Grid stuff
@@ -96,13 +140,47 @@ namespace TempoMonkey
         }
         #endregion
 
+        public void unSelectBox(box Box)
+        {
+            Box.unHighlightBox();
+            Boxes.Remove(Box);
+        }
+
+        public void SelectBox(box Box)
+        {
+            Box.highlightBox();
+            bool tooMuch = Boxes.Count >= 1;
+            if (tooMuch)
+            {
+                unSelectBox(Boxes[0]);
+                Boxes.Add(Box);
+            }
+            else
+            {
+                Boxes.Add(Box);
+            }
+        }
+
         public void Click()
+        {
+            box currentlySelectedBox = (box)MainWindow.currentlySelectedObject;
+            if (!Boxes.Contains(currentlySelectedBox))
+            {
+                SelectBox(currentlySelectedBox);
+                tutorialIndex = currentlySelectedBox.index;
+            }
+            else
+            {
+                unSelectBox(currentlySelectedBox);
+            }
+        }
+        /*public void Click()
         {
             box currentlySelectedBox = (box)MainWindow.currentlySelectedObject;
             (MainWindow.tutorPage as TutorMode).initTutor(currentlySelectedBox.index);
             MainWindow.currentPage = MainWindow.tutorPage;
             NavigationService.Navigate(MainWindow.currentPage);
-        }
+        }*/
 
         #region Button Handlers
         void Mouse_Enter(object sender, MouseEventArgs e)
@@ -113,6 +191,16 @@ namespace TempoMonkey
         void Mouse_Leave(object sender, MouseEventArgs e)
         {
             MainWindow.Mouse_Leave(sender, e);
+        }
+
+        private void DoneButton_MouseLeave(object sender, MouseEventArgs e)
+        {
+            DoneButtonBackground.Visibility = System.Windows.Visibility.Hidden;
+        }
+
+        private void DoneButton_MouseEnter(object sender, MouseEventArgs e)
+        {
+            DoneButtonBackground.Visibility = System.Windows.Visibility.Visible;
         }
         #endregion
 
