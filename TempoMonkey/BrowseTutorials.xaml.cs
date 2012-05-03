@@ -42,6 +42,7 @@ namespace TempoMonkey
                 {
                     selection.unHighlightBox();
                 }
+                Message.Content = "";
                 Boxes = new List<box>();
                 return MainWindow.soloPage;
             });
