@@ -9,15 +9,23 @@
 
     <Canvas Name="mainCanvas">
 		<Image Source="/Resources/Images/back-button.png" Canvas.Left="72" Canvas.Top="36" Name="BackButton"/>
-        <Label Content="SELECT SONGS" Height="75" HorizontalContentAlignment="Center" Name="Title" VerticalAlignment="Top" Width="522" FontSize="70" FontWeight="Bold" Foreground="#8F00BF" Canvas.Left="429" Canvas.Top="36" 
+        <Label Content="SELECT SONGS" Height="75" HorizontalContentAlignment="Center" Name="Title" VerticalAlignment="Top" Width="522" FontSize="70" FontWeight="Bold" Foreground="#8F00BF" Canvas.Left="380" Canvas.Top="36" 
                FontFamily="Aharoni Bold"/>
         
         <!-- Grid stuff-->
-        <Rectangle Height="390" Width="1000" Canvas.Left="146" Canvas.Top="170" Stroke="Gray" Fill="LightGray"></Rectangle>
-        <Grid Name="selectionGallary" Height="390" Width="1000" Canvas.Left="146" Canvas.Top="170"></Grid>
+		<Border Canvas.Left="140" Canvas.Top="150" CornerRadius="10" BorderBrush="#CCC" BorderThickness="1" Background="#EDEDED">
+			<Rectangle Height="410" Width="1000" Canvas.Left="140" Canvas.Top="150"></Rectangle>
+		</Border>
+        <Grid Name="selectionGallary" Height="410" Width="1000" Canvas.Left="140" Canvas.Top="150"></Grid>
         
+<<<<<<< HEAD
         <Label Content="" Height="62" HorizontalContentAlignment="Center" Name="Message" VerticalAlignment="Top" Width="681" FontSize="40" FontFamily="Bold Art" FontWeight="Bold" Canvas.Left="29" Canvas.Top="600" Foreground="#FFFF5521" />
         <Image Canvas.Left="930" Canvas.Top="600" Height="62" Name="DoneButton" Stretch="Fill" Width="198" Source="/Resources/Images/done-button.png" MouseEnter="DoneButton_MouseEnter" />
         <Image Canvas.Left="930" Canvas.Top="600" Height="62" Name="DoneButtonBackground" Stretch="Fill" Width="198" Source="/Resources/Images/done-button-selected.png"  MouseLeave="DoneButton_MouseLeave" Visibility="Hidden"/>
+=======
+        <Label Content="" Height="62" HorizontalContentAlignment="Center" Name="Message" VerticalAlignment="Top" Width="681" FontSize="48" FontFamily="Bold Art" FontWeight="Bold" Canvas.Left="35" Canvas.Top="610" Foreground="#FFFF5521" />
+        <Image Canvas.Right="140" Canvas.Top="610" Height="62" Name="DoneButton" Stretch="Fill" Width="198" Source="/Resources/Images/done-button.png" MouseEnter="DoneButton_MouseEnter" />
+        <Image Canvas.Right="140" Canvas.Top="610" Height="62" Name="DoneButtonBackground" Stretch="Fill" Width="198" Source="/Resources/Images/done-button-selected.png"  MouseLeave="DoneButton_MouseLeave" Visibility="Hidden"/>
+>>>>>>> ef882701e0aeaafe522a9b23dcde2292165202b7
     </Canvas>
 </Page>

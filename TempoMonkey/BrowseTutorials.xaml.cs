@@ -23,7 +23,8 @@ namespace TempoMonkey
     /// </summary>
     public partial class BrowseTutorials : Page, SelectionPage
     {
-        int sizeOfBox = 150;
+        int sizeOfBox = 160;
+		int numBoxes = 5;
         List<box> Boxes = new List<box>();
         int gridRows, gridCols;
         NavigationButton backButton, doneButton;
@@ -35,7 +36,8 @@ namespace TempoMonkey
             addGrid();
             addItemsToGrid(@"Tutorials", "*.m4v");
 
-            backButton = new NavigationButton(BackButton, delegate(){
+            backButton = new NavigationButton(BackButton, delegate()
+			{
                 return MainWindow.soloPage;
             });
 
@@ -87,7 +89,7 @@ namespace TempoMonkey
         /* Creates a grid dyanmically with demensions equal to (height/100) by (width/100) */
         private void addGrid()
         {
-            int sizeOfCell = sizeOfBox + sizeOfBox * 1 / 5;
+			int sizeOfCell = (int)selectionGallary.Width / numBoxes;
             gridRows = (int)selectionGallary.Height / sizeOfCell;
             gridCols = (int)selectionGallary.Width / sizeOfCell;
 
@@ -203,6 +205,16 @@ namespace TempoMonkey
             DoneButtonBackground.Visibility = System.Windows.Visibility.Visible;
         }
         #endregion
+
+		private void DoneButton_MouseLeave(object sender, MouseEventArgs e)
+		{
+			DoneButtonBackground.Visibility = Visibility.Hidden;
+		}
+
+		private void DoneButton_MouseEnter(object sender, MouseEventArgs e)
+		{
+			DoneButtonBackground.Visibility = Visibility.Visible;
+		}
 
     }
 }

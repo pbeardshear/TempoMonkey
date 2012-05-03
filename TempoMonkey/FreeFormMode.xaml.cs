@@ -195,7 +195,7 @@ namespace TempoMonkey
 
         public void allFramesReady(object sender, AllFramesReadyEventArgs e)
         {
-            if (!isPaused)
+            if (!_isPaused)
             {
                 if (_type == "Solo")
                 {
@@ -274,7 +274,7 @@ namespace TempoMonkey
 		#region Gesture Handlers
 		void pauseTrackingHandler(bool exist)
 		{
-			if (isPaused)
+			if (_isPaused)
 			{
 				return;
 			}
@@ -394,45 +394,28 @@ namespace TempoMonkey
 
 		public void Resume()
 		{
-			isPaused = false;
+			_isPaused = false;
+            Processing.Audio.Resume();
+
+            mainCanvas.Background = new SolidColorBrush(Colors.Black);
+            ResumeButton.Visibility = System.Windows.Visibility.Hidden;
+            QuitButton.Visibility = System.Windows.Visibility.Hidden;
+            PauseOverlay.Visibility = System.Windows.Visibility.Hidden;
+            MainWindow.setManipulating(true);
+
 		}
 
         public void Pause()
         {
-            isPaused = true;
+            _isPaused = true;
+            Processing.Audio.Pause();
+
+            mainCanvas.Background = new SolidColorBrush(Colors.Gray);
+            PauseOverlay.Visibility = System.Windows.Visibility.Visible;
+            ResumeButton.Visibility = System.Windows.Visibility.Visible;
+            QuitButton.Visibility = System.Windows.Visibility.Visible;
+            MainWindow.setManipulating(false);
         }
-
-
-        public bool isPaused
-        {
-            set
-            {
-                _isPaused = value;
-                if (value)
-                {
-                    Processing.Audio.Play();
-                    mainCanvas.Background = new SolidColorBrush(Colors.White);
-                    ResumeButton.Visibility = System.Windows.Visibility.Hidden;
-                    QuitButton.Visibility = System.Windows.Visibility.Hidden;
-                    PauseOverlay.Visibility = System.Windows.Visibility.Hidden;
-                    MainWindow.setManipulating(true);
-                }
-                else
-                {
-                    Processing.Audio.Pause();
-                    mainCanvas.Background = new SolidColorBrush(Colors.Gray);
-                    PauseOverlay.Visibility = System.Windows.Visibility.Visible;
-                    ResumeButton.Visibility = System.Windows.Visibility.Visible;
-                    QuitButton.Visibility = System.Windows.Visibility.Visible;
-                    MainWindow.setManipulating(false);
-                }
-            }
-            get
-            {
-                return _isPaused;
-            }
-        }
-
 		#endregion
 
 

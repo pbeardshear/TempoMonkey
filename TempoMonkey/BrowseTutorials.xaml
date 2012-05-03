@@ -8,9 +8,10 @@
 	Title="BrowseTutorials" xmlns:my="clr-namespace:slidingMenu;assembly=slidingMenu">
 
     <Canvas Name="mainCanvas">
-		<Label Content="Choose a Lesson" HorizontalAlignment="Left" Name="Title" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontSize="70" FontFamily="Aharoni Bold" Foreground="#8F00BF" Canvas.Left="352" Canvas.Top="42" />
+		<Label Content="Choose a Lesson" HorizontalAlignment="Left" Name="Title" VerticalAlignment="Top" HorizontalContentAlignment="Center" FontSize="70" FontFamily="Aharoni Bold" Foreground="#8F00BF" Canvas.Left="346" Canvas.Top="40" />
 
         <!-- Grid stuff-->
+<<<<<<< HEAD
         <Rectangle Height="390" Width="1000" Canvas.Left="146" Canvas.Top="170" Stroke="Gray" Fill="LightGray"></Rectangle>
         <Grid Name="selectionGallary" Height="390" Width="1000" Canvas.Left="146" Canvas.Top="170"></Grid>
         <Label Content="" Height="62" HorizontalContentAlignment="Center" Name="Message" VerticalAlignment="Top" Width="681" FontSize="36" FontFamily="Bold Art" FontWeight="Bold" Canvas.Left="29" Canvas.Top="600" Foreground="#FFFF5521" />
@@ -20,5 +21,18 @@
         <Image  Name="DoneButton" Source="/Resources/Images/done-button.png" Canvas.Left="1052" Canvas.Top="542" Height="135" Width="174" MouseEnter="DoneButton_MouseEnter" />
         <!--Selected Buttons-->
         <Image Name="DoneButtonBackground" Source="/Resources/Images/done-button-selected.png" Canvas.Left="1052" Canvas.Top="542" Visibility="Hidden" Height="135" Width="174" MouseLeave="DoneButton_MouseLeave" />
+=======
+		<Border Canvas.Left="140" Canvas.Top="150" Background="#EDEDED" BorderBrush="#CCC" BorderThickness="1" CornerRadius="10">
+			<Rectangle Height="410" Width="1000" Canvas.Left="146" Canvas.Top="150" ></Rectangle>	
+		</Border>
+        <Grid Name="selectionGallary" Height="410" Width="1000" Canvas.Left="140" Canvas.Top="150"></Grid>
+		
+        <!--Buttons-->
+        <Image Source="/Resources/Images/back-button.png" Canvas.Left="50" Canvas.Top="40" Name="BackButton" Stretch="Uniform"/>
+        <Image  Name="DoneButton" Source="/Resources/Images/done-button.png" Canvas.Right="140" Canvas.Top="610" MouseEnter="DoneButton_MouseEnter" />
+        
+		<!--Selected Buttons-->
+        <Image Source="/Resources/Images/done-button-selected.png" Canvas.Right="140" Canvas.Top="610" Visibility="Hidden" Name="DoneButtonBackground" MouseLeave="DoneButton_MouseLeave"  />
+>>>>>>> ef882701e0aeaafe522a9b23dcde2292165202b7
 	</Canvas>
 </Page>

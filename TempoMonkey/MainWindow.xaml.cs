@@ -115,11 +115,22 @@ namespace TempoMonkey
 
             if (System.Windows.Input.Key.A == e.Key)
             {
-                Processing.Audio.Resume();
+                Processing.Audio.Pause();
             }
+
             if (System.Windows.Input.Key.S == e.Key)
             {
-				Processing.Audio.Pause();
+                Processing.Audio.Resume();
+            }
+
+            if (System.Windows.Input.Key.Z == e.Key)
+            {
+                (currentPage as FreeFormMode).Pause();
+            }
+
+            if (System.Windows.Input.Key.X == e.Key)
+            {
+                (currentPage as FreeFormMode).Resume();
             }
 
             if (System.Windows.Input.Key.LeftShift == e.Key)

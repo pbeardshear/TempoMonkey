@@ -28,9 +28,9 @@
         <Image Canvas.Left="704" Canvas.Top="12" Height="50" Name="tempoAvatar" Stretch="Fill" Width="50" />
         <Image Canvas.Left="869" Canvas.Top="12" Height="50" Name="seekAvatar" Stretch="Fill" Width="50" />
         <!-- Pause overlay -->
-	    <Grid Name="PauseOverlay" Height="140" Width="600" Visibility="Hidden" Background="#CCC" Opacity="0.8" Canvas.Left="363" Canvas.Top="289">
-                <Button Content="Resume" Name="ResumeButton" Canvas.ZIndex="2" Canvas.Left="411" Canvas.Top="251" Width="152" Height="46" FontSize="30" Visibility="Hidden" />
-                <Button Content="Quit" Name="QuitButton" Canvas.ZIndex="2" Canvas.Left="704" Canvas.Top="251" Width="152" Height="46" FontSize="30" Visibility="Hidden"/>
+        <Grid Name="PauseOverlay" Height="140" Canvas.ZIndex="2" Width="600" Visibility="Hidden" Background="#CCC" Opacity="0.8" Canvas.Left="363" Canvas.Top="289">
+            <Button Content="Resume" Name="ResumeButton" Canvas.ZIndex="2" Canvas.Left="411" Canvas.Top="251" Width="152" Height="46" FontSize="30" Visibility="Hidden" />
+            <Button Content="Quit" Name="QuitButton" Canvas.ZIndex="2" Canvas.Left="704" Canvas.Top="251" Width="152" Height="46" FontSize="30" Visibility="Hidden"/>
          </Grid>
 		<!-- End overlay -->
 
