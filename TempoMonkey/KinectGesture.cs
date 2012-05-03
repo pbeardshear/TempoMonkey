@@ -171,6 +171,44 @@ class KinectGesturePlayer
         }
     }
 
+
+    /* Detects quick movements of the body, we can use this for changing tracks */
+    // Have an Queue of size 40, if the user has diverate alot in the last 40 frames, then
+    // they must have switched tracks
+    private int MoveValue = 100;
+    private Queue<int> bodyMoves = new Queue<int>();
+    private int prevSpineX = -999;
+    public void trackMoveListener()
+    {
+        if (prevSpineX != -999)
+        {
+            bodyMoves.Enqueue(currSpine.X - prevSpineX);
+        }
+
+        if (bodyMoves.Count() > 40)
+        {
+            bodyMoves.Dequeue();
+        }
+
+        if (handled)
+        {
+            return;
+        }
+        else
+        {
+            if (bodyMoves.Sum() > 100)
+            {
+                callDynamicCallBack(trackMoveListener, -1);
+            }
+            else if (bodyMoves.Sum() < 100)
+            {
+                callDynamicCallBack(trackMoveListener, 1);
+            }
+        }
+    }
+
+
+
     /* Detects a right hand fist pump, that we might use for changing tempo */
     private bool fistLeftCharged = false;
     private bool fistLeftPumped = false;

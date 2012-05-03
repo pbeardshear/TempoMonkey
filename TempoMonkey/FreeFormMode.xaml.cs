@@ -154,13 +154,13 @@ namespace TempoMonkey
 
             // connected to gestures
             freePlayer = new KinectGesturePlayer();
-            freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
+            freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, null);
             freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
             freePlayer.registerCallBack(freePlayer.leanListener, tempoTrackingHandler, tempoChangeHandler);
             freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
 
             freePlayer2 = new KinectGesturePlayer();
-            freePlayer2.registerCallBack(freePlayer2.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
+            freePlayer2.registerCallBack(freePlayer2.kinectGuideListener, pauseTrackingHandler, null);
             freePlayer2.registerCallBack(freePlayer2.handsAboveHeadListener, pitchTrackingHandler2, pitchChangeHandler);
             freePlayer2.registerCallBack(freePlayer2.leanListener, tempoTrackingHandler2, tempoChangeHandler);
             freePlayer2.registerCallBack(freePlayer2.handsWidenListener, volumeTrackingHandler2, volumeChangeHandler);
@@ -192,10 +192,11 @@ namespace TempoMonkey
 
             // connected to gestures
             freePlayer = new KinectGesturePlayer();
-			freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
+			freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, null);           
 			freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
 			freePlayer.registerCallBack(freePlayer.leanListener, tempoTrackingHandler, tempoChangeHandler);
 			freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
+            freePlayer.registerCallBack(freePlayer.trackMoveListener, null, changeTrackHandler);
         }
 
         public void tearDown()
@@ -320,32 +321,30 @@ namespace TempoMonkey
 
 
 		int _currentTrackIndex;
-
-        int midPoint = 325;
-        int span = 190;
 		void changeTrackHandler(double value)
 		{
-            if (!wasSeeking)
-			{
-				SeekSlider.Value += .05;
-			}
+            if (value == 0)
+            {
 
-			if (value < midPoint - span && currentTrackIndex != 0 && _nameList.Count > 1)
-			{
-				currentTrackIndex = 0;
-			}
-			else if (value > midPoint + span && currentTrackIndex != 2 && _nameList.Count > 2)
-			{
-                currentTrackIndex = 2;
-			}
-			else if (value >= midPoint - span && value <= midPoint + span && currentTrackIndex != 1)
-			{
-                currentTrackIndex = 1;
-			}
-			else
-			{
-				return;
-			}
+            }
+            else if (value == 1)
+            {
+                if (currentTrackIndex < _nameList.Count - 1)
+                {
+                    currentTrackIndex += 1;
+                }
+            }
+            else if (value == -1)
+            {
+                if (currentTrackIndex != 0)
+                {
+                    currentTrackIndex -= 1;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
 		}
 
 		void volumeChangeHandler(double change)

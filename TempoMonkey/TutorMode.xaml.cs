@@ -196,11 +196,12 @@ namespace TempoMonkey
 
             // connected to gestures
             tutoree = new KinectGesturePlayer();
-            tutoree.registerCallBack(tutoree.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
+            tutoree.registerCallBack(tutoree.kinectGuideListener, pauseTrackingHandler, null);
             tutoree.registerCallBack(tutoree.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
             tutoree.registerCallBack(tutoree.handSwingListener, seekTrackingHandler, seekChangeHandler);
             tutoree.registerCallBack(tutoree.leanListener, tempoTrackingHandler, tempoChangeHandler);
             tutoree.registerCallBack(tutoree.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
+            tutoree.registerCallBack(tutoree.trackMoveListener, null, changeTrackHandler);
         }
 
         public void tearDown()
@@ -345,33 +346,35 @@ namespace TempoMonkey
         }
 
         int totalTrackChange = 0;
-        int midPoint = 325;
-        int span = 190;		
+
+
         void changeTrackHandler(double value)
         {
-            if (!wasSeeking)
+            bool changed = true;
+            if (value == 0)
             {
-                SeekSlider.Value += .05;
+                changed = false;
             }
-
-            if (value < midPoint - span && currentTrackIndex != 0 && _nameList.Count > 1)
+            else if (value == 1)
             {
-                currentTrackIndex = 0;
+                if (currentTrackIndex < _nameList.Count - 1)
+                {
+                    currentTrackIndex += 1;
+                }
             }
-            else if (value > midPoint + span && currentTrackIndex != 2 && _nameList.Count > 2)
+            else if (value == -1)
             {
-                currentTrackIndex = 2;
-            }
-            else if (value >= midPoint - span && value <= midPoint + span && currentTrackIndex != 1)
-            {
-                currentTrackIndex = 1;
+                if (currentTrackIndex != 0)
+                {
+                    currentTrackIndex -= 1;
+                }
             }
             else
             {
-                return;
+                throw new Exception();
             }
 
-            if (Tutorial.getCurrentTutorial() == switch_tracks)
+           if (changed && Tutorial.getCurrentTutorial() == switch_tracks)
             {
                 totalTrackChange++;
                 if (totalTrackChange >= 3){
@@ -379,6 +382,7 @@ namespace TempoMonkey
                 }
             }
         }
+
 
         double totalVolumeChange = 0;
         void volumeChangeHandler(double change)
