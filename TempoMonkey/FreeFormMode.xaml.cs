@@ -199,7 +199,6 @@ namespace TempoMonkey
                 currentTrackIndex = _nameList.Count > 1 ? 1 : 0;
             });
 
-
             // connected to gestures
             freePlayer = new KinectGesturePlayer();
 			freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);

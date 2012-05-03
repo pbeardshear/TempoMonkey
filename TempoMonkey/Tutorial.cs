@@ -33,9 +33,12 @@ namespace TempoMonkey
             return _instructions;
         }
 
-        public static void setIndex(int index)
+        public static int TutorialIndex
         {
-            _tutorialIndex = index;
+            set
+            {
+                _tutorialIndex = value;
+            }
         }
 
         public string getName()

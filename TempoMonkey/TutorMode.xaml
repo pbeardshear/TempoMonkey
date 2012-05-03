@@ -15,9 +15,9 @@
         <!-- Selector square for denoting selected song -->
         <Rectangle Name="BlueDot" Fill="Cyan" Height="9" Width="9" Canvas.Left="525" Canvas.Top="77" />
         <!-- Container objects for song waveforms -->
-        <Canvas Background="White" Name="SongContainer0" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
-        <Canvas Background="White" Name="SongContainer1" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
-        <Canvas Background="White" Name="SongContainer2" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
+        <Canvas Background="Black" Name="SongContainer0" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
+        <Canvas Background="Black" Name="SongContainer1" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
+        <Canvas Background="Black" Name="SongContainer2" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
 
         <!-- Media Element -->
         <MediaElement Name="myMediaElement" 

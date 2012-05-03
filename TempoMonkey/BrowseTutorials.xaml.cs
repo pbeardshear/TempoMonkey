@@ -59,7 +59,7 @@ namespace TempoMonkey
                 {
                     tearDown();
                     (MainWindow.tutorPage as TutorMode).initTutor(tutorialIndex);
-                    return MainWindow.tutorPage;
+                    return MainWindow.loadingPage;
                 }
             });
         }
@@ -123,7 +123,9 @@ namespace TempoMonkey
             // littleBox.address = address;
             // littleBox.name = name;
             // string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Tutorial_Art\\" + name + "_tutorial.png";
-			string path = "/Resources/Images/" + Regex.Match(name, "([a-zA-Z]+)").Value + "-tutorial.png";
+            string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Tutorial_Art\\" + name + "_tutorial.png";
+            
+			// string path = "/Resources/Images/" + Regex.Match(name, "([a-zA-Z]+)").Value + "-tutorial.png";
             littleBox.setImage(path);
 
             Grid.SetRow(littleBox, rowspot);

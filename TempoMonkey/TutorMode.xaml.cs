@@ -125,28 +125,74 @@ namespace TempoMonkey
             wave.Draw();
         }
 
+        // This is slow because it is serial, Peter can you create a function that takes in multiple waveForms 
+        // and calls a single callback. when it is all done? Thanks.
+        public void initWaveFormRecur(int index, Panel[] waveFormContainers, ArrayList uris,
+            Visualizer.Timeline.WaveformTimeline.CompletionCallback callback = null)
+        {
+            if (index >= uris.Count - 1)
+            {
+                Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainers[index], uris[index] as string, callback);
+                wave.Draw();
+            }
+            else
+            {
+                Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainers[index], uris[index] as string, delegate()
+                {
+                    initWaveFormRecur(index + 1, waveFormContainers, uris, callback);
+                });
+                wave.Draw();
+            }
+        }
+
         public void initTutor(int index)
         {
-            // TODO PUT A WAITING SCREEN HERE
-
-            List<string> nameList = new List<string>{ "Chasing Pavements", "Enough To Fly With You" };
-            List<string> addrList = new List<string>{ @"..\..\Resources\Music\Chasing Pavements.mp3", @"..\..\Resources\Music\Enough To Fly With You.mp3" };
             initCommon();
+            List<string> nameList = new List<string>{ "Chasing Pavements", "Enough To Fly With You" };
+            ArrayList addrList = new ArrayList{ @"..\..\Resources\Music\Chasing Pavements.mp3", @"..\..\Resources\Music\Enough To Fly With You.mp3" };
 
             // Load and set the song titles
             for (int i = 0; i < addrList.Count; i++)
             {
                 string address = addrList[i] as String;
                 string name = nameList[i] as String;
-                initWaveForm(waveFormContainers[i], address);
                 _nameList.Add(name);
                 SongTitles[i].Content = name;
                 Processing.Audio.LoadFile(address);
             }
 
-            // Set the current track & also plays it
-            Processing.Audio.Play();
-            currentTrackIndex = _nameList.Count > 1 ? 1 : 0;
+            initWaveFormRecur(0, waveFormContainers, addrList, delegate()
+            {
+                MainWindow.loadingPage.NavigationService.Navigate(MainWindow.tutorPage);
+
+                // Sets the current track & also plays it
+                Processing.Audio.Play();
+                currentTrackIndex = _nameList.Count > 1 ? 1 : 0;
+
+
+                Tutorial.TutorialIndex = index;
+                playTutorial(Tutorial.getCurrentTutorial());
+                Timer = new DispatcherTimer();
+                Timer.Interval = TimeSpan.FromSeconds(2);
+                Timer.Tick += (delegate(object s, EventArgs args)
+                {
+                    //Checks if the user has finished the task, and queues up the next task
+                    if (Tutorial.checkTask())
+                    {
+                        Tutorial next = Tutorial.nextTutorial();
+                        if (next != null)
+                        {
+                            showTutorialChooser(next);
+                        }
+                        else
+                        {
+                            showTutorialsFinished();
+                            Timer.Stop();
+                        }
+                    }
+                });
+                Timer.Start();
+            });
 
             // connected to gestures
             tutoree = new KinectGesturePlayer();
@@ -155,29 +201,6 @@ namespace TempoMonkey
             tutoree.registerCallBack(tutoree.handSwingListener, seekTrackingHandler, seekChangeHandler);
             tutoree.registerCallBack(tutoree.leanListener, tempoTrackingHandler, tempoChangeHandler);
             tutoree.registerCallBack(tutoree.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
-
-            Tutorial.setIndex(index);
-            playTutorial(Tutorial.getCurrentTutorial());
-            Timer = new DispatcherTimer();
-            Timer.Interval = TimeSpan.FromSeconds(2);
-            Timer.Tick += (delegate(object s, EventArgs args)
-            {
-                //Checks if the user has finished the task, and queues up the next task
-                if (Tutorial.checkTask())
-                {
-                    Tutorial next = Tutorial.nextTutorial();
-                    if (next != null)
-                    {
-                        showTutorialChooser(next);
-                    }
-                    else
-                    {
-                        showTutorialsFinished();
-                        Timer.Stop();
-                    }
-                }
-            });
-            Timer.Start();
         }
 
         public void tearDown()

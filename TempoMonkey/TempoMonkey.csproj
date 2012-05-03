@@ -230,12 +230,6 @@
     <Resource Include="Resources\Images\done_button_unselected.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\Tutorial_Art\02pitch_tutorial.png" />
-    <Resource Include="Images\Tutorial_Art\05seek_tutorial.png" />
-    <Resource Include="Images\Tutorial_Art\01tempo_tuturial.png" />
-    <Resource Include="Images\Tutorial_Art\03volume_tutorial.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Images\menu_arrow.png" />
   </ItemGroup>
   <ItemGroup>
