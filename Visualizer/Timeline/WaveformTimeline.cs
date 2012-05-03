@@ -8,6 +8,7 @@ using System.ComponentModel;
 using NAudio.Wave;
 using Processing;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Visualizer.Timeline
 {
@@ -17,11 +18,14 @@ namespace Visualizer.Timeline
 		private Panel Container;
 		private Brush WaveformFill = Brushes.RoyalBlue;
 		private float TopOffset = 0;
-		private float LeftOffset = 0;
+		private float LeftOffset = 20;
 
 		private BackgroundWorker worker = new BackgroundWorker();
 		private CompletionCallback OnCompletion;
 		private Sampler InputSampler;
+
+		private Rectangle CurrentPosition;
+		private double TotalTime = 0.0;
 
 		private string FileName;
 		private float[] WaveformData;
@@ -35,6 +39,17 @@ namespace Visualizer.Timeline
 			Container = container;
 			FileName = fileName;
 			OnCompletion = callback;
+
+			CurrentPosition = new Rectangle
+			{
+				Height = container.Height,
+				Width = 4,
+				Fill = Brushes.DarkSlateBlue,
+				Opacity = 0.9,
+				Margin = new System.Windows.Thickness(LeftOffset, TopOffset, 0, 0)
+			};
+			// Add the tracking bar to the container
+			Container.Children.Add(CurrentPosition);
 		}
 
 		#region Public Methods
@@ -65,6 +80,33 @@ namespace Visualizer.Timeline
 
 			// Start the background worker
 			worker.RunWorkerAsync();
+		}
+
+		/// <summary>
+		/// Sets up a timer to hook into the Audio library for tracking the position of the current song
+		/// </summary>
+		public void StartTracking()
+		{
+			DispatcherTimer timer = new DispatcherTimer(DispatcherPriority.Background);
+			timer.Interval = TimeSpan.FromMilliseconds(100);
+			timer.Tick += new EventHandler(timer_Tick);
+			timer.Start();
+		}
+
+		void timer_Tick(object sender, EventArgs e)
+		{
+			if (Audio.IsPlaying && Audio.CurrentTrack == FileName)
+			{
+				// Only track when the audio library is playing the song that this 
+				// waveform is matched up with
+				WaveChannel32 stream = Audio.CurrentStream;
+				if (TotalTime == 0.0)
+				{
+					TotalTime = stream.TotalTime.TotalSeconds;
+				}
+				double offset = (stream.CurrentTime.TotalSeconds / TotalTime) * 1000;
+				CurrentPosition.Margin = new System.Windows.Thickness(offset + LeftOffset, TopOffset, 0, 0);
+			}
 		}
 
 		#endregion
@@ -154,7 +196,7 @@ namespace Visualizer.Timeline
 			PathFigure figure = new PathFigure();
 			double yOffset = Container.Height / 2;
 			figure.StartPoint = new System.Windows.Point(0, yOffset);
-			double thickness = 1000.0 / WaveformData.Length;
+			double thickness = (2 * (Container.Width - LeftOffset - 10)) / WaveformData.Length;
 			double x = 0;
 
 			PolyLineSegment leftSegment = new PolyLineSegment();
@@ -178,9 +220,9 @@ namespace Visualizer.Timeline
 			path.Data = geometry;
 
             //Strech it out, to fit the container
-            path.Data.Transform = new ScaleTransform(Container.Width / x, 1);
+            // path.Data.Transform = new ScaleTransform(Container.Width / x, 1);
 
-			Container.Children.Add(path);
+			Container.Children.Insert(0, path);
 			if (Container is Canvas)
 			{
 				Canvas.SetLeft(path, LeftOffset);
