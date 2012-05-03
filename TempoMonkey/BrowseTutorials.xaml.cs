@@ -55,22 +55,9 @@ namespace TempoMonkey
                 }
                 else
                 {
-                    ArrayList tutorAddrList = new ArrayList();
-                    ArrayList tutorList = new ArrayList();
-
-                    foreach (box selection in Boxes)
-                    {
-                        tutorAddrList.Add(selection.address);
-                        tutorList.Add(selection.name);
-                    }
-                    
                     tearDown();
-                    
-                    //box currentlySelectedBox = (box)MainWindow.currentlySelectedObject;
                     (MainWindow.tutorPage as TutorMode).initTutor(tutorialIndex);
                     return MainWindow.tutorPage;
-                    //MainWindow.currentPage = MainWindow.tutorPage;
-                    //NavigationService.Navigate(MainWindow.currentPage); 
                 }
             });
         }
@@ -82,12 +69,6 @@ namespace TempoMonkey
                 selection.unHighlightBox();
             }
             Boxes = new List<box>();
-
-            // Remove all the selections, row defintions and col defitions
-            selectionGallary.Children.RemoveRange(0, selectionGallary.Children.Count);
-            selectionGallary.RowDefinitions.RemoveRange(0, selectionGallary.RowDefinitions.Count);
-            selectionGallary.ColumnDefinitions.RemoveRange(0, selectionGallary.ColumnDefinitions.Count);
-
         }
 
         #region Grid stuff
@@ -181,13 +162,6 @@ namespace TempoMonkey
                 unSelectBox(currentlySelectedBox);
             }
         }
-        /*public void Click()
-        {
-            box currentlySelectedBox = (box)MainWindow.currentlySelectedObject;
-            (MainWindow.tutorPage as TutorMode).initTutor(currentlySelectedBox.index);
-            MainWindow.currentPage = MainWindow.tutorPage;
-            NavigationService.Navigate(MainWindow.currentPage);
-        }*/
 
         #region Button Handlers
         void Mouse_Enter(object sender, MouseEventArgs e)
@@ -200,8 +174,6 @@ namespace TempoMonkey
             MainWindow.Mouse_Leave(sender, e);
         }
 
-        #endregion
-
 		private void DoneButton_MouseLeave(object sender, MouseEventArgs e)
 		{
 			DoneButtonBackground.Visibility = Visibility.Hidden;
@@ -211,6 +183,6 @@ namespace TempoMonkey
 		{
 			DoneButtonBackground.Visibility = Visibility.Visible;
 		}
-
+        #endregion
     }
 }

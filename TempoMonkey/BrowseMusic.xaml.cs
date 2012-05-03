@@ -102,12 +102,6 @@ namespace TempoMonkey
                 selection.unHighlightBox();
             }
             mySelections = new List<box>();
-
-            // Remove all the selections, row defintions and col defitions
-            selectionGallary.Children.RemoveRange(0, selectionGallary.Children.Count);
-            selectionGallary.RowDefinitions.RemoveRange(0, selectionGallary.RowDefinitions.Count);
-            selectionGallary.ColumnDefinitions.RemoveRange(0, selectionGallary.ColumnDefinitions.Count);
-
         }
 
         #region Grid stuff
