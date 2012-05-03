@@ -15,8 +15,9 @@
 			<Rectangle Height="410" Width="1000" Canvas.Left="146" Canvas.Top="150" ></Rectangle>	
 		</Border>
         <Grid Name="selectionGallary" Height="410" Width="1000" Canvas.Left="140" Canvas.Top="150"></Grid>
-		
-        <!--Buttons-->
+            <Label Content="" Height="62" HorizontalContentAlignment="Center" Name="Message" VerticalAlignment="Top" Width="681" FontSize="36" FontFamily="Bold Art" FontWeight="Bold" Canvas.Left="29" Canvas.Top="600" Foreground="#FFFF5521" />
+    
+            <!--Buttons-->
         <Image Source="/Resources/Images/back-button.png" Canvas.Left="50" Canvas.Top="40" Name="BackButton" Stretch="Uniform"/>
         <Image  Name="DoneButton" Source="/Resources/Images/done-button.png" Canvas.Right="140" Canvas.Top="610" MouseEnter="DoneButton_MouseEnter" />
         
