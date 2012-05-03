@@ -92,10 +92,24 @@ namespace TempoMonkey
 
         private void HandleKeyDownEvent(object sender, KeyEventArgs e)
         {
-            if (System.Windows.Input.Key.T == e.Key)
+            if (System.Windows.Input.Key.D == e.Key)
             {
                 (currentPage as FreeFormMode).currentTrackIndex = 0;
             }
+            if (System.Windows.Input.Key.F == e.Key)
+            {
+                (currentPage as FreeFormMode).currentTrackIndex = 1;
+            }
+            if (System.Windows.Input.Key.G == e.Key)
+            {
+                (currentPage as FreeFormMode).currentTrackIndex = 2;
+            }
+
+            if (System.Windows.Input.Key.H == e.Key)
+            {
+                (currentPage as FreeFormMode).currentTrackIndex = 0;
+            }
+
             if (System.Windows.Input.Key.Y == e.Key)
             {
                 (currentPage as FreeFormMode).currentTrackIndex = 1;

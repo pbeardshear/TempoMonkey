@@ -36,77 +36,6 @@ namespace TempoMonkey
         private Dictionary<Tutorial, check> _checkers = new Dictionary<Tutorial, check>();
 
 
-        #region Tutorials
-        public class Tutorial
-        {
-            static List<Tutorial> _tutorials = new List<Tutorial>();
-            public static int _tutorialIndex;
-            string _name, _instructions;
-            Uri _source;
-            check _checker;
-
-            public Tutorial(string name, string instructions, Uri source, check checker)
-            {
-                _name = name;
-                _instructions = instructions;
-                _source = source;
-                _checker = checker;
-            }
-
-            public Uri getSource()
-            {
-                return _source;
-            }
-
-            public string getInstructions()
-            {
-                return _instructions;
-            }
-
-            public static void setIndex(int index)
-            {
-                _tutorialIndex = index;
-            }
-
-            public string getName()
-            {
-                return _name;
-            }
-
-            public static Tutorial getCurrentTutorial()
-            {
-                return _tutorials[_tutorialIndex];
-            }
-
-            public static void addTutorial(Tutorial tutorial)
-            {
-                _tutorials.Add(tutorial);
-            }
-
-            public static bool checkTask()
-            {
-                if (doNext)
-                {
-                    doNext = false;
-                    return true;
-                }
-                return _tutorials[_tutorialIndex]._checker();
-            }
-
-            public static Tutorial nextTutorial()
-            {
-                _tutorialIndex++;
-                if (_tutorialIndex < _tutorials.Count)
-                {
-                    return _tutorials[_tutorialIndex];
-                }
-                else
-                {
-                    return null;
-                }
-            }
-        }
-
         public void playTutorial(Tutorial tutorial)
         {
             myMediaElement.Source = tutorial.getSource();
@@ -169,7 +98,6 @@ namespace TempoMonkey
         {
             return doneSeeking;
         }
-        #endregion
 
         Spectrum spectrumVisualizer;
 
@@ -574,10 +502,9 @@ namespace TempoMonkey
             playTutorial(Tutorial.getCurrentTutorial());
         }
 
-        static bool doNext = false;
         private void Debug_Click(object sender, RoutedEventArgs e)
         {
-            doNext = true;
+            Tutorial.doNext = true;
             mainCanvas.Background = new SolidColorBrush(Colors.Gray);
         }
         #endregion

@@ -76,6 +76,7 @@
     </Compile>
     <Compile Include="KinectGesture.cs" />
     <Compile Include="NavigationButton.cs" />
+    <Compile Include="Tutorial.cs" />
     <Compile Include="TutorMode.xaml.cs">
       <DependentUpon>TutorMode.xaml</DependentUpon>
     </Compile>
