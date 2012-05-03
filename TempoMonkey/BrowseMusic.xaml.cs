@@ -44,7 +44,11 @@ namespace TempoMonkey
 			// Create navigation buttons
 			backButton = new NavigationButton(BackButton, delegate()
 			{
-                tearDown();
+                foreach (box selection in mySelections)
+                {
+                    selection.unHighlightBox();
+                }
+                mySelections = new List<box>();
                 if (_type == "Buddy")
                     return MainWindow.homePage;
                 else//if (_type == "Solo")

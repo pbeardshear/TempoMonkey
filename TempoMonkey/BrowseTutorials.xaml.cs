@@ -38,6 +38,11 @@ namespace TempoMonkey
 
             backButton = new NavigationButton(BackButton, delegate()
 			{
+                foreach (box selection in Boxes)
+                {
+                    selection.unHighlightBox();
+                }
+                Boxes = new List<box>();
                 return MainWindow.soloPage;
             });
 
