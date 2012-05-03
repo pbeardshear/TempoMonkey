@@ -107,6 +107,9 @@ namespace TempoMonkey
         {
             Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainer, uri, callback);
             wave.Draw();
+			// This might be more appropriate to call after Audio.Play() is called, but currently there is no
+			// reference to these wave objects.  Tracking checks if the Audio is playing, so it shouldn't break.
+			wave.StartTracking();
         }
 
         // This is slow because it is serial, Peter can you create a function that takes in multiple waveForms 
@@ -118,6 +121,9 @@ namespace TempoMonkey
             {
                 Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainers[index], uris[index] as string, callback);
                 wave.Draw();
+				// This might be more appropriate to call after Audio.Play() is called, but currently there is no
+				// reference to these wave objects.  Tracking checks if the Audio is playing, so it shouldn't break.
+				wave.StartTracking();
             }
             else
             {
@@ -126,6 +132,9 @@ namespace TempoMonkey
                     initWaveFormRecur(index + 1, waveFormContainers, uris, callback);
                 });
                 wave.Draw();
+				// This might be more appropriate to call after Audio.Play() is called, but currently there is no
+				// reference to these wave objects.  Tracking checks if the Audio is playing, so it shouldn't break.
+				wave.StartTracking();
             }
         }
 

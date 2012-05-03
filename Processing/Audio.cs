@@ -20,6 +20,7 @@ namespace Processing
         public static int CurrentTrackIndex;
         public static bool IsInitialized = false;
 		public static bool IsPlaying = false;
+		public static WaveChannel32 CurrentStream { get; private set; }
 
 		public static Sampler InputSampler;
         #endregion
@@ -256,7 +257,8 @@ namespace Processing
             {
                 CurrentTrackIndex = 0;
                 CurrentTrack = _audioStreamList[CurrentTrackIndex].Name;
-				
+				CurrentStream = _audioStreamList[CurrentTrackIndex].Stream;
+
                 // This is the first time playing, so we need to create a thread to run on
                 audioProcessingThread = new Thread(new ThreadStart(delegate
                 {
