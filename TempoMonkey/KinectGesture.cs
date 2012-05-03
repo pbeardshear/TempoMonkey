@@ -158,6 +158,8 @@ class KinectGesturePlayer
             }
             else
             {
+                int degrees = (360 * guideTryCount / 40);
+                callDynamicCallBack(kinectGuideListener, degrees);
                 guideTryCount++;
             }
         }

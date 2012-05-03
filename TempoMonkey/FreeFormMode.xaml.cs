@@ -20,6 +20,7 @@ using System.Drawing;
 using System.Windows.Threading;
 using slidingMenu;
 using Visualizer;
+using System.Windows.Shapes;
 
 namespace TempoMonkey
 {
@@ -37,6 +38,9 @@ namespace TempoMonkey
 
         public void initCommon()
         {
+            PauseCircle.Stroke = System.Windows.Media.Brushes.RoyalBlue;
+            PauseCircle.StrokeThickness = 10;
+
             waveFormContainers[0] = SongContainer0;
             waveFormContainers[1] = SongContainer1;
             waveFormContainers[2] = SongContainer2;
@@ -201,7 +205,7 @@ namespace TempoMonkey
 
             // connected to gestures
             freePlayer = new KinectGesturePlayer();
-			freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, null);           
+			freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, pauseChangeHandler);           
 			freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
 			freePlayer.registerCallBack(freePlayer.leanListener, tempoTrackingHandler, tempoChangeHandler);
 			freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
@@ -327,6 +331,41 @@ namespace TempoMonkey
 				Pause();
 			}
 		}
+
+        void pauseChangeHandler(double angle)
+        {
+            if (angle > 10)
+            {
+                PauseCircle.Visibility = System.Windows.Visibility.Visible;
+                PauseImage.Visibility = System.Windows.Visibility.Visible;
+
+                System.Windows.Point center = Mouse.GetPosition(mainCanvas);
+                System.Windows.Point endPoint = new System.Windows.Point(center.X + 40 * Math.Sin(angle / 180.0 * Math.PI), center.Y - 40 * Math.Cos(angle / 180.0 * Math.PI));
+
+
+                PathFigure figure = new PathFigure();
+                figure.StartPoint = new System.Windows.Point(center.X, center.Y - 40);
+
+                figure.Segments.Add(new ArcSegment(
+                    endPoint,
+                    new System.Windows.Size(40, 40),
+                    0,
+                    angle >= 180,
+                    SweepDirection.Clockwise,
+                    true
+                ));
+
+                PathGeometry geometry = new PathGeometry();
+                geometry.Figures.Add(figure);
+
+                PauseCircle.Data = geometry;
+
+            } else {
+                PauseCircle.Visibility = System.Windows.Visibility.Hidden;
+                PauseImage.Visibility = System.Windows.Visibility.Hidden;
+            }
+        }
+
 
 
 		int _currentTrackIndex;

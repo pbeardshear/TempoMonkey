@@ -42,5 +42,10 @@
             <Button Grid.Row="0" Grid.Column="1" Content="Quit" Name="QuitButton" Canvas.ZIndex="2" Canvas.Left="704" Canvas.Top="251" Width="152" Height="46" FontSize="30"/>
          </Grid>
 		<!-- End overlay -->
+        
+        <!-- To give some feedback on user pausing, we have this image in the corner and it will have a path rotating around it -->
+        <!-- Currenty the image does not correspond to the action, because no image exist for that at the moment-->
+        <Image Name="PauseImage" Visibility="Hidden" Source="/Resources/Images/seek-avatar.png" Canvas.Left="40" Canvas.Top="548" RenderTransformOrigin="0.098,1.496" />
+        <Path Name="PauseCircle"></Path>
     </Canvas>
 </Page>
