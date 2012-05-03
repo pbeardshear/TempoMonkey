@@ -63,6 +63,7 @@ namespace TempoMonkey
                     return null;
                 } else 
                 {
+                    // this.NavigationService.Navigate(MainWindow.loadingPage);
                     ArrayList musicAddrList = new ArrayList();
                     ArrayList musicList = new ArrayList();
 
@@ -91,7 +92,7 @@ namespace TempoMonkey
                         throw new Exception();
                     }
                     tearDown();
-                    //return MainWindow.freeFormPage;
+
                     return MainWindow.loadingPage;
                 }
             });

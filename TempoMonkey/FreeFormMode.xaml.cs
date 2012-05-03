@@ -20,7 +20,6 @@ using System.Drawing;
 using System.Windows.Threading;
 using slidingMenu;
 using Visualizer;
-using System.Windows.Shapes;
 
 namespace TempoMonkey
 {
@@ -38,8 +37,8 @@ namespace TempoMonkey
 
         public void initCommon()
         {
-            PauseCircle.Stroke = System.Windows.Media.Brushes.RoyalBlue;
-            PauseCircle.StrokeThickness = 10;
+            PauseCircle.Stroke = System.Windows.Media.Brushes.White;
+            PauseCircle.StrokeThickness = 8;
 
             waveFormContainers[0] = SongContainer0;
             waveFormContainers[1] = SongContainer1;
@@ -116,33 +115,6 @@ namespace TempoMonkey
 			wave.StartTracking();
         }
 
-        // This is slow because it is serial, Peter can you create a function that takes in multiple waveForms 
-        // and calls a single callback. when it is all done? Thanks.
-        public void initWaveFormRecur(int index, Panel[] waveFormContainers, ArrayList uris,
-            Visualizer.Timeline.WaveformTimeline.CompletionCallback callback = null)
-        {
-            if (index >= uris.Count - 1)
-            {
-                Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainers[index], uris[index] as string, callback);
-                wave.Draw();
-				// This might be more appropriate to call after Audio.Play() is called, but currently there is no
-				// reference to these wave objects.  Tracking checks if the Audio is playing, so it shouldn't break.
-				wave.StartTracking();
-            }
-            else
-            {
-                Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainers[index], uris[index] as string, delegate()
-                {
-                    initWaveFormRecur(index + 1, waveFormContainers, uris, callback);
-                });
-                wave.Draw();
-				// This might be more appropriate to call after Audio.Play() is called, but currently there is no
-				// reference to these wave objects.  Tracking checks if the Audio is playing, so it shouldn't break.
-				wave.StartTracking();
-            }
-        }
-
-
         public void initBuddyForm(string address, string name)
         {
             _type = "Buddy"; 
@@ -156,7 +128,8 @@ namespace TempoMonkey
             // Initlaize the wave form
             initWaveForm(waveFormContainers[1], address, delegate()
             {
-                MainWindow.loadingPage.NavigationService.Navigate(MainWindow.freeFormPage);
+                MainWindow.currentPage = MainWindow.freeFormPage;
+                MainWindow.loadingPage.NavigationService.Navigate(MainWindow.currentPage);
 
                 // Sets the current track & also plays it
                 currentTrackIndex = 1;
@@ -179,10 +152,12 @@ namespace TempoMonkey
             freePlayer2.registerCallBack(freePlayer2.handsWidenListener, volumeTrackingHandler2, volumeChangeHandler);
         }
 
+        
+
         public void initSoloForm(ArrayList addrList, ArrayList nameList){
             _type = "Solo"; 
             initCommon();
-
+            int doneCount = 0;
             // Load and set the song titles
             for( int i=0; i < addrList.Count; i++)
 			{
@@ -192,16 +167,22 @@ namespace TempoMonkey
                 _nameList.Add(name);
                 SongTitles[i].Content = name;
                 Processing.Audio.LoadFile(address);
+
+                // Initlaize the wave form
+                initWaveForm(waveFormContainers[i], address, delegate()
+                {
+                    doneCount++;
+                    if (doneCount == _nameList.Count)
+                    {
+                        MainWindow.currentPage = MainWindow.freeFormPage;
+                        MainWindow.loadingPage.NavigationService.Navigate(MainWindow.currentPage);
+
+                        // Sets the current track & also plays it
+                        currentTrackIndex = _nameList.Count > 1 ? 1 : 0;
+                        Processing.Audio.Play();
+                    }
+                });
 			}
-
-            initWaveFormRecur(0, waveFormContainers, addrList, delegate()
-            { 
-                MainWindow.loadingPage.NavigationService.Navigate(MainWindow.freeFormPage);
-
-                // Sets the current track & also plays it
-                Processing.Audio.Play();
-                currentTrackIndex = _nameList.Count > 1 ? 1 : 0;
-            });
 
             // connected to gestures
             freePlayer = new KinectGesturePlayer();
@@ -301,12 +282,15 @@ namespace TempoMonkey
 			InitializeResource(Properties.Resources.seek_avatar, "seekAvatar");
 			InitializeResource(Properties.Resources.pitch_avatar, "pitchAvatar");
 			InitializeResource(Properties.Resources.tempo_avatar, "tempoAvatar");
+            // InitializeResource(Properties.Resources.seek_avatar, "pauseAvatar");
+
 
 			// Disabled images
 			volumeAvatar.Source = InitializeResource(Properties.Resources.volume_avatar_disabled, "volumeAvatarDisabled");
 			seekAvatar.Source = InitializeResource(Properties.Resources.seek_avatar_disabled, "seekAvatarDisabled");
 			pitchAvatar.Source = InitializeResource(Properties.Resources.pitch_avatar_disabled, "pitchAvatarDisabled");
 			tempoAvatar.Source = InitializeResource(Properties.Resources.tempo_avatar_disabled, "tempoAvatarDisabled");
+            // PauseAvatar.Source = InitializeResource(Properties.Resources.seek_avatar, "pauseAvatar");
 		}
 
 		public void SetAvatarState(bool active, System.Windows.Controls.Image imageControl, BitmapImage image)
@@ -332,16 +316,18 @@ namespace TempoMonkey
 			}
 		}
 
-        void pauseChangeHandler(double angle)
+        public void pauseChangeHandler(double angle)
         {
             if (angle > 10)
             {
                 PauseCircle.Visibility = System.Windows.Visibility.Visible;
-                PauseImage.Visibility = System.Windows.Visibility.Visible;
+                // PauseAvatar.Visibility = System.Windows.Visibility.Visible;
 
-                System.Windows.Point center = Mouse.GetPosition(mainCanvas);
+                // System.Windows.Point center = new System.Windows.Point(Canvas.GetLeft(PauseLabel) - PauseLabel.Width / 2,
+                //     Canvas.GetTop(PauseLabel) - PauseLabel.Height / 2);
+                System.Windows.Point center = new System.Windows.Point(100, 500);
+
                 System.Windows.Point endPoint = new System.Windows.Point(center.X + 40 * Math.Sin(angle / 180.0 * Math.PI), center.Y - 40 * Math.Cos(angle / 180.0 * Math.PI));
-
 
                 PathFigure figure = new PathFigure();
                 figure.StartPoint = new System.Windows.Point(center.X, center.Y - 40);
@@ -362,11 +348,9 @@ namespace TempoMonkey
 
             } else {
                 PauseCircle.Visibility = System.Windows.Visibility.Hidden;
-                PauseImage.Visibility = System.Windows.Visibility.Hidden;
+                // PauseAvatar.Visibility = System.Windows.Visibility.Hidden;
             }
         }
-
-
 
 		int _currentTrackIndex;
 		void changeTrackHandler(double value)

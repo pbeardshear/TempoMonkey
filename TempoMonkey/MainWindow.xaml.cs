@@ -92,15 +92,18 @@ namespace TempoMonkey
 			angle = 0;
         }
 
+        int debugDegree = 0;
         private void HandleKeyDownEvent(object sender, KeyEventArgs e)
         {
             if (System.Windows.Input.Key.A == e.Key)
             {
-                (currentPage as KinectPage).Pause();
+                debugDegree -= 10;
+                (currentPage as FreeFormMode).pauseChangeHandler(debugDegree);
             }
             if (System.Windows.Input.Key.S == e.Key)
             {
-                (currentPage as KinectPage).Resume();
+                debugDegree += 10;
+                (currentPage as FreeFormMode).pauseChangeHandler(debugDegree);
             }
             if (System.Windows.Input.Key.D == e.Key)
             {

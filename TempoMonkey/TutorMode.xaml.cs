@@ -119,30 +119,14 @@ namespace TempoMonkey
             MainWindow.setManipulating(true);
         }
 
-        public void initWaveForm(Panel waveFormContainer, string uri)
+        public void initWaveForm(Panel waveFormContainer, string uri,
+                    Visualizer.Timeline.WaveformTimeline.CompletionCallback callback = null)
         {
-            Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainer, uri);
+            Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainer, uri, callback);
             wave.Draw();
-        }
-
-        // This is slow because it is serial, Peter can you create a function that takes in multiple waveForms 
-        // and calls a single callback. when it is all done? Thanks.
-        public void initWaveFormRecur(int index, Panel[] waveFormContainers, ArrayList uris,
-            Visualizer.Timeline.WaveformTimeline.CompletionCallback callback = null)
-        {
-            if (index >= uris.Count - 1)
-            {
-                Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainers[index], uris[index] as string, callback);
-                wave.Draw();
-            }
-            else
-            {
-                Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainers[index], uris[index] as string, delegate()
-                {
-                    initWaveFormRecur(index + 1, waveFormContainers, uris, callback);
-                });
-                wave.Draw();
-            }
+            // This might be more appropriate to call after Audio.Play() is called, but currently there is no
+            // reference to these wave objects.  Tracking checks if the Audio is playing, so it shouldn't break.
+            wave.StartTracking();
         }
 
         public void initTutor(int index)
@@ -150,6 +134,27 @@ namespace TempoMonkey
             initCommon();
             List<string> nameList = new List<string>{ "Chasing Pavements", "Enough To Fly With You" };
             ArrayList addrList = new ArrayList{ @"..\..\Resources\Music\Chasing Pavements.mp3", @"..\..\Resources\Music\Enough To Fly With You.mp3" };
+            int doneCount = 0;
+
+            Timer = new DispatcherTimer();
+            Timer.Interval = TimeSpan.FromSeconds(2);
+            Timer.Tick += (delegate(object s, EventArgs args)
+            {
+                //Checks if the user has finished the task, and queues up the next task
+                if (Tutorial.checkTask())
+                {
+                    Tutorial next = Tutorial.nextTutorial();
+                    if (next != null)
+                    {
+                        showTutorialChooser(next);
+                    }
+                    else
+                    {
+                        showTutorialsFinished();
+                        Timer.Stop();
+                    }
+                }
+            });
 
             // Load and set the song titles
             for (int i = 0; i < addrList.Count; i++)
@@ -159,40 +164,26 @@ namespace TempoMonkey
                 _nameList.Add(name);
                 SongTitles[i].Content = name;
                 Processing.Audio.LoadFile(address);
-            }
 
-            initWaveFormRecur(0, waveFormContainers, addrList, delegate()
-            {
-                MainWindow.loadingPage.NavigationService.Navigate(MainWindow.tutorPage);
-
-                // Sets the current track & also plays it
-                Processing.Audio.Play();
-                currentTrackIndex = _nameList.Count > 1 ? 1 : 0;
-
-
-                Tutorial.TutorialIndex = index;
-                playTutorial(Tutorial.getCurrentTutorial());
-                Timer = new DispatcherTimer();
-                Timer.Interval = TimeSpan.FromSeconds(2);
-                Timer.Tick += (delegate(object s, EventArgs args)
+                // Initlaize the wave form
+                initWaveForm(waveFormContainers[i], address, delegate()
                 {
-                    //Checks if the user has finished the task, and queues up the next task
-                    if (Tutorial.checkTask())
+                    doneCount++;
+                    if (doneCount == _nameList.Count)
                     {
-                        Tutorial next = Tutorial.nextTutorial();
-                        if (next != null)
-                        {
-                            showTutorialChooser(next);
-                        }
-                        else
-                        {
-                            showTutorialsFinished();
-                            Timer.Stop();
-                        }
+                        MainWindow.currentPage = MainWindow.freeFormPage;
+                        MainWindow.loadingPage.NavigationService.Navigate(MainWindow.currentPage);
+
+                        // Sets the current track & also plays it
+                        currentTrackIndex = _nameList.Count > 1 ? 1 : 0;
+                        Processing.Audio.Play();
+
+                        Tutorial.TutorialIndex = index;
+                        playTutorial(Tutorial.getCurrentTutorial());
+                        Timer.Start();
                     }
                 });
-                Timer.Start();
-            });
+            }
 
             // connected to gestures
             tutoree = new KinectGesturePlayer();
