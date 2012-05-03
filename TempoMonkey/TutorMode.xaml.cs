@@ -47,8 +47,6 @@ namespace TempoMonkey
 
         public void showTutorialsFinished()
         {
-            // Border.Visibility = QuitButton.Visibility = Finished.Visibility = System.Windows.Visibility.Visible;
-            // FIX ME!!
             MainWindow.setManipulating(false);
             System.Windows.Forms.Cursor.Show();
             Timer.Stop();
@@ -57,9 +55,8 @@ namespace TempoMonkey
         public void showTutorialChooser(Tutorial tutorial)
         {
             MainWindow.setManipulating(false);
-            // FIX ME
-            //Border.Visibility = 
-            Next.Visibility = TutorialsButton.Visibility = QuitButton.Visibility = System.Windows.Visibility.Visible;
+
+            NextOverLay.Visibility = System.Windows.Visibility.Visible;
             System.Windows.Forms.Cursor.Show();
         }
 
@@ -98,8 +95,6 @@ namespace TempoMonkey
         {
             return doneSeeking;
         }
-
-        Spectrum spectrumVisualizer;
 
         Label[] SongTitles = new Label[3];
         Panel[] waveFormContainers = new Panel[3];
@@ -160,7 +155,6 @@ namespace TempoMonkey
             tutoree.registerCallBack(tutoree.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
 
             Tutorial.setIndex(index);
-
             playTutorial(Tutorial.getCurrentTutorial());
             Timer = new DispatcherTimer();
             Timer.Interval = TimeSpan.FromSeconds(2);
@@ -189,6 +183,7 @@ namespace TempoMonkey
             tutoree = null;
             Timer.Stop();
             MainWindow.setManipulating(false);
+
             // Border.Visibility = ResumeButton.Visibility = QuitButton.Visibility = System.Windows.Visibility.Hidden;
             // FIX ME!!
             // TODO: TEARDOWN MUSIC... unload all files and whatever else that needs to be done
@@ -276,6 +271,21 @@ namespace TempoMonkey
             {
                 tearDown();
                 return MainWindow.browseTutorialsPage;
+            });
+
+            new NavigationButton(ResumeButton, delegate()
+            {
+                Resume();
+                return null;
+            });
+
+            new NavigationButton(NextTutorial, delegate()
+            {
+                NextOverLay.Visibility = System.Windows.Visibility.Hidden;
+                MainWindow.setManipulating(true);
+                mainCanvas.Background = new SolidColorBrush(Colors.Gray);
+                playTutorial(Tutorial.getCurrentTutorial());
+                return null;
             });
         }
 
@@ -448,9 +458,9 @@ namespace TempoMonkey
         {
             isPaused = false;
             Processing.Audio.Resume();
-            // Border.Visibility = ResumeButton.Visibility = QuitButton.Visibility = System.Windows.Visibility.Hidden;
-            // FIX ME!!
+
             mainCanvas.Background = new SolidColorBrush(Colors.White);
+            PauseOverlay.Visibility = System.Windows.Visibility.Hidden;
             MainWindow.setManipulating(true);
         }
 
@@ -458,54 +468,10 @@ namespace TempoMonkey
         {
             isPaused = true;
             Processing.Audio.Pause();
-            // Border.Visibility = System.Windows.Visibility.Visible;
-            // FIX ME!!
+
             mainCanvas.Background = new SolidColorBrush(Colors.Gray);
-            ResumeButton.Visibility = System.Windows.Visibility.Visible;
-            QuitButton.Visibility = System.Windows.Visibility.Visible;
+            PauseOverlay.Visibility = System.Windows.Visibility.Visible;
             MainWindow.setManipulating(false);       
-        }
-        #endregion
-
-        #region Navigation
-        void Mouse_Enter(object sender, MouseEventArgs e)
-        {
-            MainWindow.Mouse_Enter(sender, e);
-        }
-
-        void Mouse_Leave(object sender, MouseEventArgs e)
-        {
-            MainWindow.Mouse_Leave(sender, e);
-        }
-
-
-        void Resume_Click(object sender, RoutedEventArgs e)
-        {
-            Resume();
-        }
-
-        void Tutorials_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow.setManipulating(false);
-            MainWindow.currentPage = new BrowseTutorials();
-            mainCanvas.Background = new SolidColorBrush(Colors.White);
-            NavigationService.Navigate(MainWindow.currentPage);
-        }
-
-        void Next_Click(object sender, RoutedEventArgs e)
-        {
-            // FIX ME!!
-            // Border.Visibility = 
-            Next.Visibility = TutorialsButton.Visibility = QuitButton.Visibility = System.Windows.Visibility.Hidden;
-            MainWindow.setManipulating(true);
-            mainCanvas.Background = new SolidColorBrush(Colors.White);
-            playTutorial(Tutorial.getCurrentTutorial());
-        }
-
-        private void Debug_Click(object sender, RoutedEventArgs e)
-        {
-            Tutorial.doNext = true;
-            mainCanvas.Background = new SolidColorBrush(Colors.Gray);
         }
         #endregion
 
@@ -515,5 +481,9 @@ namespace TempoMonkey
             myMediaElement.LoadedBehavior = MediaState.Play;
         }
 
+        public void debugDoNext()
+        {
+            Tutorial.doNext = true;
+        }
     }
 }
