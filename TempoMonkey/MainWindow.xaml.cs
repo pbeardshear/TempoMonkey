@@ -42,6 +42,8 @@ namespace TempoMonkey
     interface KinectPage
     {
         void allFramesReady(object sender, AllFramesReadyEventArgs e);
+        void Resume();
+        void Pause();
     }
 
     interface SelectionPage
@@ -94,23 +96,15 @@ namespace TempoMonkey
         {
             if (System.Windows.Input.Key.A == e.Key)
             {
-                (currentPage as TutorMode).Pause();
+                (currentPage as KinectPage).Pause();
             }
             if (System.Windows.Input.Key.S == e.Key)
             {
-                (currentPage as TutorMode).Resume();
+                (currentPage as KinectPage).Resume();
             }
             if (System.Windows.Input.Key.D == e.Key)
             {
-                (currentPage as TutorMode).debugDoNext();
-            }
-            if (System.Windows.Input.Key.F == e.Key)
-            {
-                (currentPage as TutorMode).currentTrackIndex = 1;
-            }
-            if (System.Windows.Input.Key.G == e.Key)
-            {
-                (currentPage as TutorMode).currentTrackIndex = 2;
+                //(currentPage as TutorMode).debugDoNext();
             }
             /*
             if (System.Windows.Input.Key.D == e.Key)
@@ -338,7 +332,7 @@ namespace TempoMonkey
         {
             if (value)
             {
-                System.Windows.Forms.Cursor.Hide();
+                // System.Windows.Forms.Cursor.Hide(); // <<<<<<<<<<<<<<<<<<<<<<<<<<<< UN COMMENT ME!!
                 _isManipulating = true;
             }
             else

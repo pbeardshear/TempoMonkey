@@ -51,7 +51,7 @@ namespace TempoMonkey
 
 			Visualizer = new Spectrum(mainCanvas);
 			Visualizer.RegisterSoundPlayer();
-            System.Windows.Forms.Cursor.Hide();
+            MainWindow.setManipulating(true);
         }
 
         public void initSliders()

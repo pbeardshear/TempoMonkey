@@ -116,7 +116,7 @@ namespace TempoMonkey
 
             Visualizer = new Spectrum(mainCanvas);
             Visualizer.RegisterSoundPlayer();
-            System.Windows.Forms.Cursor.Hide();
+            MainWindow.setManipulating(true);
         }
 
         public void initWaveForm(Panel waveFormContainer, string uri)
@@ -183,11 +183,9 @@ namespace TempoMonkey
             tutoree = null;
             Timer.Stop();
             MainWindow.setManipulating(false);
-
-            // Border.Visibility = ResumeButton.Visibility = QuitButton.Visibility = System.Windows.Visibility.Hidden;
-            // FIX ME!!
-            // TODO: TEARDOWN MUSIC... unload all files and whatever else that needs to be done
-            // so that a user can navigate between pages that uses music
+            Processing.Audio.End();
+            PauseOverlay.Visibility = System.Windows.Visibility.Hidden;
+            NextOverLay.Visibility = System.Windows.Visibility.Hidden;
         }
 
         public void initSliders()
@@ -459,7 +457,7 @@ namespace TempoMonkey
             isPaused = false;
             Processing.Audio.Resume();
 
-            mainCanvas.Background = new SolidColorBrush(Colors.White);
+            mainCanvas.Background = new SolidColorBrush(Colors.Gray);
             PauseOverlay.Visibility = System.Windows.Visibility.Hidden;
             MainWindow.setManipulating(true);
         }
