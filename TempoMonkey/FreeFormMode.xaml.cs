@@ -398,8 +398,6 @@ namespace TempoMonkey
             Processing.Audio.Resume();
 
             mainCanvas.Background = new SolidColorBrush(Colors.Black);
-            ResumeButton.Visibility = System.Windows.Visibility.Hidden;
-            QuitButton.Visibility = System.Windows.Visibility.Hidden;
             PauseOverlay.Visibility = System.Windows.Visibility.Hidden;
             MainWindow.setManipulating(true);
 
@@ -412,8 +410,6 @@ namespace TempoMonkey
 
             mainCanvas.Background = new SolidColorBrush(Colors.Gray);
             PauseOverlay.Visibility = System.Windows.Visibility.Visible;
-            ResumeButton.Visibility = System.Windows.Visibility.Visible;
-            QuitButton.Visibility = System.Windows.Visibility.Visible;
             MainWindow.setManipulating(false);
         }
 		#endregion
