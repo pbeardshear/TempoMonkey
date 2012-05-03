@@ -15,6 +15,7 @@ using slidingMenu;
 using System.IO;
 using System.Windows.Media.Animation;
 using System.Collections;
+using System.Text.RegularExpressions;
 
 namespace TempoMonkey
 {
@@ -111,16 +112,18 @@ namespace TempoMonkey
 
         private void addToBox(string name, string address, int rowspot, int colspot, int index) // instantiate a box instance
         {
-            box littleBox = new box(sizeOfBox);
+            box littleBox = new box(sizeOfBox, true);
 
             littleBox.index = index;
             littleBox.MouseEnter += Mouse_Enter;
             littleBox.MouseLeave += Mouse_Leave;
 
-            littleBox.boxName = name;
-            littleBox.address = address;
-            littleBox.name = name;
-            string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Tutorial_Art\\" + name + "_tutorial.png";
+			
+            // littleBox.boxName = name;
+            // littleBox.address = address;
+            // littleBox.name = name;
+            // string path = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Images\\Tutorial_Art\\" + name + "_tutorial.png";
+			string path = "/Resources/Images/" + Regex.Match(name, "([a-zA-Z]+)").Value + "-tutorial.png";
             littleBox.setImage(path);
 
             Grid.SetRow(littleBox, rowspot);

@@ -9,12 +9,12 @@
         <!--This label is required so that hoovering works-->
         <Label Height="150" Width="150"></Label>
         <!--<Border Name="Highlight" BorderBrush="#F6B029" CornerRadius="5" BorderThickness="10"  Height="150" Width="150" />-->
-        <Border Height="35" Width="136" Canvas.Bottom="8" Canvas.Left="7" Background="#EEE" Padding="5,2">
+        <Border Height="35" Width="136" Canvas.Bottom="8" Canvas.Left="7" Background="#EEE" Padding="5,2" Name="BoxBorder">
             <TextBlock Foreground="Black" Text="Sample Song Title its long longer" FontWeight="Bold"  Name="textBox" 
                FontFamily="Arial Black" FontSize="12" TextTrimming="CharacterEllipsis" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" />
         </Border>
         <Image Height="100" Width="136" Name="Image"  Canvas.Left="7" Canvas.Top="8" Stretch="Fill" />
-            
+		<Image Height="134" Width="134" Name="FullImage" Canvas.Left="8" Canvas.Top="8" Visibility="Hidden" />
         <Border Name="Border" BorderBrush="#333" CornerRadius="5" BorderThickness="8"  Height="150" Width="150" />
     </Canvas>
 </UserControl>

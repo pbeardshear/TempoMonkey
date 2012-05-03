@@ -264,6 +264,16 @@
   <ItemGroup>
     <Resource Include="Resources\Images\highlight.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\pause-tutorial.png" />
+    <Resource Include="Resources\Images\pitch-tutorial.png" />
+    <Resource Include="Resources\Images\seek-tutorial.png" />
+    <Resource Include="Resources\Images\swap-tutorial.png" />
+    <Resource Include="Resources\Images\tempo-tutorial.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\volume-tutorial.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

@@ -20,13 +20,23 @@ namespace slidingMenu
     /// </summary>
     public partial class box : UserControl
     {
+		private bool useFullImage;
 
-        public box(int sizeOfBox)
+        public box(int sizeOfBox, bool useFullImage = false)
         {
             InitializeComponent();
             size = sizeOfBox;
             this.Width = this.Height = sizeOfBox;
+			this.useFullImage = useFullImage;
+
             Highlight.Visibility = Visibility.Hidden;
+
+			if (useFullImage)
+			{
+				FullImage.Visibility = Visibility.Visible;
+				Image.Visibility = Visibility.Hidden;
+				BoxBorder.Visibility = Visibility.Hidden;
+			}
         }
 
         public int size;
@@ -47,7 +57,14 @@ namespace slidingMenu
         {
             try
             {
-                this.Image.Source = new BitmapImage(new Uri(path));
+				if (this.useFullImage)
+				{
+					this.FullImage.Source = new BitmapImage(new Uri(path));
+				}
+				else
+				{
+					this.Image.Source = new BitmapImage(new Uri(path));
+				}
             }
             catch
             {
