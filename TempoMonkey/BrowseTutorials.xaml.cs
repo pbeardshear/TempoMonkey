@@ -43,7 +43,7 @@ namespace TempoMonkey
 
 			doneButton = new NavigationButton(DoneButtonBackground, delegate()
 			{
-				return MainWindow.soloPage;
+				return MainWindow.tutorPage;
 			});
         }
 
