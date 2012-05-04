@@ -169,14 +169,14 @@ namespace TempoMonkey
             if (System.Windows.Input.Key.LeftShift == e.Key)
             {
                 mouseOverride = true;
-            }
-            else if (System.Windows.Input.Key.RightShift == e.Key)
+            } */
+            if (System.Windows.Input.Key.RightShift == e.Key)
             {
                 if (currentPage is FreeFormMode)
                 {
                     (currentPage as FreeFormMode).Pause();
                 }
-            } */
+            } 
         }
 
         private void HandleKeyUpEvent(object sender, KeyEventArgs e)
@@ -336,7 +336,7 @@ namespace TempoMonkey
         {
             if (value)
             {
-                System.Windows.Forms.Cursor.Hide(); // <<<<<<<<<<<<<<<<<<<<<<<<<<<< UN COMMENT ME!!
+                System.Windows.Forms.Cursor.Hide();
                 _isManipulating = true;
             }
             else

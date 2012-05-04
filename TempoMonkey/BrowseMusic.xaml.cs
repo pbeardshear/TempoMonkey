@@ -78,13 +78,13 @@ namespace TempoMonkey
                         ((FreeFormMode)MainWindow.freeFormPage).initBuddyForm( 
                             ((string)musicAddrList[0]), 
                             ((string)musicList[0]));
-                        MainWindow.setManipulating(true);
+                        // MainWindow.setManipulating(true);
                     }
 
                     else if (_type == "Solo")
                     {
                         ((FreeFormMode)MainWindow.freeFormPage).initSoloForm(musicAddrList, musicList);
-                        MainWindow.setManipulating(true);
+                        // MainWindow.setManipulating(true);
                     }
 
                     else
