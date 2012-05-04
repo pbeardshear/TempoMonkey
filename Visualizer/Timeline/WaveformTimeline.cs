@@ -45,7 +45,7 @@ namespace Visualizer.Timeline
 			{
 				Height = container.Height,
 				Width = 4,
-				Fill = Brushes.DarkSlateBlue,
+				Fill = Brushes.Black,
 				Opacity = 0.9,
 				Margin = new System.Windows.Thickness(LeftOffset, TopOffset, 0, 0)
 			};
