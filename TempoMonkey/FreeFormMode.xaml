@@ -21,9 +21,6 @@
         <Canvas Background="White" Name="SongContainer2" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
         <!--Rectangle Name="Progress" Fill="Red" Opacity=".8" Width="10" Height="100" StrokeThickness="2" Canvas.Left="240" Canvas.Top="100"/-->
         <!--Rectangle Stroke="Red" Width="800" Height="100" StrokeThickness="2" Canvas.Left="240" Canvas.Top="100"/-->
-        <!-- Slider -->
-        <Slider Visibility="Hidden" Name="SeekSlider" Canvas.Left="12" Canvas.Top="353" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
-		<!-- End Slider -->
         <Image Canvas.Left="342" Canvas.Top="12" Height="50" Name="volumeAvatar" Stretch="Fill" Width="50" />
         <Image Canvas.Left="513" Canvas.Top="12" Height="50" Name="pitchAvatar" Stretch="Fill" Width="50" />
         <Image Canvas.Left="704" Canvas.Top="12" Height="50" Name="tempoAvatar" Stretch="Fill" Width="50" />

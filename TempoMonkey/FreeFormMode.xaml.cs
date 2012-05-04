@@ -129,7 +129,7 @@ namespace TempoMonkey
 
                 // Sets the current track & also plays it
                 currentTrackIndex = 1;
-                Processing.Audio.Play(currentTrackIndex);
+                Processing.Audio.Play(0);
             });
             _nameList.Add(address);
 
@@ -198,7 +198,7 @@ namespace TempoMonkey
 
         NavigationButton quitButton, resumeButton;
 		public FreeFormMode()
-		{		
+		{
 			InitializeComponent();
             InitializeAvatars();
             initSliders();
@@ -417,7 +417,7 @@ namespace TempoMonkey
 		bool wasSeeking = false;
 		void seekChangeHandler(double change)
 		{
-			SeekSlider.Value += change;
+			//SeekSlider.Value += change; //UNCOMMENT THIS IF WE WANT TO SEEK
 		}
 
 		void seekTrackingHandler(bool exist)
@@ -430,7 +430,7 @@ namespace TempoMonkey
 			{
 				if (wasSeeking)
 				{
-					Processing.Audio.Seek(SeekSlider.Value);
+					//Processing.Audio.Seek(SeekSlider.Value); // UNCOMMENT THIS OUT IF WE WANT TO SEEK IN THE FUTURE
 				}
 				wasSeeking = false;
 			}

@@ -177,12 +177,12 @@ namespace TempoMonkey
                         MainWindow.loadingPage.NavigationService.Navigate(MainWindow.currentPage);
 
                         // Sets the current track & also plays it
-                        Processing.Audio.Play();
                         currentTrackIndex = _nameList.Count > 1 ? 1 : 0;
+                        Processing.Audio.Play(currentTrackIndex);
 
-                        Tutorial.TutorialIndex = index;
-                        playTutorial(Tutorial.getCurrentTutorial());
-                        Timer.Start();
+                        // Tutorial.TutorialIndex = index;
+                        // playTutorial(Tutorial.getCurrentTutorial());
+                        // Timer.Start();
                     }
                 });
             }
@@ -237,10 +237,6 @@ namespace TempoMonkey
                 SongTitles[_currentTrackIndex].Foreground = ((System.Windows.Media.Brush)bc.ConvertFrom("#FFF"));
                 Canvas.SetLeft(BlueDot, positions[_currentTrackIndex]);
                 Processing.Audio.SwapTrack(_currentTrackIndex);
-                Processing.Audio.Seek(SeekSlider.Value);
-                Processing.Audio.ChangeVolume(VolumeSlider.Value);
-                Processing.Audio.ChangeTempo(TempoSlider.Value);
-                Processing.Audio.ChangePitch(PitchSlider.Value);
             }
             get
             {
@@ -424,7 +420,7 @@ namespace TempoMonkey
         double totalSeekingChange = 0;
         void seekChangeHandler(double change)
         {
-            SeekSlider.Value += change;
+            // SeekSlider.Value += change; //// TODO: FIX THIS
             if (Tutorial.getCurrentTutorial() == seek)
             {
                 totalSeekingChange += Math.Abs(change);
@@ -442,7 +438,7 @@ namespace TempoMonkey
             {
                 if (wasSeeking)
                 {
-                    Processing.Audio.Seek(SeekSlider.Value);
+                    // Processing.Audio.Seek(SeekSlider.Value); // TODO: FIX THIS
                     if (totalSeekingChange >= 100)
                     {
                         doneSeeking = true;
