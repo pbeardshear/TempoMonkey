@@ -39,7 +39,8 @@ namespace TempoMonkey
         public void playTutorial(Tutorial tutorial)
         {
             myMediaElement.Source = tutorial.getSource();
-            Instructions.Content = tutorial.getInstructions();
+            Instructions.Text = tutorial.getInstructions();
+            Facts.Text = tutorial.getFacts();
             myMediaElement.Play();
         }
 
@@ -113,7 +114,8 @@ namespace TempoMonkey
             SongTitles[0].Content = null;
             SongTitles[1].Content = null;
             SongTitles[2].Content = null;
-
+            Instructions.Text = null;
+            Facts.Text = null;
             Visualizer = new Spectrum(mainCanvas);
             Visualizer.RegisterSoundPlayer();
             MainWindow.setManipulating(true);
@@ -175,8 +177,8 @@ namespace TempoMonkey
                         MainWindow.loadingPage.NavigationService.Navigate(MainWindow.currentPage);
 
                         // Sets the current track & also plays it
-                        currentTrackIndex = _nameList.Count > 1 ? 1 : 0;
                         Processing.Audio.Play();
+                        currentTrackIndex = _nameList.Count > 1 ? 1 : 0;
 
                         Tutorial.TutorialIndex = index;
                         playTutorial(Tutorial.getCurrentTutorial());
@@ -256,18 +258,18 @@ namespace TempoMonkey
             Tutorial._tutorialIndex = 0;
             string tutorials_base = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Tutorials\\";
 
-            pause = new Tutorial("Pause", "To pause move your left arm to a 35 degree angle with your body",
-                new Uri(tutorials_base + "pause.m4v"), pauseChecker);
+            pause = new Tutorial("Pause", "To pause move your left arm to a 45 degree angle with your body",
+                new Uri(tutorials_base + "00pause.m4v"), pauseChecker, null);
             tempo = new Tutorial("Changing the Tempo", "To increase the tempo lean towards the right, to decrease the tempo lean towards the left",
-                new Uri(tutorials_base + "01tempo.m4v"), tempoChecker);
+                new Uri(tutorials_base + "01tempo.m4v"), tempoChecker, "Tempo determins the speed of a song");
             pitch = new Tutorial("Changing the Pitch", "To increase/decrease the pitch put your arms above your head and move your body up/down",
-                new Uri(tutorials_base + "02pitch.m4v"), pitchChecker);
+                new Uri(tutorials_base + "02pitch.m4v"), pitchChecker, "Pitch determines how low or high the sounds of a song becomes");
             switch_tracks = new Tutorial("Switching Tracks", "To switch between your tracks jump to the left/right",
-                new Uri(tutorials_base + "03switchtracks.m4v"), switchTrackChecker);
+                new Uri(tutorials_base + "03volume.m4v"), switchTrackChecker);
             volume = new Tutorial("Changing the Volume", "To change the volume put both your arms in the midsection of your body and expand/intract your hands",
-                new Uri(tutorials_base + "04volume.m4v"), volumeChecker);
+                new Uri(tutorials_base + "04seek.m4v"), volumeChecker);
             seek = new Tutorial("Changing the Position of the track", "To seek around the track put your right hand up and hover it left and right",
-                new Uri(tutorials_base + "05seek.m4v"), seekChecker);
+                new Uri(tutorials_base + "05swaptracks.m4v"), seekChecker);
 
             //Tutorial.addTutorial(pause);
             Tutorial.addTutorial(tempo);

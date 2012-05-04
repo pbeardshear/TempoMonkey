@@ -94,6 +94,7 @@ namespace TempoMonkey
                 SongTitles[_currentTrackIndex].Foreground = ((System.Windows.Media.Brush)bc.ConvertFrom("#FFF"));
                 Canvas.SetLeft(BlueDot, positions[_currentTrackIndex]);
                 Processing.Audio.SwapTrack(_currentTrackIndex);
+                
                 Processing.Audio.Seek(SeekSlider.Value);
                 Processing.Audio.ChangeVolume(VolumeSlider.Value);
                 Processing.Audio.ChangeTempo(TempoSlider.Value);
@@ -136,7 +137,6 @@ namespace TempoMonkey
                 Processing.Audio.Play();
             });
             _nameList.Add(address);
-            
 
             // connected to gestures
             freePlayer = new KinectGesturePlayer();
@@ -190,7 +190,7 @@ namespace TempoMonkey
 			freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
 			freePlayer.registerCallBack(freePlayer.leanListener, tempoTrackingHandler, tempoChangeHandler);
 			freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
-            freePlayer.registerCallBack(freePlayer.trackMoveListener, null, changeTrackHandler);
+            freePlayer.registerCallBack(freePlayer.trackMoveListener, changeTrackTrackingHandler, null);
         }
 
         public void tearDown()
@@ -318,14 +318,15 @@ namespace TempoMonkey
 
         public void pauseChangeHandler(double angle)
         {
-            if (angle > 10)
+            if (angle > 0 && angle < 360)
             {
                 PauseCircle.Visibility = System.Windows.Visibility.Visible;
-                // PauseAvatar.Visibility = System.Windows.Visibility.Visible;
+                PauseLabel.Visibility = System.Windows.Visibility.Visible;
 
-                // System.Windows.Point center = new System.Windows.Point(Canvas.GetLeft(PauseLabel) - PauseLabel.Width / 2,
-                //     Canvas.GetTop(PauseLabel) - PauseLabel.Height / 2);
-                System.Windows.Point center = new System.Windows.Point(100, 500);
+                double x = Canvas.GetLeft(PauseLabel) + 25;
+                double y = Canvas.GetTop(PauseLabel) + 15;
+
+                System.Windows.Point center = new System.Windows.Point(x, y);
 
                 System.Windows.Point endPoint = new System.Windows.Point(center.X + 40 * Math.Sin(angle / 180.0 * Math.PI), center.Y - 40 * Math.Cos(angle / 180.0 * Math.PI));
 
@@ -348,36 +349,29 @@ namespace TempoMonkey
 
             } else {
                 PauseCircle.Visibility = System.Windows.Visibility.Hidden;
-                // PauseAvatar.Visibility = System.Windows.Visibility.Hidden;
+                PauseLabel.Visibility = System.Windows.Visibility.Hidden;
             }
         }
 
-		int _currentTrackIndex;
-		void changeTrackHandler(double value)
-		{
-            if (value == 0)
-            {
-
-            }
-            else if (value == 1)
+        void changeTrackTrackingHandler(bool right)
+        {
+            if (right)
             {
                 if (currentTrackIndex < _nameList.Count - 1)
                 {
                     currentTrackIndex += 1;
                 }
             }
-            else if (value == -1)
+            else
             {
                 if (currentTrackIndex != 0)
                 {
                     currentTrackIndex -= 1;
                 }
             }
-            else
-            {
-                throw new Exception();
-            }
-		}
+        }
+
+		int _currentTrackIndex;
 
 		void volumeChangeHandler(double change)
 		{
@@ -408,7 +402,6 @@ namespace TempoMonkey
             TempoSlider.player1Exists = exist;
 			SetAvatarState(exist, tempoAvatar, exist ? loadedImages["tempoAvatar"] : loadedImages["tempoAvatarDisabled"]);
 		}
-
 
         void tempoTrackingHandler2(bool exist)
         {

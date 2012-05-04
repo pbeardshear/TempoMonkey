@@ -15,20 +15,25 @@
         <!-- Selector square for denoting selected song -->
         <Rectangle Name="BlueDot" Fill="Cyan" Height="9" Width="9" Canvas.Left="525" Canvas.Top="77" />
         <!-- Container objects for song waveforms -->
-        <Canvas Background="Black" Name="SongContainer0" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
-        <Canvas Background="Black" Name="SongContainer1" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
-        <Canvas Background="Black" Name="SongContainer2" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
+        <Canvas Background="White" Name="SongContainer0" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
+        <Canvas Background="White" Name="SongContainer1" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
+        <Canvas Background="White" Name="SongContainer2" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
 
         <!-- Media Element -->
         <MediaElement Name="myMediaElement" 
-            Width="450" Height="250" LoadedBehavior="Manual" UnloadedBehavior="Manual" MediaEnded="Media_Ended"  Stretch="Fill" Canvas.Left="-1" Canvas.Top="228"/>
+            Opacity=".8" Width="334" Height="230" LoadedBehavior="Manual" UnloadedBehavior="Manual" MediaEnded="Media_Ended"  Stretch="Fill" Canvas.Left="450" Canvas.Top="252"/>
         <!-- End of Media Element-->
         
         <!-- Controls -->
         <Label Canvas.Top="10" Name="Seek" Content="Seek Bar" Height="40" Width="94" FontSize="20" FontStyle="Normal" Canvas.Left="294"/>
         <Slider Visibility="Hidden" Name="SeekSlider" Canvas.Left="268" Canvas.Top="56" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
-        
-        <Label Content="" Name="Instructions"></Label>
+
+        <TextBlock Name="Instructions" Foreground="White" FontSize="30" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Canvas.Left="76" Canvas.Top="252" Height="230" Width="374">
+            This is an example instruction, it could sometimes be very long. But lets hope this page works out well.
+        </TextBlock>
+        <TextBlock Name="Facts" Foreground="White" FontSize="30" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Canvas.Left="789" Canvas.Top="252" Height="230" Width="375">
+            This is an example instruction, it could sometimes be very long. But lets hope this page works out well.
+        </TextBlock>
         <!-- End of Controls-->
         
         <!-- Pause overlay -->

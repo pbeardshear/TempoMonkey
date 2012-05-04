@@ -47,7 +47,7 @@
         <!-- Currenty the image does not correspond to the action, because no image exist for that at the moment-->
         <!--Image Name="PauseAvatar" Canvas.ZIndex="30" Visibility="Visible" Canvas.Left="46" Canvas.Top="296"/-->
         <Path Name="PauseCircle"></Path>
-        <Label Name="PauseLabel" Foreground="White" Canvas.Left="79" Canvas.Top="626" Content="Pausing">
+        <Label Name="PauseLabel" Visibility="Hidden" Width="56" Foreground="White" Canvas.Left="79" Canvas.Top="626" Content="Pausing" Height="32">
         </Label>
     </Canvas>
 </Page>

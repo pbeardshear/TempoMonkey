@@ -62,6 +62,10 @@ class KinectGesturePlayer
                 staticCallBacks[listener](exists);
                 staticWas[listener] = exists;
             }
+            else if (listener == trackMoveListener)
+            {
+                staticCallBacks[listener](exists);
+            }
         }
         else
         {
@@ -77,6 +81,7 @@ class KinectGesturePlayer
         /* The order does matter, it will look at them in order and short curcuit */
         handled = false;
         kinectGuideListener();
+        trackMoveListener();
         handsAboveHeadListener();
         leanListener();
         handsUppenListener();
@@ -170,6 +175,7 @@ class KinectGesturePlayer
             {
                 guideTryCount--;
             }
+            callDynamicCallBack(kinectGuideListener, 0);
         }
     }
 
@@ -186,8 +192,8 @@ class KinectGesturePlayer
         {
             bodyMoves.Enqueue(currSpine.X - prevSpineX);
         }
-
-        if (bodyMoves.Count() > 40)
+        prevSpineX = currSpine.X;
+        if (bodyMoves.Count() > 20)
         {
             bodyMoves.Dequeue();
         }
@@ -198,14 +204,19 @@ class KinectGesturePlayer
         }
         else
         {
-            if (bodyMoves.Sum() > 100)
+            int sum = bodyMoves.Sum();
+            if (sum > 150)
             {
-                callDynamicCallBack(trackMoveListener, -1);
+                callStaticCallBack(trackMoveListener, true);
+                bodyMoves = new Queue<int>();
             }
-            else if (bodyMoves.Sum() < 100)
+            else if (sum < -150)
             {
-                callDynamicCallBack(trackMoveListener, 1);
+                callStaticCallBack(trackMoveListener, false);
+                bodyMoves = new Queue<int>();
             }
+
+            callDynamicCallBack(trackMoveListener, sum);
         }
     }
 

@@ -9,15 +9,16 @@ namespace TempoMonkey
     {
         static List<Tutorial> _tutorials = new List<Tutorial>();
         public static int _tutorialIndex;
-        string _name, _instructions;
+        string _name, _instructions, _fact;
         public delegate bool check();
         Uri _source;
         check _checker;
         public static bool doNext = false;
 
-        public Tutorial(string name, string instructions, Uri source, check checker)
+        public Tutorial(string name, string instructions, Uri source, check checker, string fact = null)
         {
             _name = name;
+            _fact = fact;
             _instructions = instructions;
             _source = source;
             _checker = checker;
@@ -77,6 +78,11 @@ namespace TempoMonkey
             {
                 return null;
             }
+        }
+
+        internal string getFacts()
+        {
+            return _fact;
         }
     }
 }
