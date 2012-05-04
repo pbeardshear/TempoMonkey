@@ -34,6 +34,7 @@ namespace TempoMonkey
         string _type;
         public mySlider VolumeSlider, PitchSlider, TempoSlider;
 		public Spectrum Visualizer;
+		public bool IsTutorialMode = false;
 
         public void initCommon()
         {
@@ -145,6 +146,8 @@ namespace TempoMonkey
             freePlayer2.registerCallBack(freePlayer2.handsAboveHeadListener, pitchTrackingHandler2, pitchChangeHandler);
             freePlayer2.registerCallBack(freePlayer2.leanListener, tempoTrackingHandler2, tempoChangeHandler);
             freePlayer2.registerCallBack(freePlayer2.handsWidenListener, volumeTrackingHandler2, volumeChangeHandler);
+
+			IsTutorialMode = false;
         }
 
         public void initSoloForm(ArrayList addrList, ArrayList nameList){
@@ -184,6 +187,8 @@ namespace TempoMonkey
 			freePlayer.registerCallBack(freePlayer.leanListener, tempoTrackingHandler, tempoChangeHandler);
 			freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
             freePlayer.registerCallBack(freePlayer.trackMoveListener, changeTrackTrackingHandler, null);
+
+			IsTutorialMode = false;
         }
 
         public void initTutor(int index)
@@ -257,6 +262,8 @@ namespace TempoMonkey
             tutoree.registerCallBack(tutoree.leanListener, tempoTrackingHandler, tempoChangeHandler);
             tutoree.registerCallBack(tutoree.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
             tutoree.registerCallBack(tutoree.trackMoveListener, changeTrackTrackingHandler, volumeChangeHandler);
+
+			IsTutorialMode = true;
         }
 
         public void tearDown()
@@ -640,6 +647,7 @@ namespace TempoMonkey
 
         public void Pause()
         {
+			NextTutorial.Visibility = IsTutorialMode ? Visibility.Visible : Visibility.Hidden;
             _isPaused = true;
             Processing.Audio.Pause();
 

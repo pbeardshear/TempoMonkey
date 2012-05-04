@@ -95,6 +95,10 @@ namespace TempoMonkey
         int debugDegree = 0;
         private void HandleKeyDownEvent(object sender, KeyEventArgs e)
         {
+			if (System.Windows.Input.Key.P == e.Key)
+			{
+				(currentPage as FreeFormMode).Pause();
+			}
             if (System.Windows.Input.Key.A == e.Key)
             {
                 debugDegree -= 10;
@@ -336,12 +340,14 @@ namespace TempoMonkey
         {
             if (value)
             {
-                System.Windows.Forms.Cursor.Hide(); // <<<<<<<<<<<<<<<<<<<<<<<<<<<< UN COMMENT ME!!
+                //System.Windows.Forms.Cursor.Hide(); // <<<<<<<<<<<<<<<<<<<<<<<<<<<< UN COMMENT ME!!
+				Mouse.OverrideCursor = Cursors.None;
                 _isManipulating = true;
             }
             else
             {
-                System.Windows.Forms.Cursor.Show();
+                // System.Windows.Forms.Cursor.Show();
+				Mouse.OverrideCursor = null;
                 _isManipulating = false;
             }
         }
