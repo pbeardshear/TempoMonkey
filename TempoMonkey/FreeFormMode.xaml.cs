@@ -94,11 +94,6 @@ namespace TempoMonkey
                 SongTitles[_currentTrackIndex].Foreground = ((System.Windows.Media.Brush)bc.ConvertFrom("#FFF"));
                 Canvas.SetLeft(BlueDot, positions[_currentTrackIndex]);
                 Processing.Audio.SwapTrack(_currentTrackIndex);
-                
-                Processing.Audio.Seek(SeekSlider.Value);
-                Processing.Audio.ChangeVolume(VolumeSlider.Value);
-                Processing.Audio.ChangeTempo(TempoSlider.Value);
-                Processing.Audio.ChangePitch(PitchSlider.Value);
             }
             get
             {
