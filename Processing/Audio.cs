@@ -545,6 +545,7 @@ namespace Processing
 
             // End of the audio file
             _waveOutDevice.Stop();
+			IsPlaying = false;
             if (!stopWorker && _currentWaveChannel.CurrentTime < actualEndMarker)
             {
                 _currentWaveChannel.CurrentTime = actualEndMarker;
