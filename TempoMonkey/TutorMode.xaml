@@ -26,8 +26,7 @@
         
         <!-- Controls -->
         <Label Canvas.Top="10" Name="Seek" Content="Seek Bar" Height="40" Width="94" FontSize="20" FontStyle="Normal" Canvas.Left="294"/>
-        <Slider Visibility="Hidden" Name="SeekSlider" Canvas.Left="268" Canvas.Top="56" Height="29" Width="632" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
-
+        
         <TextBlock Name="Instructions" Foreground="White" FontSize="30" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Canvas.Left="76" Canvas.Top="252" Height="230" Width="374">
             This is an example instruction, it could sometimes be very long. But lets hope this page works out well.
         </TextBlock>
