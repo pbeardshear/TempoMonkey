@@ -46,5 +46,45 @@
         <Path Name="PauseCircle"></Path>
         <Label Name="PauseLabel" Visibility="Hidden" Width="56" Foreground="White" Canvas.Left="79" Canvas.Top="626" Content="Pausing" Height="32">
         </Label>
+        
+        <!-- Tutor Stuff -->
+        <TextBlock Name="Instructions" Visibility="Hidden" Foreground="White" FontSize="30" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Canvas.Left="76" Canvas.Top="252" Height="230" Width="374">
+            This is an example instruction, it could sometimes be very long. But lets hope this page works out well.
+        </TextBlock>
+        <TextBlock Name="Facts" Visibility="Hidden" Foreground="White" FontSize="30" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" Canvas.Left="789" Canvas.Top="252" Height="230" Width="375">
+            This is an example instruction, it could sometimes be very long. But lets hope this page works out well.
+        </TextBlock>
+        <!-- Media Element -->
+        <MediaElement Name="myMediaElement" Visibility="Hidden"
+            Opacity=".8" Width="334" Height="230" LoadedBehavior="Manual" UnloadedBehavior="Manual" MediaEnded="Media_Ended"  Stretch="Fill" Canvas.Left="450" Canvas.Top="252"/>
+        <!-- End of Media Element-->
+
+        <Grid Visibility="Hidden" Name="NextOverLay" Height="140" Canvas.ZIndex="2" Width="600" Background="#CCC" Opacity="0.8" Canvas.Left="363" Canvas.Top="289">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Button Name="TutorialsButton" Grid.Row="0" Grid.Column="0" Content="Back to Tutorials"  Width="250" Height="47" FontSize="30"/>
+            <Button Name="NextTutorial" Grid.Row="0" Grid.Column="1" Content="Next Tutorial" Width="200" Height="47" FontSize="30"/>
+        </Grid>
+
+
+        <Grid Visibility="Visible" Name="FinishedOverlay" Height="140" Canvas.ZIndex="2" Width="600" Background="#CCC" Opacity="0.8" Canvas.Left="363" Canvas.Top="289">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Row="0" Grid.Column="0" >Hooarry!! You finished the Tutorial!</TextBlock>
+            <Button Name="HomeButton" Grid.Row="1" Grid.Column="0" Content="Go Back Home"  Width="250" Height="47" FontSize="30"/>
+        </Grid>
+        <!-- End of Tutor Stuff -->
     </Canvas>
 </Page>

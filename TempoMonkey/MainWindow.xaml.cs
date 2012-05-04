@@ -270,7 +270,7 @@ namespace TempoMonkey
 			browseMusicPage = new BrowseMusic();
             browseTutorialsPage = new BrowseTutorials(); 
             freeFormPage = new FreeFormMode();
-            tutorPage = new TutorMode();
+            // tutorPage = new TutorMode();
             soloPage = new SoloPage();
             loadingPage = new LoadingPage();
 

@@ -159,6 +159,8 @@ class KinectGesturePlayer
             if (guideTryCount >= 40)
             {
                 callStaticCallBack(kinectGuideListener, true);
+                callDynamicCallBack(kinectGuideListener, 0);
+                guideTryCount = 0;
                 handled = true;
             }
             else
