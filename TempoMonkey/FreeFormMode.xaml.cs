@@ -64,19 +64,19 @@ namespace TempoMonkey
             PitchSlider = new mySlider("Pitch", 0, 100, 50, 250);
             TempoSlider = new mySlider("Tempo", 40, 200, 100, 250);
 
-            Canvas.SetLeft(VolumeSlider, 450);
-            Canvas.SetLeft(PitchSlider, 450);
-            Canvas.SetLeft(TempoSlider, 450);
+            Canvas.SetLeft(VolumeSlider, 240);
+            Canvas.SetLeft(PitchSlider, 513);
+            Canvas.SetLeft(TempoSlider, 792);
 
-            Canvas.SetTop(VolumeSlider, 200);
-            Canvas.SetTop(PitchSlider, 300);
-            Canvas.SetTop(TempoSlider, 400);
+            Canvas.SetTop(VolumeSlider, 256);
+            Canvas.SetTop(PitchSlider, 256);
+            Canvas.SetTop(TempoSlider, 256);
 
-            /*
+            
             mainCanvas.Children.Add(VolumeSlider);
             mainCanvas.Children.Add(PitchSlider);
             mainCanvas.Children.Add(TempoSlider);
-             * */
+            
         }
 
         BrushConverter bc = new BrushConverter();
