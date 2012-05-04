@@ -19,6 +19,7 @@ namespace Visualizer.Timeline
 		private Brush WaveformFill = Brushes.RoyalBlue;
 		private float TopOffset = 0;
 		private float LeftOffset = 20;
+		private double TotalLength;
 
 		private BackgroundWorker worker = new BackgroundWorker();
 		private CompletionCallback OnCompletion;
@@ -104,7 +105,7 @@ namespace Visualizer.Timeline
 				{
 					TotalTime = stream.TotalTime.TotalSeconds;
 				}
-				double offset = (stream.CurrentTime.TotalSeconds / TotalTime) * 1000;
+				double offset = (stream.CurrentTime.TotalSeconds / TotalTime) * TotalLength;
 				CurrentPosition.Margin = new System.Windows.Thickness(offset + LeftOffset, TopOffset, 0, 0);
 			}
 		}
@@ -218,6 +219,8 @@ namespace Visualizer.Timeline
 			Path path = new Path();
 			path.Fill = WaveformFill;
 			path.Data = geometry;
+
+			TotalLength = x;
 
             //Strech it out, to fit the container
             // path.Data.Transform = new ScaleTransform(Container.Width / x, 1);

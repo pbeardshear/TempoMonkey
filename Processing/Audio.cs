@@ -251,11 +251,11 @@ namespace Processing
         #endregion
 
         #region Basic Audio Methods
-        public static void Play()
+        public static void Play(int songIndex = 0)
         {
             if (!Started)
             {
-                CurrentTrackIndex = 0;
+                CurrentTrackIndex = songIndex;
                 CurrentTrack = _audioStreamList[CurrentTrackIndex].Name;
 				CurrentStream = _audioStreamList[CurrentTrackIndex].Stream;
 
