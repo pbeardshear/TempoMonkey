@@ -135,13 +135,13 @@ namespace TempoMonkey
 
             // connected to gestures
             freePlayer = new KinectGesturePlayer();
-            freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, null);
+            freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, pauseChangeHandler);
             freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
             freePlayer.registerCallBack(freePlayer.leanListener, tempoTrackingHandler, tempoChangeHandler);
             freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
 
             freePlayer2 = new KinectGesturePlayer();
-            freePlayer2.registerCallBack(freePlayer2.kinectGuideListener, pauseTrackingHandler, null);
+            freePlayer2.registerCallBack(freePlayer2.kinectGuideListener, pauseTrackingHandler, pauseChangeHandler);
             freePlayer2.registerCallBack(freePlayer2.handsAboveHeadListener, pitchTrackingHandler2, pitchChangeHandler);
             freePlayer2.registerCallBack(freePlayer2.leanListener, tempoTrackingHandler2, tempoChangeHandler);
             freePlayer2.registerCallBack(freePlayer2.handsWidenListener, volumeTrackingHandler2, volumeChangeHandler);
@@ -256,7 +256,7 @@ namespace TempoMonkey
             tutoree.registerCallBack(tutoree.handSwingListener, seekTrackingHandler, seekChangeHandler);
             tutoree.registerCallBack(tutoree.leanListener, tempoTrackingHandler, tempoChangeHandler);
             tutoree.registerCallBack(tutoree.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
-            tutoree.registerCallBack(tutoree.trackMoveListener, changeTrackTrackingHandler, null);
+            tutoree.registerCallBack(tutoree.trackMoveListener, changeTrackTrackingHandler, volumeChangeHandler);
         }
 
         public void tearDown()
@@ -310,6 +310,7 @@ namespace TempoMonkey
             {
                 Tutorial.nextTutorial();
                 _isPaused = false;
+                Processing.Audio.Resume();
                 // NextOverLay.Visibility = System.Windows.Visibility.Hidden;
                 PauseOverlay.Visibility = System.Windows.Visibility.Hidden;
                 MainWindow.setManipulating(true);
