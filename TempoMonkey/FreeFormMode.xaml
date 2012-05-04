@@ -44,7 +44,17 @@
         <!-- Currenty the image does not correspond to the action, because no image exist for that at the moment-->
         <!--Image Name="PauseAvatar" Canvas.ZIndex="30" Visibility="Visible" Canvas.Left="46" Canvas.Top="296"/-->
         <Path Name="PauseCircle"></Path>
-        <Label Name="PauseLabel" Visibility="Hidden" Width="56" Foreground="White" Canvas.Left="79" Canvas.Top="626" Content="Pausing" Height="32">
-        </Label>
+        <Image Name="PauseLabel" Source="/Resources/Images/pause_button.png" Canvas.Left="1103" Canvas.Top="12" Stretch="Uniform" Height="88" Width="85" Opacity=".3"/>
+            <!-- Sliders -->
+        <Label Content="Pitch" HorizontalContentAlignment="Center" FontFamily="Aharoni" FontSize="20" Height="36" Foreground="Gray" Width="75" Canvas.Left="328" Canvas.Top="230" />
+        <Slider Name="Pitch_Slider" Canvas.Left="240" Canvas.Top="256" Height="28" Width="248" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
+
+        <Label Content="Volume" HorizontalContentAlignment="Center" FontFamily="Aharoni" FontSize="20" Height="36" Foreground="Gray" Width="101" Canvas.Left="582" Canvas.Top="230" />
+        <Slider Name="Volume_Slider" Canvas.Left="513" Canvas.Top="256" Height="28" Width="248" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
+
+        <Label Content="Tempo" HorizontalContentAlignment="Center" FontFamily="Aharoni" FontSize="20" Height="36" Foreground="Gray" Width="75" Canvas.Left="879" Canvas.Top="230" />
+        <Slider Name="Tempo_Slider" Canvas.Left="792" Canvas.Top="256" Height="28" Width="248" Value="0" Minimum="0" Maximum="100" TickFrequency=".1"/>
+
+        <!-- End Sliders -->
     </Canvas>
 </Page>
