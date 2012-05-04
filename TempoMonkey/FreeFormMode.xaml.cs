@@ -37,6 +37,9 @@ namespace TempoMonkey
 
         public void initCommon()
         {
+            PauseCircle.Stroke = System.Windows.Media.Brushes.White;
+            PauseCircle.StrokeThickness = 8;
+
             waveFormContainers[0] = SongContainer0;
             waveFormContainers[1] = SongContainer1;
             waveFormContainers[2] = SongContainer2;
@@ -112,33 +115,6 @@ namespace TempoMonkey
 			wave.StartTracking();
         }
 
-        // This is slow because it is serial, Peter can you create a function that takes in multiple waveForms 
-        // and calls a single callback. when it is all done? Thanks.
-        public void initWaveFormRecur(int index, Panel[] waveFormContainers, ArrayList uris,
-            Visualizer.Timeline.WaveformTimeline.CompletionCallback callback = null)
-        {
-            if (index >= uris.Count - 1)
-            {
-                Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainers[index], uris[index] as string, callback);
-                wave.Draw();
-				// This might be more appropriate to call after Audio.Play() is called, but currently there is no
-				// reference to these wave objects.  Tracking checks if the Audio is playing, so it shouldn't break.
-				wave.StartTracking();
-            }
-            else
-            {
-                Visualizer.Timeline.WaveformTimeline wave = new Visualizer.Timeline.WaveformTimeline(waveFormContainers[index], uris[index] as string, delegate()
-                {
-                    initWaveFormRecur(index + 1, waveFormContainers, uris, callback);
-                });
-                wave.Draw();
-				// This might be more appropriate to call after Audio.Play() is called, but currently there is no
-				// reference to these wave objects.  Tracking checks if the Audio is playing, so it shouldn't break.
-				wave.StartTracking();
-            }
-        }
-
-
         public void initBuddyForm(string address, string name)
         {
             _type = "Buddy"; 
@@ -152,7 +128,8 @@ namespace TempoMonkey
             // Initlaize the wave form
             initWaveForm(waveFormContainers[1], address, delegate()
             {
-                MainWindow.loadingPage.NavigationService.Navigate(MainWindow.freeFormPage);
+                MainWindow.currentPage = MainWindow.freeFormPage;
+                MainWindow.loadingPage.NavigationService.Navigate(MainWindow.currentPage);
 
                 // Sets the current track & also plays it
                 currentTrackIndex = 1;
@@ -163,22 +140,24 @@ namespace TempoMonkey
 
             // connected to gestures
             freePlayer = new KinectGesturePlayer();
-            freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
+            freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, null);
             freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
             freePlayer.registerCallBack(freePlayer.leanListener, tempoTrackingHandler, tempoChangeHandler);
             freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
 
             freePlayer2 = new KinectGesturePlayer();
-            freePlayer2.registerCallBack(freePlayer2.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
+            freePlayer2.registerCallBack(freePlayer2.kinectGuideListener, pauseTrackingHandler, null);
             freePlayer2.registerCallBack(freePlayer2.handsAboveHeadListener, pitchTrackingHandler2, pitchChangeHandler);
             freePlayer2.registerCallBack(freePlayer2.leanListener, tempoTrackingHandler2, tempoChangeHandler);
             freePlayer2.registerCallBack(freePlayer2.handsWidenListener, volumeTrackingHandler2, volumeChangeHandler);
         }
 
+        
+
         public void initSoloForm(ArrayList addrList, ArrayList nameList){
             _type = "Solo"; 
             initCommon();
-
+            int doneCount = 0;
             // Load and set the song titles
             for( int i=0; i < addrList.Count; i++)
 			{
@@ -188,23 +167,30 @@ namespace TempoMonkey
                 _nameList.Add(name);
                 SongTitles[i].Content = name;
                 Processing.Audio.LoadFile(address);
+
+                // Initlaize the wave form
+                initWaveForm(waveFormContainers[i], address, delegate()
+                {
+                    doneCount++;
+                    if (doneCount == _nameList.Count)
+                    {
+                        MainWindow.currentPage = MainWindow.freeFormPage;
+                        MainWindow.loadingPage.NavigationService.Navigate(MainWindow.currentPage);
+
+                        // Sets the current track & also plays it
+                        currentTrackIndex = _nameList.Count > 1 ? 1 : 0;
+                        Processing.Audio.Play();
+                    }
+                });
 			}
-
-            initWaveFormRecur(0, waveFormContainers, addrList, delegate()
-            { 
-                MainWindow.loadingPage.NavigationService.Navigate(MainWindow.freeFormPage);
-
-                // Sets the current track & also plays it
-                Processing.Audio.Play();
-                currentTrackIndex = _nameList.Count > 1 ? 1 : 0;
-            });
 
             // connected to gestures
             freePlayer = new KinectGesturePlayer();
-			freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, changeTrackHandler);
+			freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, pauseChangeHandler);           
 			freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
 			freePlayer.registerCallBack(freePlayer.leanListener, tempoTrackingHandler, tempoChangeHandler);
 			freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
+            freePlayer.registerCallBack(freePlayer.trackMoveListener, null, changeTrackHandler);
         }
 
         public void tearDown()
@@ -296,12 +282,15 @@ namespace TempoMonkey
 			InitializeResource(Properties.Resources.seek_avatar, "seekAvatar");
 			InitializeResource(Properties.Resources.pitch_avatar, "pitchAvatar");
 			InitializeResource(Properties.Resources.tempo_avatar, "tempoAvatar");
+            // InitializeResource(Properties.Resources.seek_avatar, "pauseAvatar");
+
 
 			// Disabled images
 			volumeAvatar.Source = InitializeResource(Properties.Resources.volume_avatar_disabled, "volumeAvatarDisabled");
 			seekAvatar.Source = InitializeResource(Properties.Resources.seek_avatar_disabled, "seekAvatarDisabled");
 			pitchAvatar.Source = InitializeResource(Properties.Resources.pitch_avatar_disabled, "pitchAvatarDisabled");
 			tempoAvatar.Source = InitializeResource(Properties.Resources.tempo_avatar_disabled, "tempoAvatarDisabled");
+            // PauseAvatar.Source = InitializeResource(Properties.Resources.seek_avatar, "pauseAvatar");
 		}
 
 		public void SetAvatarState(bool active, System.Windows.Controls.Image imageControl, BitmapImage image)
@@ -327,34 +316,67 @@ namespace TempoMonkey
 			}
 		}
 
+        public void pauseChangeHandler(double angle)
+        {
+            if (angle > 10)
+            {
+                PauseCircle.Visibility = System.Windows.Visibility.Visible;
+                // PauseAvatar.Visibility = System.Windows.Visibility.Visible;
+
+                // System.Windows.Point center = new System.Windows.Point(Canvas.GetLeft(PauseLabel) - PauseLabel.Width / 2,
+                //     Canvas.GetTop(PauseLabel) - PauseLabel.Height / 2);
+                System.Windows.Point center = new System.Windows.Point(100, 500);
+
+                System.Windows.Point endPoint = new System.Windows.Point(center.X + 40 * Math.Sin(angle / 180.0 * Math.PI), center.Y - 40 * Math.Cos(angle / 180.0 * Math.PI));
+
+                PathFigure figure = new PathFigure();
+                figure.StartPoint = new System.Windows.Point(center.X, center.Y - 40);
+
+                figure.Segments.Add(new ArcSegment(
+                    endPoint,
+                    new System.Windows.Size(40, 40),
+                    0,
+                    angle >= 180,
+                    SweepDirection.Clockwise,
+                    true
+                ));
+
+                PathGeometry geometry = new PathGeometry();
+                geometry.Figures.Add(figure);
+
+                PauseCircle.Data = geometry;
+
+            } else {
+                PauseCircle.Visibility = System.Windows.Visibility.Hidden;
+                // PauseAvatar.Visibility = System.Windows.Visibility.Hidden;
+            }
+        }
 
 		int _currentTrackIndex;
-
-        int midPoint = 325;
-        int span = 190;
 		void changeTrackHandler(double value)
 		{
-            if (!wasSeeking)
-			{
-				SeekSlider.Value += .05;
-			}
+            if (value == 0)
+            {
 
-			if (value < midPoint - span && currentTrackIndex != 0 && _nameList.Count > 1)
-			{
-				currentTrackIndex = 0;
-			}
-			else if (value > midPoint + span && currentTrackIndex != 2 && _nameList.Count > 2)
-			{
-                currentTrackIndex = 2;
-			}
-			else if (value >= midPoint - span && value <= midPoint + span && currentTrackIndex != 1)
-			{
-                currentTrackIndex = 1;
-			}
-			else
-			{
-				return;
-			}
+            }
+            else if (value == 1)
+            {
+                if (currentTrackIndex < _nameList.Count - 1)
+                {
+                    currentTrackIndex += 1;
+                }
+            }
+            else if (value == -1)
+            {
+                if (currentTrackIndex != 0)
+                {
+                    currentTrackIndex -= 1;
+                }
+            }
+            else
+            {
+                throw new Exception();
+            }
 		}
 
 		void volumeChangeHandler(double change)
