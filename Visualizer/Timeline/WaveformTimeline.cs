@@ -93,7 +93,7 @@ namespace Visualizer.Timeline
 			timer.Start();
 		}
 
-		void timer_Tick(object sender, EventArgs e)
+		private void timer_Tick(object sender, EventArgs e)
 		{
 			if (Audio.IsPlaying && Audio.CurrentTrack == FileName)
 			{
@@ -196,7 +196,7 @@ namespace Visualizer.Timeline
 			PathFigure figure = new PathFigure();
 			double yOffset = Container.Height / 2;
 			figure.StartPoint = new System.Windows.Point(0, yOffset);
-			double thickness = (2 * (Container.Width - LeftOffset - 10)) / WaveformData.Length;
+			double thickness = (2 * (Container.Width - LeftOffset - 5)) / WaveformData.Length;
 			double x = 0;
 
 			PolyLineSegment leftSegment = new PolyLineSegment();
