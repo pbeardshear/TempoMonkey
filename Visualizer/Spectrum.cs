@@ -29,11 +29,29 @@ namespace Visualizer
 		private float[] channelData = new float[2048];
 		private double bandWidth = 1.0;
 		private double barWidth = 1;
-		private int BarCount = 11;
-		private double BarSpacing = 60.0;
-		private int maxBarHeight = 120;
+		private int BarCount = 13;
+		private double BarSpacing = 65.0;
+		private int maxBarHeight = 160;
 		private const int scaleFactorLinear = 15;
 		private Random rand = new Random();
+		private byte[] MainColors = new byte[3];
+		private byte[] SideColors = new byte[3];
+
+		private int colorUpdate = 0;
+		private int intervalSize = 100;
+		private int energyOffset = 50;
+		private const double stepSize = 100.0 / 6;
+		private double colorIntervalPosition = 0;
+		private Dictionary<double, SolidColorBrush> ColorMap = new Dictionary<double, SolidColorBrush>()
+		{
+				  {stepSize * 0, Brushes.Purple},
+				  {stepSize * 1, Brushes.Blue},
+				  {stepSize * 2, Brushes.Green},
+				  {stepSize * 3, Brushes.Yellow},
+				  {stepSize * 4, Brushes.Orange},
+				  {stepSize * 5, Brushes.Red},
+				  {stepSize * 6, Brushes.White}
+		};
 
 		public float currentTempo;
 		public float currentPitch;
@@ -44,7 +62,7 @@ namespace Visualizer
 			this.canv = spectrumContainer;
 			timer = new DispatcherTimer(DispatcherPriority.Background)
 			{
-				Interval = TimeSpan.FromMilliseconds(40),
+				Interval = TimeSpan.FromMilliseconds(30),
 			};
 			timer.Tick += timerTick;
 		}
@@ -98,22 +116,42 @@ namespace Visualizer
 					if (barHeight > height)
 						barHeight = height;
 					if (barIndex > 0)
-						barHeight = (lastPeakHeight + barHeight) / (rand.NextDouble() < 0.3 ? 1.2 : 1.8);
+						barHeight = (lastPeakHeight + barHeight) / 1.3;// / (rand.NextDouble() < 0.3 ? 1.2 : 1.8);
 					// Apply the current volume to the bar height
 					barHeight += currentVolume / 5;
 					// Apply the tempo to the volume
 					// Depending on the value, we add a random offset to the height
-					barHeight += rand.Next(0, (int)(currentTempo / 4));
+					// barHeight += rand.Next(0, (int)(currentTempo / 4));
 					peakYPos = barHeight;
-					if (channelPeakData[barIndex] < peakYPos)
+					if (channelPeakData[barIndex] < peakYPos) 
+					{
 						channelPeakData[barIndex] = (float)peakYPos;
+					}
 					else
+					{
 						channelPeakData[barIndex] = (float)(peakYPos + (PeakFallDelay * channelPeakData[barIndex])) / ((float)(PeakFallDelay + 1));
+					}
 
 					double xCoord = BarSpacing + (barWidth * barIndex) + (BarSpacing * barIndex) + 1;
 					
 					// barShapes[barIndex].Margin = new Thickness(xCoord, (height - 1) - Math.Min(barHeight, maxBarHeight), 0, 0);
-					barShapes[barIndex].Height = barHeight / 2.0;
+					barShapes[barIndex].Height = Math.Min(barHeight / 2, maxBarHeight);
+					// Color only changes once every few updates
+					// This is to prevent flickering
+					colorUpdate += 1;
+					if (colorUpdate >= 8)
+					{
+						// Set lightness based on energy
+						double energy = (barShapes[barIndex].Height / maxBarHeight);
+						double value = currentPitch + ((energy * intervalSize) - energyOffset);
+						SolidColorBrush fill = ColorMap[Math.Max(Math.Min(value - (value % stepSize), 100), 0)];
+						//barShapes[barIndex].BarFill = new SolidColorBrush(Color.FromArgb((byte)200, fill.Color.R, fill.Color.G, fill.Color.B));
+						//barShapes[barIndex].sideFill = new SolidColorBrush(Color.FromArgb((byte)200, fill.Color.R, fill.Color.G, fill.Color.B)); //new SolidColorBrush(Color.FromArgb((byte)(255 * (barShapes[barIndex].Height / maxBarHeight)), red, green, blue));
+						barShapes[barIndex].BarFill = fill;
+						barShapes[barIndex].sideFill = fill;
+						barShapes[barIndex].Opacity = Math.Min(Math.Max(energy, 0.4), 0.8);
+						colorUpdate = 0;
+					}
 					lastPeakHeight = barHeight;
 					barHeight = 0f;
 					barIndex++;
@@ -170,24 +208,35 @@ namespace Visualizer
 
 			Bar.canvas = canv;
 
+			SolidColorBrush MainBrush = Brushes.Blue;
+			SolidColorBrush SideBrush = Brushes.DarkBlue;
 			// Number of rectangles to each side of the center bar
 			int sideCount = (int)Math.Floor(actualBarCount / 2.0);
 			for (int i = 0; i < sideCount; i++)
 			{
 				double rightPos = (BarSpacing * sideCount) - (BarSpacing * i);
 				double leftPos = (-BarSpacing * sideCount) + (BarSpacing * i);
-				Bar rightRectangle = new Bar(rightPos, Brushes.SlateBlue, Brushes.DarkSlateBlue, 50, 30);
-				Bar leftRectangle = new Bar(leftPos, Brushes.SlateBlue, Brushes.DarkSlateBlue, 50, 30);
+				Bar rightRectangle = new Bar(rightPos, MainBrush, SideBrush, 50, 30);
+				Bar leftRectangle = new Bar(leftPos, MainBrush, SideBrush, 50, 30);
 				
 				barShapes.Insert(0, rightRectangle);
 				barShapes.Insert(0, leftRectangle);
 			}
 
 			// Center bar
-			Bar centerBar = new Bar(0, Brushes.SlateBlue, Brushes.DarkSlateBlue, 50, 30);
+			Bar centerBar = new Bar(0, MainBrush, SideBrush, 65, 30);
 			barShapes.Insert(0, centerBar);
 
-			// ActualBarWidth = barWidth;
+			// Set the color values
+			Color MainColor = MainBrush.Color;
+			Color SideColor = SideBrush.Color;
+			MainColors[0] = MainColor.R;
+			MainColors[1] = MainColor.G;
+			MainColors[2] = MainColor.B;
+
+			SideColors[0] = SideColor.R;
+			SideColors[1] = SideColor.G;
+			SideColors[2] = SideColor.B;
 		}
 
 		#region Update Style Handlers
@@ -195,18 +244,8 @@ namespace Visualizer
 		// Pitch affects color of bars
 		public void UpdatePitch(float newValue)
 		{
+			// Color position goes from the interval [0, 410]
 			currentPitch = newValue;
-			// We need to apply the pitch to the color, since its
-			// more efficient not to apply this every update
-			
-			// We want maxPitch -> red, and minPitch -> blue/purple
-			//for (int i = 0; i < barShapes.Count; i++)
-			//{
-			//    barShapes[i].BarFill = new LinearGradientBrush(Color.FromRgb((byte)(currentPitch * 2.5), 50, (byte)(130 - currentPitch)),
-			//                            Color.FromRgb((byte)(currentPitch * 1.3), 50, (byte)(100 - currentPitch)),
-			//                            new Point(0.5, 0),
-			//                            new Point(0.5, 1));
-			//}
 		}
 		
 		#endregion
