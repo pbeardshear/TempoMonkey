@@ -29,11 +29,9 @@ namespace Visualizer
             bar = new Rectangle();
             bar.Width = Width;
 			bar.Fill = mainFill;
-			bar.Opacity = 0.6;
 
             side = new Polygon();
 			side.Fill = sideFill;
-			side.Opacity = 0.7;
 
             d = Math.Sqrt(vanishingPointz * vanishingPointz + x * x);
             k = d * i * Math.Cos(Math.Atan(vanishingPointz / x));
@@ -118,6 +116,19 @@ namespace Visualizer
                 side.Fill = value;
             }
         }
+
+		public double Opacity
+		{
+			get
+			{
+				return bar.Opacity;
+			}
+			set
+			{
+				bar.Opacity = value;
+				side.Opacity = value;
+			}
+		}
 
     }
 }
