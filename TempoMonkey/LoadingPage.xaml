@@ -29,19 +29,19 @@
                 </EventTrigger>
             </Ellipse.Triggers>
         </Ellipse>
-        <Ellipse Canvas.Left="665" Canvas.Top="232" Height="70" Name="ellipse2" Stroke="Black" Width="70" Fill="DarkMagenta">
+        <Ellipse Canvas.Left="665" Canvas.Top="232" Height="70" Name="ellipse5" Stroke="Black" Width="70" Fill="DarkMagenta">
             <Ellipse.Triggers>
                 <EventTrigger RoutedEvent="Ellipse.Loaded">
                     <BeginStoryboard>
                         <Storyboard>
                             <DoubleAnimation
                                 BeginTime="00:00:00"
-                                Storyboard.TargetName="ellipse2" 
+                                Storyboard.TargetName="ellipse5" 
                                 Storyboard.TargetProperty="Opacity"
                                 From="0.6" To="0.0" Duration="0:0:3"/>
                             <DoubleAnimation
                                 BeginTime="00:00:03"
-                                Storyboard.TargetName="ellipse2" 
+                                Storyboard.TargetName="ellipse5" 
                                 Storyboard.TargetProperty="Opacity"
                                 From="0.0" To="0.8" Duration="0:0:4" 
                                 AutoReverse="True" RepeatBehavior="Forever" />
@@ -50,19 +50,19 @@
                 </EventTrigger>
             </Ellipse.Triggers>
         </Ellipse>
-        <Ellipse Canvas.Left="695" Canvas.Top="302" Height="70" Name="ellipse3" Stroke="Black" Width="70" Fill="DarkMagenta">
+        <Ellipse Canvas.Left="695" Canvas.Top="302" Height="70" Name="ellipse6" Stroke="Black" Width="70" Fill="DarkMagenta">
             <Ellipse.Triggers>
                 <EventTrigger RoutedEvent="Ellipse.Loaded">
                     <BeginStoryboard>
                         <Storyboard>
                             <DoubleAnimation
                                 BeginTime="00:00:00"
-                                Storyboard.TargetName="ellipse3" 
+                                Storyboard.TargetName="ellipse6" 
                                 Storyboard.TargetProperty="Opacity"
                                 From="0.4" To="0.0" Duration="0:0:2"/>
                             <DoubleAnimation
                                 BeginTime="00:00:02"
-                                Storyboard.TargetName="ellipse3" 
+                                Storyboard.TargetName="ellipse6" 
                                 Storyboard.TargetProperty="Opacity"
                                 From="0.0" To="0.8" Duration="0:0:4" 
                                 AutoReverse="True" RepeatBehavior="Forever" />
@@ -71,19 +71,19 @@
                 </EventTrigger>
             </Ellipse.Triggers>
         </Ellipse>
-        <Ellipse Canvas.Left="665" Canvas.Top="372" Height="70" Name="ellipse4" Stroke="Black" Width="70" Fill="DarkMagenta">
+        <Ellipse Canvas.Left="665" Canvas.Top="372" Height="70" Name="ellipse7" Stroke="Black" Width="70" Fill="DarkMagenta">
             <Ellipse.Triggers>
                 <EventTrigger RoutedEvent="Ellipse.Loaded">
                     <BeginStoryboard>
                         <Storyboard>
                             <DoubleAnimation
                                 BeginTime="00:00:00"
-                                Storyboard.TargetName="ellipse4" 
+                                Storyboard.TargetName="ellipse7" 
                                 Storyboard.TargetProperty="Opacity"
                                 From="0.2" To="0.0" Duration="0:0:1"/>
                             <DoubleAnimation
                                 BeginTime="00:00:01"
-                                Storyboard.TargetName="ellipse4" 
+                                Storyboard.TargetName="ellipse7" 
                                 Storyboard.TargetProperty="Opacity"
                                 From="0.0" To="0.8" Duration="0:0:4" 
                                 AutoReverse="True" RepeatBehavior="Forever" />
@@ -92,19 +92,19 @@
                 </EventTrigger>
             </Ellipse.Triggers>
         </Ellipse>
-        <Ellipse Canvas.Left="525" Canvas.Top="232" Height="70" Name="ellipse5" Stroke="Black" Width="70" Fill="DarkMagenta">
+        <Ellipse Canvas.Left="525" Canvas.Top="232" Height="70" Name="ellipse2" Stroke="Black" Width="70" Fill="DarkMagenta">
             <Ellipse.Triggers>
                 <EventTrigger RoutedEvent="Ellipse.Loaded">
                     <BeginStoryboard>
                         <Storyboard>
                             <DoubleAnimation
                                 BeginTime="00:00:00"
-                                Storyboard.TargetName="ellipse5" 
+                                Storyboard.TargetName="ellipse2" 
                                 Storyboard.TargetProperty="Opacity"
                                 From="0.6" To="0.8" Duration="0:0:1"/>
                             <DoubleAnimation
                                 BeginTime="00:00:01"
-                                Storyboard.TargetName="ellipse5" 
+                                Storyboard.TargetName="ellipse2" 
                                 Storyboard.TargetProperty="Opacity"
                                 From="0.8" To="0.0" Duration="0:0:4" 
                                 AutoReverse="True" RepeatBehavior="Forever" />
@@ -113,19 +113,19 @@
                 </EventTrigger>
             </Ellipse.Triggers>
         </Ellipse>
-        <Ellipse Canvas.Left="495" Canvas.Top="302" Height="70" Name="ellipse6" Stroke="Black" Width="70" Fill="DarkMagenta">
+        <Ellipse Canvas.Left="495" Canvas.Top="302" Height="70" Name="ellipse3" Stroke="Black" Width="70" Fill="DarkMagenta">
             <Ellipse.Triggers>
                 <EventTrigger RoutedEvent="Ellipse.Loaded">
                     <BeginStoryboard>
                         <Storyboard>
                             <DoubleAnimation
                                 BeginTime="00:00:00"
-                                Storyboard.TargetName="ellipse6" 
+                                Storyboard.TargetName="ellipse3" 
                                 Storyboard.TargetProperty="Opacity"
                                 From="0.4" To="0.8" Duration="0:0:2"/>
                             <DoubleAnimation
                                 BeginTime="00:00:02"
-                                Storyboard.TargetName="ellipse6" 
+                                Storyboard.TargetName="ellipse3" 
                                 Storyboard.TargetProperty="Opacity"
                                 From="0.8" To="0.0" Duration="0:0:4" 
                                 AutoReverse="True" RepeatBehavior="Forever" />
@@ -134,19 +134,19 @@
                 </EventTrigger>
             </Ellipse.Triggers>
         </Ellipse>
-        <Ellipse Canvas.Left="525" Canvas.Top="372" Height="70" Name="ellipse7" Stroke="Black" Width="70" Fill="DarkMagenta">
+        <Ellipse Canvas.Left="525" Canvas.Top="372" Height="70" Name="ellipse4" Stroke="Black" Width="70" Fill="DarkMagenta">
             <Ellipse.Triggers>
                 <EventTrigger RoutedEvent="Ellipse.Loaded">
                     <BeginStoryboard>
                         <Storyboard>
                             <DoubleAnimation
                                 BeginTime="00:00:00"
-                                Storyboard.TargetName="ellipse7" 
+                                Storyboard.TargetName="ellipse4" 
                                 Storyboard.TargetProperty="Opacity"
                                 From="0.2" To="0.8" Duration="0:0:3"/>
                             <DoubleAnimation
                                 BeginTime="00:00:03"
-                                Storyboard.TargetName="ellipse7" 
+                                Storyboard.TargetName="ellipse4" 
                                 Storyboard.TargetProperty="Opacity"
                                 From="0.8" To="0.0" Duration="0:0:4" 
                                 AutoReverse="True" RepeatBehavior="Forever" />
