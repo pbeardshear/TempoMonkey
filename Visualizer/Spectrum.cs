@@ -45,11 +45,11 @@ namespace Visualizer
 		private Dictionary<double, SolidColorBrush> ColorMap = new Dictionary<double, SolidColorBrush>()
 		{
 				  {stepSize * 0, Brushes.Purple},
-				  {stepSize * 1, Brushes.Blue},
-				  {stepSize * 2, Brushes.Green},
+				  {stepSize * 1, Brushes.Cyan},
+				  {stepSize * 2, Brushes.GreenYellow},
 				  {stepSize * 3, Brushes.Yellow},
 				  {stepSize * 4, Brushes.Orange},
-				  {stepSize * 5, Brushes.Red},
+				  {stepSize * 5, Brushes.DarkRed},
 				  {stepSize * 6, Brushes.White}
 		};
 
