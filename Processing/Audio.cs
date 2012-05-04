@@ -251,11 +251,11 @@ namespace Processing
         #endregion
 
         #region Basic Audio Methods
-        public static void Play()
+        public static void Play(int songIndex = 0)
         {
             if (!Started)
             {
-                CurrentTrackIndex = 0;
+                CurrentTrackIndex = songIndex;
                 CurrentTrack = _audioStreamList[CurrentTrackIndex].Name;
 				CurrentStream = _audioStreamList[CurrentTrackIndex].Stream;
 
@@ -545,6 +545,7 @@ namespace Processing
 
             // End of the audio file
             _waveOutDevice.Stop();
+			IsPlaying = false;
             if (!stopWorker && _currentWaveChannel.CurrentTime < actualEndMarker)
             {
                 _currentWaveChannel.CurrentTime = actualEndMarker;

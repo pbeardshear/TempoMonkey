@@ -129,7 +129,7 @@ namespace TempoMonkey
 
                 // Sets the current track & also plays it
                 currentTrackIndex = 1;
-                Processing.Audio.Play();
+                Processing.Audio.Play(currentTrackIndex);
             });
             _nameList.Add(address);
 
@@ -174,7 +174,7 @@ namespace TempoMonkey
 
                         // Sets the current track & also plays it
                         currentTrackIndex = _nameList.Count > 1 ? 1 : 0;
-                        Processing.Audio.Play();
+                        Processing.Audio.Play(currentTrackIndex);
                     }
                 });
 			}
