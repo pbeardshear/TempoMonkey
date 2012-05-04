@@ -20,6 +20,7 @@ using System.Drawing;
 using System.Windows.Threading;
 using slidingMenu;
 using Visualizer;
+using Visualizer.Timeline;
 
 namespace TempoMonkey
 {
@@ -36,8 +37,12 @@ namespace TempoMonkey
 		public Spectrum Visualizer;
 		public bool IsTutorialMode = false;
 
+		public List<WaveformTimeline> Timelines = new List<WaveformTimeline>();
+
         public void initCommon()
         {
+			Processing.Audio.Initialize();
+
             PauseCircle.Stroke = System.Windows.Media.Brushes.White;
             PauseCircle.StrokeThickness = 8;
 
@@ -110,6 +115,8 @@ namespace TempoMonkey
 			// This might be more appropriate to call after Audio.Play() is called, but currently there is no
 			// reference to these wave objects.  Tracking checks if the Audio is playing, so it shouldn't break.
 			wave.StartTracking();
+
+			Timelines.Add(wave);
         }
 
         public void initBuddyForm(string address, string name)
@@ -273,11 +280,25 @@ namespace TempoMonkey
             tutoree = null;
 
             myMediaElement.Visibility = System.Windows.Visibility.Visible;
-            Instructions.Visibility = System.Windows.Visibility.Visible;
-            Facts.Visibility = System.Windows.Visibility.Visible;
+            // Instructions.Visibility = System.Windows.Visibility.Visible;
+            // Facts.Visibility = System.Windows.Visibility.Visible;
+
+			mainCanvas.Background = new SolidColorBrush(Colors.Black);
+			PauseOverlay.Visibility = System.Windows.Visibility.Hidden;
+
+			// Tell the timeline and visualizer to cleanup
+			foreach (WaveformTimeline wave in Timelines)
+			{
+				wave.Destroy();
+			}
+			Visualizer.Destroy();
 
             MainWindow.setManipulating(false);
-			Processing.Audio.End();
+			Processing.Audio.End(delegate
+			{
+				MainWindow.currentPage = MainWindow.homePage;
+				MainWindow.loadingPage.NavigationService.Navigate(MainWindow.currentPage);
+			});
         }
 
         NavigationButton quitButton, resumeButton, tutorialsButton, homeButton;
@@ -290,7 +311,7 @@ namespace TempoMonkey
             quitButton = new NavigationButton(QuitButton, delegate()
             {
                 tearDown();
-                return MainWindow.homePage;
+                return MainWindow.loadingPage;
             });
 
 

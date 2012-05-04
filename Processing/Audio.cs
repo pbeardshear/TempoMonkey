@@ -7,6 +7,7 @@ using NAudio.Wave;
 using System.IO;
 using System.Diagnostics;
 using System.Threading;
+using System.Windows.Threading;
 
 namespace Processing
 {
@@ -107,6 +108,7 @@ namespace Processing
 			// Create a new sampler object
 			InputSampler = new Sampler((int)FFTDataSize.FFT2048);
 
+			stopWorker = false;
             IsInitialized = true;
         }
 
@@ -177,26 +179,41 @@ namespace Processing
         }
         #endregion
 
+		public delegate void CleanupDelegate();
+
         #region Cleanup Methods
 
 		/// <summary>
 		/// Close down all audio processing and unload all files
 		/// </summary>
-		public static void End()
+		public static void End(CleanupDelegate end)
 		{
 			// Tell the processing thread to shut down
-			Stopping = true;
+			// Stopping = true;
+			stopWorker = true;
 			IsPlaying = false;
+			IsInitialized = false;
 
-			// Unload all files
-			//foreach (string fileName in _audioStreams.Keys)
-			//{
-			//    UnloadFile(fileName);
-			//}
-
-			// Set the stream containers to empty state
-			_audioStreams = new Dictionary<string, AudioStream>();
-			_audioStreamList = new List<AudioStream>();
+			DispatcherTimer timer = new DispatcherTimer();
+			timer.Interval = TimeSpan.FromMilliseconds(100);
+			timer.Tick += delegate
+			{
+				// Wait for the thread to close
+				if (audioProcessingThread == null)
+				{
+					timer.Stop();
+					// Set the stream containers to empty state
+					_audioStreams = new Dictionary<string, AudioStream>();
+					_audioStreamList = new List<AudioStream>();
+					if (_soundTouchSharp != null)
+					{
+						_soundTouchSharp.Clear();
+						_soundTouchSharp.Dispose();
+					}
+					end();
+				}
+			};
+			timer.Start();
 		}
 
         public static void Cleanup()
@@ -529,7 +546,7 @@ namespace Processing
                 do
                 {
                     samplesProcessed = _soundTouchSharp.ReceiveSamples(convertOutputBuffer.Floats, outBufferSizeFloats);
-                    if (samplesProcessed > 0)
+                    if (!stopWorker && samplesProcessed > 0)
                     {
                         TimeSpan currentBufferTime = _currentWaveChannel.CurrentTime;
                         _inputProvider.AddSamples(convertOutputBuffer.Bytes, 0, (int)samplesProcessed * (sizeof(float)) * _currentWaveChannel.WaveFormat.Channels, currentBufferTime);
@@ -545,6 +562,13 @@ namespace Processing
 
             // End of the audio file
             _waveOutDevice.Stop();
+			// Stop sampling
+			_waveChannel.Sample -= _waveChannel_Sample;
+			_waveReader.Close();
+			_blockAlignStream.Close();
+			_waveChannel.Close();
+			_inputProvider.Flush();
+			_currentWaveChannel.Close();
 			IsPlaying = false;
             if (!stopWorker && _currentWaveChannel.CurrentTime < actualEndMarker)
             {

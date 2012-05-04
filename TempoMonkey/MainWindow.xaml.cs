@@ -198,7 +198,7 @@ namespace TempoMonkey
         {
             // This should only be done once, 
             // so it is being done here.
-            Processing.Audio.Initialize();
+//             Processing.Audio.Initialize();
             InitializeComponent();
 
             MainWindow.height = (int)this.Height;

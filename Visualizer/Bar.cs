@@ -70,6 +70,13 @@ namespace Visualizer
             Canvas.SetBottom(side, Base);
         }
 
+		// Destructor
+		public void Destroy()
+		{
+			myCanvas.Children.Remove(bar);
+			myCanvas.Children.Remove(side);
+		}
+
         public static Canvas canvas
         {
             set
