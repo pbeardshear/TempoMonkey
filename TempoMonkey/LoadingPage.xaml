@@ -8,9 +8,7 @@
 	Title="LoadingPage">
 
     <Canvas Opacity="0.7">
-        <Label Canvas.Left="150" FontSize="100" Canvas.Top="284" Height="154" Width="960">
-            Please Wait... Loading
-        </Label>
+		
         <!-- Bars image-->
         <!-- Logo -->
         <Image Source="/Resources/Images/logo.png" Canvas.Left="25" Canvas.Top="25" Height="98" Width="232" />
@@ -170,5 +168,10 @@
                 </EventTrigger>
             </Ellipse.Triggers>
         </Ellipse>
-    </Canvas>
+
+		<TextBlock Canvas.Left="315" FontSize="100" Canvas.Top="280" Height="250" Width="650" FontFamily="Aharoni Bold" TextWrapping="Wrap" TextAlignment="Center">
+			Loading
+			Please Wait
+		</TextBlock>
+	</Canvas>
 </Page>

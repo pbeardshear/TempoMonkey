@@ -9,22 +9,22 @@
 
     <Canvas Name="mainCanvas" Margin="0,6,0,-6" Background="Black">
 		<!-- Song titles -->
-		<Label Name="SongTitle0" Content="Test Song" Canvas.Left="278" Canvas.Top="58" FontSize="24" Foreground="#666" />
-		<Label Name="SongTitle1" Content="Second Test Song" Canvas.Left="550" Canvas.Top="58" FontSize="24" Foreground="#FFF" />
-		<Label Name="SongTitle2" Content="Third Test Song" Canvas.Left="864" Canvas.Top="58" FontSize="24" Foreground="#666" />
+		<TextBlock Name="SongTitle0" Text="Test Song" Canvas.Left="278" Canvas.Top="83" FontSize="20" Foreground="#666" TextTrimming="CharacterEllipsis" />
+		<TextBlock  Name="SongTitle1" Text="Second Test Song" Canvas.Left="549" Canvas.Top="83" FontSize="20" Foreground="#FFF" TextTrimming="CharacterEllipsis" />
+		<TextBlock Name="SongTitle2" Text="Third Test Song" Canvas.Left="864" Canvas.Top="83" FontSize="20" Foreground="#666" TextTrimming="CharacterEllipsis" />
 		
 		<!-- Selector square for denoting selected song -->
-		<Rectangle Name="BlueDot" Fill="Cyan" Height="9" Width="9" Canvas.Left="525" Canvas.Top="77" />
+		<Rectangle Name="BlueDot" Fill="Cyan" Height="9" Width="9" Canvas.Left="525" Canvas.Top="93" />
 		<!-- Container objects for song waveforms -->
-        <Canvas Background="White" Name="SongContainer0" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
-        <Canvas Background="White" Name="SongContainer1" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
-        <Canvas Background="White" Name="SongContainer2" Width="800" Height="100" Canvas.Left="240" Canvas.Top="100"></Canvas>
+        <Canvas Background="White" Name="SongContainer0" Width="800" Height="100" Canvas.Left="240" Canvas.Top="120"></Canvas>
+        <Canvas Background="White" Name="SongContainer1" Width="800" Height="100" Canvas.Left="240" Canvas.Top="120"></Canvas>
+        <Canvas Background="White" Name="SongContainer2" Width="800" Height="100" Canvas.Left="240" Canvas.Top="120"></Canvas>
         <!--Rectangle Name="Progress" Fill="Red" Opacity=".8" Width="10" Height="100" StrokeThickness="2" Canvas.Left="240" Canvas.Top="100"/-->
         <!--Rectangle Stroke="Red" Width="800" Height="100" StrokeThickness="2" Canvas.Left="240" Canvas.Top="100"/-->
-        <Image Canvas.Left="342" Canvas.Top="12" Height="50" Name="volumeAvatar" Stretch="Fill" Width="50" />
-        <Image Canvas.Left="513" Canvas.Top="12" Height="50" Name="pitchAvatar" Stretch="Fill" Width="50" />
-        <Image Canvas.Left="704" Canvas.Top="12" Height="50" Name="tempoAvatar" Stretch="Fill" Width="50" />
-        <Image Canvas.Left="869" Canvas.Top="12" Height="50" Name="seekAvatar" Stretch="Fill" Width="50" />
+        <Image Canvas.Left="342" Canvas.Top="20" Height="50" Name="volumeAvatar" Stretch="Fill" Width="50" />
+        <Image Canvas.Left="513" Canvas.Top="20" Height="50" Name="pitchAvatar" Stretch="Fill" Width="50" />
+        <Image Canvas.Left="704" Canvas.Top="20" Height="50" Name="tempoAvatar" Stretch="Fill" Width="50" />
+        <Image Canvas.Left="869" Canvas.Top="20" Height="50" Name="seekAvatar" Stretch="Fill" Width="50" />
         <!-- Pause overlay -->
         <Grid Name="PauseOverlay" Height="140" Canvas.ZIndex="2" Width="600" Visibility="Hidden" Background="#CCC" Opacity="0.8" Canvas.Left="363" Canvas.Top="289">
             <Grid.RowDefinitions>

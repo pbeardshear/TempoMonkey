@@ -49,9 +49,9 @@ namespace TempoMonkey
             SongTitles[0] = SongTitle0;
             SongTitles[1] = SongTitle1;
             SongTitles[2] = SongTitle2;
-            SongTitles[0].Content = null;
-            SongTitles[1].Content = null;
-            SongTitles[2].Content = null;
+            SongTitles[0].Text = null;
+            SongTitles[1].Text = null;
+            SongTitles[2].Text = null;
 
 			Visualizer = new Spectrum(mainCanvas);
 			Visualizer.RegisterSoundPlayer();
@@ -80,7 +80,7 @@ namespace TempoMonkey
         }
 
         BrushConverter bc = new BrushConverter();
-        Label[] SongTitles = new Label[3];
+        TextBlock[] SongTitles = new TextBlock[3];
         Panel[] waveFormContainers = new Panel[3];
         int[] positions = { 260, 525, 850 };
         public int currentTrackIndex
@@ -117,7 +117,7 @@ namespace TempoMonkey
             initCommon();
 
             // Load and set the song titles
-            SongTitles[1].Content = name;
+            SongTitles[1].Text = name;
             Processing.Audio.LoadFile(address);
 
             // NavigationService.Navigate(MainWindow.freeFormPage);
@@ -160,7 +160,7 @@ namespace TempoMonkey
                 string address = addrList[i] as String;
                 string name = nameList[i] as String;
                 _nameList.Add(name);
-                SongTitles[i].Content = name;
+                SongTitles[i].Text = name;
                 Processing.Audio.LoadFile(address);
 
                 // Initlaize the wave form
