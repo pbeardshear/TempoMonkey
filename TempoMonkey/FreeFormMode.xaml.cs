@@ -64,19 +64,19 @@ namespace TempoMonkey
             PitchSlider = new mySlider("Pitch", 0, 100, 50, 250);
             TempoSlider = new mySlider("Tempo", 40, 200, 100, 250);
 
-            Canvas.SetLeft(VolumeSlider, 450);
-            Canvas.SetLeft(PitchSlider, 450);
-            Canvas.SetLeft(TempoSlider, 450);
+            Canvas.SetLeft(VolumeSlider, 240);
+            Canvas.SetLeft(PitchSlider, 513);
+            Canvas.SetLeft(TempoSlider, 792);
 
-            Canvas.SetTop(VolumeSlider, 200);
-            Canvas.SetTop(PitchSlider, 300);
-            Canvas.SetTop(TempoSlider, 400);
+            Canvas.SetTop(VolumeSlider, 256);
+            Canvas.SetTop(PitchSlider, 256);
+            Canvas.SetTop(TempoSlider, 256);
 
-            /*
+            
             mainCanvas.Children.Add(VolumeSlider);
             mainCanvas.Children.Add(PitchSlider);
             mainCanvas.Children.Add(TempoSlider);
-             * */
+            
         }
 
         BrushConverter bc = new BrushConverter();
@@ -200,6 +200,7 @@ namespace TempoMonkey
 
             Timer = new DispatcherTimer();
             Timer.Interval = TimeSpan.FromSeconds(2);
+            /*
             Timer.Tick += (delegate(object s, EventArgs args)
             {
                 //Checks if the user has finished the task, and queues up the next task
@@ -217,6 +218,7 @@ namespace TempoMonkey
                     }
                 }
             });
+             * */
 
             // Load and set the song titles
             for (int i = 0; i < addrList.Count; i++)
@@ -306,7 +308,10 @@ namespace TempoMonkey
 
             new NavigationButton(NextTutorial, delegate()
             {
-                NextOverLay.Visibility = System.Windows.Visibility.Hidden;
+                Tutorial.nextTutorial();
+                _isPaused = false;
+                // NextOverLay.Visibility = System.Windows.Visibility.Hidden;
+                PauseOverlay.Visibility = System.Windows.Visibility.Hidden;
                 MainWindow.setManipulating(true);
                 mainCanvas.Background = new SolidColorBrush(Colors.Black);
                 playTutorial(Tutorial.getCurrentTutorial());
@@ -407,15 +412,12 @@ namespace TempoMonkey
 			InitializeResource(Properties.Resources.seek_avatar, "seekAvatar");
 			InitializeResource(Properties.Resources.pitch_avatar, "pitchAvatar");
 			InitializeResource(Properties.Resources.tempo_avatar, "tempoAvatar");
-            // InitializeResource(Properties.Resources.seek_avatar, "pauseAvatar");
-
 
 			// Disabled images
 			volumeAvatar.Source = InitializeResource(Properties.Resources.volume_avatar_disabled, "volumeAvatarDisabled");
 			seekAvatar.Source = InitializeResource(Properties.Resources.seek_avatar_disabled, "seekAvatarDisabled");
 			pitchAvatar.Source = InitializeResource(Properties.Resources.pitch_avatar_disabled, "pitchAvatarDisabled");
 			tempoAvatar.Source = InitializeResource(Properties.Resources.tempo_avatar_disabled, "tempoAvatarDisabled");
-            // PauseAvatar.Source = InitializeResource(Properties.Resources.seek_avatar, "pauseAvatar");
 		}
 
 		public void SetAvatarState(bool active, System.Windows.Controls.Image imageControl, BitmapImage image)
@@ -430,11 +432,12 @@ namespace TempoMonkey
 		#region Gesture Handlers
 		void pauseTrackingHandler(bool exist)
 		{
+            /*
             if ( _type == "Tutor" && Tutorial.getCurrentTutorial() == pause && exist)
             {
                 donePause = true;
                 return;
-            }
+            }*/
 
 			if (_isPaused)
 			{
@@ -452,10 +455,9 @@ namespace TempoMonkey
             if (angle > 0 && angle < 360)
             {
                 PauseCircle.Visibility = System.Windows.Visibility.Visible;
-                PauseLabel.Visibility = System.Windows.Visibility.Visible;
 
-                double x = Canvas.GetLeft(PauseLabel) + 25;
-                double y = Canvas.GetTop(PauseLabel) + 15;
+                double x = Canvas.GetLeft(PauseLabel) + 45;
+                double y = Canvas.GetTop(PauseLabel) + 45;
 
                 System.Windows.Point center = new System.Windows.Point(x, y);
 
@@ -480,7 +482,6 @@ namespace TempoMonkey
 
             } else {
                 PauseCircle.Visibility = System.Windows.Visibility.Hidden;
-                PauseLabel.Visibility = System.Windows.Visibility.Hidden;
             }
         }
 

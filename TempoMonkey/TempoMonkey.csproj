@@ -265,6 +265,9 @@
   <ItemGroup>
     <Resource Include="Resources\Images\highlight.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\pause_button.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

@@ -336,7 +336,7 @@ namespace TempoMonkey
         {
             if (value)
             {
-                // System.Windows.Forms.Cursor.Hide(); // <<<<<<<<<<<<<<<<<<<<<<<<<<<< UN COMMENT ME!!
+                System.Windows.Forms.Cursor.Hide(); // <<<<<<<<<<<<<<<<<<<<<<<<<<<< UN COMMENT ME!!
                 _isManipulating = true;
             }
             else

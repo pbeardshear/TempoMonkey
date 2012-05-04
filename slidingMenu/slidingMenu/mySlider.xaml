@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              Height="50" Width="250">
     <Canvas Name="rectCanvas">
-        <Rectangle Height="50" Width="249" Fill="LightSlateGray"  Stroke="Gray" StrokeThickness="8"></Rectangle>
-        <Rectangle Name="Bar" Height="50" Width="21" Fill="Black"/>
-        <Rectangle Visibility="Hidden" Name="Border" Stroke="Green" StrokeThickness="2" Height="32" Width="85" Canvas.Left="169" Canvas.Top="55"></Rectangle>
-        <Label Content="Test Content" Name="SliderName" Canvas.Left="169" Canvas.Top="55" Height="28" Width="80"></Label>
+        <Rectangle Height="7" Width="249" Fill="Gray" Canvas.Top="20" Canvas.Left="0"></Rectangle>
+        <Rectangle Name="Bar" Height="20" Width="10" Fill="Cyan" Opacity=".5" Canvas.Top="14" />
+        <Rectangle Visibility="Hidden" Name="Border" Stroke="Cyan" StrokeThickness="2" Height="32" Width="85" Canvas.Left="77" Canvas.Top="-17"></Rectangle>
+        <Label Content="Volume" FontFamily="Aharoni" HorizontalContentAlignment="Center" FontSize="18" Foreground="Gray" Name="SliderName" Canvas.Left="80" Canvas.Top="-12" Height="28" Width="80"></Label>
     </Canvas>
 </UserControl>
