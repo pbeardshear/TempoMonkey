@@ -58,7 +58,9 @@ namespace TempoMonkey
                 else
                 {
                     tearDown();
-                    (MainWindow.tutorPage as TutorMode).initTutor(tutorialIndex);
+                    // (MainWindow.freeFormPage as FreeFormMode)._type = "Buddy"
+                    (MainWindow.freeFormPage as FreeFormMode).initTutor(tutorialIndex);
+                    //(MainWindow.tutorPage as TutorMode).initTutor(tutorialIndex);
                     return MainWindow.loadingPage;
                 }
             });

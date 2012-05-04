@@ -270,7 +270,7 @@ namespace TempoMonkey
 			browseMusicPage = new BrowseMusic();
             browseTutorialsPage = new BrowseTutorials(); 
             freeFormPage = new FreeFormMode();
-            tutorPage = new TutorMode();
+            // tutorPage = new TutorMode();
             soloPage = new SoloPage();
             loadingPage = new LoadingPage();
 
@@ -336,7 +336,7 @@ namespace TempoMonkey
         {
             if (value)
             {
-                // System.Windows.Forms.Cursor.Hide(); // <<<<<<<<<<<<<<<<<<<<<<<<<<<< UN COMMENT ME!!
+                System.Windows.Forms.Cursor.Hide(); // <<<<<<<<<<<<<<<<<<<<<<<<<<<< UN COMMENT ME!!
                 _isManipulating = true;
             }
             else

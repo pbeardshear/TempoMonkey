@@ -28,7 +28,7 @@ namespace TempoMonkey
 	/// </summary>
     public partial class FreeFormMode : Page, KinectPage
 	{
-        KinectGesturePlayer freePlayer, freePlayer2;
+        KinectGesturePlayer freePlayer, freePlayer2, tutoree;
 		bool _isPaused = false;
         ArrayList _nameList = new ArrayList();
         string _type;
@@ -135,19 +135,17 @@ namespace TempoMonkey
 
             // connected to gestures
             freePlayer = new KinectGesturePlayer();
-            freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, null);
+            freePlayer.registerCallBack(freePlayer.kinectGuideListener, pauseTrackingHandler, pauseChangeHandler);
             freePlayer.registerCallBack(freePlayer.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
             freePlayer.registerCallBack(freePlayer.leanListener, tempoTrackingHandler, tempoChangeHandler);
             freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
 
             freePlayer2 = new KinectGesturePlayer();
-            freePlayer2.registerCallBack(freePlayer2.kinectGuideListener, pauseTrackingHandler, null);
+            freePlayer2.registerCallBack(freePlayer2.kinectGuideListener, pauseTrackingHandler, pauseChangeHandler);
             freePlayer2.registerCallBack(freePlayer2.handsAboveHeadListener, pitchTrackingHandler2, pitchChangeHandler);
             freePlayer2.registerCallBack(freePlayer2.leanListener, tempoTrackingHandler2, tempoChangeHandler);
             freePlayer2.registerCallBack(freePlayer2.handsWidenListener, volumeTrackingHandler2, volumeChangeHandler);
         }
-
-        
 
         public void initSoloForm(ArrayList addrList, ArrayList nameList){
             _type = "Solo"; 
@@ -188,33 +186,163 @@ namespace TempoMonkey
             freePlayer.registerCallBack(freePlayer.trackMoveListener, changeTrackTrackingHandler, null);
         }
 
+        public void initTutor(int index)
+        {
+            _type = "Tutor";
+            initCommon();
+            List<string> nameList = new List<string> { "Chasing Pavements", "Enough To Fly With You" };
+            ArrayList addrList = new ArrayList { @"..\..\Resources\Music\Chasing Pavements.mp3", @"..\..\Resources\Music\Enough To Fly With You.mp3" };
+            int doneCount = 0;
+
+            myMediaElement.Visibility = System.Windows.Visibility.Visible;
+            Instructions.Visibility = System.Windows.Visibility.Visible;
+            Facts.Visibility = System.Windows.Visibility.Visible;
+
+            Timer = new DispatcherTimer();
+            Timer.Interval = TimeSpan.FromSeconds(2);
+            /*
+            Timer.Tick += (delegate(object s, EventArgs args)
+            {
+                //Checks if the user has finished the task, and queues up the next task
+                if (Tutorial.checkTask())
+                {
+                    Tutorial next = Tutorial.nextTutorial();
+                    if (next != null)
+                    {
+                        showTutorialChooser(next);
+                    }
+                    else
+                    {
+                        showTutorialsFinished();
+                        Timer.Stop();
+                    }
+                }
+            });
+             * */
+
+            // Load and set the song titles
+            for (int i = 0; i < addrList.Count; i++)
+            {
+                string address = addrList[i] as String;
+                string name = nameList[i] as String;
+                _nameList.Add(name);
+                SongTitles[i].Text = name;
+                Processing.Audio.LoadFile(address);
+
+                // Initlaize the wave form
+                initWaveForm(waveFormContainers[i], address, delegate()
+                {
+                    doneCount++;
+                    if (doneCount == _nameList.Count)
+                    {
+                        MainWindow.currentPage = MainWindow.freeFormPage;
+                        MainWindow.loadingPage.NavigationService.Navigate(MainWindow.currentPage);
+
+                        // Sets the current track & also plays it
+                        currentTrackIndex = _nameList.Count > 1 ? 1 : 0;
+                        Processing.Audio.Play(currentTrackIndex);
+                        Timer.Start();
+
+                        Tutorial.TutorialIndex = index;
+                        playTutorial(Tutorial.getCurrentTutorial());
+                    }
+                });
+            }
+
+
+            tutoree = new KinectGesturePlayer();
+            tutoree.registerCallBack(tutoree.kinectGuideListener, pauseTrackingHandler, pauseChangeHandler);
+            tutoree.registerCallBack(tutoree.handsAboveHeadListener, pitchTrackingHandler, pitchChangeHandler);
+            tutoree.registerCallBack(tutoree.handSwingListener, seekTrackingHandler, seekChangeHandler);
+            tutoree.registerCallBack(tutoree.leanListener, tempoTrackingHandler, tempoChangeHandler);
+            tutoree.registerCallBack(tutoree.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
+            tutoree.registerCallBack(tutoree.trackMoveListener, changeTrackTrackingHandler, volumeChangeHandler);
+        }
+
         public void tearDown()
         {
             freePlayer = null;
             freePlayer2 = null;
+            tutoree = null;
+
+            myMediaElement.Visibility = System.Windows.Visibility.Visible;
+            Instructions.Visibility = System.Windows.Visibility.Visible;
+            Facts.Visibility = System.Windows.Visibility.Visible;
+
             MainWindow.setManipulating(false);
 			Processing.Audio.End();
         }
 
-        NavigationButton quitButton, resumeButton;
+        NavigationButton quitButton, resumeButton, tutorialsButton, homeButton;
 		public FreeFormMode()
 		{
 			InitializeComponent();
             InitializeAvatars();
-            initSliders();
 
+            initSliders();
             quitButton = new NavigationButton(QuitButton, delegate()
             {
                 tearDown();
                 return MainWindow.homePage;
             });
 
+
+            homeButton = new NavigationButton(HomeButton, delegate()
+            {
+                tearDown();
+                return MainWindow.homePage;
+            });
+
+
             resumeButton = new NavigationButton(ResumeButton, delegate()
             {
                 Resume();
                 return null;
             });
+
+            tutorialsButton = new NavigationButton(TutorialsButton, delegate()
+            {
+                tearDown();
+                return MainWindow.browseTutorialsPage;
+            });
+
+            new NavigationButton(NextTutorial, delegate()
+            {
+                Tutorial.nextTutorial();
+                _isPaused = false;
+                Processing.Audio.Resume();
+                // NextOverLay.Visibility = System.Windows.Visibility.Hidden;
+                PauseOverlay.Visibility = System.Windows.Visibility.Hidden;
+                MainWindow.setManipulating(true);
+                mainCanvas.Background = new SolidColorBrush(Colors.Black);
+                playTutorial(Tutorial.getCurrentTutorial());
+                return null;
+            });
+
+            // Tutor stuff
+            string tutorials_base = System.IO.Path.GetDirectoryName(System.Windows.Forms.Application.ExecutablePath) + "\\Tutorials\\";
+            pause = new Tutorial("Pause", "To pause move your left arm to a 45 degree angle with your body",
+                    new Uri(tutorials_base + "00pause.m4v"), pauseChecker, null);
+            tempo = new Tutorial("Changing the Tempo", "To increase the tempo lean towards the right, to decrease the tempo lean towards the left",
+                    new Uri(tutorials_base + "01tempo.m4v"), tempoChecker, "Tempo determins the speed of a song");
+            pitch = new Tutorial("Changing the Pitch", "To increase/decrease the pitch put your arms above your head and move your body up/down",
+                    new Uri(tutorials_base + "02pitch.m4v"), pitchChecker, "Pitch determines how low or high the sounds of a song becomes");
+            volume = new Tutorial("Changing the Volume", "To change the volume put both your arms in the midsection of your body and expand/intract your hands",
+                    new Uri(tutorials_base + "03volume.m4v"), volumeChecker);
+            seek = new Tutorial("Changing the Position of the track", "To seek around the track put your right hand up and hover it left and right",
+                    new Uri(tutorials_base + "04seek.m4v"), seekChecker);
+            switch_tracks = new Tutorial("Switching Tracks", "To switch between your tracks jump to the left/right",
+                  new Uri(tutorials_base + "05swaptracks.m4v"), switchTrackChecker);
+
+            Tutorial.addTutorial(pause);
+            Tutorial.addTutorial(tempo);
+            Tutorial.addTutorial(pitch);
+            Tutorial.addTutorial(volume);
+            Tutorial.addTutorial(seek);
+            Tutorial.addTutorial(switch_tracks);
 		}
+
+        Tutorial seek, volume, switch_tracks, pitch, tempo, pause;
 
         public void allFramesReady(object sender, AllFramesReadyEventArgs e)
         {
@@ -254,6 +382,14 @@ namespace TempoMonkey
                         freePlayer2.skeletonReady(e, rightSkeleton);
                     }
                 }
+                else if (_type == "Tutor")
+                {
+                    Skeleton skeleton = KinectGesturePlayer.getFristSkeleton(e);
+                    if (skeleton != null)
+                    {
+                        tutoree.skeletonReady(e, skeleton);
+                    }
+                }
             }
         }
 
@@ -277,15 +413,12 @@ namespace TempoMonkey
 			InitializeResource(Properties.Resources.seek_avatar, "seekAvatar");
 			InitializeResource(Properties.Resources.pitch_avatar, "pitchAvatar");
 			InitializeResource(Properties.Resources.tempo_avatar, "tempoAvatar");
-            // InitializeResource(Properties.Resources.seek_avatar, "pauseAvatar");
-
 
 			// Disabled images
 			volumeAvatar.Source = InitializeResource(Properties.Resources.volume_avatar_disabled, "volumeAvatarDisabled");
 			seekAvatar.Source = InitializeResource(Properties.Resources.seek_avatar_disabled, "seekAvatarDisabled");
 			pitchAvatar.Source = InitializeResource(Properties.Resources.pitch_avatar_disabled, "pitchAvatarDisabled");
 			tempoAvatar.Source = InitializeResource(Properties.Resources.tempo_avatar_disabled, "tempoAvatarDisabled");
-            // PauseAvatar.Source = InitializeResource(Properties.Resources.seek_avatar, "pauseAvatar");
 		}
 
 		public void SetAvatarState(bool active, System.Windows.Controls.Image imageControl, BitmapImage image)
@@ -300,6 +433,13 @@ namespace TempoMonkey
 		#region Gesture Handlers
 		void pauseTrackingHandler(bool exist)
 		{
+            /*
+            if ( _type == "Tutor" && Tutorial.getCurrentTutorial() == pause && exist)
+            {
+                donePause = true;
+                return;
+            }*/
+
 			if (_isPaused)
 			{
 				return;
@@ -316,10 +456,9 @@ namespace TempoMonkey
             if (angle > 0 && angle < 360)
             {
                 PauseCircle.Visibility = System.Windows.Visibility.Visible;
-                PauseLabel.Visibility = System.Windows.Visibility.Visible;
 
-                double x = Canvas.GetLeft(PauseLabel) + 25;
-                double y = Canvas.GetTop(PauseLabel) + 15;
+                double x = Canvas.GetLeft(PauseLabel) + 45;
+                double y = Canvas.GetTop(PauseLabel) + 45;
 
                 System.Windows.Point center = new System.Windows.Point(x, y);
 
@@ -344,7 +483,6 @@ namespace TempoMonkey
 
             } else {
                 PauseCircle.Visibility = System.Windows.Visibility.Hidden;
-                PauseLabel.Visibility = System.Windows.Visibility.Hidden;
             }
         }
 
@@ -364,7 +502,17 @@ namespace TempoMonkey
                     currentTrackIndex -= 1;
                 }
             }
+            if (_type == "Tutor" && Tutorial.getCurrentTutorial() == switch_tracks)
+            {
+                totalTrackChange++;
+                if (totalTrackChange >= 3)
+                {
+                    doneSwitchTrack = true;
+                }
+            }
         }
+
+        int totalTrackChange = 0;
 
 		int _currentTrackIndex;
 
@@ -372,7 +520,18 @@ namespace TempoMonkey
 		{
 			VolumeSlider.Value -= change;
 			Processing.Audio.ChangeVolume(VolumeSlider.Value);
+
+            if ( _type == "Tutor" && Tutorial.getCurrentTutorial() == volume)
+            {
+                totalVolumeChange += Math.Abs(change);
+                if (totalVolumeChange > 100)
+                {
+                    doneVolume = true;
+                }
+            }
 		}
+
+        double totalVolumeChange = 0;
 
 		void volumeTrackingHandler(bool exist)
 		{
@@ -389,8 +548,18 @@ namespace TempoMonkey
 		{
 			TempoSlider.Value += change / 2;
 			Processing.Audio.ChangeTempo(TempoSlider.Value);
+
+            if (_type == "Tutor" && Tutorial.getCurrentTutorial() == tempo)
+            {
+                totalTempoChange += Math.Abs(change);
+                if (totalTempoChange > 150)
+                {
+                    doneTempo = true;
+                }
+            }
 		}
 
+        double totalTempoChange = 0;
 
 		void tempoTrackingHandler(bool exist)
 		{
@@ -420,6 +589,8 @@ namespace TempoMonkey
 			//SeekSlider.Value += change; //UNCOMMENT THIS IF WE WANT TO SEEK
 		}
 
+
+
 		void seekTrackingHandler(bool exist)
 		{
 			if (exist)
@@ -442,7 +613,19 @@ namespace TempoMonkey
 		{
 			PitchSlider.Value -= change * 3;
 			Processing.Audio.ChangePitch(PitchSlider.Value);
+
+            if (_type == "Tutor" && Tutorial.getCurrentTutorial() == pitch)
+            {
+                totalPitchChange += Math.Abs(change);
+                // Seek.Content = totalPitchChange;
+                if (totalPitchChange > 50)
+                {
+                    donePitch = true;
+                }
+            }
 		}
+
+        double totalPitchChange = 0;
 
 		public void Resume()
 		{
@@ -466,6 +649,81 @@ namespace TempoMonkey
         }
 		#endregion
 
+        #region Tutor stuff
+
+        private void Media_Ended(object sender, RoutedEventArgs e)
+        {
+            myMediaElement.Position = TimeSpan.Zero;
+            myMediaElement.LoadedBehavior = MediaState.Play;
+        }
+
+        private Dictionary<Tutorial, check> _checkers = new Dictionary<Tutorial, check>();
+
+
+        public void playTutorial(Tutorial tutorial)
+        {
+            myMediaElement.Source = tutorial.getSource();
+            Instructions.Text = tutorial.getInstructions();
+            Facts.Text = tutorial.getFacts();
+            myMediaElement.Play();
+        }
+
+        DispatcherTimer Timer;
+
+        public void showTutorialsFinished()
+        {
+            MainWindow.setManipulating(false);
+            Timer.Stop();
+
+        }
+
+        public void showTutorialChooser(Tutorial tutorial)
+        {
+            MainWindow.setManipulating(false);
+            mainCanvas.Background = new SolidColorBrush(Colors.Gray);
+            NextOverLay.Visibility = System.Windows.Visibility.Visible;
+        }
+
+
+
+        bool donePause = false;
+        public bool pauseChecker()
+        {
+            return donePause;
+        }
+
+        bool doneTempo = false;
+        public bool tempoChecker()
+        {
+            return doneTempo;
+        }
+
+        bool doneVolume = false;
+        public bool volumeChecker()
+        {
+            return doneVolume;
+        }
+
+        bool donePitch = false;
+        public bool pitchChecker()
+        {
+            return donePitch;
+        }
+
+        bool doneSwitchTrack = false;
+        public bool switchTrackChecker()
+        {
+            return doneSwitchTrack;
+        }
+
+        bool doneSeeking = false;
+        public bool seekChecker()
+        {
+            return doneSeeking;
+        }
+
+        public delegate bool check();
+        #endregion
 
     }
 }
