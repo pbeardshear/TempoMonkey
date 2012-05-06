@@ -67,6 +67,16 @@ namespace Visualizer
 			timer.Tick += timerTick;
 		}
 
+		// Destructor
+		public void Destroy()
+		{
+			timer.Stop();
+			foreach (Bar bar in barShapes)
+			{
+				bar.Destroy();
+			}
+		}
+
 		public void RegisterSoundPlayer()
 		{
 			UpdateBarLayout();

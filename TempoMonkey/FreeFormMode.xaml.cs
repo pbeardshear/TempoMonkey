@@ -20,6 +20,7 @@ using System.Drawing;
 using System.Windows.Threading;
 using slidingMenu;
 using Visualizer;
+using Visualizer.Timeline;
 
 namespace TempoMonkey
 {
@@ -34,9 +35,14 @@ namespace TempoMonkey
         string _type;
         public mySlider VolumeSlider, PitchSlider, TempoSlider;
 		public Spectrum Visualizer;
+		public bool IsTutorialMode = false;
+
+		public List<WaveformTimeline> Timelines = new List<WaveformTimeline>();
 
         public void initCommon()
         {
+			Processing.Audio.Initialize();
+
             PauseCircle.Stroke = System.Windows.Media.Brushes.White;
             PauseCircle.StrokeThickness = 8;
 
@@ -109,6 +115,8 @@ namespace TempoMonkey
 			// This might be more appropriate to call after Audio.Play() is called, but currently there is no
 			// reference to these wave objects.  Tracking checks if the Audio is playing, so it shouldn't break.
 			wave.StartTracking();
+
+			Timelines.Add(wave);
         }
 
         public void initBuddyForm(string address, string name)
@@ -145,6 +153,8 @@ namespace TempoMonkey
             freePlayer2.registerCallBack(freePlayer2.handsAboveHeadListener, pitchTrackingHandler2, pitchChangeHandler);
             freePlayer2.registerCallBack(freePlayer2.leanListener, tempoTrackingHandler2, tempoChangeHandler);
             freePlayer2.registerCallBack(freePlayer2.handsWidenListener, volumeTrackingHandler2, volumeChangeHandler);
+
+			IsTutorialMode = false;
         }
 
         public void initSoloForm(ArrayList addrList, ArrayList nameList){
@@ -184,6 +194,8 @@ namespace TempoMonkey
 			freePlayer.registerCallBack(freePlayer.leanListener, tempoTrackingHandler, tempoChangeHandler);
 			freePlayer.registerCallBack(freePlayer.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
             freePlayer.registerCallBack(freePlayer.trackMoveListener, changeTrackTrackingHandler, null);
+
+			IsTutorialMode = false;
         }
 
         public void initTutor(int index)
@@ -257,6 +269,8 @@ namespace TempoMonkey
             tutoree.registerCallBack(tutoree.leanListener, tempoTrackingHandler, tempoChangeHandler);
             tutoree.registerCallBack(tutoree.handsWidenListener, volumeTrackingHandler, volumeChangeHandler);
             tutoree.registerCallBack(tutoree.trackMoveListener, changeTrackTrackingHandler, volumeChangeHandler);
+
+			IsTutorialMode = true;
         }
 
         public void tearDown()
@@ -266,11 +280,25 @@ namespace TempoMonkey
             tutoree = null;
 
             myMediaElement.Visibility = System.Windows.Visibility.Visible;
-            Instructions.Visibility = System.Windows.Visibility.Visible;
-            Facts.Visibility = System.Windows.Visibility.Visible;
+            // Instructions.Visibility = System.Windows.Visibility.Visible;
+            // Facts.Visibility = System.Windows.Visibility.Visible;
+
+			mainCanvas.Background = new SolidColorBrush(Colors.Black);
+			PauseOverlay.Visibility = System.Windows.Visibility.Hidden;
+
+			// Tell the timeline and visualizer to cleanup
+			foreach (WaveformTimeline wave in Timelines)
+			{
+				wave.Destroy();
+			}
+			Visualizer.Destroy();
 
             MainWindow.setManipulating(false);
-			Processing.Audio.End();
+			Processing.Audio.End(delegate
+			{
+				MainWindow.currentPage = MainWindow.homePage;
+				MainWindow.loadingPage.NavigationService.Navigate(MainWindow.currentPage);
+			});
         }
 
         NavigationButton quitButton, resumeButton, tutorialsButton, homeButton;
@@ -283,7 +311,7 @@ namespace TempoMonkey
             quitButton = new NavigationButton(QuitButton, delegate()
             {
                 tearDown();
-                return MainWindow.homePage;
+                return MainWindow.loadingPage;
             });
 
 
@@ -640,6 +668,7 @@ namespace TempoMonkey
 
         public void Pause()
         {
+			NextTutorial.Visibility = IsTutorialMode ? Visibility.Visible : Visibility.Hidden;
             _isPaused = true;
             Processing.Audio.Pause();
 

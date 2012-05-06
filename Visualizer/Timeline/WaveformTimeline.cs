@@ -16,6 +16,7 @@ namespace Visualizer.Timeline
 	{
 		#region Private variables
 		private Panel Container;
+		private Path Timeline;
 		private Brush WaveformFill = Brushes.RoyalBlue;
 		private float TopOffset = 0;
 		private float LeftOffset = 20;
@@ -51,6 +52,13 @@ namespace Visualizer.Timeline
 			};
 			// Add the tracking bar to the container
 			Container.Children.Add(CurrentPosition);
+		}
+
+		// Destructor
+		public void Destroy()
+		{
+			Container.Children.Remove(Timeline);
+			Container.Children.Remove(CurrentPosition);
 		}
 
 		#region Public Methods
@@ -216,25 +224,25 @@ namespace Visualizer.Timeline
 			PathGeometry geometry = new PathGeometry();
 			geometry.Figures.Add(figure);
 
-			Path path = new Path();
-			path.Fill = WaveformFill;
-			path.Data = geometry;
+			Timeline = new Path();
+			Timeline.Fill = WaveformFill;
+			Timeline.Data = geometry;
 
 			TotalLength = x;
 
             //Strech it out, to fit the container
             // path.Data.Transform = new ScaleTransform(Container.Width / x, 1);
 
-			Container.Children.Insert(0, path);
+			Container.Children.Insert(0, Timeline);
 			if (Container is Canvas)
 			{
-				Canvas.SetLeft(path, LeftOffset);
-				Canvas.SetTop(path, TopOffset);
+				Canvas.SetLeft(Timeline, LeftOffset);
+				Canvas.SetTop(Timeline, TopOffset);
 			}
 			else
 			{
 				// Default to margin
-				path.Margin = new System.Windows.Thickness(LeftOffset, TopOffset, 0, 0);
+				Timeline.Margin = new System.Windows.Thickness(LeftOffset, TopOffset, 0, 0);
 			}
 
 			// Alert any callbacks that were registered
