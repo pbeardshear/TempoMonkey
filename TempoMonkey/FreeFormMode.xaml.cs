@@ -313,6 +313,7 @@ namespace TempoMonkey
                 Tutorial.nextTutorial();
                 _isPaused = false;
                 Processing.Audio.Resume();
+                // NextOverLay.Visibility = System.Windows.Visibility.Hidden;
                 PauseOverlay.Visibility = System.Windows.Visibility.Hidden;
                 MainWindow.setManipulating(true);
                 mainCanvas.Background = new SolidColorBrush(Colors.Black);
@@ -641,12 +642,12 @@ namespace TempoMonkey
 
         public void Pause()
         {
-            MainWindow.setManipulating(false);
             _isPaused = true;
             Processing.Audio.Pause();
 
             mainCanvas.Background = new SolidColorBrush(Colors.Gray);
             PauseOverlay.Visibility = System.Windows.Visibility.Visible;
+            MainWindow.setManipulating(false);
         }
 		#endregion
 

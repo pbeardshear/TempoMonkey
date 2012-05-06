@@ -207,12 +207,12 @@ class KinectGesturePlayer
         else
         {
             int sum = bodyMoves.Sum();
-            if (sum > 120)
+            if (sum > 150)
             {
                 callStaticCallBack(trackMoveListener, true);
                 bodyMoves = new Queue<int>();
             }
-            else if (sum < -120)
+            else if (sum < -150)
             {
                 callStaticCallBack(trackMoveListener, false);
                 bodyMoves = new Queue<int>();
