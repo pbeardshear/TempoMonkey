@@ -38,7 +38,7 @@
             
             <Button Grid.Row="0" Grid.Column="0" Content="Resume" Name="ResumeButton" Canvas.ZIndex="2" Canvas.Left="411" Canvas.Top="251" Width="152" Height="46" FontSize="30"/>
             <Button Grid.Row="0" Grid.Column="1" Content="Quit" Name="QuitButton" Canvas.ZIndex="2" Canvas.Left="704" Canvas.Top="251" Width="152" Height="46" FontSize="30"/>
-            <Button Name="NextTutorial" Visibility="Hidden" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="Next Tutorial" Width="200" Height="47" FontSize="30"/>
+            <Button Name="NextTutorial" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Content="Next Tutorial" Width="200" Height="47" FontSize="30"/>
 
         </Grid>
 		<!-- End overlay -->

@@ -198,8 +198,6 @@ namespace TempoMonkey
             Instructions.Visibility = System.Windows.Visibility.Visible;
             Facts.Visibility = System.Windows.Visibility.Visible;
 
-            NextTutorial.Visibility = System.Windows.Visibility.Visible;
-
             Timer = new DispatcherTimer();
             Timer.Interval = TimeSpan.FromSeconds(2);
             /*
@@ -270,7 +268,7 @@ namespace TempoMonkey
             myMediaElement.Visibility = System.Windows.Visibility.Visible;
             Instructions.Visibility = System.Windows.Visibility.Visible;
             Facts.Visibility = System.Windows.Visibility.Visible;
-            NextTutorial.Visibility = System.Windows.Visibility.Hidden;
+
             MainWindow.setManipulating(false);
 			Processing.Audio.End();
         }
